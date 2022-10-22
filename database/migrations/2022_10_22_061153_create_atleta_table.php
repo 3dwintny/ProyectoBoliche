@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('escolaridad');
 
             $table->unsignedInteger('id_centro');
-            $table->foreign('id_centre')->references('id')->on('centro');
+            $table->foreign('id_centro')->references('id')->on('centro');
 
             $table->unsignedInteger('id_entrenador');
             $table->foreign('id_entrenador')->references('id')->on('entrenador');
