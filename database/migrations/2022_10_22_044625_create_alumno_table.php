@@ -27,7 +27,7 @@ return new class extends Migration
             $table->double('peso');
             $table->double('altura');
             $table->string('genero',25);
-            $table->string('direccio',150);
+            $table->string('direccion',150);
             $table->string('telefono_casa',10)->unique();
             $table->string('celular',10)->unique();
             $table->string('correo',150)->unique();
@@ -51,7 +51,7 @@ return new class extends Migration
             $table->foreign('id_municipio')->references('id')->on('municipio');
 
             $table->unsignedInteger('id_nacionalidad');
-            $table->foreign('id_nacionalidad')->references('id')->on('nacionaliad');
+            $table->foreign('id_nacionalidad')->references('id')->on('nacionalidad');
 
             $table->timestamps();
         });
