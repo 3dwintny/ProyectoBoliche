@@ -36,17 +36,17 @@ return new class extends Migration
             $table->unsignedInteger('id_etapa_deportiva');
             $table->foreign('id_etapa_deportiva')->references('id')->on('etapa_deportiva');
 
-            $table->unsignedInteger('id_deporte_adaptado')->nullable();
-            $table->foreign('id_deporte_adaptado')->references('id')->on('deporte_adaptado');
+            $table->unsignedInteger('id_deporte_adaptado');
+            $table->foreign('id_deporte_adaptado')->references('id')->on('deporte_adoptado');
 
             $table->unsignedInteger('id_asistencia');
             $table->foreign('id_asistencia')->references('id')->on('asistencia');
 
-            $table->unsignedInteger('id_otro_programa')->nullable();
+            $table->unsignedInteger('id_otro_programa');
             $table->foreign('id_otro_programa')->references('id')->on('otro_programa');
 
-            $table->unsignedInteger('id_liea_desarrollo');
-            $table->foreign('id_line_desarrollo')->references('id')->on('linea_desarrollo');
+            $table->unsignedInteger('id_linea_desarrollo');
+            $table->foreign('id_linea_desarrollo')->references('id')->on('linea_desarrollo');
 
             $table->unsignedInteger('id_deporte');
             $table->foreign('id_deporte')->references('id')->on('deporte');
