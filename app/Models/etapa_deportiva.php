@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class etapa_deportiva extends Model
+class Etapa_Deportiva extends Model
 {
     use HasFactory;
 }
