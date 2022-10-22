@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo__contratos');
+        Schema::dropIfExists('tipo_contrato');
     }
 };

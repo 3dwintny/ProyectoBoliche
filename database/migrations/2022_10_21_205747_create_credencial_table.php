@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('credendciales', function (Blueprint $table) {
+        Schema::create('credencial', function (Blueprint $table) {
             $table->increments('id');
             $table->string('usuario',30)->unique();
             $table->string('password',30)->unique();
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('credendciales');
+        Schema::dropIfExists('credencial');
     }
 };
