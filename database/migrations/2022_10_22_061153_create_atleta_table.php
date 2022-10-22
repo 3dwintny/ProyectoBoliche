@@ -48,9 +48,6 @@ return new class extends Migration
             $table->unsignedInteger('id_liea_desarrollo');
             $table->foreign('id_line_desarrollo')->references('id')->on('linea_desarrollo');
 
-            $table->unsignedInteger('id_etapa_deportiva')->nullable();
-            $table->foreign('id_etapa_deportiva')->references('id')->on('etapa_deportiva');
-
             $table->unsignedInteger('id_deporte');
             $table->foreign('id_deporte')->references('id')->on('deporte');
 
