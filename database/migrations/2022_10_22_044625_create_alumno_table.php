@@ -26,7 +26,6 @@ return new class extends Migration
             $table->unsignedInteger('edad');
             $table->double('peso');
             $table->double('altura');
-            $table->double('peso');
             $table->string('genero',25);
             $table->string('direccio',150);
             $table->string('telefono_casa',10)->unique();
