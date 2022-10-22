@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categoria', function (Blueprint $table) {
+        Schema::create('parentezco', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tipo',20)->nullable();
-            $table->string('rango_edades',25);
+            $table->string('tipo',30);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categoria');
+        Schema::dropIfExists('parentezco');
     }
 };

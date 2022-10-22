@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('colegiado',20);
             $table->string('telefono',10);
             $table->string('correo',50);
-            $table->string('direccion',100);
+            $table->string('direccion',150);
             $table->date('fecha_inicio_labores');
             $table->timestamps();
         });

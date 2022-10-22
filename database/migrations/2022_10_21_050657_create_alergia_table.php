@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('alergia', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre',255)->nullable();
+            $table->string('nombre',255);
             $table->string('descripcion',255)->nullable();
             $table->timestamps();
         });

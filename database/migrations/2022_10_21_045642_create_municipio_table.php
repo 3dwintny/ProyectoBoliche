@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('municipio', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('nombre',50);
+            $table->timestamps();
+        });
     }
-
+    
     /**
      * Reverse the migrations.
      *
@@ -23,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('municipio');
     }
 };

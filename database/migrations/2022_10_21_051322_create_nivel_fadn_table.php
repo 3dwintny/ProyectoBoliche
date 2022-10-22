@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('nivel_cdag', function (Blueprint $table) {
+        Schema::create('nivel_fadn', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre')->nullable();
+            $table->string('tipo',100);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nivel_cdag');
+        Schema::dropIfExists('nivel_fadn');
     }
 };
