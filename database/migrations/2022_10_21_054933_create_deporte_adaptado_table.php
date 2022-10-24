@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('deporte_adoptado', function (Blueprint $table) {
+        Schema::create('deporte_adaptado', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
             $table->timestamps();

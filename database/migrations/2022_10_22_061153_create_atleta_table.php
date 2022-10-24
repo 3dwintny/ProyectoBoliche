@@ -37,7 +37,7 @@ return new class extends Migration
             $table->foreign('id_etapa_deportiva')->references('id')->on('etapa_deportiva');
 
             $table->unsignedInteger('id_deporte_adaptado');
-            $table->foreign('id_deporte_adaptado')->references('id')->on('deporte_adoptado');
+            $table->foreign('id_deporte_adaptado')->references('id')->on('deporte_adaptado');
 
             $table->unsignedInteger('id_asistencia');
             $table->foreign('id_asistencia')->references('id')->on('asistencia');
