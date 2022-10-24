@@ -18,9 +18,9 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm container">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand container" href="{{ url('/') }}">
                     {{ config('Federacion_de_Boliche', 'Federacion de boliche Boliche') }}
                 </a>
                 <button class="navbar-toggler navbar-dark bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
