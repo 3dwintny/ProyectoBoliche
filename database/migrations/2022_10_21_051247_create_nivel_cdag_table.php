@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_contrato', function (Blueprint $table) {
+        Schema::create('nivel_cdag', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('descripcion',150)->nullable();
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo__contratos');
+        Schema::dropIfExists('nivel_cdag');
     }
 };

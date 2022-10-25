@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('nivel_cdag', function (Blueprint $table) {
+        Schema::create('municipio', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre')->nullable();
+            $table->string('nombre',50);
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nivel_cdags');
+        Schema::dropIfExists('municipio');
     }
 };

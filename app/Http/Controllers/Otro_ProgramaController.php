@@ -4,26 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AlumnoController extends Controller
+class Otro_ProgramaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    public function index()
-    {
-        return view('Alumnos.create');
-=======
     public function index()
     {
         //
->>>>>>> 398903413ccc7478431bfc51d9f24d2fcb621aae
     }
 
     /**

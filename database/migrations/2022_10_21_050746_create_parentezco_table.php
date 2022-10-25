@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('alergia', function (Blueprint $table) {
+        Schema::create('parentezco', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre',255)->nullable();
-            $table->string('descripcion',255)->nullable();
+            $table->string('tipo',30);
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alergias');
+        Schema::dropIfExists('parentezco');
     }
 };

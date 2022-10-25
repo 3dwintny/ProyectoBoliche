@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categoria', function (Blueprint $table) {
+        Schema::create('deporte_adaptado', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tipo',20)->nullable();
-            $table->string('rango_edades',25);
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('deporte_adoptado');
     }
 };

@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('login', function (Blueprint $table) {
+        Schema::create('nivel_fadn', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('id_credencial');
-            $table->foreign('id_credencial')->references('id')->on('credencial');
-            $table->dateTime('fecha_hora');
-            $table->string('tipo_accion',30);
+            $table->string('tipo',100);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logins');
+        Schema::dropIfExists('nivel_fadn');
     }
 };
