@@ -20,8 +20,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="">
-                <a class="navbar-brand container" href="{{ url('/') }}">
-                    {{ config('Federacion_de_Boliche', 'Federacion de boliche Boliche') }}
+                <a class="navbar-brand container-fluid" href="{{ url('/home') }}">
+                    {{ config('Federacion_de_Boliche', 'Federacion de Boliche') }}
                 </a>
                 <button class="navbar-toggler navbar-dark bg-dark" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -36,7 +36,7 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
+                                <li class="nav-item ms-auto">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif

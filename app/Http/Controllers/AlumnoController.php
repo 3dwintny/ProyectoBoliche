@@ -17,7 +17,7 @@ class AlumnoController extends Controller
     }
     public function index()
     {
-        return view('Alumnos.index');
+        return view('Alumnos.create');
     }
 
     /**

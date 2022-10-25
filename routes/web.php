@@ -19,7 +19,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/alumnos', [App\Http\Controllers\AlumnoController::class, 'index'])->name('alumnos');
