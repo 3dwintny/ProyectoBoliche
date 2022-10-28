@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departamento;
+use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
 
 class AlumnoController extends Controller
@@ -13,8 +15,9 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
-        return view('alumno.alumno');
+        $departamentos = Departamento::all();
+        $nacionalidades = Nacionalidad::all();
+        return view('alumno.alumno',compact("departamentos","nacionalidades"));
     }
 
     /**
