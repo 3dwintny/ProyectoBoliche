@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tipo_Usuario;
 
 class Tipo_UsuarioController extends Controller
 {
@@ -13,7 +14,7 @@ class Tipo_UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        $tipo_usuarios = Tipo_Usuario::all();
     }
 
     /**

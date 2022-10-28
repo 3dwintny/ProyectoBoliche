@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\Tipo_UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ Route::get('/', function () {
 
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
+Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
