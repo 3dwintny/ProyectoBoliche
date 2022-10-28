@@ -53,19 +53,28 @@
         <input type="text" name="pasaporte" placeholder="Pasaporte">
         <label>Departamento de Nacimiento</label>
         <select name="id_departamento" id="_departamento">
-            <option selected disabled>Seleccionar Departamento</option>
+            <option selected disabled>Departamento</option>
+            @foreach ($departamentos as $item)
+            <option value="{{$item->id}}">{{$item->nombre}}</option>
+            @endforeach
         </select>
         <label>Municipio de Nacimiento</label>
         <select name="id_municipio" id="_municipio"></select>
         <label>Departamento de Residencia</label>
         <select name="id_departamento_residencia" id="_departamentoR">
             <option selected disabled>Departamento</option>
+            @foreach ($departamentos as $item)
+            <option value="{{$item->id}}">{{$item->nombre}}</option>
+            @endforeach
         </select>
         <label>Municipio de Nacimiento de Residencia</label>
         <select name="id_municipio_residencia" id="_municipioR"></select>
         <label>Nacionalidad</label>
         <select name="nacionalidad" id="">
             <option selected disabled>Nacionalidad</option>
+            @foreach ($nacionalidades as $item)
+            <option value="{{$item->id}}">{{$item->descripcion}}</option>
+            @endforeach
         </select>
     </form>
 </body>
