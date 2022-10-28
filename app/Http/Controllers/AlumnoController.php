@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Departamento;
+use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AlumnoController extends Controller
 {
@@ -17,7 +20,26 @@ class AlumnoController extends Controller
     }
     public function index()
     {
-        return view('Alumnos.create');
+        $departamentos = Departamento::all();
+        $nacionalidades = Nacionalidad::all();
+        return view('Alumnos.create',compact("departamentos","nacionalidades"));
+    }
+
+     /**
+     * return cities list
+     *
+     * @return json
+     */
+
+    public function getMunicipios(Request $request)
+    {
+        $municipios = DB::table('municipio')
+            ->where('id_departamento', $request->id_departamento)
+            ->get();
+        
+        if (count($municipios) > 0) {
+            return response()->json($municipios);
+        }
     }
 
     /**

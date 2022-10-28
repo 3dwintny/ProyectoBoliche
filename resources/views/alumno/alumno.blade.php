@@ -1,14 +1,13 @@
-
-    @extends('layouts.app')    
-    @section('content')
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-12 ">
-            <div class="card">
-
-            <h1 class="container-fluid">Formulario para registrar Alumnos</h1>
-        <form action="" method="post" class="container col-md-8">
-            
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
     <h1>Formulario de Inscripción</h1>
     <h3>Información Personal</h3>
     <form method="posts" role="form" enctype="multipart/form-data">
@@ -77,12 +76,8 @@
             <option value="{{$item->id}}">{{$item->descripcion}}</option>
             @endforeach
         </select>
-        </form>
-        </div>
-        </div>
-    </div>
-</div>
-@endsection
+    </form>
+</body>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#_departamento').on('change', function () {
@@ -120,4 +115,4 @@
         });
     });
 </script>
-
+</html>
