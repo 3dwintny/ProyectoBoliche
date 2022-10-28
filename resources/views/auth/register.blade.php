@@ -24,7 +24,7 @@
             
             <!-- Tipo de Usuario -->
             <div class="mt-4">
-                <select required>
+                <select name="id_tipo_usuario" id="id_tipo_usuario" required>
                     <option selected disabled>Tipo de Usuario</option>
                     @foreach ($tipo_usuarios as $item){
                         <option value="{{$item->id}}">{{$item->tipo}}</option>
