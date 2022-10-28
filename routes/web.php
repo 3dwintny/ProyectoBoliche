@@ -22,6 +22,7 @@ Route::get('/', function () {
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
+Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

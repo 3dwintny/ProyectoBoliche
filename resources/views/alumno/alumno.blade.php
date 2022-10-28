@@ -78,4 +78,41 @@
         </select>
     </form>
 </body>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#_departamento').on('change', function () {
+            var dptoId = this.value;
+            $('#_municipio').html('');
+            $.ajax({
+                url: '{{ route('municipios') }}?id_departamento='+dptoId,
+                type: 'get',
+                success: function (res) {
+                    $('#_municipio').html('<option value="">Municipio</option>');
+                    $.each(res, function (key, value) {
+                        $('#_municipio').append('<option value="' + value.id
+                            + '">' + value.nombre + '</option>');
+                    });
+                }
+            });
+        });
+    });
+
+    $(document).ready(function () {
+        $('#_departamentoR').on('change', function () {
+            var dptoId = this.value;
+            $('#_municipioR').html('');
+            $.ajax({
+                url: '{{ route('municipios') }}?id_departamento='+dptoId,
+                type: 'get',
+                success: function (res) {
+                    $('#_municipioR').html('<option value="">Municipio</option>');
+                    $.each(res, function (key, value) {
+                        $('#_municipioR').append('<option value="' + value.id
+                            + '">' + value.nombre + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
 </html>
