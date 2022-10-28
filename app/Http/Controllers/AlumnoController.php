@@ -11,7 +11,6 @@ class AlumnoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
     public function __construct()
     {
         $this->middleware('auth');
@@ -19,11 +18,6 @@ class AlumnoController extends Controller
     public function index()
     {
         return view('Alumnos.create');
-=======
-    public function index()
-    {
-        //
->>>>>>> 398903413ccc7478431bfc51d9f24d2fcb621aae
     }
 
     /**
