@@ -18,15 +18,16 @@ use App\Http\Controllers\Frontend\FrontendController;
 |
 */
 
-Route::get('/', function () {
+/* Route::get('/', function () {
 
-    return view('welcome');
+    return view('frontend.index');
 
 
-});
+}); */
 //Route::resource('/', FrontendController::class);
 //Slider
 Route::resource('slider', SliderController::class);
+Route::resource('/', FrontendController::class);
 
  //Route::get('home-slider','Admin\SliderController.index');
 /*Route::post('home-slider','Admin\SliderController.show'); */
