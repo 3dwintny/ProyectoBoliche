@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::resource('alumnos',AlumnoController::class);
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
+Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

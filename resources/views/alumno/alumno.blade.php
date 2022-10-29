@@ -24,7 +24,9 @@
         <label>CUI</label>
         <input  type="text" name="cui" placeholder="CUI">
         <label>Fecha de Nacimiento</label>
-        <input  type="date" name="fecha">
+        <input  type="date" name="fecha" id="fecha">
+        <label>Edad</label>
+        <input  type="text" name="edad" id="_edad" value="" readonly>
         <label>Peso</label>
         <input  type="text" name="peso" placeholder="Peso">
         <label>Altura</label>
@@ -77,8 +79,28 @@
             @endforeach
         </select>
     </form>
+    <h1 id="prueba"></h1>
 </body>
 <script type="text/javascript">
+
+$(document).ready(function () {
+        $('#fecha').on('change', function () {
+            function calcularEdad(fechas) {
+            var hoy = new Date();
+            var cumpleanos = new Date(fechas);
+            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+            var m = hoy.getMonth() - cumpleanos.getMonth();
+
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
+            }
+
+            return edad;
+        }
+        document.getElementById('_edad').value=calcularEdad(document.getElementById('fecha').value);
+        });
+    });
+
     $(document).ready(function () {
         $('#_departamento').on('change', function () {
             var dptoId = this.value;
