@@ -19,7 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 
 
 
@@ -31,8 +31,5 @@ Route::resource('alumnos',AlumnoController::class);
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+
