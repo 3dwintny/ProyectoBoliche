@@ -1,9 +1,11 @@
 <?php
 
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\SliderController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Frontend\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,14 +18,22 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/* Route::get('/', function () {
 
+   // return view('');
+   return "Holi";
+
+}); */
+Route::resource('/', FrontendController::class);
 //Slider
 Route::resource('slider', SliderController::class);
+
  //Route::get('home-slider','Admin\SliderController.index');
 /*Route::post('home-slider','Admin\SliderController.show'); */
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

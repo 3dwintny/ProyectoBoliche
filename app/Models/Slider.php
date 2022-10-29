@@ -10,6 +10,7 @@ class Slider extends Model
     use HasFactory;
     protected $table = 'sliders';
     protected $fillable = [
+        'id',
         'heding',
         'description',
         'link',
@@ -21,8 +22,9 @@ class Slider extends Model
     {
         return Slider::all();
     }
-    public function obtenerClientesporId($id)
+    public function obtenerSliderporId($id)
     {
         return Slider::find($id);
     }
+
 }
