@@ -79,7 +79,28 @@
             @endforeach
         </select>
     </form>
-    <h1 id="prueba"></h1>
+    <h3>Información de Encargados</h3>
+    <form method="posts" role="form" enctype="multipart/form-data">
+        <label>Primer Nombre</label>
+        <input  type="text" name="nombre1" placeholder="Primer Nombre">
+        <label>Segundo Nombre</label>
+        <input  type="text" name="nombre2" placeholder="Segundo Nombre">
+        <label>Tercer Nombre</label>
+        <input  type="text" name="nombre3" placeholder="Tercer Nombre">
+        <label>Primer Apellido</label>
+        <input  type="text" name="apellido1" placeholder="Primer Apellido">
+        <label>Segundo Apellido</label>
+        <input  type="text" name="apellido2" placeholder="Segundo Apellido">
+        <label>Apellido de Casada</label>
+        <input  type="text" name="apellido_casada" placeholder="Apellido de Casada">
+        <select name="id_parentezco" id="id_parentezco">
+            <option selected disabled>Parentezco</option>
+            @foreach ($parentezcos as $item){
+                <option value="{{$item->id}}">{{$item->tipo}}</option>
+            }
+            @endforeach
+        </select>
+    </form>
 </body>
 <script type="text/javascript">
 
