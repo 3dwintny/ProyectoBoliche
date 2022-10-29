@@ -18,13 +18,13 @@ use App\Http\Controllers\Frontend\FrontendController;
 |
 */
 
-/* Route::get('/', function () {
+Route::get('/', function () {
 
-   // return view('');
-   return "Holi";
+    return view('welcome');
 
-}); */
-Route::resource('/', FrontendController::class);
+
+});
+//Route::resource('/', FrontendController::class);
 //Slider
 Route::resource('slider', SliderController::class);
 
