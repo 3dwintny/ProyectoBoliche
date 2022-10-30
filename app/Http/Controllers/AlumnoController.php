@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Departamento;
 use App\Models\Nacionalidad;
 use App\Models\Parentezco;
+use App\Models\Formulario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +21,8 @@ class AlumnoController extends Controller
         $departamentos = Departamento::all();
         $nacionalidades = Nacionalidad::all();
         $parentezcos = Parentezco::all();
-        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos"));
+        $formularios = Formulario::all();
+        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios"));
     }
 
      /**

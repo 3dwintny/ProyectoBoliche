@@ -9,6 +9,15 @@
 </head>
 <body>
     <h1>Formulario de Inscripción</h1>
+        @foreach($formularios as $item)
+        <label>
+            {{$item->titulo_principal}} {{$item->año_logo}}
+        </label>
+        <br>
+        <label>{{$item->subtitulo}}</label>
+        <br>
+        <label>{{$item->titulo_ficha}}</label>
+        @endforeach
     <h3>Información Personal</h3>
     <form method="posts" role="form" enctype="multipart/form-data">
         <label>Primer Nombre</label>
@@ -101,6 +110,10 @@
             @endforeach
         </select>
     </form>
+    <br>
+    @foreach($formularios as $item)
+    <textarea rows="10" cols="70" readonly style="text-align: justify; resize:none; font-size:1em;">{{$item->declaracion}}</textarea>
+    @endforeach
 </body>
 <script type="text/javascript">
 
