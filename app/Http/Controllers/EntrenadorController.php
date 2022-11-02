@@ -23,7 +23,7 @@ class EntrenadorController extends Controller
      */
     public function create()
     {
-        //
+        return view('entrenador.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class EntrenadorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
