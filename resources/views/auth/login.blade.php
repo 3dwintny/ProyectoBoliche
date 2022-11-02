@@ -8,8 +8,8 @@
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>
+                        <div class=" text-center text-muted mb-4">
+                            <small class="text-light">
                                     Create new account OR Sign in with these credentials:
                                     <br>
                                     Username <strong>admin@argon.com</strong> Password: <strong>secret</strong>
@@ -47,7 +47,7 @@
                             <div class="custom-control custom-control-alternative custom-checkbox">
                                 <input class="custom-control-input" name="remember" id="customCheckLogin" type="checkbox" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="custom-control-label" for="customCheckLogin">
-                                    <span class="text-muted">{{ __('Remember me') }}</span>
+                                    <span class="text-muted, text-light">{{ __('Remember me') }}</span>
                                 </label>
                             </div>
                             <div class="text-center">
