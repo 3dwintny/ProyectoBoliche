@@ -7,7 +7,7 @@
         <!-- Table -->
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
-                <div class="card bg-secondary shadow border-0">
+                <div class="card bg-light shadow border-0">
        
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
@@ -63,13 +63,18 @@
                                     <input class="form-control" placeholder="{{ __('Confirm Password') }}" type="password" name="password_confirmation" required>
                                 </div>
                             </div>
+
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
-                                    </div>
-                                    <select class="form-control" placeholder="{{ __('Name') }}" type="select" name="name" value="{{ old('name') }}" required autofocus>
+                                        <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                                    </div>  
+                                    <select class="form-control" name="id_tipo_usuario" id="id_tipo_usuario" required autofocus>
                                     <option selected disabled >Tipo de usuario</option>
+                                    @foreach ($tipo_usuarios as $item){
+                                    <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                            }
+                                    @endforeach
                                     </select>
                                 </div>
                             <div class="text-muted font-italic">

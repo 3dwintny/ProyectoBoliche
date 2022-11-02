@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alumno;
+use App\Models\Departamento;
+use App\Models\Nacionalidad;
+use App\Models\Parentezco;
+use App\Models\Formulario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AlumnoController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,29 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        //
+        
+        $alumnos = Alumno::paginate();
+
+        return view('alumno.index', compact('alumnos'))
+            ->with('i', (request()->input('page', 1) - 1) * $alumnos->perPage());
+        //return view('alumno.show');
+    }
+
+     /**
+     * return cities list
+     *
+     * @return json
+     */
+
+    public function getMunicipios(Request $request)
+    {
+        $municipios = DB::table('municipio')
+            ->where('id_departamento', $request->id_departamento)
+            ->get();
+        
+        if (count($municipios) > 0) {
+            return response()->json($municipios);
+        }
     }
 
     /**
@@ -23,7 +52,11 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        //
+        $departamentos = Departamento::all();
+        $nacionalidades = Nacionalidad::all();
+        $parentezcos = Parentezco::all();
+        $formularios = Formulario::all();
+        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios"));
     }
 
     /**
@@ -34,7 +67,12 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        
+        /*$factura = Alumno::create($request->all());
+            
+        return redirect()->route('facturas.index')
+            ->with('success', 'Factura created successfully.');*/
     }
 
     /**
@@ -45,7 +83,9 @@ class AlumnoController extends Controller
      */
     public function show($id)
     {
-        //
+        $alumno = Alumno::find($id);
+        $departamentos = Departamento::pluck('nombre');
+        return view('alumno.show', compact('alumno'));
     }
 
     /**

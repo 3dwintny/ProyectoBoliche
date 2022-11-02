@@ -9,6 +9,19 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+namespace App\Http\Controllers\Auth;
+
+
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Validation\Rules;
+use App\Models\Alumno;
+use App\Models\Tipo_Usuario;
+use App\Models\Entrenador;
+use App\Models\Psicologia;
+
 class RegisterController extends Controller
 {
     /*
@@ -47,13 +60,105 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator(Request $request)
     {
-        return Validator::make($data, [
+        /*return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ]);*/
+        $tipoUsuario = $_POST['id_tipo_usuario'];
+        $correo = $_POST['email'];
+        switch($tipoUsuario){
+            case 1:
+                $contadorC=0;
+                $contadorE=0;
+                $alumno = Alumno::where('correo',$correo)->get();
+                foreach($alumno as $a){
+                    $contadorC++;
+                    if($a->estado=='Inscrito'){
+                        $contadorE++;
+                    }
+                }
+                if($contadorC>0 && $contadorE>0){
+                    $request->validate([
+                        'name' => ['required', 'string', 'max:255'],
+                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                        'id_tipo_usuario' => ['required','integer'],
+                    ]);
+            
+                    $user = User::create([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($request->password),
+                        'id_tipo_usuario' => $request->id_tipo_usuario,
+                    ]);
+                    event(new Registered($user));
+                    Auth::login($user);
+                    return redirect(RouteServiceProvider::HOME);
+                }
+                else{
+                    echo "Valió Queso";
+                }
+                break;
+            case 2:
+                $contadorC=0;
+                $entrenador = Entrenador::where('correo',$correo)->get();
+                foreach($entrenador as $e){
+                    $contadorC++;
+                }
+                if($contadorC>0){
+                    $request->validate([
+                        'name' => ['required', 'string', 'max:255'],
+                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                        'id_tipo_usuario' => ['required','integer'],
+                    ]);
+            
+                    $user = User::create([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($request->password),
+                        'id_tipo_usuario' => $request->id_tipo_usuario,
+                    ]);
+                    event(new Registered($user));
+                    Auth::login($user);
+                    return redirect(RouteServiceProvider::HOME);
+                }
+                else{
+                    echo "Valió Queso";
+                }
+                break;
+            case 3:
+                $contadorC=0;
+                $psicologo = Psicologia::where('correo',$correo)->get();
+                foreach($psicologo as $a){
+                    $contadorC++;
+                }
+                if($contadorC>0){
+                    $request->validate([
+                        'name' => ['required', 'string', 'max:255'],
+                        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+                        'id_tipo_usuario' => ['required','integer'],
+                    ]);
+            
+                    $user = User::create([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($request->password),
+                        'id_tipo_usuario' => $request->id_tipo_usuario,
+                    ]);
+                    event(new Registered($user));
+                    Auth::login($user);
+                    return redirect(RouteServiceProvider::HOME);
+                }
+                else{
+                    echo "Valió Queso";
+                }
+                break;
+        }
     }
 
     /**

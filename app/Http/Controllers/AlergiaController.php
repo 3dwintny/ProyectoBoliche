@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Departamento;
+use App\Models\Nacionalidad;
+use App\Models\Parentezco;
+use Illuminate\Support\Facades\DB;
 
 class AlergiaController extends Controller
 {
@@ -13,9 +17,21 @@ class AlergiaController extends Controller
      */
     public function index()
     {
-        //
+        $departamentos = Departamento::all();
+        $nacionalidades = Nacionalidad::all();
+        $parentezcos = Parentezco::all();
+        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos"));
     }
-
+    public function getMunicipios(Request $request)
+    {
+        $municipios = DB::table('municipio')
+            ->where('id_departamento', $request->id_departamento)
+            ->get();
+        
+        if (count($municipios) > 0) {
+            return response()->json($municipios);
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\Tipo_UsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,17 +16,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
-
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
-
 Route::group(['middleware' => 'auth'], function () {
+	
+
+	//Auth::routes();
+	
+	Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
@@ -35,3 +35,14 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
+//Ruta Formulario de Inscripción
+Route::resource('alumnos',AlumnoController::class);
+Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
+Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
+Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
+
+/*Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');*/
+
+require __DIR__.'/auth.php';
