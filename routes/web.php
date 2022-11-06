@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\AlumnoController;
-<<<<<<< HEAD
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\AtletaController;
 use App\Http\Controllers\CategoriaController;
@@ -31,9 +31,6 @@ use App\Http\Controllers\TerapiaController;
 use App\Http\Controllers\Tipo_ContratoController;
 
 
-=======
-use App\Http\Controllers\Admin\SliderController;
->>>>>>> 07a6dbfc387ef401ee44b811b1e95040f2ad9f7b
 use App\Http\Controllers\Tipo_UsuarioController;
 use App\Http\Controllers\Frontend\FrontendController;
 /*
@@ -46,22 +43,18 @@ use App\Http\Controllers\Frontend\FrontendController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-<<<<<<< HEAD
 
-Route::get('/', function () {return view('welcome');});
-Route::get('wel', function () {return view('welcome');})->name('wel'); 
+/*Route::get('/', function () {return view('welcome');});
+Route::get('wel', function () {return view('welcome');})->name('wel'); */
 
 
-=======
-/* Route::get('/', function () {
-	return view('welcome');
-}); */
+
 //Son para los sliders
 Route::resource('slider', SliderController::class);
 Route::resource('/', FrontendController::class);
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
->>>>>>> 07a6dbfc387ef401ee44b811b1e95040f2ad9f7b
+
 Route::group(['middleware' => 'auth'], function () {
 //Auth::routes();
 	Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');

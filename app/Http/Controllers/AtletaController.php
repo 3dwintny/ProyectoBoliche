@@ -17,6 +17,11 @@ use App\Models\Modalidad;
 use App\Models\PRT;
 class AtletaController extends Controller
 {
+    protected $alumnos;
+    public function __construct(Alumno $alumno)
+    {
+        $this->alumno = $alumno;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -31,16 +36,19 @@ class AtletaController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * $atletas->perPage());
     }
 
-    /**
-     * Show the form for creating a new resource.
+      /**
+     * Display the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function create($id)
     {
         $centro=Centro::all();
         $entrenador= Entrenador::All();
-        $alumno = Alumno::find($id)->nombre;
+        $alumnos = $this->alumno->obtener_nombre($id);
+        //$alumnos = Alumno::find($id);
+        //$alumno = $this->alumno->obterenrAlumno();
         $categoria = Categoria::all();
         $etapa=Etapa_Deportiva::all();
         $deporteadaptado = Deporte_Adoptado::all();
@@ -49,15 +57,12 @@ class AtletaController extends Controller
         $deporte = Deporte::all();
         $modalidad = Modalidad::all();
         $prt = PRT::all();
-        return view('atletas.create',compact("centro","entrenador","aumno","categoria","etapa",
+        return view('atletas.create',compact("centro","entrenador","alumno","categoria","etapa",
                                             "deporteadaptado","otroprograma","lineadesarrollo",
                                             "deporte","modalidad","prt"));
-    }
-    public function asignar_categoria()
-    {
-        
         
     }
+ 
     /**
      * Store a newly created resource in storage.
      *

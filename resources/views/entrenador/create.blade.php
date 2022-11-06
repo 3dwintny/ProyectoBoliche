@@ -24,7 +24,7 @@
                     <div class="col-lg-8 col-md-8">
                         <div class="card">
                             <div class="card-header text-bold ">
-                               <strong><h1> Registrar nuevo entrenador </h1></strong>
+                               <strong><h2> Registrar nuevo entrenador </h2></strong>
                                
                             </div> 
                            </div>
@@ -34,7 +34,7 @@
         <div">Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" readonly ></div>
             <div class="card">
             <div class="card-body bg-light">
-            <h2 class="mb-2">Información Personal</h2>
+            <h3 class="mb-2">Información Personal</h3>
                 <div class="row">
                     <div class="col-md-4 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Nombre') }}" type="text" name="nombre1" value="{{ old('Primer Nombre') }}" required></div>
                     <div class="col-md-4 mb-2"><input class="form-control text-dark" placeholder="{{ __('Segundo Nombre') }}" type="text" name="nombre2" value="{{ old('Segundo Nombre') }}"></div>

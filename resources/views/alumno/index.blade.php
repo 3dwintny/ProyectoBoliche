@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-4 pt-5 pt-md-8">
+<div class="header bg-dark pb-5 pt-5 pt-md-10">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-<div class="pt-md-2 pb-4 pt-5">
+<div class="pt-md-3 pb-12 pt-5">
 <div class="">
 <table class="table table-sm">
   <thead class="table-dark">
@@ -43,7 +43,7 @@
       <td>
       <form action="" method="POST">
        <a class="btn btn-sm btn-primary " href="{{ route('alumnos.show',$alumno->id) }}"><i class="fa fa-fw fa-eye"></i>Ver</a>
-        <a class="btn btn-sm btn-success" href="{{ route('atletas.create'),$alumno->id}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
+        <a class="btn btn-sm btn-success" href="{{ route('atletas.create') }}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
         <a class="btn btn-sm btn-danger" href="{{ route('alumnos.create')}}"><i class="fa fa-fw fa-trash"></i>Rechazar</a>
       </form>
       </td>
