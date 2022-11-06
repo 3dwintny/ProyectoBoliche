@@ -1,11 +1,4 @@
-<style>
-    img{
-  width: 200%;
-  height: 200%;
-  border-radius: 5px 5px;
-}
-</style>
-<nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-white">
+<nav class="navbar navbar-expand-lg" style="background-color: #FFFFFF;"">
     <div class="container px-4">
         <a class="navbar-brand" href="{{ route('home') }}">
             <img src="{{ asset('argon') }}/img/brand/blue.jpg" />
