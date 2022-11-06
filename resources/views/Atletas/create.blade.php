@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Inscripcion del Atleta {{ $alumnos->nombre1 }}</h2>
+                            <h2>Inscripcion del Atleta </h2>
                         </strong>
 
                     </div>
@@ -79,7 +79,7 @@
                                     <div class="col-md-4 mb-2"><select name="entrenador_id" class="form-control text-dark" required>
                                             <option selected disabled>Entrenador</option>
                                             @foreach ($entrenador as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                            <option value="{{$item->id}}">{{$item->nombre1}} {{$item->apellido1}}</option>
                                             @endforeach
                                         </select></div>
                                     <div class="col-md-4 mb-2"><select name="etapa_deportiva_id" class="form-control text-dark" required>

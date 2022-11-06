@@ -41,7 +41,7 @@
       <td>{{$entrenador->correo}}</td>
       <td >{{$entrenador->edad}}</td>
       <td>{{$entrenador->direccion}}</td>
-      <td>{{$entrenador->id_deporte}}</td>
+      <td>{{$entrenador->deporte_id}}</td>
       <td>
       <form action="" method="POST">
        <a class="btn btn-sm btn-primary " href="{{ route('entrenadores.edit',$entrenador->id) }}"><i class="fa fa-fw fa-edit"></i>Modificar</a>

@@ -17,7 +17,7 @@
                                 </strong>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped active"
-                                        style="background-color: orange ;" role="progressbar" aria-valuemin="0"
+                                        style="background-color: primary ;" role="progressbar" aria-valuemin="0"
                                         aria-valuemax="100">
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@
                                 <br>
                                 <label>{{$item->titulo_ficha}}</label>
                                 @endforeach
-                                <input type="text" class="form-control" name="fecha_registro" id="fecha_sistema" readonly>
+                                <input type="text" class="form-control text-center" name="fecha_registro" id="fecha_sistema" readonly>
                             </div>
                         </div>
 
@@ -306,70 +306,60 @@ $(document).ready(function() {
 });
 </script>
 
-
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#fecha').on('change', function() {
-        function calcularEdad(fechas) {
+$(document).ready(function () {
+        $('#fecha').on('change', function () {
+            function calcularEdad(fechas) {
             var hoy = new Date();
             var cumpleanos = new Date(fechas);
             var edad = hoy.getFullYear() - cumpleanos.getFullYear();
             var m = hoy.getMonth() - cumpleanos.getMonth();
-
-                if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                    edad--;
-                }
-
-                return edad;
+            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                edad--;
             }
-
             return edad;
         }
-        document.getElementById('_edad').value = calcularEdad(document.getElementById('fecha').value);
-    });
-});
-
-$(document).ready(function() {
-    $('#_departamento').on('change', function() {
-        var dptoId = this.value;
-        $('#_municipio').html('');
-        $.ajax({
-            url: "{{ route('municipios') }}?id_departamento=" + dptoId,
-            type: 'get',
-            success: function(res) {
-                $('#_municipio').html('<option value="">Municipio</option>');
-                $.each(res, function(key, value) {
-                    $('#_municipio').append('<option value="' + value.id +
-                        '">' + value.nombre + '</option>');
-                });
-            }
+        document.getElementById('_edad').value=calcularEdad(document.getElementById('fecha').value);
         });
     });
-});
-
-$(document).ready(function() {
-    $('#_departamentoR').on('change', function() {
-        var dptoId = this.value;
-        $('#_municipioR').html('');
-        $.ajax({
-            url: "{{ route('municipios') }}?id_departamento=" + dptoId,
-            type: 'get',
-            success: function(res) {
-                $('#_municipioR').html('<option value="">Municipio</option>');
-                $.each(res, function(key, value) {
-                    $('#_municipioR').append('<option value="' + value.id +
-                        '">' + value.nombre + '</option>');
-                });
-            }
+    $(document).ready(function () {
+        $('#_departamento').on('change', function () {
+            var dptoId = this.value;
+            $('#_municipio').html('');
+            $.ajax({
+                url: '{{ route('municipios') }}?departamento_id='+dptoId,
+                type: 'get',
+                success: function (res) {
+                    $('#_municipio').html('<option value="">Municipio</option>');
+                    $.each(res, function (key, value) {
+                        $('#_municipio').append('<option value="' + value.id
+                            + '">' + value.nombre + '</option>');
+                    });
+                }
+            });
         });
     });
-});
-date = new Date();
+    $(document).ready(function () {
+        $('#_departamentoR').on('change', function () {
+            var dptoId = this.value;
+            $('#_municipioR').html('');
+            $.ajax({
+                url: '{{ route('municipios') }}?departamento_id='+dptoId,
+                type: 'get',
+                success: function (res) {
+                    $('#_municipioR').html('<option value="">Municipio</option>');
+                    $.each(res, function (key, value) {
+                        $('#_municipioR').append('<option value="' + value.id
+                            + '">' + value.nombre + '</option>');
+                    });
+                }
+            });
+        });
+    });
+    date = new Date();
     year = date.getFullYear();
     month = date.getMonth()+1;
     day = date.getDate();
     document.getElementById("fecha_sistema").value = year+"/"+month+"/"+day;
 </script>
-
-
 @endsection

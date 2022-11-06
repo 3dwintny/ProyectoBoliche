@@ -1,8 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.app', ['title' => __('User Profile')])
 
 @section('content')
+    @include('users.partials.header', [
+        'title' => __('Hello') . ' '. auth()->user()->name,
+        'description' => __('Bienvenido a la Federacion Nacional de Boliche'),
+        'class' => 'col-lg-12'
+    ])  
 
-    @include('layouts.headers.cards')
     
         
         @include('layouts.footers.auth')

@@ -121,11 +121,28 @@
                         </ul>
                     </div>
                 </li>
+                
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('psicologia.create') }}">
-                        <i class="ni ni-atom text-dark"></i> {{ __('Psicologia') }}
+                <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-atom text-dark"></i>
+                        <span class="nav-link-text text-dark">{{ __('Psicologia') }}</span>
                     </a>
+                    <div class="collapse show" id="navbar-psico">
+                        <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('entrenadores.create') }}">
+                                    {{ __('Terapias') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('entrenadores.index') }}">
+                                    {{ __('Registrar Piscologo') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
+    
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fab fa-laravel" style="color: #f4645f;"></i>
@@ -153,18 +170,6 @@
                         <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('table') }}">
-                      <i class="ni ni-bullet-list-67 text-default"></i>
-                      <span class="nav-link-text">Tables</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
-                    </a>
-                </li>
-              
             </ul>
             <!-- Divider -->
             <hr class="my-3">
@@ -174,17 +179,22 @@
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
                     <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/getting-started/overview.html">
-                        <i class="ni ni-spaceship"></i> Getting started
+                        <i class="ni ni-bullet-list-67"style="color: #f4645f;"></i> Reporte EGD FOR31
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/foundation/colors.html">
-                        <i class="ni ni-palette"></i> Foundation
+                        <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR27
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/components/alerts.html">
-                        <i class="ni ni-ui-04"></i> Components
+                        <i class="ni ni-bullet-list-67"style="color: #fea735;"></i> Reporte EGD FOR27.2
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/foundation/colors.html">
+                        <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
                     </a>
                 </li>
             </ul>

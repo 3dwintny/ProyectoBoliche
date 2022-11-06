@@ -21,7 +21,6 @@ class EntrenadorController extends Controller
     {
      
         $entrenadores = Entrenador::paginate();
-
         return view('entrenador.index', compact('entrenadores'))
             ->with('i', (request()->input('page', 1) - 1) * $entrenadores->perPage());   
     }

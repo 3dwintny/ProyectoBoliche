@@ -94,38 +94,38 @@
                         <option value="Doctorado">Doctorado</option>
                     </select></div>
 
-                    <div class="col-md-4 mb-2"><select class="form-control text-dark" name="id_nivel_cdag" required>
+                    <div class="col-md-4 mb-2"><select class="form-control text-dark" name="nivel_cdag_id" required>
                     <option selected disabled>Nivel CDAG</option>
                     @foreach ($niveles_cdag as $item)
                     <option value="{{$item->id}}">{{$item->nombre}}</option>
                     @endforeach
                 </select></div>
-                    <div class="col-md-4 mb-2"><select name="id_nivel_fadn" class="form-control text-dark" required>
+                    <div class="col-md-4 mb-2"><select name="nivel_fadn_id" class="form-control text-dark" required>
             <option selected disabled>Nivel FADN</option>
             @foreach ($niveles_fadn as $item)
             <option value="{{$item->id}}">{{$item->tipo}}</option>
             @endforeach
         </select></div>
-        <div class="col-md-4 mb-2"><select name="id_departamento" class="form-control text-dark" required>
+        <div class="col-md-4 mb-2"><select name="departamento_id" class="form-control text-dark" required>
             <option selected disabled>Departamento</option>
             @foreach ($departamentos as $item)
             <option value="{{$item->id}}">{{$item->nombre}}</option>
             @endforeach
         </select></div>
-        <div class="col-md-4 mb-2"><select name="id_deporte" class="form-control text-dark" required>
+        <div class="col-md-4 mb-2"><select name="deporte_id" class="form-control text-dark" required>
             <option selected disabled>Deporte</option>
             @foreach ($deportes as $item)
             <option value="{{$item->id}}">{{$item->nombre}}</option>
             @endforeach
         </select></div>
-        <div class="col-md-4 mb-2"><select name="id_tipo_contrato" class="form-control text-dark"    required>
+        <div class="col-md-4 mb-2"><select name="tipo_contrato_id" class="form-control text-dark"    required>
             <option selected disabled>Tipo de Contrato</option>
             @foreach ($tipos_contratos as $item)
             <option value="{{$item->id}}">{{$item->descripcion}}</option>
             @endforeach
         </select></div>
         <div class="col-md-12 mb-2">
-        <select name="id_nacionalidad" class="form-control text-dark" required>
+        <select name="nacionalidad_id" class="form-control text-dark" required>
             <option selected disabled>Nacionalidad</option>
             @foreach ($nacionalidades as $item)
             <option value="{{$item->id}}">{{$item->descripcion}}</option>

@@ -43,7 +43,7 @@
       <td>
       <form action="" method="POST">
        <a class="btn btn-sm btn-primary " href="{{ route('alumnos.show',$alumno->id) }}"><i class="fa fa-fw fa-eye"></i>Ver</a>
-        <a class="btn btn-sm btn-success" href="{{ route('atletas.create') }}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
+        <a class="btn btn-sm btn-success" href="{{ route('atletas.create',2) }}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
         <a class="btn btn-sm btn-danger" href="{{ route('alumnos.create')}}"><i class="fa fa-fw fa-trash"></i>Rechazar</a>
       </form>
       </td>

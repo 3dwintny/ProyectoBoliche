@@ -46,7 +46,8 @@ class AtletaController extends Controller
     {
         $centro=Centro::all();
         $entrenador= Entrenador::All();
-        $alumnos = $this->alumno->obtener_nombre($id);
+        $alumnos = Alumno::all();
+        //$alumnos = Alumno::all();
         //$alumnos = Alumno::find($id);
         //$alumno = $this->alumno->obterenrAlumno();
         $categoria = Categoria::all();
@@ -57,10 +58,16 @@ class AtletaController extends Controller
         $deporte = Deporte::all();
         $modalidad = Modalidad::all();
         $prt = PRT::all();
-        return view('atletas.create',compact("centro","entrenador","alumno","categoria","etapa",
+        return view('atletas.create',compact("centro","entrenador","alumnos","categoria","etapa",
                                             "deporteadaptado","otroprograma","lineadesarrollo",
                                             "deporte","modalidad","prt"));
         
+
+                                            /*$municipios = DB::table('municipio')
+            ->where('departamento_id', $request->departamento_id)
+            ->get();*/
+        
+     
     }
  
     /**
