@@ -2,8 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atleta;
 use Illuminate\Http\Request;
-
+use App\Models\Centro;
+use App\Models\Entrenador;
+use App\Models\Alumno;
+use App\Models\Categoria;
+use App\Models\Etapa_Deportiva;
+use App\Models\Deporte_Adoptado;
+use App\Models\Otro_Programa;
+use App\Models\Linea_Desarrollo;
+use App\Models\Deporte;
+use App\Models\Modalidad;
+use App\Models\PRT;
 class AtletaController extends Controller
 {
     /**
@@ -13,7 +24,11 @@ class AtletaController extends Controller
      */
     public function index()
     {
-        //
+        
+        $atletas = Atleta::paginate();
+
+        return view('alumno.index', compact('atletas'))
+            ->with('i', (request()->input('page', 1) - 1) * $atletas->perPage());
     }
 
     /**
@@ -21,11 +36,28 @@ class AtletaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $centro=Centro::all();
+        $entrenador= Entrenador::All();
+        $alumno = Alumno::find($id)->nombre;
+        $categoria = Categoria::all();
+        $etapa=Etapa_Deportiva::all();
+        $deporteadaptado = Deporte_Adoptado::all();
+        $otroprograma = Otro_Programa::all();
+        $lineadesarrollo = Linea_Desarrollo::all();
+        $deporte = Deporte::all();
+        $modalidad = Modalidad::all();
+        $prt = PRT::all();
+        return view('atletas.create',compact("centro","entrenador","aumno","categoria","etapa",
+                                            "deporteadaptado","otroprograma","lineadesarrollo",
+                                            "deporte","modalidad","prt"));
     }
-
+    public function asignar_categoria()
+    {
+        
+        
+    }
     /**
      * Store a newly created resource in storage.
      *

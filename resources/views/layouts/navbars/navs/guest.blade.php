@@ -7,7 +7,7 @@
 </style>
 <nav class="navbar navbar-top navbar-horizontal navbar-expand-md navbar-white">
     <div class="container px-4">
-        <a class="navbar-brand" href="{{ route('home') }}">
+        <a class="navbar-brand" href="{{ route('wel') }}">
             <img src="{{ asset('argon') }}/img/brand/blue.jpg" />
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

@@ -13,7 +13,7 @@ class AsistenciaController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

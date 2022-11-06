@@ -1,7 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Nivel_cdag;
+use App\Models\Nivel_fadn;
+use App\Models\Tipo_Contrato;
+use App\Models\Departamento;
+use App\Models\Nacionalidad;
+use App\Models\Deporte;
+use App\Models\Entrenador;
 use Illuminate\Http\Request;
 
 class EntrenadorController extends Controller
@@ -13,7 +19,11 @@ class EntrenadorController extends Controller
      */
     public function index()
     {
-        //
+     
+        $entrenadores = Entrenador::paginate();
+
+        return view('entrenador.index', compact('entrenadores'))
+            ->with('i', (request()->input('page', 1) - 1) * $entrenadores->perPage());   
     }
 
     /**
@@ -23,7 +33,15 @@ class EntrenadorController extends Controller
      */
     public function create()
     {
-        return view('entrenador.create');
+        //return view('entrenador.create');
+        $niveles_cdag = Nivel_cdag::All();
+        $niveles_fadn = Nivel_fadn::All();
+        $departamentos = Departamento::All();
+        $nacionalidades = Nacionalidad::All();
+        $deportes = Deporte::All();
+        $tipos_contratos = Tipo_Contrato::All();
+        return view('entrenador.create',compact("niveles_cdag","niveles_fadn","departamentos","nacionalidades"
+        ,"deportes","tipos_contratos"));
     }
 
     /**
@@ -34,7 +52,9 @@ class EntrenadorController extends Controller
      */
     public function store(Request $request)
     {
-        
+        $entrenador = new Entrenador($request->all());
+        $entrenador->save();
+        return redirect()->action([EntrenadorController::class, 'index']);
     }
 
     /**

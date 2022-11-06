@@ -31,13 +31,14 @@ class Alumno extends Model
     'estado',
     'nit',
     'pasaporte',
-    'id_encargado',
-    'id_alergia',
-    'id_departamento',
-    'id_municipio',
-    'id_nacionalidad',
+    'encargado_id',
+    'alergia_id',
+    'departamento_id',
+    'municipio_id',
+    'nacionalidad_id',
     'created_at',
     'updated_at',
-    'id_departamento_residencia',
-    'id_municipio_residencia'];
+    'departamento_residencia_id',
+    'municipio_residencia_id'];
+
 }

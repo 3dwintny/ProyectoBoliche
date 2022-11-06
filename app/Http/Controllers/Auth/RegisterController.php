@@ -62,12 +62,8 @@ class RegisterController extends Controller
      */
     protected function validator(Request $request)
     {
-        /*return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);*/
-        $tipoUsuario = $_POST['id_tipo_usuario'];
+        
+        $tipoUsuario = $_POST['tipo_usuario_id'];
         $correo = $_POST['email'];
         switch($tipoUsuario){
             case 1:
@@ -85,14 +81,14 @@ class RegisterController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'id_tipo_usuario' => ['required','integer'],
+                        'tipo_usuario_id' => ['required','integer'],
                     ]);
             
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'id_tipo_usuario' => $request->id_tipo_usuario,
+                        'tipo_usuario_id' => $request->tipo_usuario_id,
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -113,14 +109,14 @@ class RegisterController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'id_tipo_usuario' => ['required','integer'],
+                        'tipo_usuario_id' => ['required','integer'],
                     ]);
             
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'id_tipo_usuario' => $request->id_tipo_usuario,
+                        'tipo_usuario_id' => $request->tipo_usuario_id,
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -141,14 +137,14 @@ class RegisterController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'id_tipo_usuario' => ['required','integer'],
+                        'tipo_usuario_id' => ['required','integer'],
                     ]);
             
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'id_tipo_usuario' => $request->id_tipo_usuario,
+                        'tipo_usuario_id' => $request->tipo_usuario_id,
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -160,6 +156,7 @@ class RegisterController extends Controller
                 break;
         }
     }
+    
 
     /**
      * Create a new user instance after a valid registration.

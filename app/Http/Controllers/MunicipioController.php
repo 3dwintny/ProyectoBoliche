@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Municipio;
+use App\Models\Departamento;
 class MunicipioController extends Controller
 {
     /**
@@ -13,7 +14,9 @@ class MunicipioController extends Controller
      */
     public function index()
     {
-        //
+        $municipios = Municipio::with('departamento')->get();
+        return view('municipio.show',compact('municipios')); 
+
     }
 
     /**
@@ -23,7 +26,10 @@ class MunicipioController extends Controller
      */
     public function create()
     {
-        //
+    
+        $departamentos = Departamento::all();
+        return view('municipio.create',compact("departamentos"));
+
     }
 
     /**
@@ -34,7 +40,10 @@ class MunicipioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $municipios = new Municipio($request->all());
+        $municipios->save();
+        return redirect()->action([MunicipioController::class,'index']);
+
     }
 
     /**

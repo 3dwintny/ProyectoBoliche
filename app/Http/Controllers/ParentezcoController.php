@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Parentezco;
 use Illuminate\Http\Request;
 
 class ParentezcoController extends Controller
@@ -13,7 +13,9 @@ class ParentezcoController extends Controller
      */
     public function index()
     {
-        //
+        $parentezcos = Parentezco::all();
+        return view('parentezco.show',compact("parentezcos"));
+
     }
 
     /**
@@ -23,7 +25,7 @@ class ParentezcoController extends Controller
      */
     public function create()
     {
-        //
+        return view('parentezco.create');
     }
 
     /**
@@ -34,7 +36,10 @@ class ParentezcoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $parentezcos = new Parentezco($request->all());
+        $parentezcos->save();
+        return redirect()->action([ParentezcoController::class,'index']);
+
     }
 
     /**

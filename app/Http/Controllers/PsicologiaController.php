@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Psicologia;
 use Illuminate\Http\Request;
 
 class PsicologiaController extends Controller
@@ -23,7 +23,7 @@ class PsicologiaController extends Controller
      */
     public function create()
     {
-        //
+        return view('psicologia.create');
     }
 
     /**
@@ -34,7 +34,9 @@ class PsicologiaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $psicologo = new Psicologia($request->all());
+        $psicologo->save();
+        return redirect()->action([PsicologiaController::class,'index']);
     }
 
     /**

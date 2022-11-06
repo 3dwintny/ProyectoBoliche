@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Deporte_Adoptado extends Model
 {
     use HasFactory;
+    protected $table = "deporte_adoptado";
+protected $fillable = ['id','nombre','created_at','updated_at'];
+
 }

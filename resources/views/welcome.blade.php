@@ -6,8 +6,7 @@
             <div class="header-body text-center mt-7 mb-7">
                 <div class="row justify-content-center">
                     <div class="col-lg-5 col-md-6">
-                        //Slider
-                        
+                        <h1 class="text-white">{{ __('SILDER DE TONY') }}</h1>
                     </div>
                 </div>
             </div>

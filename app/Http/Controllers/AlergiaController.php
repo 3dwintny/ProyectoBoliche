@@ -5,22 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Departamento;
 use App\Models\Nacionalidad;
-use App\Models\Parentezco;
+use App\Models\Alergia;
 use Illuminate\Support\Facades\DB;
 
 class AlergiaController extends Controller
 {
-    /**
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $departamentos = Departamento::all();
-        $nacionalidades = Nacionalidad::all();
-        $parentezcos = Parentezco::all();
-        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos"));
+        $alergias = Alergia::all();
+        return view('alergia.show',compact("alergias"));
+
     }
     public function getMunicipios(Request $request)
     {
@@ -50,7 +49,10 @@ class AlergiaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $alergia = new Alergia($request->all());
+        $alergia->save();
+        return redirect()->action([AlergiaController::class,'index']);
+
     }
 
     /**

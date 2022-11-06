@@ -14,7 +14,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/team-1-800x800.jpg">
+                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/angular.jpg">
                         </span>
                     </div>
                 </a>
@@ -102,12 +102,27 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-time-alarm text-dark"></i> {{ __('Entrenador') }}
+                <a class="nav-link active" href="#navbar-entrenador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                        <i class="ni ni-time-alarm"></i>
+                        <span class="nav-link-text text-dark">{{ __('Entrenador') }}</span>
                     </a>
+                    <div class="collapse show" id="navbar-entrenador">
+                        <ul class="nav nav-sm flex-column">
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('entrenadores.create') }}">
+                                    {{ __('Registrar Entrenador') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('entrenadores.index') }}">
+                                    {{ __('Listado de Entrenadores') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
+                    <a class="nav-link" href="{{ route('psicologia.create') }}">
                         <i class="ni ni-atom text-dark"></i> {{ __('Psicologia') }}
                     </a>
                 </li>
