@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\AlumnoController;
+<<<<<<< HEAD
 use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\AtletaController;
 use App\Http\Controllers\CategoriaController;
@@ -30,8 +31,11 @@ use App\Http\Controllers\TerapiaController;
 use App\Http\Controllers\Tipo_ContratoController;
 
 
+=======
+use App\Http\Controllers\Admin\SliderController;
+>>>>>>> 07a6dbfc387ef401ee44b811b1e95040f2ad9f7b
 use App\Http\Controllers\Tipo_UsuarioController;
-
+use App\Http\Controllers\Frontend\FrontendController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,23 +46,31 @@ use App\Http\Controllers\Tipo_UsuarioController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+<<<<<<< HEAD
 
 Route::get('/', function () {return view('welcome');});
 Route::get('wel', function () {return view('welcome');})->name('wel'); 
 
 
-Route::group(['middleware' => 'auth'], function () {
-	
+=======
+/* Route::get('/', function () {
+	return view('welcome');
+}); */
+//Son para los sliders
+Route::resource('slider', SliderController::class);
+Route::resource('/', FrontendController::class);
 
-	//Auth::routes();
-	
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+>>>>>>> 07a6dbfc387ef401ee44b811b1e95040f2ad9f7b
+Route::group(['middleware' => 'auth'], function () {
+//Auth::routes();
 	Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
-	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade'); 
+	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade');
 	 Route::get('map', function () {return view('pages.maps');})->name('map');
-	 Route::get('icons', function () {return view('pages.icons');})->name('icons'); 
+	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 	Route::resource('entrenadores',EntrenadorController::class);
@@ -149,9 +161,7 @@ Route::resource('alumnos',AlumnoController::class);
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
 Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
-
 /*Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');*/
-
 require __DIR__.'/auth.php';
