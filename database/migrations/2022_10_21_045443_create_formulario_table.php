@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('formulario', function (Blueprint $table) {
             $table->increments('id');
             $table->string('titulo_principal',50);
-            $table->string('subtitulo',50);
+            $table->string('subtitulo',70);
             $table->string('año_logo',5);
             $table->string('titulo_ficha',50);
             $table->text('declaracion');

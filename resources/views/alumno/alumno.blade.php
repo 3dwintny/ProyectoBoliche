@@ -63,23 +63,23 @@
         <label>Pasaporte</label>
         <input type="text" name="pasaporte" placeholder="Pasaporte">
         <label>Departamento de Nacimiento</label>
-        <select name="id_departamento" id="_departamento">
+        <select name="departamento_id" id="_departamento">
             <option selected disabled>Departamento</option>
             @foreach ($departamentos as $item)
             <option value="{{$item->id}}">{{$item->nombre}}</option>
             @endforeach
         </select>
         <label>Municipio de Nacimiento</label>
-        <select name="id_municipio" id="_municipio"></select>
+        <select name="municipio_id" id="_municipio"></select>
         <label>Departamento de Residencia</label>
-        <select name="id_departamento_residencia" id="_departamentoR">
+        <select name="departamento_residencia_id" id="_departamentoR">
             <option selected disabled>Departamento</option>
             @foreach ($departamentos as $item)
             <option value="{{$item->id}}">{{$item->nombre}}</option>
             @endforeach
         </select>
         <label>Municipio de Nacimiento de Residencia</label>
-        <select name="id_municipio_residencia" id="_municipioR"></select>
+        <select name="municipio_residencia_id" id="_municipioR"></select>
         <label>Nacionalidad</label>
         <select name="nacionalidad" id="">
             <option selected disabled>Nacionalidad</option>
@@ -102,7 +102,7 @@
         <input  type="text" name="apellido2" placeholder="Segundo Apellido">
         <label>Apellido de Casada</label>
         <input  type="text" name="apellido_casada" placeholder="Apellido de Casada">
-        <select name="id_parentezco" id="id_parentezco">
+        <select name="parentezco_id" id="id_parentezco">
             <option selected disabled>Parentezco</option>
             @foreach ($parentezcos as $item){
                 <option value="{{$item->id}}">{{$item->tipo}}</option>
@@ -140,7 +140,7 @@ $(document).ready(function () {
             var dptoId = this.value;
             $('#_municipio').html('');
             $.ajax({
-                url: '{{ route('municipios') }}?id_departamento='+dptoId,
+                url: '{{ route('municipios') }}?departamento_id='+dptoId,
                 type: 'get',
                 success: function (res) {
                     $('#_municipio').html('<option value="">Municipio</option>');
@@ -158,7 +158,7 @@ $(document).ready(function () {
             var dptoId = this.value;
             $('#_municipioR').html('');
             $.ajax({
-                url: '{{ route('municipios') }}?id_departamento='+dptoId,
+                url: '{{ route('municipios') }}?departamento_id='+dptoId,
                 type: 'get',
                 success: function (res) {
                     $('#_municipioR').html('<option value="">Municipio</option>');

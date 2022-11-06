@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\PRT;
 
 class PRTController extends Controller
 {
@@ -13,7 +14,9 @@ class PRTController extends Controller
      */
     public function index()
     {
-        //
+        $prts = PRT::all();
+        return view('prt.show',compact("prts"));
+
     }
 
     /**
@@ -23,7 +26,7 @@ class PRTController extends Controller
      */
     public function create()
     {
-        //
+        return view('prt.create');
     }
 
     /**
@@ -34,7 +37,9 @@ class PRTController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $prts = new PRT($request->all());
+        $prts->save();
+        return redirect()->action([PRTController::class,'index']);
     }
 
     /**

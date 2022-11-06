@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Nivel_fadn;
 
 class Nivel_fadnController extends Controller
 {
@@ -13,7 +14,8 @@ class Nivel_fadnController extends Controller
      */
     public function index()
     {
-        //
+        $niveles_fadn = Nivel_fadn::all();
+        return view('nivel_fadn.show',compact("niveles_fadn"));
     }
 
     /**
@@ -23,7 +25,7 @@ class Nivel_fadnController extends Controller
      */
     public function create()
     {
-        //
+        return view('nivel_fadn.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class Nivel_fadnController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $niveles_fadn = new Nivel_fadn($request->all());
+        $niveles_fadn->save();
+        return redirect()->action([Nivel_fadnController::class,'index']);
     }
 
     /**

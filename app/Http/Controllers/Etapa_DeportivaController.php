@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Etapa_Deportiva;
 
 class Etapa_DeportivaController extends Controller
 {
@@ -13,7 +14,8 @@ class Etapa_DeportivaController extends Controller
      */
     public function index()
     {
-        //
+        $etapas_deportivas = Etapa_Deportiva::all();
+        return view('etapa_deportiva.show',compact("etapas_deportivas"));
     }
 
     /**
@@ -23,7 +25,8 @@ class Etapa_DeportivaController extends Controller
      */
     public function create()
     {
-        //
+        return view('etapa_deportiva.create');
+
     }
 
     /**
@@ -34,7 +37,9 @@ class Etapa_DeportivaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $etapas_deportivas = new Etapa_Deportiva($request->all());
+        $etapas_deportivas->save();
+        return redirect()->action([Etapa_DeportivaController::class,'index']);
     }
 
     /**

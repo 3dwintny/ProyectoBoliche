@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Nacionalidad;
 
 class NacionalidadController extends Controller
 {
@@ -13,7 +14,8 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
-        //
+        $nacionalidades = Nacionalidad::all();
+        return view('nacionalidad.show',compact("nacionalidades"));
     }
 
     /**
@@ -23,7 +25,7 @@ class NacionalidadController extends Controller
      */
     public function create()
     {
-        //
+        return view('nacionalidad.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class NacionalidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nacionalidades = new Nacionalidad($request->all());
+        $nacionalidades->save();
+        return redirect()->action([NacionalidadController::class,'index']);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Horario;
 
 class HorarioController extends Controller
 {
@@ -13,7 +14,8 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        //
+        $horarios = Horario::all();
+        return view('horario.show',compact("horarios"));
     }
 
     /**
@@ -23,7 +25,7 @@ class HorarioController extends Controller
      */
     public function create()
     {
-        //
+        return view('horario.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $horarios = new Horario($request->all());
+        $horarios->save();
+        return redirect()->action([HorarioController::class,'index']);
     }
 
     /**

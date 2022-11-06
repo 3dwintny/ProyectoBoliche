@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Nivel_cdag;
 
 class Nivel_cdagController extends Controller
 {
@@ -13,7 +14,8 @@ class Nivel_cdagController extends Controller
      */
     public function index()
     {
-        //
+        $niveles_cdag = Nivel_cdag::all();
+        return view('nivel_cdag.show',compact("niveles_cdag"));
     }
 
     /**
@@ -23,7 +25,7 @@ class Nivel_cdagController extends Controller
      */
     public function create()
     {
-        //
+        return view('nivel_cdag.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class Nivel_cdagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $niveles_cdag = new Nivel_cdag($request->all());
+        $niveles_cdag->save();
+        return redirect()->action([Nivel_cdagController::class,'index']);
     }
 
     /**

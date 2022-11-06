@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Deporte;
 
 class DeporteController extends Controller
 {
@@ -13,7 +14,8 @@ class DeporteController extends Controller
      */
     public function index()
     {
-        //
+        $deportes = Deporte::all();
+        return view('deporte.show',compact("deportes"));
     }
 
     /**
@@ -23,7 +25,7 @@ class DeporteController extends Controller
      */
     public function create()
     {
-        //
+        return view('deporte.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class DeporteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $deportes = new Deporte($request->all());
+        $deportes->save();
+        return redirect()->action([DeporteController::class,'index']);
     }
 
     /**

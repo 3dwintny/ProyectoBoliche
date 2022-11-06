@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Alergia;
 
 class AlergiaController extends Controller
 {
@@ -13,7 +14,8 @@ class AlergiaController extends Controller
      */
     public function index()
     {
-        //
+        $alergias = Alergia::all();
+        return view('alergia.show',compact("alergias"));
     }
 
     /**
@@ -23,7 +25,7 @@ class AlergiaController extends Controller
      */
     public function create()
     {
-        //
+        return view('alergia.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class AlergiaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $alergia = new Alergia($request->all());
+        $alergia->save();
+        return redirect()->action([AlergiaController::class,'index']);
     }
 
     /**

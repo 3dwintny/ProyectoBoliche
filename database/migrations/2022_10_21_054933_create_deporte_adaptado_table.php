@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deporte_adoptado');
+        Schema::dropIfExists('deporte_adaptado');
     }
 };

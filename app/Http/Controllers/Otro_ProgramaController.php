@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Otro_Programa;
 
 class Otro_ProgramaController extends Controller
 {
@@ -13,7 +14,8 @@ class Otro_ProgramaController extends Controller
      */
     public function index()
     {
-        //
+        $otros_programas = Otro_Programa::all();
+        return view('otro_programa.show',compact("otros_programas"));
     }
 
     /**
@@ -23,7 +25,7 @@ class Otro_ProgramaController extends Controller
      */
     public function create()
     {
-        //
+        return view('otro_programa.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class Otro_ProgramaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $otros_programas = new Otro_Programa($request->all());
+        $otros_programas->save();
+        return redirect()->action([Otro_ProgramaController::class,'index']);
     }
 
     /**

@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PRT extends Model
 {
     use HasFactory;
+    protected $table = "prt";
+    protected $fillable = ['id','nombre','created_at','updated_at'];
 }

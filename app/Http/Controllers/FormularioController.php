@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Formulario;
 
 class FormularioController extends Controller
 {
@@ -13,7 +14,8 @@ class FormularioController extends Controller
      */
     public function index()
     {
-        //
+        $formularios = Formulario::all();
+        return view('formulario.show', compact("formularios"));
     }
 
     /**
@@ -23,7 +25,7 @@ class FormularioController extends Controller
      */
     public function create()
     {
-        //
+        return view('formulario.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class FormularioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $formularios = new Formulario($request->all());
+        $formularios->save();
+        return redirect()->action([Formulario::class,'index']);
     }
 
     /**

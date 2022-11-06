@@ -38,7 +38,7 @@
                         @if (Route::has('register'))
                             <a href="{{ route('register')}}" style="color: #FA841A";>Registrarse</a>
                         @endif
-                        <a href="{{route('alumnos.index')}}" style="color: #FFC619;">Formulario Inscripción</a>
+                        <a href="{{route('alumnos.create')}}" style="color: #FFC619;">Formulario Inscripción</a>
                     @endauth
                 </div>
             @endif

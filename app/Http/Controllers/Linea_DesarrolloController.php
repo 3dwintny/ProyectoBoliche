@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Linea_Desarrollo;
 
 class Linea_DesarrolloController extends Controller
 {
@@ -13,7 +14,8 @@ class Linea_DesarrolloController extends Controller
      */
     public function index()
     {
-        //
+        $lineas_desarrollo = Linea_Desarrollo::all();
+        return view('linea_desarrollo.show',compact("lineas_desarrollo"));
     }
 
     /**
@@ -23,7 +25,7 @@ class Linea_DesarrolloController extends Controller
      */
     public function create()
     {
-        //
+        return view('linea_desarrollo.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class Linea_DesarrolloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $lineas_desarrollo = new Linea_Desarrollo($request->all());
+        $lineas_desarrollo->save();
+        return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
 
     /**

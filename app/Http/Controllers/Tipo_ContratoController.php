@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tipo_Contrato;
 
 class Tipo_ContratoController extends Controller
 {
@@ -13,7 +14,8 @@ class Tipo_ContratoController extends Controller
      */
     public function index()
     {
-        //
+        $tipos_contratos = Tipo_Contrato::all();
+        return view('tipo_contrato.show', compact("tipos_contratos"));
     }
 
     /**
@@ -23,7 +25,7 @@ class Tipo_ContratoController extends Controller
      */
     public function create()
     {
-        //
+        return view('tipo_contrato.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class Tipo_ContratoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tipos_contratos = new Tipo_Contrato($request->all());
+        $tipos_contratos->save();
+        return redirect()->action([Tipo_ContratoController::class,'index']);
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Modalidad;
 
 class ModalidadController extends Controller
 {
@@ -13,7 +14,8 @@ class ModalidadController extends Controller
      */
     public function index()
     {
-        //
+        $modalidades = Modalidad::All();
+        return view('modalidad.show', compact("modalidades"));
     }
 
     /**
@@ -23,7 +25,7 @@ class ModalidadController extends Controller
      */
     public function create()
     {
-        //
+        return view('modalidad.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class ModalidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $modalidades = new Modalidad($request->all());
+        $modalidades->save();
+        return redirect()->action([ModalidadController::class, 'index']);
     }
 
     /**

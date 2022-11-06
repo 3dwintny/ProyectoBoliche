@@ -6,6 +6,7 @@ use App\Models\Departamento;
 use App\Models\Nacionalidad;
 use App\Models\Parentezco;
 use App\Models\Formulario;
+use App\Models\Alumno;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,11 +19,7 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        $departamentos = Departamento::all();
-        $nacionalidades = Nacionalidad::all();
-        $parentezcos = Parentezco::all();
-        $formularios = Formulario::all();
-        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios"));
+        return view('alumno.show');   
     }
 
      /**
@@ -34,7 +31,7 @@ class AlumnoController extends Controller
     public function getMunicipios(Request $request)
     {
         $municipios = DB::table('municipio')
-            ->where('id_departamento', $request->id_departamento)
+            ->where('departamento_id', $request->departamento_id)
             ->get();
         
         if (count($municipios) > 0) {
@@ -49,7 +46,11 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        //
+        $departamentos = Departamento::all();
+        $nacionalidades = Nacionalidad::all();
+        $parentezcos = Parentezco::all();
+        $formularios = Formulario::all();
+        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios"));
     }
 
     /**
@@ -61,6 +62,9 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         //
+        $alumnos = new Alumno($request->all());
+        $alumnos->save();
+        return redirect()->action([AlumnoController::class,'index']);
     }
 
     /**

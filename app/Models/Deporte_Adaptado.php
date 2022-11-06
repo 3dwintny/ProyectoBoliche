@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Deporte_Adoptado extends Model
+class Deporte_Adaptado extends Model
 {
     use HasFactory;
+    protected $table = "deporte_adaptado";
+    protected $fillable = ['id','nombre','created_at','updated_at'];
 }
