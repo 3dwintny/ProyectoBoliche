@@ -15,6 +15,7 @@ class Tipo_UsuarioController extends Controller
     public function index()
     {
         $tipo_usuarios = Tipo_Usuario::all();
+        return view('tipo_usuario.show',compact("tipo_usuarios"));
     }
 
     /**
@@ -24,7 +25,7 @@ class Tipo_UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        return view('tipo_usuario.create');
     }
 
     /**
@@ -35,7 +36,9 @@ class Tipo_UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tipo_usuarios = new Tipo_Usuario($request->all());
+        $tipo_usuarios->save();
+        return redirect()->action([Tipo_UsuarioController::class,'index']);
     }
 
     /**

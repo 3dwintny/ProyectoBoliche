@@ -12,4 +12,16 @@ class Centro extends Model
     protected $fillable =['id','nombre','direccion','fecha_registro','institucion','accesibilidad',
 'implementacion','espacio_fisico','horario_id','departamento_id','created_at','updated_at'];
 
+public function departamento(){
+    return $this->belongsTo('App\Models\Departamento');
+}
+
+public function horario(){
+    return $this->belongsTo('App\Models\Horario');
+}
+
+public function atletas(){
+    return $this->hasMany('App\Models\Atleta');
+}
+
 }

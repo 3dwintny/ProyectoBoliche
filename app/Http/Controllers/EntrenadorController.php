@@ -20,15 +20,9 @@ class EntrenadorController extends Controller
      */
     public function index()
     {
-        //
-        $niveles_cdag = Nivel_cdag::All();
-        $niveles_fadn = Nivel_fadn::All();
-        $departamentos = Departamento::All();
-        $nacionalidades = Nacionalidad::All();
-        $deportes = Deporte::All();
-        $tipos_contratos = Tipo_Contrato::All();
-        return view('entrenador.create',compact("niveles_cdag","niveles_fadn","departamentos","nacionalidades"
-        ,"deportes","tipos_contratos"));
+        $entrenadores = Entrenador::with('nivel_cdag','nivel_fadn','departamento',
+        'nacionalidad','deporte','tipo_contrato')->get();
+        return view('entrenador.show',compact('entrenadores'));  
     }
 
     /**
@@ -38,7 +32,14 @@ class EntrenadorController extends Controller
      */
     public function create()
     {
-        //
+        $niveles_cdag = Nivel_cdag::All();
+        $niveles_fadn = Nivel_fadn::All();
+        $departamentos = Departamento::All();
+        $nacionalidades = Nacionalidad::All();
+        $deportes = Deporte::All();
+        $tipos_contratos = Tipo_Contrato::All();
+        return view('entrenador.create',compact("niveles_cdag","niveles_fadn","departamentos","nacionalidades"
+        ,"deportes","tipos_contratos"));
     }
 
     /**

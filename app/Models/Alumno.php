@@ -41,7 +41,35 @@ class Alumno extends Model
     'departamento_residencia_id',
     'municipio_residencia_id'];
 
-    public function atleta(){
+    public function atletas(){
         return $this->hasMany('App\Models\Atleta');
+    }
+
+    public function alergia(){
+        return $this->belongsTo('App\Models\Alergia');
+    }
+
+    public function departamento(){
+        return $this->belongsTo('App\Models\Departamento');
+    }
+
+    public function departamento_residencia(){
+        return $this->belongsTo('App\Models\Departamento');
+    }
+
+    public function encargado(){
+        return $this->belongsTo('App\Models\Encargado');
+    }
+
+    public function municipio(){
+        return $this->belongsTo('App\Models\Municipio');
+    }
+
+    public function municipio_residencia(){
+        return $this->belongsTo('App\Models\Municipio');
+    }
+
+    public function nacionalidad(){
+        return $this->belongsTo('App\Models\Nacionalidad');
     }
 }

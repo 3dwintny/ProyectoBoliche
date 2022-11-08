@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+USE App\Models\Centro;
 
 class CentroController extends Controller
 {
@@ -13,7 +14,8 @@ class CentroController extends Controller
      */
     public function index()
     {
-        //
+        $centros = Centro::with('departamento','horario')->get();
+        return view('centro.show',compact("centros"));
     }
 
     /**
@@ -23,7 +25,7 @@ class CentroController extends Controller
      */
     public function create()
     {
-        //
+        return view('centro.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class CentroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $centros = new Centro($request->all());
+        $centros->save();
+        return redirect()->action([CentroController::class,'index']);
     }
 
     /**
@@ -45,7 +49,7 @@ class CentroController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**

@@ -60,6 +60,7 @@
             <option value="Separada/o">Separada/o</option>
             <option value="Divorciada/o">Divorciada/o</option>
             <option value="Viuda/o">Viuda/o</option>
+            <option value="Comprometida/o">Comprometida/o</option>
         </select>
         <label>NIT</label>
         <input type="text" name="nit" placeholder="NIT" id="">
@@ -72,6 +73,8 @@
             <option value="Licenciatura">Licenciatura</option>
             <option value="Maestría">Maestría</option>
             <option value="Doctorado">Doctorado</option>
+            <option value="Profesorado">Profesorado</option>
+            <option value="Técnico">Técnico</option>
         </select>
         <label>Nivel CDAG</label>
         <select name="nivel_cdag_id" required>
@@ -88,7 +91,7 @@
             @endforeach
         </select>
         <label>Departamento</label>
-        <select name="id_departamento" required>
+        <select name="departamento_id" required>
             <option selected disabled>Departamento</option>
             @foreach ($departamentos as $item)
             <option value="{{$item->id}}">{{$item->nombre}}</option>

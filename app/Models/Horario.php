@@ -11,4 +11,8 @@ class Horario extends Model
     protected $table="horario";
     protected $fillable = ['id','hora_inicio','hora_fin','lunes','martes','miercoles','jueves','viernes',
     'sabado','domingo'];
+
+    public function centros(){
+        return $this->hasMany('App\Models\Centro');
+    }
 }

@@ -4,22 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Listado de Líneas de Desarrollo</title>
+    <title>Listado de Terapias</title>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>Línea de Desarrollo</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($lineas_desarrollo as $item)
-            <tr>
-                <td>{{$item->tipo}}</td>
-            </tr>
-            @endforeach
-        </tbody>
+    <h1>FUNCIONA</h1>
     </table>
 </body>
 </html>

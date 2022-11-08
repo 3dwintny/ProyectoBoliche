@@ -7,10 +7,10 @@
     <title>Ingresar Departamento</title>
 </head>
 <body>
-    <form method="POST" action="{{route('deportes1.store')}}" enctype="multipart/form-data" role="form">
+    <form method="POST" action="{{route('departamentos.store')}}" enctype="multipart/form-data" role="form">
         @csrf
         <label>Departamento</label>
-        <input type="text" name="nombre" placeholder="Deporte" id="" required>
+        <input type="text" name="nombre" placeholder="Departamento" id="" required>
         <input type="submit" value="Guardar">
     </form>
 </body>

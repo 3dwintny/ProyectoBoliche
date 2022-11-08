@@ -10,4 +10,12 @@ class Nacionalidad extends Model
     use HasFactory;
     protected $table = "nacionalidad";
     protected $fillable = ['id','descripcion','created_at','updated_at'];
+
+    public function alumnos(){
+        return $this->hasMany('App\Models\Alumno');
+    }
+
+    public function entrenadores(){
+        return $this->hasMany('App\Models\Entrenador');
+    }
 }

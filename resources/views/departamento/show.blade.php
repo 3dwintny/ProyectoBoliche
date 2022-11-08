@@ -7,6 +7,19 @@
     <title>Listado de Departamentos</title>
 </head>
 <body>
-    
+    <table>
+        <thead>
+            <tr>
+                <th>Departamento</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($departamentos as $item)
+            <tr>
+                <td>{{$item->nombre}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </body>
 </html>

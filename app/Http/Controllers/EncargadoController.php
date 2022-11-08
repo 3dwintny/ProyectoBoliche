@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Encargado;
+use App\Models\Parentezco;
 
 class EncargadoController extends Controller
 {
@@ -13,7 +15,8 @@ class EncargadoController extends Controller
      */
     public function index()
     {
-        //
+        $encargados = Encargado::with('parentezco')->get();
+        return view('encargado.show',compact('encargados'));
     }
 
     /**
@@ -23,7 +26,7 @@ class EncargadoController extends Controller
      */
     public function create()
     {
-        //
+        return view('encargado.create');
     }
 
     /**
@@ -34,7 +37,9 @@ class EncargadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $encargados = new Encargado($request->all());
+        $encargados->save();
+        return redirect()->action([EncargadoController::class,'index']);
     }
 
     /**

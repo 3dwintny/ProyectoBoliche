@@ -19,7 +19,9 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        return view('alumno.show');   
+        $alumnos = Alumno::with('encargado','alergia','departamento'
+        ,'departamento_residencia','municipio','municipio_residencia','nacionalidad')->get();
+        return view('alumno.show',compact('alumnos'));   
     }
 
      /**

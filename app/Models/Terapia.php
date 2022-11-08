@@ -13,5 +13,13 @@ class Terapia extends Model
     'analisis_semiologico','desarrollo','observaciones','tarea','conciencia_corporal','dominio_corporal',
     'dominio_respiracion','dialogo_interno','atencion','concentracion','motivacion','confianza',
     'activacion','relajacion','estres','ansiedad_cognitiva','ansiedad_fisica','miedo','frustracion',
-    'psicologia_id','created_at','updated_at'];
+    'atleta_id','psicologia_id','created_at','updated_at'];
+
+    public function psicologia(){
+        return $this->belongsTo('App\Models\Psicologia');
+    }
+
+    public function atleta(){
+        return $this->belongsTo('App\Models\Atleta');
+    }
 }

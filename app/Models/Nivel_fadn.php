@@ -10,4 +10,8 @@ class Nivel_fadn extends Model
     use HasFactory;
     protected $table="nivel_fadn";
     protected $fillable = ['id','tipo','created_at','updated_at'];
+
+    public function entrenadores(){
+        return $this->hasMany('App\Models\Entrenador');
+    }
 }

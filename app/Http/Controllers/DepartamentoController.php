@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Departamento;
 class DepartamentoController extends Controller
 {
     /**
@@ -13,7 +13,8 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        //
+        $departamentos = Departamento::all();
+        return view('departamento.show',compact("departamentos"));
     }
 
     /**
@@ -23,7 +24,7 @@ class DepartamentoController extends Controller
      */
     public function create()
     {
-        //
+        return view('departamento.create');
     }
 
     /**
@@ -34,7 +35,9 @@ class DepartamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $departamentos = new Departamento($request->all());
+        $departamentos->save();
+        return redirect()->action([DepartamentoController::class,'index']);
     }
 
     /**

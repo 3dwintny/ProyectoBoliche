@@ -10,4 +10,8 @@ class PRT extends Model
     use HasFactory;
     protected $table = "prt";
     protected $fillable = ['id','nombre','created_at','updated_at'];
+
+    public function atletas(){
+        return $this->hasMany('App\Models\Atleta');
+    }
 }

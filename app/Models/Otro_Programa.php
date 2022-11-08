@@ -10,4 +10,8 @@ class Otro_Programa extends Model
     use HasFactory;
     protected $table = "otro_programa";
     protected $fillable =['id','nombre','created_at','updated_at'];
+
+    public function atletas(){
+        return $this->hasMany('App\Models\Atleta');
+    }
 }
