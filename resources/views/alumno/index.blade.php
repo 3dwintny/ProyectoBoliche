@@ -32,7 +32,7 @@
   <tbody class="table-hover">
   @foreach ($alumnos as $alumno)
     <tr>
-      <td>{{ ++$i }}</td>
+      <td>{{ $alumno->id }}</td>
       <td>{{$alumno->nombre1}}</td>
       <td>{{$alumno->apellido1}}</td>
       <td>{{$alumno->cui}}</td>

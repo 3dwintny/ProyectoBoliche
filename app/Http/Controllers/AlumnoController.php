@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class AlumnoController extends Controller
 {
-   
+
     /**
      * Display a listing of the resource.
      *
@@ -20,11 +20,10 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        
-        $alumnos = Alumno::paginate();
 
-        return view('alumno.index', compact('alumnos'))
-            ->with('i', (request()->input('page', 1) - 1) * $alumnos->perPage());
+        $alumnos = Alumno::where('estado','Pendiente')->get();
+
+        return view('alumno.index', compact('alumnos'));
         //return view('alumno.show');
     }
 
@@ -39,7 +38,7 @@ class AlumnoController extends Controller
         $municipios = DB::table('municipio')
             ->where('departamento_id', $request->departamento_id)
             ->get();
-        
+
         if (count($municipios) > 0) {
             return response()->json($municipios);
         }
@@ -68,10 +67,10 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        
-        
+
+
         /*$factura = Alumno::create($request->all());
-            
+
         return redirect()->route('facturas.index')
             ->with('success', 'Factura created successfully.');*/
     }
