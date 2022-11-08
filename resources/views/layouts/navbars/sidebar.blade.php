@@ -126,7 +126,7 @@
                         </ul>
                     </div>
                 </li>
-                
+
                 <li class="nav-item">
                 <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-atom text-dark"></i>
@@ -135,7 +135,7 @@
                     <div class="collapse show" id="navbar-psico">
                         <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                                <a class="nav-link" href="{{ route('entrenadores.create') }}">
+                                <a class="nav-link" href="{{ route('terapias.create') }}">
                                     {{ __('Terapias') }}
                                 </a>
                             </li>
@@ -156,7 +156,7 @@
             <!-- Divider -->
             <hr class="my-3">
             <!-- Heading -->
-            
+
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
