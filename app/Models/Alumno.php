@@ -44,13 +44,35 @@ class Alumno extends Model
     /*public function atleta(){
         return $this->hasMany('App\Models\Atleta');
     }*/
-    public function obtener_nombre($id)
-    {
-        return Alumno::find($id);
+    public function atletas(){
+        return $this->hasMany('App\Models\Atleta');
     }
-    /*public function obtenerAlumno()
-    {
-        return Alumno::all();
-    }*/
 
+    public function alergia(){
+        return $this->belongsTo('App\Models\Alergia');
+    }
+
+    public function departamento(){
+        return $this->belongsTo('App\Models\Departamento');
+    }
+
+    public function departamento_residencia(){
+        return $this->belongsTo('App\Models\Departamento');
+    }
+
+    public function encargado(){
+        return $this->belongsTo('App\Models\Encargado');
+    }
+
+    public function municipio(){
+        return $this->belongsTo('App\Models\Municipio');
+    }
+
+    public function municipio_residencia(){
+        return $this->belongsTo('App\Models\Municipio');
+    }
+
+    public function nacionalidad(){
+        return $this->belongsTo('App\Models\Nacionalidad');
+    }
 }

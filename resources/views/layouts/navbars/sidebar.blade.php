@@ -121,7 +121,7 @@
                         </ul>
                     </div>
                 </li>
-                
+
                 <li class="nav-item">
                 <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-atom text-dark"></i>
@@ -130,7 +130,7 @@
                     <div class="collapse show" id="navbar-psico">
                         <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                                <a class="nav-link" href="{{ route('entrenadores.create') }}">
+                                <a class="nav-link" href="{{ route('terapias.create') }}">
                                     {{ __('Terapias') }}
                                 </a>
                             </li>
@@ -142,39 +142,12 @@
                         </ul>
                     </div>
                 </li>
-    
-                <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Laravel Examples') }}</span>
-                    </a>
 
-                    <div class="collapse show" id="navbar-examples">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('User profile') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('User Management') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('icons') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
-                    </a>
-                </li>
             </ul>
             <!-- Divider -->
             <hr class="my-3">
             <!-- Heading -->
-            
+
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">

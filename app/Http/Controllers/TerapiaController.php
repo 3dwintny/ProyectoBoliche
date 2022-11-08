@@ -23,7 +23,7 @@ class TerapiaController extends Controller
      */
     public function create()
     {
-        //
+        return view('psicologia.terapias.create');
     }
 
     /**
