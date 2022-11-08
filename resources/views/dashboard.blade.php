@@ -2,7 +2,7 @@
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('Hello') . ' '. auth()->user()->name,
+        'title' => __('Hola') . ' '. auth()->user()->name,
         'description' => __('Bienvenido a la Federacion Nacional de Boliche'),
         'class' => 'col-lg-12'
     ])

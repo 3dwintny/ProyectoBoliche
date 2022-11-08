@@ -110,6 +110,11 @@
                         <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.create') }}">
+                                    {{ __('Asistencia') }}
+                                </a>
+                            </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{ route('entrenadores.create') }}">
                                     {{ __('Registrar Entrenador') }}
                                 </a>
                             </li>
@@ -142,7 +147,11 @@
                         </ul>
                     </div>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('icons') }}">
+                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
+                    </a>
+                </li>
             </ul>
             <!-- Divider -->
             <hr class="my-3">

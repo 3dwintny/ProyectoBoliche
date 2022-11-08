@@ -306,6 +306,18 @@ $(document).ready(function() {
 
             return edad;
         }
+<<<<<<< HEAD
+        document.getElementById('_edad').value=calcularEdad(document.getElementById('fecha_nacimiento').value);
+        });
+    });
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth()+1;
+    day = date.getDate();
+    document.getElementById("fecha_sistema").value = year+"/"+month+"/"+day;
+</script>
+@endsection
+=======
         document.getElementById('_edad').value = calcularEdad(document.getElementById(
             'fecha_nacimiento').value);
     });
@@ -317,3 +329,4 @@ day = date.getDate();
 document.getElementById("fecha_sistema").value = year + "/" + month + "/" + day;
 </script>
 @endsection
+>>>>>>> 14808f8ae125efd465a74a25805c050ce31235fa
