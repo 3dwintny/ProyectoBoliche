@@ -61,4 +61,8 @@ class Atleta extends Model
     public function terapias(){
         return $this->hasMany('App\Models\Terapia');
     }
+
+    public function asistencias(){
+        return $this->hasMany('App\Models\Asistencia');
+    }
 }

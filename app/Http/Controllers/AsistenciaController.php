@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Asistencia;
+use App\Models\Atleta;
 
 class AsistenciaController extends Controller
 {
@@ -13,7 +15,8 @@ class AsistenciaController extends Controller
      */
     public function index()
     {
-        //
+        $asistencias = Asistencia::with('atleta');
+        return view('asistencia.show',compact('asistencias'));
     }
 
     /**
@@ -23,7 +26,8 @@ class AsistenciaController extends Controller
      */
     public function create()
     {
-        //
+        $atletas = Atleta::all();
+        return view('asistencia.create',compact("atletas"));
     }
 
     /**
