@@ -56,6 +56,7 @@ Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
 
 //Rutas Asistencia
 Route::resource('asistencias',AsistenciaController::class);
+Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
 
 //Rutas Atletas
 Route::resource('atletas',AtletaController::class);
