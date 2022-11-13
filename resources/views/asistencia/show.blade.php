@@ -18,6 +18,9 @@
                 @foreach ($fechas as $item)
                 <th>{{$item->fecha}}</th>
                 @endforeach
+                <th>Días Entrenados</th>
+                <th>% de Asistencia</th>
+                <th>Etapa Deportiva</th>
             </tr>
         </thead>
         <tbody>
@@ -40,6 +43,9 @@
                 @for($i=$s;$i<count($fechas)+$s;$i++)
                 <td>{{$estado[$i]}}</td>
                 @endfor
+                <td></td>
+                <td></td>
+                <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
             </tr>
 
             @php 
