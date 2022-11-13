@@ -17,23 +17,102 @@ class AsistenciaController extends Controller
      */
     public function index()
     {
-        $asistencias = Asistencia::with('atleta')->get();
-        $atletas = Atleta::all();
-        $ast = Asistencia::all('fecha')->sortBy('fecha');
-        $arreglo = array();
+        $ads = Asistencia::all("atleta_id","estado")->sortBy("atleta_id");
+        $atletas = Asistencia::all('atleta_id');
+        $ast = Asistencia::all('fecha');
+
+        //Array en el que se almacenan las fechas una sola vez
+        $fechas = array();
+
+        //Array en el que se almacenan los atletas una sola vez 
+        $atleta = array();
+
+        //Array en el que se almacena el estado de la asistencia de cada atleta
+        $estado = array();
+
+        $atl = array();
+
+        $atls = array();
+
+        //Array que almacena la cantidad de atletas nuevos en la asociación
+        $noRepetidos = array();
+
+        //Array que almacena la cantidad de atletas que ya se encontraban en la asociación
+        $repetidos = array();
+
+        //Inserta una sola vez inofrmación de la fecha
         for($i=0;$i<count($ast);$i++){
-            
-            if(count($arreglo)==0){
-                array_push($arreglo,$ast[$i]);
+            if(count($fechas)==0){
+                array_push($fechas,$ast[$i]);
             }
             else{
-                if(in_array($ast[$i],$arreglo,)==false){
-                    array_push($arreglo,$ast[$i]);
+                if(in_array($ast[$i],$fechas,)==false){
+                    array_push($fechas,$ast[$i]);
                 }
             }
         }
-        asort($arreglo);
-        return view('asistencia.show',compact('asistencias','atletas','arreglo'));
+
+        //Inserta una sola vez información del atleta
+        for($i=0;$i<count($atletas);$i++){
+            if(count($atleta)==0){
+                array_push($atleta,$atletas[$i]);
+            }
+            else{
+                if(in_array($atletas[$i],$atleta,)==false){
+                    array_push($atleta,$atletas[$i]);
+                }
+            }
+        }
+
+        foreach(array_count_values($atl) as $item){
+            array_push($atls,$item->value);
+        }
+        
+        
+        //Ingresa el estado de asistencia de cada atleta, orndenado y listo para mostrarse en la vista
+        foreach($ads as $item){
+            array_push($estado,$item->estado);
+            array_push($atl,$item->atleta_id);
+        }
+        asort($atleta);
+        asort($fechas);
+
+        //Obtiene el patrón para verificar los atletas antiguos
+        foreach(array_count_values($atl) as $item){
+            array_push($atls,$item);
+        }
+        arsort($atls);
+        $antiguos = $atls[0];
+        for($i=0;$i<count($atls);$i++) {
+            if($atls[$i]!=$antiguos){
+                array_push($noRepetidos,$atls[$i]);
+            }
+            else{
+                array_push($repetidos,$atls[$i]);
+            }
+        }
+
+        //Variable Controladora
+        $contador=0;
+
+        //Variable controladora de alumnos que se encontraban dentro de la asociación
+        $cAntiguos = count($repetidos)*count($fechas);
+
+        //Verifica si se ha ingresado uno o varios nuevos atletas
+        if(count($atleta)*count($fechas)!=count($estado)){
+
+            //Recorre el array contenedor de los nuevos atletas
+            for($j=0;$j<count($noRepetidos);$j++){
+
+                //Ingresa cadenas vacías a aquellos días en los que el atleta no formaba
+                //parte de la asociación
+                for($i=$cAntiguos+$contador;$i<$cAntiguos+$antiguos-$noRepetidos[$j]+$contador;$i++){
+                    array_splice($estado,$i,0,"");
+                }
+                $contador=$contador+$antiguos;
+            }
+        }
+        return view('asistencia.show',compact('atleta','fechas','estado'));
     }
 
     /**
