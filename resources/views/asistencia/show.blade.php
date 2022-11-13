@@ -11,6 +11,10 @@
         <thead>
             <tr>
                 <th>Atleta</th>
+                <th>Edad</th>
+                <th>Género</th>
+                <th>Categoría</th>
+                <th>Modalidad</th>
                 @foreach ($fechas as $item)
                 <th>{{$item->fecha}}</th>
                 @endforeach
@@ -28,6 +32,10 @@
                     {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}} {{$item->atleta->alumno->nombre3}}
                     {{$item->atleta->alumno->apellido1}} {{$item->atleta->alumno->apellido2}}
                 </td>
+                <td>{{$item->atleta->alumno->edad}}</td>
+                <td>{{$item->atleta->alumno->genero}}</td>
+                <td>{{$item->atleta->categoria->tipo}}</td>
+                <td>{{$item->atleta->modalidad->nombre}}</td>
 
                 @for($i=$s;$i<count($fechas)+$s;$i++)
                 <td>{{$estado[$i]}}</td>
