@@ -20,7 +20,6 @@ class AsistenciaController extends Controller
         $ads = Asistencia::all("atleta_id","estado")->sortBy("atleta_id");
         $atletas = Asistencia::all('atleta_id');
         $ast = Asistencia::all('fecha');
-
         //Array en el que se almacenan las fechas una sola vez
         $fechas = array();
 
@@ -33,6 +32,10 @@ class AsistenciaController extends Controller
         $atl = array();
 
         $atls = array();
+
+        $f = array();
+
+        $fs = array();
 
         //Array que almacena la cantidad de atletas nuevos en la asociación
         $noRepetidos = array();
@@ -112,7 +115,17 @@ class AsistenciaController extends Controller
                 $contador=$contador+$antiguos;
             }
         }
-        return view('asistencia.show',compact('atleta','fechas','estado'));
+
+        foreach ($fechas as $da)
+        { 
+            array_push($f,$da->fecha);
+        }
+
+        foreach ($f as $da)
+        { 
+            array_push($fs,substr($da,8,2));
+        }
+        return view('asistencia.show',compact('atleta','fs','estado'));
     }
 
     /**

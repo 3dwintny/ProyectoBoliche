@@ -15,9 +15,9 @@
                 <th>Género</th>
                 <th>Categoría</th>
                 <th>Modalidad</th>
-                @foreach ($fechas as $item)
-                <th>{{$item->fecha}}</th>
-                @endforeach
+                @for ($i=0;$i<count($fs);$i++)
+                <th>{{$fs[$i]}}</th>
+                @endfor
                 <th>Días Entrenados</th>
                 <th>% de Asistencia</th>
                 <th>Etapa Deportiva</th>
@@ -40,7 +40,7 @@
                 <td>{{$item->atleta->categoria->tipo}}</td>
                 <td>{{$item->atleta->modalidad->nombre}}</td>
 
-                @for($i=$s;$i<count($fechas)+$s;$i++)
+                @for($i=$s;$i<count($fs)+$s;$i++)
                 <td>{{$estado[$i]}}</td>
                 @endfor
                 <td></td>
@@ -50,7 +50,7 @@
 
             @php 
                 $c=$c+1; 
-                $s=$s+count($fechas) 
+                $s=$s+count($fs) 
             @endphp
             @endforeach
         </tbody>
