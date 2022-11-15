@@ -14,7 +14,7 @@
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/theme/angular.jpg">
+                        <img alt="Image placeholder" src="{{ asset('argon') }}/img/brand/blue.jpg">
                         </span>
                     </div>
                 </a>
@@ -93,7 +93,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('atletas.index') }}">
                                     {{ __('Listado de Atletas') }}
                                 </a>
                             </li>
@@ -109,7 +109,7 @@
                     <div class="collapse show" id="navbar-entrenador">
                         <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                                <a class="nav-link" href="{{ route('entrenadores.create') }}">
+                                <a class="nav-link" href="{{ route('asis') }}">
                                     {{ __('Asistencia') }}
                                 </a>
                             </li>
@@ -160,12 +160,12 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/getting-started/overview.html">
+                    <a class="nav-link" href="{{ route('asistencias.index') }}">
                         <i class="ni ni-bullet-list-67"style="color: #f4645f;"></i> Reporte EGD FOR31
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/foundation/colors.html">
+                    <a class="nav-link" href="">
                         <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR27
                     </a>
                 </li>
@@ -175,7 +175,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/foundation/colors.html">
+                    <a class="nav-link" href="{{ route('for30') }}">
                         <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
                     </a>
                 </li>

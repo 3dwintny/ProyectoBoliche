@@ -69,8 +69,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::resource('entrenadores',EntrenadorController::class);
 	Route::resource('psicologia',PsicologiaController::class);
 	Route::resource('alergias',AlergiaController::class);
-	//Rutas Asistencia
-Route::resource('asistencias',AsistenciaController::class);
+
+	
+	Route::resource('asistencias',AsistenciaController::class);
+	Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
 
 //Rutas Atletas
 Route::resource('atletas',AtletaController::class);
@@ -145,7 +147,11 @@ Route::resource('tipo_contratos',Tipo_ContratoController::class);
 
 //Rutas Tipo_Usuario
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
+//ruta para mostrar el nombre del atleta
+Route::get('atl/{id}',[AtletaController::class,'creacion'])->name('creacion');
 
+Route::get('for31', function () {return view('Reportes.for31');})->name('for31'); 
+Route::get('for30', function () {return view('Reportes.for30');})->name('for30'); 
 
 });
 
@@ -154,7 +160,7 @@ Route::resource('alumnos',AlumnoController::class);
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
 Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
-/*Route::get('/dashboard', function () {
+Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');*/
+})->middleware(['auth', 'verified'])->name('dashboard');
 require __DIR__.'/auth.php';

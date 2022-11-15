@@ -20,11 +20,8 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        
-        $alumnos = Alumno::paginate();
-
-        return view('alumno.index', compact('alumnos'))
-            ->with('i', (request()->input('page', 1) - 1) * $alumnos->perPage());
+        $alumnos = Alumno::where('estado','Pendiente')->get();        
+        return view('alumno.index', compact('alumnos'));
         //return view('alumno.show');
     }
 
