@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Inscribir Atleta</title>
@@ -9,6 +10,13 @@
 <body>
     <form method="POST" action="{{route('atletas.store')}}" enctype="multipart/form-data" role="form">
         @csrf
+        <label>Atleta Federado</label>
+        <div>
+            <label>Si</label>
+            <input type="radio" name="federado" id="federado0" value="0">
+            <label>No</label>
+            <input type="radio" name="federado" id="federado1" value="1">
+        </div>
         <label>Fecha</label>
         <input type="text" name="fecha_ingreso" id="fecha_sistema" readonly>
         <br>
@@ -134,5 +142,14 @@
      month = date.getMonth()+1;
      day = date.getDate();
      document.getElementById("fecha_sistema").value = year+"/"+month+"/"+day;
+
+     $(document).ready(function () {
+        $('#federado0').on('change', function () {
+            console.log("Funciona SI");
+        });
+        $('#federado1').on('change', function () {
+            console.log("Funciona NO");
+        });
+    });
 </script>
 </html>
