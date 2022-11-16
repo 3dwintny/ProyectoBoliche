@@ -13,7 +13,7 @@
         <label>Atleta Federado</label>
         <div>
             <label>Si</label>
-            <input type="radio" name="federado" id="federado0" value="0">
+            <input type="radio" name="federado" id="federado0" value="SISTEMÁTICO" checked>
             <label>No</label>
             <input type="radio" name="federado" id="federado1" value="1">
         </div>
@@ -99,7 +99,7 @@
             @endforeach
         </select>
         <label>Otro Programa</label>
-        <select name="otro_programa_id" required>
+        <select name="otro_programa_id" id="otro_programa_id" disabled>
             <option selected disabled>Otro Programa</option>
             @foreach($otros_programas as $item)
             <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -145,10 +145,10 @@
 
      $(document).ready(function () {
         $('#federado0').on('change', function () {
-            console.log("Funciona SI");
+            document.getElementById('otro_programa_id').disabled = true;
         });
         $('#federado1').on('change', function () {
-            console.log("Funciona NO");
+            document.getElementById('otro_programa_id').disabled = false;
         });
     });
 </script>

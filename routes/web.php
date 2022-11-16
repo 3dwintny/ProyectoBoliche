@@ -29,6 +29,7 @@ use App\Http\Controllers\PsicologiaController;
 use App\Http\Controllers\TerapiaController;
 use App\Http\Controllers\Tipo_ContratoController;
 use App\Http\Controllers\Tipo_UsuarioController;
+use App\Http\Controllers\EDG27Controller;
 
 
 /*
@@ -76,6 +77,9 @@ Route::resource('deportes-adaptados',Deporte_AdaptadoController::class);
 
 //Rutas Deporte
 Route::resource('deportes',DeporteController::class);
+
+//Ruta Reporte EDG27
+Route::resource('edg-27',EDG27Controller::class);
 
 //Rutas Encargado
 Route::resource('encargados',EncargadoController::class);
