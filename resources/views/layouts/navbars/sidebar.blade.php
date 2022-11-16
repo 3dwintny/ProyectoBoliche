@@ -109,7 +109,7 @@
                     <div class="collapse show" id="navbar-entrenador">
                         <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-                                <a class="nav-link" href="{{ route('entrenadores.create') }}">
+                                <a class="nav-link" href="{{ route('asistencias.create') }}">
                                     {{ __('Asistencia') }}
                                 </a>
                             </li>
@@ -175,7 +175,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/foundation/colors.html">
+                    <a class="nav-link" href="{{ route('asistencias.index') }}">
                         <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
                     </a>
                 </li>
