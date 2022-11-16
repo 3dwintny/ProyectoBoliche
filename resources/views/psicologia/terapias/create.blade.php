@@ -6,7 +6,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
-<div class="header bg-dark pb-4 pt-5 pt-md-6">
+<div class="header bg-dark pb-3 pt-5 pt-md-5">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -18,315 +18,273 @@
         </div>
     </div>
 </div>
-<div class="container-fluid">
-    <div class="header-body text-center  mb-7">
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-md-8">
+<div class="header-body text-center  mb-2 container">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-md-10">
+            <form method="POST" action="{{route('terapias.store')}}" enctype="multipart/form-data" role="form">
+                @csrf
                 <div class="card">
-                    <div class="card-header text-bold ">
-                        <strong>
-                            <h1> Registrar nuevo entrenador </h1>
-                        </strong>
-                        <div">Fecha <input type="text" class=" container form-control text-center" name="fecha_registro"
-                                id="fecha_sistema" readonly disabled>
+                    <div class="card-header bg-light mb-2">
+                        <div class="row justify-content-center">
+                            <div class="col-md-10 mb-3">
+                                <h3 class="card-title">Terapia</h3>
+                            </div>
+                            <div class="col-md-2 mb-2"><input type="text" class="form-control text-dark" name="numero_terapia" placeholder="No. Sesion" id=""></div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 mb-4"><select name="psicologia_id" class="form-control text-dark" required>
+                                <option selected disabled>Psicologa(o)</option>
+                                @foreach ($psicologos as $item)
+                                <option value="{{$item->id}}">{{$item->nombre1}} {{$item->nombre2}} {{$item->apellido1}}
+                                    {{$item->apellido2}} {{$item->apellido_casada}}
+                                </option>
+                                @endforeach
+                            </select></div>
+                        <div class="col-md-4 mb-4"><select name="atleta_id" class="form-control text-dark">
+                                <option selected disabled>Atleta</option>
+                                @foreach ($atletas as $item)
+                                <option value="{{$item->id}}">{{$item->alumno->nombre1}} {{$item->alumno->nombre2}}
+                                    {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
+                                </option>
+                                @endforeach
+                            </select></div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-md-4 mb-13"><input type="text" class="form-control text-center" name="fecha_registro" id="fecha_sistema" readonly></div>
+                        <div class="col-md-4 mb-4"><input type="time" class="form-control text-dark" name="hora_inicio" id="hora_inicio"></div>
+                    </div>
+
+
+                    <div class="card-body bg-light">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                Impresión Clínica
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body"> <textarea class="form-control" name="impresion_clinica" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingTwo">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                Análisis Semiológico (Signos y Síntomas)
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body"><textarea class="form-control" name="analisis_semiologico" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingThree">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                                Desarrollo
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body"><textarea class="form-control" name="desarrollo" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-heading4">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4">
+                                                Observaciones
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-heading4" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body"> <textarea class="form-control" name="observaciones" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-heading5">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse5" aria-expanded="false" aria-controls="flush-collapse5">
+                                                Tarea
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-heading5" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body"> <textarea class="form-control" name="tarea" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th scope="col">Rubro</th>
+                                        <th scope="col">Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr>
+                                        <td>Conciencia Corporal</td>
+                                        <td><select  aria-label=".form-select-sm example" name="conciencia_corporal" id="">
+                                                <option class="form-control" selected disabled>Conciencia Corporal</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td> Dominio Corporal</td>
+                                        <td><select name="dominio_corporal" id="">
+                                                <option selected disabled>Dominio Corporal</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dominio de Respiración</td>
+                                        <td><select name="dominio_respiracion" id="">
+                                                <option selected disabled>Dominio de Respiración</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diálogo Interno</td>
+                                        <td><select name="dialogo_interno" id="">
+                                                <option selected disabled>Diálogo Interno</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Atención</td>
+                                        <td><select name="atencion" id="">
+                                                <option selected disabled>Atención</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Concentración</td>
+                                        <td><select name="concentracion" id="">
+                                                <option selected disabled>Concentración</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Motivación</td>
+                                        <td><select name="motivacion" id="">
+                                                <option selected disabled>Motivación</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Confianza</td>
+                                        <td><select name="confianza" id="">
+                                                <option selected disabled>Confianza</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Activación</td>
+                                        <td><select name="activacion" id="">
+                                                <option selected disabled>Activación</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <td>Relajación</td>
+                                    <td><select name="relajacion" id="">
+                                            <option selected disabled>Relajación</option>
+                                            @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                @endfor
+                                        </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Estrés</td>
+                                        <td><select name="estres" id="">
+                                                <option selected disabled>Estrés</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ansiedad Cognitiva</td>
+                                        <td><select name="ansiedad_cognitiva" id="">
+                                                <option selected disabled>Ansiedad Cognitiva</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select>
+                                    </tr>
+                                    </td>
+                                    <tr>
+                                        <td>Ansiedad Física</td>
+                                        <td><select name="ansiedad_fisica" id="">
+                                                <option selected disabled>Ansiedad Física</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Miedo</td>
+                                        <td><select name="miedo" id="">
+                                                <option selected disabled>Miedo</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Frustración</td>
+                                        <td><select name="frustracion" id="">
+                                                <option selected disabled>Frustración</option>
+                                                @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
+                                                    @endfor
+                                            </select></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        </div>
+                        <input class="btn btn-outline-primary" type="submit" value="Guardar">
                     </div>
                 </div>
-            </div>
-            <form method="POST" action="{{route('terapias.store')}}" enctype="multipart/form-data" role="form">
-                <label>Fecha</label>
-                <input type="text" name="fecha" id="fecha_sistema" readonly>
-                <input type="time" name="hora_inicio" id="">
-                <br>
-                @csrf
-                <label>Psicologa(o)</label>
-                <select name="psicologia_id">
-                    <option selected disabled>Psicologa(o)</option>
-                    @foreach ($psicologos as $item)
-                    <option value="{{$item->id}}">{{$item->nombre1}} {{$item->nombre2}} {{$item->apellido1}}
-                        {{$item->apellido2}} {{$item->apellido_casada}}</option>
-                    @endforeach
-                </select>
-                <select name="atleta_id">
-                    <option selected disabled>Atleta</option>
-                    @foreach ($atletas as $item)
-                    <option value="{{$item->id}}">{{$item->alumno->nombre1}} {{$item->alumno->nombre2}}
-                        {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}</option>
-                    @endforeach
-                </select>
-                <label>Número de Sesión</label>
-                <input type="text" name="numero_terapia" placeholder="Número de Sesión" id="">
-                <label>Impresión Clínica</label>
-                <textarea rows="10" cols="70" name="impresion_clinica" placeholder="Impresión Clínica"
-                    style="resize:none;"></textarea>
-                <label>Análisis Semiológico (Signos y Síntomas)</label>
-                <textarea rows="10" cols="70" name="analisis_semiologico"
-                    placeholder="Análisis Semiológico (Signos y Síntomas)" style="resize:none;"></textarea>
-                <label>Desarrollo</label>
-                <textarea rows="10" cols="70" name="desarrollo" placeholder="Desarrollo"
-                    style="resize:none;"></textarea>
-                <label>Observaciones</label>
-                <textarea rows="10" cols="70" name="observaciones" placeholder="Observaciones"
-                    style="resize:none;"></textarea>
-                <label>Tarea</label>
-                <textarea rows="10" cols="70" name="tarea" placeholder="Tarea" style="resize:none;"></textarea>
-                <label>Conciencia Corporal</label>
-                <select name="conciencia_corporal" id="">
-                    <option selected disabled>Conciencia Corporal</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Dominio Corporal</label>
-                <select name="dominio_corporal" id="">
-                    <option selected disabled>Dominio Corporal</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Dominio de Respiración</label>
-                <select name="dominio_respiracion" id="">
-                    <option selected disabled>Dominio de Respiración</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Diálogo Interno</label>
-                <select name="dialogo_interno" id="">
-                    <option selected disabled>Diálogo Interno</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Atención</label>
-                <select name="atencion" id="">
-                    <option selected disabled>Atención</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Concentración</label>
-                <select name="concentracion" id="">
-                    <option selected disabled>Concentración</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Motivación</label>
-                <select name="motivacion" id="">
-                    <option selected disabled>Motivación</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Confianza</label>
-                <select name="confianza" id="">
-                    <option selected disabled>Confianza</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Activación</label>
-                <select name="activacion" id="">
-                    <option selected disabled>Activación</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Relajación</label>
-                <select name="relajacion" id="">
-                    <option selected disabled>Relajación</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Estrés</label>
-                <select name="estres" id="">
-                    <option selected disabled>Estrés</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Ansiedad Cognitiva</label>
-                <select name="ansiedad_cognitiva" id="">
-                    <option selected disabled>Ansiedad Cognitiva</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Ansiedad Física</label>
-                <select name="ansiedad_fisica" id="">
-                    <option selected disabled>Ansiedad Física</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Miedo</label>
-                <select name="miedo" id="">
-                    <option selected disabled>Miedo</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <label>Frustración</label>
-                <select name="frustracion" id="">
-                    <option selected disabled>Frustración</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <input type="submit" value="Guardar">
-            </form>
-
-
-
         </div>
+        </form>
+
+
     </div>
 </div>
-</div>
-</div>
-</div>
+
+
+
+
+
 
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#fecha_nacimiento').on('change', function() {
-        function calcularEdad(fechas) {
-            var hoy = new Date();
-            var cumpleanos = new Date(fechas);
-            var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-            var m = hoy.getMonth() - cumpleanos.getMonth();
+    $(document).ready(function() {
+        $('#fecha_nacimiento').on('change', function() {
+            function calcularEdad(fechas) {
+                var hoy = new Date();
+                var cumpleanos = new Date(fechas);
+                var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+                var m = hoy.getMonth() - cumpleanos.getMonth();
 
-            if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                edad--;
+                if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+                    edad--;
+                }
+
+                return edad;
             }
-
-            return edad;
-        }
-<<<<<<< HEAD
-        document.getElementById('_edad').value=calcularEdad(document.getElementById('fecha_nacimiento').value);
+            document.getElementById('_edad').value = calcularEdad(document.getElementById(
+                'fecha_nacimiento').value);
         });
     });
     date = new Date();
     year = date.getFullYear();
-    month = date.getMonth()+1;
+    month = date.getMonth() + 1;
     day = date.getDate();
-    document.getElementById("fecha_sistema").value = year+"/"+month+"/"+day;
+    document.getElementById("fecha_sistema").value = year + "/" + month + "/" + day;
 </script>
 @endsection
-=======
-        document.getElementById('_edad').value = calcularEdad(document.getElementById(
-            'fecha_nacimiento').value);
-    });
-});
-date = new Date();
-year = date.getFullYear();
-month = date.getMonth() + 1;
-day = date.getDate();
-document.getElementById("fecha_sistema").value = year + "/" + month + "/" + day;
-</script>
-@endsection
->>>>>>> 14808f8ae125efd465a74a25805c050ce31235fa

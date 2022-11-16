@@ -20,9 +20,7 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-
-        $alumnos = Alumno::where('estado','Pendiente')->get();
-
+        $alumnos = Alumno::where('estado','Pendiente')->get();        
         return view('alumno.index', compact('alumnos'));
         //return view('alumno.show');
     }

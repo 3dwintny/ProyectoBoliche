@@ -41,9 +41,10 @@ class Alumno extends Model
     'departamento_residencia_id',
     'municipio_residencia_id'];
 
-    /*public function atleta(){
-        return $this->hasMany('App\Models\Atleta');
-    }*/
+    public function obtener_nombre($id)
+    {
+        return Alumno::find($id);
+    }
     public function atletas(){
         return $this->hasMany('App\Models\Atleta');
     }

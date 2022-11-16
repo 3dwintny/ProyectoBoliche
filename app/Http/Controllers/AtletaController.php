@@ -31,8 +31,8 @@ class AtletaController extends Controller
     {
         
         $atletas = Atleta::paginate();
-
-        return view('alumno.index', compact('atletas'))
+        
+        return view('Atletas.index', compact('atletas'))
             ->with('i', (request()->input('page', 1) - 1) * $atletas->perPage());
     }
 
@@ -69,6 +69,22 @@ class AtletaController extends Controller
         
      
     }
+    public function creacion($id){
+        $centro=Centro::all();
+        $entrenador= Entrenador::All();
+        $alumno = Alumno::find($id);
+        $categoria = Categoria::all();
+        $etapa=Etapa_Deportiva::all();
+        $deporteadaptado = Deporte_Adoptado::all();
+        $otroprograma = Otro_Programa::all();
+        $lineadesarrollo = Linea_Desarrollo::all();
+        $deporte = Deporte::all();
+        $modalidad = Modalidad::all();
+        $prt = PRT::all();
+        return view('atletas.create',compact('alumno',"centro","entrenador","categoria","etapa",
+        "deporteadaptado","otroprograma","lineadesarrollo",
+        "deporte","modalidad","prt"));
+    }
  
     /**
      * Store a newly created resource in storage.
@@ -78,7 +94,10 @@ class AtletaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $atletas = new Atleta($request->all());
+        $atletas->save();
+        return redirect()->action([AtletaController::class, 'index']);
     }
 
     /**

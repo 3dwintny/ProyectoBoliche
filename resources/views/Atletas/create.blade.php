@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Inscripcion del Atleta </h2>
+                            <h3>Inscripcion del Atleta {{ $alumno->nombre1 }}</h3>
                         </strong>
 
                     </div>
@@ -35,12 +35,12 @@
                     <div class="form-group">
                         <div class="card">
                             <div class="card-body bg-light">
-                                <h2 class="mb-2">Informacion Adicional</h2>
+                                <h5 class="mb-2">Informacion Adicional</h5>
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
                                         <div class="input-group mb-2">
                                             <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Ingreso</span>
-                                            <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" readonly>
+                                            <input type="text" class=" container form-control text-center" name="fecha_ingreso" id="fecha_sistema" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Adaptado" type="text" name="adaptado" value="{{ old('Adaptado') }}" required></div>
@@ -82,6 +82,12 @@
                                             <option value="{{$item->id}}">{{$item->nombre1}} {{$item->apellido1}}</option>
                                             @endforeach
                                         </select></div>
+                                        <div class="col-md-4 mb-2"><select name="categoria_id" class="form-control text-dark" required>
+                                            <option selected disabled>Categoria</option>
+                                            @foreach ($categoria as $item)
+                                            <option value="{{$item->id}}">{{$item->tipo}} ({{$item->rango_edades}} años)</option>
+                                            @endforeach
+                                        </select></div>
                                     <div class="col-md-4 mb-2"><select name="etapa_deportiva_id" class="form-control text-dark" required>
                                             <option selected disabled>Etapa Deportiva</option>
                                             @foreach ($etapa as $item)
@@ -94,6 +100,37 @@
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
+                                        <div class="col-md-4 mb-2"><select name="deporte_adaptado_id" class="form-control text-dark" required>
+                                            <option selected disabled>Deporte Adaptado</option>
+                                            @foreach ($deporteadaptado as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                            @endforeach
+                                        </select></div>
+                                        <div class="col-md-4 mb-2"><select name="otro_programa_id" class="form-control text-dark" required>
+                                            <option selected disabled>Otro Programa</option>
+                                            @foreach ($otroprograma as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                            @endforeach
+                                        </select></div>
+                                        <div class="col-md-4 mb-2"><select name="linea_desarrollo_id" class="form-control text-dark" required>
+                                            <option selected disabled>Linea de Desarrollo</option>
+                                            @foreach ($lineadesarrollo as $item)
+                                            <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                            @endforeach
+                                        </select></div>
+                                        <div class="col-md-4 mb-2"><select name="modalidad_id" class="form-control text-dark" required>
+                                            <option selected disabled>Modalidad</option>
+                                            @foreach ($modalidad as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                            @endforeach
+                                        </select></div>
+                                        <div class="col-md-4 mb-2"><select name="prt_id" class="form-control text-dark" required>
+                                            <option selected disabled>PRT</option>
+                                            @foreach ($prt as $item)
+                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                            @endforeach
+                                        </select></div>
+                                        <input type="hidden" name="alumno_id" id="" value="{{$alumno->id}}" readonly>
                                 </div>
                                 <div class="container">
                                     <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>
