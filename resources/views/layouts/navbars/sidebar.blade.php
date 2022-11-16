@@ -160,7 +160,7 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('asistencias.index') }}">
+                    <a class="nav-link" href="#">
                         <i class="ni ni-bullet-list-67"style="color: #f4645f;"></i> Reporte EGD FOR31
                     </a>
                 </li>
@@ -170,7 +170,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/components/alerts.html">
+                    <a class="nav-link" href="{{ route('edg-27-2.index') }}">
                         <i class="ni ni-bullet-list-67"style="color: #fea735;"></i> Reporte EGD FOR27.2
                     </a>
                 </li>

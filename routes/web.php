@@ -29,7 +29,8 @@ use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\NacionalidadController;
 use App\Http\Controllers\Tipo_UsuarioController;
 use App\Http\Controllers\Otro_ProgramaController;
-
+use App\Http\Controllers\EDG272Controller;
+use App\Http\Controllers\EDG27Controller;
 
 use App\Http\Controllers\Tipo_ContratoController;
 use App\Http\Controllers\Etapa_DeportivaController;
@@ -159,6 +160,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Rutas Tipo_Usuario
     Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
+    //Ruta Reporte EDG27
+Route::resource('edg-27',EDG27Controller::class);
+
+//Ruta Reporte EDG27.2
+Route::resource('edg-27-2',EDG272Controller::class);
 
 //Rutas Tipo_Contrato
 
