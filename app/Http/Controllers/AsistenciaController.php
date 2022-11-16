@@ -18,8 +18,14 @@ class AsistenciaController extends Controller
     public function index()
     {
         $hoy = Carbon::now();
-        $mes = Asistencia::whereMonth('fecha',$hoy->month)->get(); 
-        $ads = Asistencia::whereMonth('fecha',$hoy->month)->get()->sortBy('atleta_id');
+        $mes = Asistencia::
+        whereMonth('fecha',$hoy->month)
+        ->whereYear('fecha',$hoy->year)
+        ->get(); 
+        $ads = Asistencia::whereMonth('fecha',$hoy->month)
+        ->whereYear('fecha',$hoy->year)
+        ->get()
+        ->sortBy('atleta_id');
         $atletas = Asistencia::all('atleta_id');
         $ast = Asistencia::all('fecha');
         //Array en el que se almacenan las fechas una sola vez
@@ -210,10 +216,15 @@ class AsistenciaController extends Controller
     public function buscar(Request $request){
         $m = $request->mes;
         $y = $request->anio;
-        $mes = Asistencia::whereMonth('fecha',$m)->get();
-        $anio = Asistencia::whereYear('fecha',$y)->get();
-        if(count($mes)>0 && count($anio)>0){
-            $ads = Asistencia::whereMonth('fecha',$m)->get()->sortBy('atleta_id');
+        $mes = Asistencia::
+        whereMonth('fecha',$m)
+        ->whereYear('fecha',$y)
+        ->get();
+        if(count($mes)>0){
+            $ads = Asistencia::
+            whereMonth('fecha',$m)
+            ->whereYear('fecha',$y)
+            ->get()->sortBy('atleta_id');
         $atletas = Asistencia::all('atleta_id');
         $ast = Asistencia::all('fecha');
         //Array en el que se almacenan las fechas una sola vez
