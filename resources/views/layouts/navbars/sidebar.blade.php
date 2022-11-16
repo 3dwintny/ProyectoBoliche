@@ -109,11 +109,7 @@
                     <div class="collapse show" id="navbar-entrenador">
                         <ul class="nav nav-sm flex-column">
                         <li class="nav-item">
-<<<<<<< HEAD
                                 <a class="nav-link" href="{{ route('asistencias.create') }}">
-=======
-                                <a class="nav-link" href="{{ route('asis') }}">
->>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
                                     {{ __('Asistencia') }}
                                 </a>
                             </li>
@@ -179,11 +175,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-<<<<<<< HEAD
                     <a class="nav-link" href="{{ route('asistencias.index') }}">
-=======
-                    <a class="nav-link" href="{{ route('for30') }}">
->>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
                         <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
                     </a>
                 </li>
