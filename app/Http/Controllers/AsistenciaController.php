@@ -12,15 +12,29 @@ class AsistenciaController extends Controller
 {
     public function index()
     {
+<<<<<<< HEAD
         $hoy = Carbon::now();
         $mes = Asistencia::whereMonth('fecha',$hoy->month)->get(); 
         $ads = Asistencia::whereMonth('fecha',$hoy->month)->get()->sortBy('atleta_id');
+=======
+<<<<<<< HEAD
+        $hoy = Carbon::now();
+        $mes = Asistencia::whereMonth('fecha',$hoy->month)->get();
+        $ads = Asistencia::whereMonth('fecha',$hoy->month)->get()->sortBy('atleta_id');
+=======
+        $ads = Asistencia::all("atleta_id","estado")->sortBy("atleta_id");
+>>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
+>>>>>>> f8f2de15642dbf5c86f8dec9c68b3c12f5a4cf6c
         $atletas = Asistencia::all('atleta_id');
         $ast = Asistencia::all('fecha');
         //Array en el que se almacenan las fechas una sola vez
         $fechas = array();
 
+<<<<<<< HEAD
+        //Array en el que se almacenan los atletas una sola vez
+=======
         //Array en el que se almacenan los atletas una sola vez 
+>>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
         $atleta = array();
 
         //Array en el que se almacena el estado de la asistencia de cada atleta
@@ -41,6 +55,10 @@ class AsistenciaController extends Controller
         $repetidos = array();
 
         //Inserta una sola vez inofrmación de la fecha
+<<<<<<< HEAD
+        for($i=0;$i<count($mes);$i++){
+=======
+<<<<<<< HEAD
         for($i=0;$i<count($mes);$i++){
             if(count($fechas)==0){
                 array_push($fechas,$mes[$i]->fecha);
@@ -48,6 +66,21 @@ class AsistenciaController extends Controller
             else{
                 if(in_array($mes[$i]->fecha,$fechas,)==false){
                     array_push($fechas,$mes[$i]->fecha);
+=======
+        for($i=0;$i<count($ast);$i++){
+>>>>>>> f8f2de15642dbf5c86f8dec9c68b3c12f5a4cf6c
+            if(count($fechas)==0){
+                array_push($fechas,$mes[$i]->fecha);
+            }
+            else{
+<<<<<<< HEAD
+                if(in_array($mes[$i]->fecha,$fechas,)==false){
+                    array_push($fechas,$mes[$i]->fecha);
+=======
+                if(in_array($ast[$i],$fechas,)==false){
+                    array_push($fechas,$ast[$i]);
+>>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
+>>>>>>> f8f2de15642dbf5c86f8dec9c68b3c12f5a4cf6c
                 }
             }
         }
@@ -67,7 +100,15 @@ class AsistenciaController extends Controller
         foreach(array_count_values($atl) as $item){
             array_push($atls,$item->value);
         }
+<<<<<<< HEAD
+
+=======
         
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
+>>>>>>> f8f2de15642dbf5c86f8dec9c68b3c12f5a4cf6c
         //Ingresa el estado de asistencia de cada atleta, orndenado y listo para mostrarse en la vista
         foreach($ads as $item){
             array_push($estado,$item->estado);
@@ -113,10 +154,17 @@ class AsistenciaController extends Controller
         }
 
         foreach ($fechas as $da)
+<<<<<<< HEAD
+        {
+            array_push($fs,substr($da,8,2));
+        }
+        return view('Reportes.RepFor30.index',compact('atleta','fs','estado'));
+=======
         { 
             array_push($fs,substr($da,8,2));
         }
         return view('Reportes.for31',compact('atleta','fs','estado'));
+>>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
     }
 
     /**
@@ -128,7 +176,11 @@ class AsistenciaController extends Controller
     {
         $atletas = Atleta::all();
         $hoy = Carbon::now();
+<<<<<<< HEAD
+        return view('Reportes.RepFor30.crear',compact("atletas" , "hoy"));
+=======
         return view('asistencia.create',compact("atletas" , "hoy"));
+>>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
     }
 
     /**
@@ -201,7 +253,12 @@ class AsistenciaController extends Controller
         }
         return redirect()->back();
     }
+<<<<<<< HEAD
     
+=======
+<<<<<<< HEAD
+
+>>>>>>> f8f2de15642dbf5c86f8dec9c68b3c12f5a4cf6c
     public function buscar(Request $request){
         $m = $request->mes;
         $y = $request->anio;
@@ -214,7 +271,11 @@ class AsistenciaController extends Controller
         //Array en el que se almacenan las fechas una sola vez
         $fechas = array();
 
+<<<<<<< HEAD
         //Array en el que se almacenan los atletas una sola vez 
+=======
+        //Array en el que se almacenan los atletas una sola vez
+>>>>>>> f8f2de15642dbf5c86f8dec9c68b3c12f5a4cf6c
         $atleta = array();
 
         //Array en el que se almacena el estado de la asistencia de cada atleta
@@ -261,7 +322,11 @@ class AsistenciaController extends Controller
         foreach(array_count_values($atl) as $item){
             array_push($atls,$item->value);
         }
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> f8f2de15642dbf5c86f8dec9c68b3c12f5a4cf6c
         //Ingresa el estado de asistencia de cada atleta, orndenado y listo para mostrarse en la vista
         foreach($ads as $item){
             array_push($estado,$item->estado);
@@ -307,6 +372,7 @@ class AsistenciaController extends Controller
         }
 
         foreach ($fechas as $da)
+<<<<<<< HEAD
         { 
             array_push($fs,substr($da,8,2));
         }
@@ -316,4 +382,17 @@ class AsistenciaController extends Controller
             return view('asistencia.sinresultados');
         }
     }
+=======
+        {
+            array_push($fs,substr($da,8,2));
+        }
+        return view('Reportes.RepFor30.index',compact('atleta','fs','estado'));
+        }
+        else{
+            return view('Reportes.RepFor30.sinresultados');
+        }
+    }
+=======
+>>>>>>> 9a480d6edc522a93f13c0b25ab0f276c2d705497
+>>>>>>> f8f2de15642dbf5c86f8dec9c68b3c12f5a4cf6c
 }

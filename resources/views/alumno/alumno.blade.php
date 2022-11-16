@@ -327,7 +327,7 @@ $(document).ready(function () {
             var dptoId = this.value;
             $('#_municipio').html('');
             $.ajax({
-                url: '{{ route('municipios') }}?departamento_id='+dptoId,
+                url: '{{ route("municipios") }}?departamento_id='+dptoId,
                 type: 'get',
                 success: function (res) {
                     $('#_municipio').html('<option value="">Municipio</option>');
@@ -344,7 +344,7 @@ $(document).ready(function () {
             var dptoId = this.value;
             $('#_municipioR').html('');
             $.ajax({
-                url: '{{ route('municipios') }}?departamento_id='+dptoId,
+                url: '{{ route("municipios") }}?departamento_id='+dptoId,
                 type: 'get',
                 success: function (res) {
                     $('#_municipioR').html('<option value="">Municipio</option>');

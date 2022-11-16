@@ -8,9 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+//agregamos spatie
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +25,8 @@ class User extends Authenticatable
         'email',
         'password',
         'tipo_usuario_id',
+        /* 'tipo', //tipo 0 es administrador, 1 es estudiante, 2 es entrenador, 3 es psicologo
+        'estado' */ // activo = 1 , no a ctivo es 0
     ];
 
 

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Inicio</title>
@@ -57,5 +57,15 @@
         integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous">
     </script>
 </body>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#fecha').on('change', function() {
+        for (let i = 0; i < document.getElementsByName('fecha[]').length; i++) {
+            document.getElementById("fecha_registro" + i).value = document.getElementById('fecha')
+            .value;
+        }
+    });
+});
+</script>
 
 </html>
