@@ -40,58 +40,63 @@
                     <div class="col-xl-6 col-lg-6">
                         <h4 class="text-white"> Reporte Asistencia</h4>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Atleta</th>
-                                <th>Edad</th>
-                                <th>Género</th>
-                                <th>Categoría</th>
-                                <th>Modalidad</th>
-                                @for ($i=0;$i<count($fs);$i++) <th>{{$fs[$i]}}</th>
-                                    @endfor
-                                    <th>Días Entrenados</th>
-                                    <th>% de Asistencia</th>
-                                    <th>Etapa Deportiva</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $s=0;
-                            $c=0;
-                            @endphp
-                            @foreach($atleta as $item)
-
-                            <tr id="{{$c}}">
-                                <!--Filas-->
-                                <td>
-                                    <!--Columnas-->
-                                    {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}} {{$item->atleta->alumno->nombre3}}
-                                    {{$item->atleta->alumno->apellido1}} {{$item->atleta->alumno->apellido2}}
-                                </td>
-                                <td>{{$item->atleta->alumno->edad}}</td>
-                                <td>{{$item->atleta->alumno->genero}}</td>
-                                <td>{{$item->atleta->categoria->tipo}}</td>
-                                <td>{{$item->atleta->modalidad->nombre}}</td>
-
-                                @for($i=$s;$i<count($fs)+$s;$i++) <td>{{$estado[$i]}}</td>
-                                    @endfor
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
-                            </tr>
-
-                            @php
-                            $c=$c+1;
-                            $s=$s+count($fs)
-                            @endphp
-                            @endforeach
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
+   
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Atleta</th>
+                <th>Edad</th>
+                <th>Género</th>
+                <th>Categoría</th>
+                <th>Modalidad</th>
+                @for ($i=0;$i<count($fs);$i++) <th>{{$fs[$i]}}</th>
+                    @endfor
+                    <th>Días Entrenados</th>
+                    <th>% de Asistencia</th>
+                    <th>Etapa Deportiva</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+            $s=0;
+            $c=0;
+            @endphp
+            @foreach($atleta as $item)
+
+            <tr id="{{$c}}">
+                <!--Filas-->
+                <td>
+                    <!--Columnas-->
+                    {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}} {{$item->atleta->alumno->nombre3}}
+                    {{$item->atleta->alumno->apellido1}} {{$item->atleta->alumno->apellido2}}
+                </td>
+                <td>{{$item->atleta->alumno->edad}}</td>
+                <td>{{$item->atleta->alumno->genero}}</td>
+                <td>{{$item->atleta->categoria->tipo}}</td>
+                <td>{{$item->atleta->modalidad->nombre}}</td>
+
+                @for($i=$s;$i<count($fs)+$s;$i++) <td>{{$estado[$i]}}</td>
+                    @endfor
+                    <td></td>
+                    <td></td>
+                    <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
+            </tr>
+
+            @php
+            $c=$c+1;
+            $s=$s+count($fs)
+            @endphp
+            @endforeach
+        </tbody>
+    </table>
+    </div>
+
 
 
 </body>

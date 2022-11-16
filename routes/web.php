@@ -73,6 +73,7 @@ Route::group(['middleware' => 'auth'], function () {
 	
 	Route::resource('asistencias',AsistenciaController::class);
 	Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
+	Route::post('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
 
 //Rutas Atletas
 Route::resource('atletas',AtletaController::class);

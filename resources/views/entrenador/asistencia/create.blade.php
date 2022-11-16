@@ -18,78 +18,108 @@
         </div>
     </div>
 </div>
-<div class="">
-    <div class="header-body mb-7">
-        <div class="">
-            <div class="col-lg-12 col-md-8">
-                <div class="card">
-                </div>
-                <form method="POST" action="{{route('asis')}}" enctype="multipart/form-data" role="form">
-                    @csrf
-                    <div class="pb-5 pt-5 pt-md-2 table-responsive">
-                        <table class="table table-hover table-bordered">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th>No</th>
-                                    <th>Atleta</th>
-                                    <th>Asistencia</th>
-                                    <th>Inasistencia</th>
-                                    <th>Permiso/Descanso</th>
-                                    <th>Enfermo</th>
-                                    <th>Lesión</th>
-                                    <th>Competencia</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-dark">
-                                @foreach($atletas as $item)
-                                <tr>
-                                    <td>
-                                        <input type="text" class="text-white bg-dark" name="atleta_id[]" value="{{$item->id}}" disabled readonly>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="text-white bg-dark" value="{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}" disabled readonly>
-                                    </td>
-                                        <td>
-                                        <div class="form-check">
-                                            <input type="radio" id="defaultCheck1" class="form-check-input" name="estado[]" value="X">
-                                            </div>
-                                        </td>
-                                        <td>
-                                        <div class="form-check">
-                                            <input type="radio" id="defaultCheck2" class="form-check-input" name="estado[]" value="O">
-                                            </div>
-                                        </td>
-                                        <td>
-                                        <div class="form-check">
-                                            <input type="radio" id="estado" class="form-check-input" name="estado[]" value="P">
-                                            </div>
-                                        </td>
-                                        <td>
-                                        <div class="form-check">
-                                            <input type="radio" id="estado" class="form-check-input" name="estado[]" value="E">
-                                            </div>
-                                        </td>
-                                        <td>
-                                        <div class="form-check">
-                                            <input type="radio" id="estado" class="form-check-input" name="estado[]" value="L">
-                                            </div>
-                                        </td>
-                                        <td>
-                                        <div class="form-check">
-                                            <input type="radio" id="estado" class="form-check-input" name="estado[]" value="C">
-                                            </div>
-                                        </td>
-                                </tr>
-                                <input type="hidden" name="fecha[]" id="" value="{{$hoy->format('Y-m-d')}}" readonly>
-                                @endforeach
-                            </tbody>
-                        </table>
-                        <button type="submit" class="btn btn-outline-primary">Guardar Asistencia</button>
+<div class="card-body">
+                        <label>Modificar Fecha de Asistencia</label>
+                        <input type="date" id="fecha">
+                        <form method="POST" action="{{route('asis')}}" enctype="multipart/form-data" role="form">
+                            @csrf
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <div class="table-responsive">
+ 
+                                            <table class="table table-striped table-hover">
+                                                <thead class="table table-dark mt-2">
+                                                    <tr>
+                                                        <th>No</th>
+                                                        <th>Fecha</th>
+                                                        <th>Atleta</th>
+                                                        <th>Asistencia</th>
+                                                        <th>Inasistencia</th>
+                                                        <th>Permiso/Descanso</th>
+                                                        <th>Enfermo</th>
+                                                        <th>Lesión</th>
+                                                        <th>Competencia</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                    $c = 0;
+                                                    @endphp
+                                                    @foreach($atletas as $item)
+                                                    <tr>
+                                                        <td>
+                                                            <input type="text" name="atleta_id[]" value="{{$item->id}}"
+                                                                readonly>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="fecha[]"
+                                                                value="{{$hoy->format('Y-m-d')}}"
+                                                                id="fecha_registro{{$c}}" readonly>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text"
+                                                                value="{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}"
+                                                                readonly>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" id="estado" class="{{$item->id}}"
+                                                                    name="estado[]" value="X"> <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" id="estado" class="{{$item->id}}"
+                                                                    name="estado[]" value="O"> <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" id="estado" class="{{$item->id}}"
+                                                                    name="estado[]" value="P"> <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" id="estado" class="{{$item->id}}"
+                                                                    name="estado[]" value="E"> <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" id="estado" class="{{$item->id}}"
+                                                                    name="estado[]" value="L"> <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>
+                                                            <label>
+                                                                <input type="checkbox" id="estado" class="{{$item->id}}"
+                                                                    name="estado[]" value="C"> <span></span>
+                                                            </label>
+                                                        </td>
+                                                    </tr>
+                                                    @php
+                                                    $c = $c+1;
+                                                    @endphp
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+ 
+                                    </div>
+                                </div>
+                            </div>
+ 
+                            <input type="submit" class="next-form btn btn-outline-primary" value="Guardar Asistencia">
+                        </form>
+ 
+ 
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+ 
 @endsection
