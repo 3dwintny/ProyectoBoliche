@@ -7,6 +7,28 @@
     <title>Asistencia</title>
 </head>
 <body>
+    <form method="POST" action="{{route('buscar')}}">
+        @csrf
+        <label>Mes</label>
+        <select name="mes" id="mes">
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octube</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+        </select>
+        <label>Año</label>
+        <input type="number" name="anio" id="anio" required>
+        <input type="submit" value="Buscar">
+    </form>
+    
     <table>
         <thead>
             <tr>
@@ -30,8 +52,8 @@
             @endphp
             @foreach($atleta as $item)
             
-            <tr id="{{$c}}"><!--Filas-->
-                <td><!--Columnas-->
+            <tr id="{{$c}}" style="text-align: center;"><!--Filas-->
+                <td ><!--Columnas-->
                     {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}} {{$item->atleta->alumno->nombre3}}
                     {{$item->atleta->alumno->apellido1}} {{$item->atleta->alumno->apellido2}}
                 </td>
