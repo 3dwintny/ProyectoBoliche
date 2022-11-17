@@ -199,24 +199,24 @@
                                                     <input class="form-control text-dark"
                                                         aria-describedby="basic-addon2"
                                                         placeholder="{{ __('Primer Nombre') }}" type="text"
-                                                        name="nombre1" value="{{ old('Primer Nombre') }}" required>
+                                                        name="nombre1p" value="{{ old('Primer Nombre') }}" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark"
                                                         placeholder="{{ __('Segundo Nombre') }}" type="text"
-                                                        name="nombre2" value="{{ old('Segundo Nombre') }}" required>
+                                                        name="nombre2p" value="{{ old('Segundo Nombre') }}" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark"
                                                         placeholder="{{ __('Tercer Nombre') }}" type="text"
-                                                        name="nombre3" value="{{ old('Tercer Nombre') }}" required>
+                                                        name="nombre3p" value="{{ old('Tercer Nombre') }}" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido1"
+                                                    <input class="form-control text-dark" type="text" name="apellido1p"
                                                         placeholder="Primer Apellido">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido2"
+                                                    <input class="form-control text-dark" type="text" name="apellido2p"
                                                         placeholder="Segundo Apellido">
                                                 </div>
                                                 <div class="col-md-4 mb-2">

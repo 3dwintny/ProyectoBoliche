@@ -23,7 +23,7 @@ class SliderController extends Controller
     {
         $slider = $this->slider->obterenrSliders();
 
-        return view('admin.slider.index', ['slider'=>$slider]);
+        return view('admin.slider.prueba', ['slider'=>$slider]);
     }
 
     /**
@@ -59,7 +59,7 @@ class SliderController extends Controller
         }
         $slider->status = $request->input('status') == true ? '1':'0';
         $slider->save();
-        
+
         return redirect()->back()->with('status','Slider agregado correctamente');
     }
 
