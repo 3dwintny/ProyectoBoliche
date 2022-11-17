@@ -17,6 +17,7 @@
         "vue": "^3.2.37"
     },
     "dependencies": {
+        "datatables.net-bs5": "^1.13.1",
         "jquery": "^3.6.1"
     }
 }

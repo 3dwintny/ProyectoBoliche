@@ -24,25 +24,17 @@
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
                         <i class="ni ni-single-02"></i>
-                        <span>{{ __('My profile') }}</span>
+                        <span>{{ __('Mi perfil') }}</span>
                     </a>
                     <a href="#" class="dropdown-item">
-                        <i class="ni ni-settings-gear-65"></i>
-                        <span>{{ __('Settings') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-calendar-grid-58"></i>
-                        <span>{{ __('Activity') }}</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="ni ni-support-16"></i>
-                        <span>{{ __('Support') }}</span>
+                        <i class="ni ni-settings"></i>
+                        <span>{{ __('Ajustes') }}</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                        <i class="ni ni-user-run"></i>
-                        <span>{{ __('Logout') }}</span>
+                        <i class="ni ni-button-power"></i>
+                        <span>{{ __('Salir') }}</span>
                     </a>
                 </div>
             </li>
@@ -148,6 +140,13 @@
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('conf') }}">
+                        <i class="ni ni-settings-gear-65 text-dark"></i>
+                        <span class="nav-link-text text-dark">{{ __('Configuraciones') }}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('icons') }}">
                         <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                     </a>
@@ -160,17 +159,17 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('asistencias.index') }}">
+                    <a class="nav-link" href="#">
                         <i class="ni ni-bullet-list-67"style="color: #f4645f;"></i> Reporte EGD FOR31
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="{{ route('edg-27.index') }}">
                         <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR27
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://argon-dashboard-laravel.creative-tim.com/docs/components/alerts.html">
+                    <a class="nav-link" href="{{ route('edg-27-2.index') }}">
                         <i class="ni ni-bullet-list-67"style="color: #fea735;"></i> Reporte EGD FOR27.2
                     </a>
                 </li>

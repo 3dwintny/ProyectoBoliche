@@ -54,7 +54,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <button type="submit" onclick="window.location='{{ url('asistencias') }}'">Regresar</button>
+                            <button type="submit" onclick="window.location=' {{ url('asistencias') }} ">Regresar</button>
                         </div>
                     </div>
                 </div>

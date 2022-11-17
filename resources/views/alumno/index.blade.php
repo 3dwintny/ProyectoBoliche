@@ -14,7 +14,7 @@
   </div>
 </div>
 <div class="pb-5 pt-5 pt-md-2">
-  <div class="">
+  <div class="col-xl-12 col-lg-12">
     <table class="table table-responsive table-hover">
       <thead class="table-dark">
         <tr>

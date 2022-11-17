@@ -6,7 +6,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
-<div class="header bg-dark pb-4 pt-5 pt-md-6">
+<div class="header bg-dark pb-6 pt-5 pt-md-6">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -18,7 +18,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid">
+<div class="container-fluid mt--6">
     <div class="header-body text-center  mb-7">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
@@ -44,6 +44,17 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Adaptado" type="text" name="adaptado" value="{{ old('Adaptado') }}" required></div>
+                                    <div class="col-md-6 mb-2 form-control">
+                                    <label>¿El/La Atleta es Federado ?</label>
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" name="federado" id="federado0" value="SISTEMÁTICO" checked>
+                                        <label class="form-check-label" for="inlineRadio3">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                        <input type="radio" name="federado" id="federado1" value="1">
+                                        <label class="form-check-label" for="inlineRadio3">No</label>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6 mb-2"><select name="estado_civil" class="form-control text-dark" required>
                                             <option selected disabled>Estado Civil</option>
                                             <option value="Soltera/o">Soltera/o</option>
@@ -82,7 +93,7 @@
                                             <option value="{{$item->id}}">{{$item->nombre1}} {{$item->apellido1}}</option>
                                             @endforeach
                                         </select></div>
-                                        <div class="col-md-4 mb-2"><select name="categoria_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2"><select name="categoria_id" class="form-control text-dark" required>
                                             <option selected disabled>Categoria</option>
                                             @foreach ($categoria as $item)
                                             <option value="{{$item->id}}">{{$item->tipo}} ({{$item->rango_edades}} años)</option>
@@ -100,37 +111,37 @@
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
-                                        <div class="col-md-4 mb-2"><select name="deporte_adaptado_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2"><select name="deporte_adaptado_id" class="form-control text-dark" required>
                                             <option selected disabled>Deporte Adaptado</option>
                                             @foreach ($deporteadaptado as $item)
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
-                                        <div class="col-md-4 mb-2"><select name="otro_programa_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2"><select name="otro_programa_id" id="otro_programa_id" class="form-control text-dark" disabled>
                                             <option selected disabled>Otro Programa</option>
                                             @foreach ($otroprograma as $item)
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
-                                        <div class="col-md-4 mb-2"><select name="linea_desarrollo_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2"><select name="linea_desarrollo_id" class="form-control text-dark" required>
                                             <option selected disabled>Linea de Desarrollo</option>
                                             @foreach ($lineadesarrollo as $item)
                                             <option value="{{$item->id}}">{{$item->tipo}}</option>
                                             @endforeach
                                         </select></div>
-                                        <div class="col-md-4 mb-2"><select name="modalidad_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2"><select name="modalidad_id" class="form-control text-dark" required>
                                             <option selected disabled>Modalidad</option>
                                             @foreach ($modalidad as $item)
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
-                                        <div class="col-md-4 mb-2"><select name="prt_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2"><select name="prt_id" class="form-control text-dark" required>
                                             <option selected disabled>PRT</option>
                                             @foreach ($prt as $item)
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
-                                        <input type="hidden" name="alumno_id" id="" value="{{$alumno->id}}" readonly>
+                                    <input type="hidden" name="alumno_id" id="" value="{{$alumno->id}}" readonly>
                                 </div>
                                 <div class="container">
                                     <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>
@@ -172,5 +183,13 @@
     month = date.getMonth() + 1;
     day = date.getDate();
     document.getElementById("fecha_sistema").value = year + "/" + month + "/" + day;
+    $(document).ready(function () {
+        $('#federado0').on('change', function () {
+            document.getElementById('otro_programa_id').disabled = true;
+        });
+        $('#federado1').on('change', function () {
+            document.getElementById('otro_programa_id').disabled = false;
+        });
+    });
 </script>
 @endsection
