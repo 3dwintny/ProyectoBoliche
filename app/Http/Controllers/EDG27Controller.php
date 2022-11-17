@@ -16,10 +16,10 @@ class EDG27Controller extends Controller
     {
         $atletas = Atleta::where('federado','SISTEMÁTICO')->get();
         if(count($atletas)>0){
-            return view('edg27.show',compact('atletas'));
+            return view('Reportes.edg27.show',compact('atletas'));
         }
         else{
-            return view('edg27.sinresultados');
+            return view('Reportes.edg27.sinresultados');
         }
     }
 

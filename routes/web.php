@@ -175,6 +175,9 @@ Route::resource('edg-27-2',EDG272Controller::class);
     Route::get('for30', function () {return view('Reportes.for30');})->name('for30');
 
     Route::resource('slider', SliderController::class);
+    Route::get('conf', function () {return view('configuraciones.index');})->name('conf');
+    Route::get('us', function () {return view('configuraciones.us');})->name('us');
+    Route::get('otros', function () {return view('configuraciones.otros');})->name('otros');
 });
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
