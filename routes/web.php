@@ -58,6 +58,8 @@ Route::get('wel', function () {return view('welcome');})->name('wel'); */
 //Son para los sliders
 
 Route::resource('/', FrontendController::class);
+//Ruta Formulario de Inscripción
+Route::resource('alumnos',AlumnoController::class);
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
@@ -170,8 +172,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('slider', SliderController::class);
 });
-//Ruta Formulario de Inscripción
-Route::resource('alumnos',AlumnoController::class);
+
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
 Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');

@@ -32,12 +32,12 @@
                                 <br>
                                 <label>{{$item->titulo_ficha}}</label>
                                 @endforeach
-                                <input type="text" class="form-control text-center" name="fecha_registro" id="fecha_sistema" readonly>
+                                <!-- <input type="text" class="form-control text-center" name="fecha_registro" id="fecha_sistema" readonly> -->
                             </div>
                         </div>
 
-                        <form id="register_form" novalidate action="form_action.php" method="posts" role="form"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('alumnos.store') }}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
+                            @csrf
                             <fieldset class="card-body bg-light">
                                 <div class="form-group">
                                     <div class="card">
@@ -48,24 +48,24 @@
                                                     <input class="form-control text-dark"
                                                         aria-describedby="basic-addon2"
                                                         placeholder="{{ __('Primer Nombre') }}" type="text"
-                                                        name="nombre1" value="{{ old('Primer Nombre') }}" required>
+                                                        name="enombre1" value="{{ old('Primer Nombre') }}" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark"
                                                         placeholder="{{ __('Segundo Nombre') }}" type="text"
-                                                        name="nombre2" value="{{ old('Segundo Nombre') }}" required>
+                                                        name="enombre2" value="{{ old('Segundo Nombre') }}" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark"
                                                         placeholder="{{ __('Tercer Nombre') }}" type="text"
-                                                        name="nombre3" value="{{ old('Tercer Nombre') }}" required>
+                                                        name="enombre3" value="{{ old('Tercer Nombre') }}" required>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido1"
+                                                    <input class="form-control text-dark" type="text" name="eapellido1"
                                                         placeholder="Primer Apellido">
                                                 </div>
                                                 <div class="col-md-6 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido2"
+                                                    <input class="form-control text-dark" type="text" name="eapellido2"
                                                         placeholder="Segundo Apellido">
                                                 </div>
                                                 <div class="col-md-12 mb-2">
@@ -126,6 +126,10 @@
                                                 <div class="col-md-6 mb-2"><input class="form-control text-dark "
                                                         type="file" name="foto">
                                                 </div>
+                                                <div class="col-md-6 mb-2">
+                                                    <input type="text" class="form-control text-dark" name="fecha_fotografia" id="fecha_sistema" readonly>
+                                                </div>
+
                                                 <div class="col-md-4 mb-2"><input class="form-control text-dark"
                                                         type="text" name="nit" placeholder="NIT">
                                                 </div>
@@ -133,7 +137,17 @@
                                                         type="text" name="pasaporte" placeholder="Pasaporte">
                                                 </div>
                                                 <div class="col-md-4 mb-2"><select class="form-control text-dark"
-                                                        name="nacionalidad" id="">
+                                                        name="alergia_id" id="">
+                                                        <div class="col-md-4 mb-2">
+                                                            <option selected disabled>Alergia</option>
+                                                            @foreach ($alergia as $item)
+                                                            <option value="{{$item->id}}">{{$item->nombre}}
+                                                            </option>
+                                                            @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 mb-2"><select class="form-control text-dark"
+                                                        name="nacionalidad_id" id="">
                                                         <div class="col-md-4 mb-2">
                                                             <option selected disabled>Nacionalidad</option>
                                                             @foreach ($nacionalidades as $item)
@@ -142,10 +156,9 @@
                                                             @endforeach
                                                     </select>
                                                 </div>
-
                                                 <label class="col-md-12 mb-2">Lugar de Nacimiento</label>
                                                 <div class="col-md-6 mb-2"><select class="form-control"
-                                                        name="id_departamento" id="_departamento">
+                                                        name="departamento_id" id="_departamento">
                                                         <option selected disabled>Departamento</option>
                                                         @foreach ($departamentos as $item)
                                                         <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -153,12 +166,12 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 mb-2"><select class="form-control"
-                                                        name="id_municipio" id="_municipio"></select>
+                                                        name="municipio_id" id="_municipio"></select>
                                                 </div>
 
                                                 <label class="col-md-12 mb-2">Lugar de Residencia</label>
                                                 <div class="col-md-6 mb-2"><select class="form-control"
-                                                        name="id_departamento_residencia" id="_departamentoR">
+                                                        name="departamento_residencia_id" id="_departamentoR">
                                                         <option selected disabled>Departamento</option>
                                                         @foreach ($departamentos as $item)
                                                         <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -166,7 +179,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 mb-2"><select class="form-control"
-                                                        name="id_municipio_residencia" id="_municipioR"></select>
+                                                        name="municipio_residencia_id" id="_municipioR" required></select>
                                                 </div>
 
 
@@ -210,18 +223,34 @@
                                                     <input class="form-control" type="text" name="apellido_casada"
                                                         placeholder="Apellido de Casada">
                                                 </div>
-
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="direccion"
+                                                        placeholder="Direccion">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="celular"
+                                                        placeholder="Celular">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="telefono_casa"
+                                                        placeholder="Teléfono Residencial">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="correo"
+                                                        placeholder="Correo electronico">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="dpi"
+                                                        placeholder="DPI">
+                                                </div>
                                                 <div class="col-md-12 mb-2">
-                                                    <select class="form-control" name="id_parentezco"
-                                                        id="id_parentezco">
+                                                    <select class="form-control" name="parentezco_id" required>
                                                         <option selected disabled>Parentezco</option>
-                                                        @foreach ($parentezcos as $item){
+                                                        @foreach ($parentezcos as $item)
                                                         <option value="{{$item->id}}">{{$item->tipo}}</option>
-                                                        }
                                                         @endforeach
                                                     </select>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -241,13 +270,13 @@
                                 </div>
                                 <input type="button" name="previous" class="previous-form btn btn-outline-warning" value="Atras" />
                                 <input type="submit" name="submit" class="submit btn btn-outline-success" value="Enviar" />
+
                             </fieldset>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <div class="separator separator-bottom separator-skew zindex-100">
         <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"

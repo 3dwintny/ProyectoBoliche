@@ -59,6 +59,7 @@ class SliderController extends Controller
         }
         $slider->status = $request->input('status') == true ? '1':'0';
         $slider->save();
+        
         return redirect()->back()->with('status','Slider agregado correctamente');
     }
 

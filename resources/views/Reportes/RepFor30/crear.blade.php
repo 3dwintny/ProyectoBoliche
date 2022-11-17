@@ -106,8 +106,6 @@
 
                             <input type="submit" class="next-form btn btn-outline-primary" value="Guardar Asistencia">
                         </form>
-
-
                     </div>
                 </div>
             </div>
