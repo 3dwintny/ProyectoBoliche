@@ -76,7 +76,7 @@ class AlumnoController extends Controller
     public function store(Request $request)
     {
         // $entrenador = new Entrenador($request->all());
-         $padres = new Encargado;
+        $padres = new Encargado;
         $padres->nombre1p = $request->input('nombre1p');
         $padres->nombre2p = $request->input('nombre2p');
         $padres->nombre3p = $request->input('nombre3p');
