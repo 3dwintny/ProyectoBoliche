@@ -91,11 +91,6 @@ class AlumnoController extends Controller
         $padres->parentezco_id = $request->input('parentezco_id');
         //$padres = new Encargado ($request->all());
         $padres->save();
-
-
-
-
-
         $alumno = new  Alumno;
         $alumno->nombre1 = $request->input('nombre1');
         $alumno->nombre2 = $request->input('nombre2');
@@ -195,7 +190,13 @@ class AlumnoController extends Controller
     {
         //
     }
-
+    /*public function actualizar_estado($id)
+    {
+        $cliente = ::find($id);
+        $cliente ->fill($request->all());
+        $cliente->save();
+        return redirect()->action([ClienteController::class,'index']);
+    }*/
     /**
      * Remove the specified resource from storage.
      *

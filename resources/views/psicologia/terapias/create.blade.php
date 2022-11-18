@@ -49,10 +49,10 @@
                                         {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
                                     </option>
                                     @endforeach
-                                </select></div>
+                            </select></div>
                         </div>
                         <div class="row justify-content-center">
-                            <div class="col-md-4 mb-13"><input type="text" class="form-control text-center" name="fecha_registro" id="fecha_sistema" readonly></div>
+                            <div class="col-md-4 mb-13"><input type="text" class="form-control text-center" name="fecha" id="fecha_sistema" readonly></div>
                             <div class="col-md-4 mb-4"><input type="time" class="form-control text-dark" name="hora_inicio" id="hora_inicio"></div>
                         </div>
 
@@ -114,9 +114,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="container-fluid">
                             <div class="mb-3">
-                                <div class="table-responsive">
-                                    <table class="table">
+                                <div class="col-xl-12 col-lg-12">
+                                    <table class="table table-responsive" style="border-radius: 5px;">
                                         <thead class="table-dark">
                                             <tr>
                                                 <th scope="col">Rubro</th>
@@ -126,126 +127,210 @@
                                         <tbody>
                                             <tr>
                                                 <td>Conciencia Corporal</td>
-                                                <td><select aria-label=".form-select-sm example" name="conciencia_corporal" id="">
-                                                        <option class="form-control" selected disabled>Conciencia Corporal</option>
-                                                        @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
-                                                            @endfor
-                                                    </select></td>
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="conciencia_corporal" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td> Dominio Corporal</td>
-                                                <td><select name="dominio_corporal" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="dominio_corporal" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td>
+                                                    <select name="dominio_corporal" id="">
                                                         <option selected disabled>Dominio Corporal</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select>
+                                                </td-->
                                             </tr>
                                             <tr>
                                                 <td>Dominio de Respiración</td>
-                                                <td><select name="dominio_respiracion" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="dominio_respiracion" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="dominio_respiracion" id="">
                                                         <option selected disabled>Dominio de Respiración</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select></td-->
                                             </tr>
                                             <tr>
                                                 <td>Diálogo Interno</td>
-                                                <td><select name="dialogo_interno" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="dialogo_interno" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="dialogo_interno" id="">
                                                         <option selected disabled>Diálogo Interno</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select></td-->
                                             </tr>
                                             <tr>
                                                 <td>Atención</td>
-                                                <td><select name="atencion" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="atencion" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="atencion" id="">
                                                         <option selected disabled>Atención</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select></td-->
                                             </tr>
                                             <tr>
                                                 <td>Concentración</td>
-                                                <td><select name="concentracion" id="">
-                                                        <option selected disabled>Concentración</option>
-                                                        @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
-                                                            @endfor
-                                                    </select></td>
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="concentracion" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Motivación</td>
-                                                <td><select name="motivacion" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="motivacion" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="motivacion" id="">
                                                         <option selected disabled>Motivación</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select></td-->
                                             </tr>
                                             <tr>
                                                 <td>Confianza</td>
-                                                <td><select name="confianza" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="confianza" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="confianza" id="">
                                                         <option selected disabled>Confianza</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select></td-->
                                             </tr>
                                             <tr>
                                                 <td>Activación</td>
-                                                <td><select name="activacion" id="">
-                                                        <option selected disabled>Activación</option>
-                                                        @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
-                                                            @endfor
-                                                    </select></td>
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="activacion" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
                                             </tr>
-                                            <td>Relajación</td>
-                                            <td><select name="relajacion" id="">
-                                                    <option selected disabled>Relajación</option>
-                                                    @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
-                                                        @endfor
-                                                </select></td>
+                                            <tr>
+                                                <td>Relajación</td>
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="relajacion" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Estrés</td>
-                                                <td><select name="estres" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="estres" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="" id="">
                                                         <option selected disabled>Estrés</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select></td-->
                                             </tr>
                                             <tr>
                                                 <td>Ansiedad Cognitiva</td>
-                                                <td><select name="ansiedad_cognitiva" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="ansiedad_cognitiva" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="ansiedad_cognitiva" id="">
                                                         <option selected disabled>Ansiedad Cognitiva</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select>
+                                                    </select-->
                                             </tr>
-                                            </td>
                                             <tr>
                                                 <td>Ansiedad Física</td>
-                                                <td><select name="ansiedad_fisica" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="ansiedad_fisica" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="ansiedad_fisica" id="">
                                                         <option selected disabled>Ansiedad Física</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select></td-->
                                             </tr>
                                             <tr>
                                                 <td>Miedo</td>
-                                                <td><select name="miedo" id="">
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="miedo" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                                                <!--td><select name="miedo" id="">
                                                         <option selected disabled>Miedo</option>
                                                         @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
                                                             @endfor
-                                                    </select></td>
+                                                    </select></td-->
                                             </tr>
                                             <tr>
                                                 <td>Frustración</td>
-                                                <td><select name="frustracion" id="">
-                                                        <option selected disabled>Frustración</option>
-                                                        @for($i=1;$i<=10;$i++) <option value="{{$i}}">{{$i}}</option>
-                                                            @endfor
-                                                    </select></td>
+                                                <td>@for($i=1;$i<=10;$i++)
+                                                    <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="frustracion" id="inlineRadio1" value="{{$i}}">
+                                                    <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
+                                                    </div>
+                                                    @endfor
+                                                </td>
+                            
                                             </tr>
                                         </tbody>
                                     </table>
+                                    </div>
                                 </div>
                             </div>
                             <input class="btn btn-outline-primary" type="submit" value="Guardar">

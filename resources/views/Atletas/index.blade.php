@@ -13,9 +13,10 @@
     </div>
   </div>
 </div>
+<div class="container">
 <div class="pb-5 pt-5 pt-md-2">
   <div class="">
-    <table class="table table-responsive table-hover">
+    <table class="table table-responsive table-hover" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
           <th scope="col">Id</th>
@@ -35,7 +36,17 @@
         @foreach ($atletas as $atleta)
         <tr>
           <td>{{$atleta->id}}</td>
-          <td><strong>{{$atleta->alumno->nombre1}} {{$atleta->alumno->nombre2}} {{$atleta->alumno->apellido1}} {{$atleta->alumno->apellido2}}</strong></td>
+          <td>
+          <div class="d-flex px-2 py-1 bg-white">
+              <div>
+                <img src="{{ asset('uploads/alumnos/'.$atleta->alumno->foto) }}" class="avatar avatar-sm me-3">
+              </div>
+              <div class="d-flex flex-column justify-content-center">
+                <h6 class="mb-0 text-xs"><strong>{{$atleta->alumno->nombre1 }} {{$atleta->alumno->nombre2}} {{$atleta->alumno->apellido1}} {{$atleta->alumno->apellido2}}</strong></h6>
+                <p class="text-xs text-secondary mb-0">{{ $atleta->alumno->correo }}</p>
+              </div>
+            </div>
+          </td>
           <td>{{$atleta->etnia}}</td>
           <td>{{$atleta->estado_civil}}</td>
           <td>{{$atleta->fecha_ingreso}}</td>
@@ -54,6 +65,7 @@
       </tbody>
     </table>
   </div>
+</div>
 </div>
 @include('layouts.footers.auth')
 </div>

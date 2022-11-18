@@ -18,7 +18,7 @@
 <div class="card container">
   <div class="table-responsive container">
   <a class="btn btn-light" href="{{ route('usuarios.create') }}">Nuevo</a>
-    <table class="table align-items-center mb-0">
+    <table class="table align-items-center mb-0" >
       <thead class="container">
         <tr>
         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>

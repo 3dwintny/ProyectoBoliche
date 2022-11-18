@@ -15,7 +15,7 @@
 </div>
 <div class="pb-5 pt-5 pt-md-2">
   <div class="col-xl-12 col-lg-12">
-    <table class="table table-responsive table-hover">
+    <table class="table table-responsive table-hover" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
           <th scope="col">Id</th>

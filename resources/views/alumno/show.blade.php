@@ -6,9 +6,9 @@
         <div class="header-body">
             <!-- Card stats -->
             <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                <h1 class="text-white">Solicitud de {{ $alumno->nombre1}} {{$alumno->apellido1}}</h1>
-                <img src="{{$alumno->foto}}" alt="" width="200">
+                <div class="col-xl-12 col-lg-12">
+                <div class="col-7"><h1 class="text-white">Solicitud de {{ $alumno->nombre1}} {{$alumno->apellido1}}</h1></div>
+                <div class="col-3"><img src="{{ asset('uploads/alumnos/'.$alumno->foto) }}" alt="" width="150"></div>
                 </div>
             </div>
         </div>
