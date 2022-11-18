@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('encargado', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre1',30);
-            $table->string('nombre2',30);
-            $table->string('nombre3',30);
+            $table->string('nombre2',30)->nullable();
+            $table->string('nombre3',30)->nullable();
             $table->string('apellido1',30);
-            $table->string('apellido2',30);
-            $table->string('apellido_casada',30);
+            $table->string('apellido2',30)->nullable();
+            $table->string('apellido_casada',30)->nullable();
             $table->string('direccion',150);
             $table->string('celular',10)->unique();
             $table->string('telefono_casa',10)->unique();
