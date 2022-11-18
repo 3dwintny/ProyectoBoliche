@@ -9,7 +9,7 @@ class Encargado extends Model
 {
     use HasFactory;
     protected $table="encargado";
-    protected $fillable=['id','nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada',
+    protected $fillable=['id','nombre1p','nombre2p','nombre3p','apellido1p','apellido2p','apellido_casada',
     'direccion','celular','telefono_casa','correo','dpi','parentezco_id','created_at','updated_at'];
 
     public function parentezco(){

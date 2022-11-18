@@ -75,21 +75,21 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-       // $entrenador = new Entrenador($request->all());
-        /* $padres = new Encargado;
-        $padres->nombre1 = $request->input('nombre1');
-        $padres->nombre2 = $request->input('nombre2');
-        $padres->nombre3 = $request->input('nombre3');
-        $padres->apellido1 = $request->input('apellido1');
-        $padres->apellido2 = $request->input('apellido2');
+        // $entrenador = new Entrenador($request->all());
+         $padres = new Encargado;
+        $padres->nombre1p = $request->input('nombre1p');
+        $padres->nombre2p = $request->input('nombre2p');
+        $padres->nombre3p = $request->input('nombre3p');
+        $padres->apellido1p = $request->input('apellido1p');
+        $padres->apellido2p = $request->input('apellido2p');
         $padres->apellido_casada = $request->input('apellido_casada');
         $padres->direccion = $request->input('direccion');
         $padres->celular = $request->input('celular');
         $padres->telefono_casa = $request->input('telefono_casa');
         $padres->correo = $request->input('correo');
         $padres->dpi = $request->input('dpi');
-        $padres->parentezco_id = $request->input('parentezco_id'); */
-        $padres = new Encargado ($request->all());
+        $padres->parentezco_id = $request->input('parentezco_id');
+        //$padres = new Encargado ($request->all());
         $padres->save();
 
 
