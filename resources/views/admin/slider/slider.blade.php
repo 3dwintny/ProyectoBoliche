@@ -9,9 +9,6 @@
         @php $i++; @endphp
       <img src="{{ asset('uploads/slider/'.$siderites->image) }}" class="d-block w-100" alt="Slider image" >
       <div class="carousel-caption d-none d-md-block">
-        <h5>{{ $siderites->heading }}</h5>
-        <p>{{ $siderites->description }}</p>
-        <a href="{{ $siderites->link }}">{{ $siderites->link_name }}</a>
       </div>
     </div>
     @endforeach

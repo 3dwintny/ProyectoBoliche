@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Estado</label>
-                            <input type="checkbox"  name="status" value="{{$slider->status == '1' ? 'checked':''}}">
+                            <input type="checkbox"  name="status" value="{{$slider->status == '1' ? 'checked':''}}"> 0=visible, 1 hidden
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Guardar</button>

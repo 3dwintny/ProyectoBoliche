@@ -20,7 +20,7 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $slider = $this->slider->obterenrSliders();
+        $slider = Slider::where('status','0')->get();
 
         return view('welcome', ['slider'=>$slider]);
     }

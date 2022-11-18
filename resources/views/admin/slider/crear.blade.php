@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Estado</label>
-                            <input type="checkbox" name="status">
+                            <input type="checkbox" name="status"> 0=visible, 1=hidden
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Guardar</button>
