@@ -31,6 +31,7 @@ use App\Http\Controllers\Tipo_ContratoController;
 use App\Http\Controllers\Tipo_UsuarioController;
 use App\Http\Controllers\EDG27Controller;
 use App\Http\Controllers\EDG272Controller;
+use App\Http\Controllers\EDG31Controller;
 
 
 /*
@@ -84,6 +85,9 @@ Route::resource('edg-27',EDG27Controller::class);
 
 //Ruta Reporte EDG27.2
 Route::resource('edg-27-2',EDG272Controller::class);
+
+//Ruta Reporte EDG31
+Route::resource('edg-31',EDG31Controller::class);
 
 //Rutas Encargado
 Route::resource('encargados',EncargadoController::class);
