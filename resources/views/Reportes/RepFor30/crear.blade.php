@@ -96,14 +96,14 @@
                                                             <td>
                                                                 <label>
                                                                     <input type="checkbox" onchange="comprobar(this)"
-                                                                        id="estado2" class="{{$item->id}}"
+                                                                        id="estado" class="{{$item->id}}"
                                                                         name="estado[]" value="L"> <span></span>
                                                                 </label>
                                                             </td>
                                                             <td>
                                                                 <label>
                                                                     <input type="checkbox" onchange="comprobar(this)"
-                                                                        id="estado3" class="{{$item->id}}"
+                                                                        id="estado" class="{{$item->id}}"
                                                                         name="estado[]" value="C"> <span></span>
                                                                 </label>
                                                             </td>
@@ -136,7 +136,7 @@ $("input:checkbox").on('click', function() {
   // in the handler, 'this' refers to the box clicked on
   var $box = $(this);
   if ($box.is(":checked")) {
-    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+    var group = "input:checkbox[id='" + $box.attr("id") + "']";
     $(group).prop("checked", false);
     $box.prop("checked", true);
   } else {

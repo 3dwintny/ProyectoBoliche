@@ -19,7 +19,7 @@ class EDG272Controller extends Controller
             return view('Reportes.edg272.show',compact('atletas'));
         }
         else{
-            return view('edg272.sinresultados');
+            return view('Reportes.edg272.sinresultados');
         }
     }
 
