@@ -23,7 +23,7 @@ class SliderController extends Controller
     {
         $slider = $this->slider->obterenrSliders();
 
-        return view('admin.slider.prueba', ['slider'=>$slider]);
+        return view('admin.slider.index', ['slider'=>$slider]);
     }
 
     /**

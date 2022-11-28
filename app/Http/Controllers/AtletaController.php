@@ -73,6 +73,7 @@ class AtletaController extends Controller
         $centro=Centro::all();
         $entrenador= Entrenador::All();
         $alumno = Alumno::find($id);
+        $alumno1=Alumno::find($id)->update(['estado' => 'Inscrito']);        
         $categoria = Categoria::all();
         $etapa=Etapa_Deportiva::all();
         $deporteadaptado = Deporte_Adoptado::all();
@@ -81,7 +82,7 @@ class AtletaController extends Controller
         $deporte = Deporte::all();
         $modalidad = Modalidad::all();
         $prt = PRT::all();
-        return view('atletas.create',compact('alumno',"centro","entrenador","categoria","etapa",
+        return view('atletas.create',compact('alumno','alumno1',"centro","entrenador","categoria","etapa",
         "deporteadaptado","otroprograma","lineadesarrollo",
         "deporte","modalidad","prt"));
     }
@@ -142,6 +143,6 @@ class AtletaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }
