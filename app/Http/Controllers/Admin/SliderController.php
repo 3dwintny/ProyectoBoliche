@@ -57,7 +57,7 @@ class SliderController extends Controller
             $file->move('uploads/slider/', $filename);
             $slider->image = $filename;
         }
-        $slider->status = $request->input('status') == true ? '1':'0';
+        $slider->status = $request->input('status') == true ? '0':'1';
         $slider->save();
 
         return redirect()->back()->with('status','Slider agregado correctamente');
@@ -112,7 +112,7 @@ class SliderController extends Controller
             $file->move('uploads/slider/', $filename);
             $slider->image = $filename;
         }
-        $slider->status = $request->input('status') == true ? '1':'0';
+        $slider->status = $request->input('status') == false ? '1':'0';
         $slider->save();
         return redirect()->back()->with('status','Slider actualizado correctamente');
     }

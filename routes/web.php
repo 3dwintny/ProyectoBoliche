@@ -5,10 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PRTController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\EDG27Controller;
+use App\Http\Controllers\EDG31Controller;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\AtletaController;
 use App\Http\Controllers\CentroController;
+use App\Http\Controllers\EDG272Controller;
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\DeporteController;
 use App\Http\Controllers\HorarioController;
@@ -28,14 +31,12 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\NacionalidadController;
 use App\Http\Controllers\Tipo_UsuarioController;
-use App\Http\Controllers\Otro_ProgramaController;
-use App\Http\Controllers\EDG272Controller;
-use App\Http\Controllers\EDG27Controller;
 
+use App\Http\Controllers\Otro_ProgramaController;
 use App\Http\Controllers\Tipo_ContratoController;
 use App\Http\Controllers\Etapa_DeportivaController;
-use App\Http\Controllers\Deporte_AdoptadoController;
 
+use App\Http\Controllers\Deporte_AdoptadoController;
 use App\Http\Controllers\Linea_DesarrolloController;
 use App\Http\Controllers\Frontend\FrontendController;
 
@@ -71,9 +72,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
 	Route::get('upgrade', function () {return view('pages.upgrade');})->name('upgrade');
-	 Route::get('map', function () {return view('pages.maps');})->name('map');
-	 Route::get('icons', function () {return view('pages.icons');})->name('icons');
-	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
+	Route::get('map', function () {return view('pages.maps');})->name('map');
+	Route::get('icons', function () {return view('pages.icons');})->name('icons');
+	Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 
     Route::resource('entrenadores',EntrenadorController::class);
@@ -88,7 +89,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
     Route::post('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
 	Route::resource('alergias',AlergiaController::class);
-
+    //Ruta Reporte EDG31
+    Route::resource('edg-31',EDG31Controller::class);
     //Rutas Atletas
     Route::resource('atletas',AtletaController::class);
 
@@ -180,11 +182,12 @@ Route::resource('edg-27-2',EDG272Controller::class);
     Route::get('conf', function () {return view('configuraciones.index');})->name('conf');
     Route::get('us', function () {return view('configuraciones.us');})->name('us');
     Route::get('otros', function () {return view('configuraciones.otros');})->name('otros');
-});
+    });
 
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
 Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
