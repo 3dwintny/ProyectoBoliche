@@ -7,6 +7,7 @@ use App\Models\Asistencia;
 use App\Models\Atleta;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use PDF;
 
 class AsistenciaController extends Controller
 {
@@ -330,6 +331,129 @@ class AsistenciaController extends Controller
         }
         else{
             return view('asistencia.sinresultados');
+        }
+    }
+
+    public function generarPDF(Request $request)
+    {
+        $hoy = Carbon::now();
+        $mes = Asistencia::
+        whereMonth('fecha',$hoy->month)
+        ->whereYear('fecha',$hoy->year)
+        ->get(); 
+        $ads = Asistencia::whereMonth('fecha',$hoy->month)
+        ->whereYear('fecha',$hoy->year)
+        ->get()
+        ->sortBy('atleta_id');
+        $atletas = Asistencia::all('atleta_id');
+        $ast = Asistencia::all('fecha');
+        //Array en el que se almacenan las fechas una sola vez
+        $fechas = array();
+
+        //Array en el que se almacenan los atletas una sola vez 
+        $atleta = array();
+
+        //Array en el que se almacena el estado de la asistencia de cada atleta
+        $estado = array();
+
+        $atl = array();
+
+        $atls = array();
+
+        $f = array();
+
+        $fs = array();
+
+        //Array que almacena la cantidad de atletas nuevos en la asociación
+        $noRepetidos = array();
+
+        //Array que almacena la cantidad de atletas que ya se encontraban en la asociación
+        $repetidos = array();
+
+        //Inserta una sola vez inofrmación de la fecha
+        for($i=0;$i<count($mes);$i++){
+            if(count($fechas)==0){
+                array_push($fechas,$mes[$i]->fecha);
+            }
+            else{
+                if(in_array($mes[$i]->fecha,$fechas,)==false){
+                    array_push($fechas,$mes[$i]->fecha);
+                }
+            }
+        }
+
+        //Inserta una sola vez información del atleta
+        for($i=0;$i<count($atletas);$i++){
+            if(count($atleta)==0){
+                array_push($atleta,$atletas[$i]);
+            }
+            else{
+                if(in_array($atletas[$i],$atleta,)==false){
+                    array_push($atleta,$atletas[$i]);
+                }
+            }
+        }
+
+        foreach(array_count_values($atl) as $item){
+            array_push($atls,$item->value);
+        }
+        
+        //Ingresa el estado de asistencia de cada atleta, orndenado y listo para mostrarse en la vista
+        foreach($ads as $item){
+            array_push($estado,$item->estado);
+            array_push($atl,$item->atleta_id);
+        }
+        asort($atleta);
+        asort($fechas);
+
+        //Obtiene el patrón para verificar los atletas antiguos
+        foreach(array_count_values($atl) as $item){
+            array_push($atls,$item);
+        }
+        arsort($atls);
+        $antiguos = $atls[0];
+        for($i=0;$i<count($atls);$i++) {
+            if($atls[$i]!=$antiguos){
+                array_push($noRepetidos,$atls[$i]);
+            }
+            else{
+                array_push($repetidos,$atls[$i]);
+            }
+        }
+
+        //Variable Controladora
+        $contador=0;
+
+        //Variable controladora de alumnos que se encontraban dentro de la asociación
+        $cAntiguos = count($repetidos)*count($fechas);
+
+        //Verifica si se ha ingresado uno o varios nuevos atletas
+        if(count($atleta)*count($fechas)!=count($estado)){
+
+            //Recorre el array contenedor de los nuevos atletas
+            for($j=0;$j<count($noRepetidos);$j++){
+
+                //Ingresa cadenas vacías a aquellos días en los que el atleta no formaba
+                //parte de la asociación
+                for($i=$cAntiguos+$contador;$i<$cAntiguos+$antiguos-$noRepetidos[$j]+$contador;$i++){
+                    array_splice($estado,$i,0,"");
+                }
+                $contador=$contador+$antiguos;
+            }
+        }
+
+        foreach ($fechas as $da)
+        { 
+            array_push($fs,substr($da,8,2));
+        }
+        $c = $request->carta;
+        if($c=="1"){
+            return PDF::loadView('asistencia.pdf',compact('atleta','fs','estado'))
+                ->setPaper('8.5x11', 'landscape')->stream();
+        }
+        else{
+            return PDF::loadView('asistencia.pdf',compact('atleta','fs','estado'))
+                ->setPaper('8.5x14', 'landscape')->stream();
         }
     }
 }

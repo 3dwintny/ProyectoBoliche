@@ -146,6 +146,8 @@ Route::resource('tipo-contratos',Tipo_ContratoController::class);
 //Rutas Tipo_Usuario
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 
+Route::get('asistencias-PDF',[AsistenciaController::class,'generarPDF'])->name('asistenciasPDF');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

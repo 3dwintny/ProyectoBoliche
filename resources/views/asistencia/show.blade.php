@@ -7,6 +7,18 @@
     <title>Asistencia</title>
 </head>
 <body>
+    <form method="GET" action="{{route('asistenciasPDF')}}">
+        @csrf
+        <input type="submit" value="Generar PDF Carta">
+        <input type="hidden" name="carta" id="carta" value="1">
+    </form>
+
+    <form method="GET" action="{{route('asistenciasPDF')}}">
+        @csrf
+        <input type="submit" value="Generar PDF Oficio">
+        <input type="hidden" name="carta" id="carta" value="2">
+    </form>
+    
     <form method="POST" action="{{route('buscar')}}">
         @csrf
         <label>Mes</label>
