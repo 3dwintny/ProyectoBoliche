@@ -32,7 +32,7 @@
             <option value="7">Julio</option>
             <option value="8">Agosto</option>
             <option value="9">Septiembre</option>
-            <option value="10">Octube</option>
+            <option value="10">Octubre</option>
             <option value="11">Noviembre</option>
             <option value="12">Diciembre</option>
         </select>
@@ -77,8 +77,8 @@
                 @for($i=$s;$i<count($fs)+$s;$i++)
                 <td>{{$estado[$i]}}</td>
                 @endfor
-                <td></td>
-                <td></td>
+                <td>{{$contarDias[$c]}}</td>
+                <td>{{$promedio[$c]}}</td>
                 <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
             </tr>
 

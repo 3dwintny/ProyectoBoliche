@@ -22,7 +22,7 @@ class AsistenciaController extends Controller
         $mes = Asistencia::
         whereMonth('fecha',$hoy->month)
         ->whereYear('fecha',$hoy->year)
-        ->get(); 
+        ->get();
         $ads = Asistencia::whereMonth('fecha',$hoy->month)
         ->whereYear('fecha',$hoy->year)
         ->get()
@@ -45,6 +45,12 @@ class AsistenciaController extends Controller
         $f = array();
 
         $fs = array();
+
+        //Array que almacena la cantidad de días entrenados del Atleta
+        $contarDias = array();
+
+        //Array que almacena el promedio de días entrenados del Atleta
+        $promedio = array();
 
         //Array que almacena la cantidad de atletas nuevos en la asociación
         $noRepetidos = array();
@@ -128,7 +134,30 @@ class AsistenciaController extends Controller
         { 
             array_push($fs,substr($da,8,2));
         }
-        return view('asistencia.show',compact('atleta','fs','estado'));
+
+        foreach ($atleta as $item){
+            $dias = Asistencia::where('atleta_id',$item->atleta_id)
+            ->whereMonth('fecha',$hoy->month)
+            ->whereYear('fecha',$hoy->year)
+            ->where( function ($query)
+            {
+                $query->where('estado','X')
+                ->orWhere('estado','P')
+                ->orWhere('estado','L')
+                ->orWhere('estado','E')
+                ->orWhere('estado','C');
+            })->get();
+
+            if(count($dias)>0){
+                array_push($contarDias,count($dias));
+                array_push($promedio,round((count($dias)/count($fs))*100,2));
+            }
+            else{
+                array_push($contarDias,0);
+                array_push($promedio,round((count($dias)/count($fs))*100,2));
+            }
+        }
+        return view('asistencia.show',compact('atleta','fs','estado','contarDias','promedio'));
     }
 
     /**
@@ -245,6 +274,12 @@ class AsistenciaController extends Controller
 
         $fs = array();
 
+        //Array que almacena la cantidad de días entrenados del Atleta
+        $contarDias = array();
+
+        //Array que almacena el promedio de días entrenados del Atleta
+        $promedio = array();
+
         //Array que almacena la cantidad de atletas nuevos en la asociación
         $noRepetidos = array();
 
@@ -327,7 +362,31 @@ class AsistenciaController extends Controller
         { 
             array_push($fs,substr($da,8,2));
         }
-        return view('asistencia.show',compact('atleta','fs','estado'));
+
+        foreach ($atleta as $item){
+            $dias = Asistencia::where('atleta_id',$item->atleta_id)
+            ->whereMonth('fecha',$m)
+            ->whereYear('fecha',$y)
+            ->where( function ($query)
+            {
+                $query->where('estado','X')
+                ->orWhere('estado','P')
+                ->orWhere('estado','L')
+                ->orWhere('estado','E')
+                ->orWhere('estado','C');
+            })->get();
+
+            if(count($dias)>0){
+                array_push($contarDias,count($dias));
+                array_push($promedio,round((count($dias)/count($fs))*100,2));
+            }
+            else{
+                array_push($contarDias,0);
+                array_push($promedio,round((count($dias)/count($fs))*100,2));
+            }
+        }
+
+        return view('asistencia.show',compact('atleta','fs','estado','contarDias','promedio'));
         }
         else{
             return view('asistencia.sinresultados');
