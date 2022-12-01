@@ -87,8 +87,8 @@
 
                                 @for($i=$s;$i<count($fs)+$s;$i++) <td>{{$estado[$i]}}</td>
                                     @endfor
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{$contarDias[$c]}}</td>
+                                    <td>{{$promedio[$c]}}</td>
                                     <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
                             </tr>
 
@@ -102,5 +102,27 @@
                 </div>
             </div>
         </div>
+        <hr>
+        <div class="row mb-2">
+        <div class="col-2">
+            <form method="GET" action="{{route('asistenciasPDF')}}">
+                @csrf
+                <input class="btn btn-outline-info " type="submit" value="Generar PDF Carta">
+                <input type="hidden" name="carta" id="carta" value="1">
+            </form>
+
+        </div>
+
+        <div class="col-2">
+            <form method="GET" action="{{route('asistenciasPDF')}}">
+                @csrf
+                <input class="btn btn-outline-info" type="submit" value="Generar PDF Oficio">
+                <input type="hidden" name="carta" id="carta" value="2">
+            </form>
+        </div>
+        </div>
+
+
+
     </div>
     @endsection

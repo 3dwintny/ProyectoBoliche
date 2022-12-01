@@ -123,7 +123,8 @@
                                                 <div class="col-md-6 mb-2"><input class="form-control text-dark"
                                                         type="email" name="correo" placeholder="Correo">
                                                 </div>
-                                                <div class="col-md-6 mb-2"><input class="form-control text-dark "
+                                                <div class="col-md-6 mb-2">
+                                                    <input class="form-control text-dark "
                                                         type="file" name="foto">
                                                 </div>
                                                 <div class="col-md-6 mb-2">
@@ -168,7 +169,6 @@
                                                 <div class="col-md-6 mb-2"><select class="form-control"
                                                         name="municipio_id" id="_municipio"></select>
                                                 </div>
-
                                                 <label class="col-md-12 mb-2">Lugar de Residencia</label>
                                                 <div class="col-md-6 mb-2"><select class="form-control"
                                                         name="departamento_residencia_id" id="_departamentoR">
@@ -181,8 +181,6 @@
                                                 <div class="col-md-6 mb-2"><select class="form-control"
                                                         name="municipio_residencia_id" id="_municipioR" required></select>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -270,7 +268,6 @@
                                 </div>
                                 <input type="button" name="previous" class="previous-form btn btn-outline-warning" value="Atras" />
                                 <input type="submit" name="submit" class="submit btn btn-outline-success" value="Enviar" />
-
                             </fieldset>
                         </form>
                     </div>

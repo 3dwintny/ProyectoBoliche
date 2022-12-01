@@ -17,7 +17,7 @@ class EDG31Controller extends Controller
     {
         $atletas = Atleta::all();
         $etapa = Etapa_Deportiva::all();
-        
+
         //FEDERADOS
         $s9=array();
         $s11=array();
@@ -466,7 +466,7 @@ class EDG31Controller extends Controller
                                 break;
                             }
                             break;
-                    } 
+                    }
                 }
                 else{
                     switch($atl->otro_programa_id){
@@ -1316,7 +1316,7 @@ class EDG31Controller extends Controller
 
         $F36=$practicantes[8]+$discapacidad[8]+$veteranos[8];
         $M36=$practicantes[9]+$discapacidad[9]+$veteranos[9];
-        
+
         $F50 = $practicantes[10]+$discapacidad[10]+$veteranos[10];
         $M50 = $practicantes[11]+$discapacidad[11]+$veteranos[11];
         $columnasOtros = array();

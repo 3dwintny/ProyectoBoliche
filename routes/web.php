@@ -31,11 +31,9 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\NacionalidadController;
 use App\Http\Controllers\Tipo_UsuarioController;
-
 use App\Http\Controllers\Otro_ProgramaController;
 use App\Http\Controllers\Tipo_ContratoController;
 use App\Http\Controllers\Etapa_DeportivaController;
-
 use App\Http\Controllers\Deporte_AdoptadoController;
 use App\Http\Controllers\Linea_DesarrolloController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -170,12 +168,13 @@ Route::resource('edg-27',EDG27Controller::class);
 //Ruta Reporte EDG27.2
 Route::resource('edg-27-2',EDG272Controller::class);
 
-//Rutas Tipo_Contrato
+//Rutas Generar pdf Asistencias
+Route::get('asistencias-PDF',[AsistenciaController::class,'generarPDF'])->name('asistenciasPDF');
 
 //ruta para mostrar el nombre del atleta
     Route::get('atl/{id}',[AtletaController::class,'creacion'])->name('creacion');
     Route::post('alc/{id}',[AtletaController::class,'store'])->name('ac_estado');
-    
+
 
     Route::get('for31', function () {return view('Reportes.for31');})->name('for31');
     Route::get('for30', function () {return view('Reportes.for30');})->name('for30');
