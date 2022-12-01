@@ -168,7 +168,8 @@ Route::resource('edg-27',EDG27Controller::class);
 //Ruta Reporte EDG27.2
 Route::resource('edg-27-2',EDG272Controller::class);
 
-//Rutas Tipo_Contrato
+//Rutas Generar pdf Asistencias
+Route::get('asistencias-PDF',[AsistenciaController::class,'generarPDF'])->name('asistenciasPDF');
 
 //ruta para mostrar el nombre del atleta
     Route::get('atl/{id}',[AtletaController::class,'creacion'])->name('creacion');
