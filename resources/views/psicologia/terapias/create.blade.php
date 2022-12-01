@@ -30,13 +30,13 @@
                                 <div class="col-md-10 mb-3">
                                     <h3 class="card-title text-dark">Nota evolutiva</h3>
                                 </div>
-                                <div class="col-md-2 mb-2"><input type="text" class="form-control text-dark" name="numero_terapia" placeholder="No. Sesion" id=""></div>
+                                <div class="col-md-2 mb-2"><input type="text" class="form-control text-dark" name="numero_terapia" placeholder="No. Sesion" value= ""></div>
                             </div>
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-md-4 mb-4"><select name="psicologia_id" class="form-control text-dark" required>
                                     <option selected disabled>Psicologa(o)</option>
-                                    @foreach ($psicologos as $item)
+                                    @foreach($psicologos as $item)
                                     <option value="{{$item->id}}">{{$item->nombre1}} {{$item->nombre2}} {{$item->apellido1}}
                                         {{$item->apellido2}} {{$item->apellido_casada}}
                                     </option>

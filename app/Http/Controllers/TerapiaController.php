@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Terapia;
 use App\Models\Psicologia;
 use App\Models\Atleta;
+use App\Models\Terapia;
 use Illuminate\Http\Request;
 
 class TerapiaController extends Controller
@@ -15,8 +15,8 @@ class TerapiaController extends Controller
      */
     public function index()
     {
-        $terapias = Terapia::with('psicologia','atleta')->get();
-        return view('terapia.show');
+        //$terapias = Terapia::with('psicologia','atleta')->get();
+        return redirect()->action([TerapiaController::class,'create']);
     }
 
     /**
@@ -28,7 +28,7 @@ class TerapiaController extends Controller
     {
         $psicologos = Psicologia::all();
         $atletas = Atleta::all();
-        return view('psicologia.terapias.create',compact("psicologos","atletas"));
+        return view('psicologia.terapias.create',compact('psicologos','atletas'));
     }
 
     /**

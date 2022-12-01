@@ -131,8 +131,8 @@
         </tbody>
     </table>
     <br>
-    <table>
-        <thead>
+    <table class="table table-responsive table-bordered border-light">
+        <thead class="table-dark ">
             <tr>
                 <tr>
                     <th>Edades</th>
@@ -198,8 +198,8 @@
         </tbody>
     </table>
     <br>
-    <table>
-        <thead>
+    <table class="table table-responsive table-bordered border-light">
+        <thead class="table-dark ">
             <tr>
                 <th rowspan="2">Etapas Deportivas</th>
                 <th colspan="4">Formación</th>
@@ -235,24 +235,72 @@
         <tbody>
             <tr>
                 <td>Visuales</td>
+                @foreach ($visuales as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$fvisuales}}</td>
+                <td>{{$mvisuales}}</td>
+                <td>{{$tvisuales}}</td>
             </tr>
             <tr>
                 <td>Intelectuales</td>
+                @foreach ($intelecto as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$fintelecto}}</td>
+                <td>{{$mintelecto}}</td>
+                <td>{{$tintelecto}}</td>
             </tr>
             <tr>
                 <td>Síndrome de Down</td>
+                @foreach ($sindrome as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$fsindrome}}</td>
+                <td>{{$msindrome}}</td>
+                <td>{{$tsindrome}}</td>
             </tr>
             <tr>
                 <td>Parálisis Cerebral</td>
+                @foreach ($paralisis as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$fparalisis}}</td>
+                <td>{{$mparalisis}}</td>
+                <td>{{$tparalisis}}</td>
             </tr>
             <tr>
                 <td>Amputados</td>
+                @foreach ($amputados as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$famputados}}</td>
+                <td>{{$mamputados}}</td>
+                <td>{{$tamputados}}</td>
             </tr>
             <tr>
                 <td>Sillas de Ruedas</td>
+                @foreach ($ruedas as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$fruedas}}</td>
+                <td>{{$mruedas}}</td>
+                <td>{{$truedas}}</td>
             </tr>
             <tr>
                 <td>Auditivos</td>
+                @foreach ($auditivos as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$fauditivos}}</td>
+                <td>{{$mauditivos}}</td>
+                <td>{{$tauditivos}}</td>
+            </tr>
+            <tr>
+                <td>TOTAL</td>
+                @foreach($columnasAdaptados as $item)
+                <td>{{$item}}</td>
+                @endforeach
             </tr>
         </tbody>
     </table>
@@ -260,3 +308,4 @@
         </div>
     </div>
 </div>
+@endsection

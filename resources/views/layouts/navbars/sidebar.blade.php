@@ -1,4 +1,4 @@
-<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-ligth bg-white" id="sidenav-main">
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-ligth bg-light" id="sidenav-main">
     <div class="container-fluid">
         <!-- Toggler -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
@@ -7,7 +7,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.jpg" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('argon') }}/img/brand/blue.jpg" class="navbar-brand-img img-fluid" alt="...">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                            <img src="{{ asset('argon') }}/img/brand/blue.png" class="img-fluid">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -77,8 +77,7 @@
             <ul class="navbar-nav">
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-atleta" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="navbar-examples">
+                    <a class="nav-link active" href="#navbar-atleta" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-user-run"></i>
                         <span class="nav-link-text text-dark">{{ __('Atleta') }}</span>
                     </a>
@@ -100,8 +99,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-entrenador" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="navbar-examples">
+                    <a class="nav-link active" href="#navbar-entrenador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-time-alarm"></i>
                         <span class="nav-link-text text-dark">{{ __('Entrenador') }}</span>
                     </a>
@@ -127,8 +125,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button"
-                        aria-expanded="true" aria-controls="navbar-examples">
+                    <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-atom text-dark"></i>
                         <span class="nav-link-text text-dark">{{ __('Psicologia') }}</span>
                     </a>
@@ -140,7 +137,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('entrenadores.index') }}">
+                                <a class="nav-link" href="{{ route('psicologia.create') }}">
                                     {{ __('Registrar Piscologo') }}
                                 </a>
                             </li>
@@ -151,12 +148,6 @@
                     <a class="nav-link" href="{{ route('conf') }}">
                         <i class="ni ni-settings-gear-65 text-dark"></i>
                         <span class="nav-link-text text-dark">{{ __('Configuraciones') }}</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('icons') }}">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
                     </a>
                 </li>
             </ul>

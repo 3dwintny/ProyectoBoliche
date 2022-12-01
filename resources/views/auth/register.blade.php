@@ -3,7 +3,7 @@
 @section('content')
     @include('layouts.headers.guest')
 
-    <div class="container mt--8 pb-5">
+    <div class="container mt--9 pb-5">
         <!-- Table -->
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
@@ -11,7 +11,7 @@
        
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
-                            <small>{{ __('Or sign up with credentials') }}</small>
+                            <small>{{ __('Sign up') }}</small>
                         </div>
                         <form role="form" method="POST" action="{{ route('register') }}">
                             @csrf
@@ -92,7 +92,7 @@
                             </div>
                         
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary mt-4">{{ __('Create account') }}</button>
+                                <button type="submit" class="btn btn-primary mt-4">{{ __('Crear Cuenta') }}</button>
                             </div>
                         </form>
                     </div>

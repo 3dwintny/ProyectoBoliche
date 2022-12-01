@@ -190,13 +190,7 @@ class AlumnoController extends Controller
     {
         //
     }
-    /*public function actualizar_estado($id)
-    {
-        $cliente = ::find($id);
-        $cliente ->fill($request->all());
-        $cliente->save();
-        return redirect()->action([ClienteController::class,'index']);
-    }*/
+
     /**
      * Remove the specified resource from storage.
      *
@@ -205,6 +199,9 @@ class AlumnoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $alumno=Alumno::find($id)->update(['estado' => 'Rechazado']);
+        return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
+        
     }
+   
 }

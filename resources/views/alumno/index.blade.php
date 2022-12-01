@@ -45,10 +45,12 @@
           <td>{{$alumno->fecha}}</td>
           <td>{{$alumno->direccion}}</td>
           <td>
-            <form action="" method="POST">
+            <form action="{{ route('alumnos.destroy',$alumno->id) }}" method="POST">
               <a class="btn btn-sm btn-primary " href="{{ route('alumnos.show',$alumno->id) }}"><i class="fa fa-fw fa-eye"></i>Ver</a>
               <a class="btn btn-sm btn-success" href="{{route('creacion',$alumno->id)}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
-              <a class="btn btn-sm btn-danger" href="{{ route('alumnos.create')}}"><i class="fa fa-fw fa-trash"></i>Rechazar</a>
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i>Rechazar</button>
             </form>
           </td>
         </tr>
