@@ -174,6 +174,8 @@ Route::resource('edg-27-2',EDG272Controller::class);
 
 //ruta para mostrar el nombre del atleta
     Route::get('atl/{id}',[AtletaController::class,'creacion'])->name('creacion');
+    Route::post('alc/{id}',[AtletaController::class,'store'])->name('ac_estado');
+    
 
     Route::get('for31', function () {return view('Reportes.for31');})->name('for31');
     Route::get('for30', function () {return view('Reportes.for30');})->name('for30');

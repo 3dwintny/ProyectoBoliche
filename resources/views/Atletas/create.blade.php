@@ -30,12 +30,12 @@
 
                     </div>
                 </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('atletas.store')}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('ac_estado',$alumno->id)}}">
                     @csrf
                     <div class="form-group">
                         <div class="card">
                             <div class="card-body bg-light">
-                            <div class="col-12 mb-2"><img src="{{ asset('uploads/alumnos/'.$alumno->foto) }}" class="img-thumbnail" alt="" width="100"></div>
+                            <div class="col-12 mb-2"><img src="{{ asset('uploads/alumnos/'.$alumno->foto) }}" class="img-thumbnail" alt="50" height="50" width="50"></div>
                                 <h5 class="mb-2">Informacion Adicional</h5>
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
@@ -44,7 +44,11 @@
                                             <input type="text" class=" container form-control text-center" name="fecha_ingreso" id="fecha_sistema" readonly>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Adaptado" type="text" name="adaptado" value="{{ old('Adaptado') }}" required></div>
+                                    <div class="col-md-6 mb-2"><select name="adaptado" class="form-control text-dark" required>
+                                            <option selected disabled>Adaptado</option>
+                                            <option value="Si">Si</option>
+                                            <option value="No">No</option>
+                                        </select></div>
                                     <div class="col-md-6 mb-2 form-control">
                                     <label>¿El/La Atleta es Federado ?</label>
                                         <div class="form-check form-check-inline">
@@ -73,7 +77,7 @@
                                             <option value="Garífuna">Garifuna</option>
                                             <option value="Ladino">Ladino</option>
                                         </select></div>
-                                    <div class="col-md-6 mb-2"><select name="escolaridad" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2"><select name="escolaridad" class="form-control text-dark" required>
                                             <option selected disabled>Nivel Académico</option>
                                             <option value="Primaria">Primaria</option>
                                             <option value="Básico">Básico</option>
@@ -88,6 +92,8 @@
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
+                                        <div class="col-md-2 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Años" type="text" name="anios"  required></div>
+                                        <div class="col-md-2 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Meses" type="text" name="meses"  required></div>
                                     <div class="col-md-4 mb-2"><select name="entrenador_id" class="form-control text-dark" required>
                                             <option selected disabled>Entrenador</option>
                                             @foreach ($entrenador as $item)

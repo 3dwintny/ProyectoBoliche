@@ -153,13 +153,8 @@
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
                 <li class="nav-item">
-<<<<<<< HEAD
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-bullet-list-67" style="color: #f4645f;"></i> Reporte EGD FOR31
-=======
                     <a class="nav-link" href="{{ route('edg-31.index')}}">
                         <i class="ni ni-bullet-list-67"style="color: #f4645f;"></i> Reporte EGD FOR31
->>>>>>> 7c9b408d4b9e3bef3a707cbf861bb6c90ecbf07f
                     </a>
                 </li>
                 <li class="nav-item">

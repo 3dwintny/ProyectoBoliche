@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="header bg-gradient-white py-7 py-lg-8">\
+<div class="header bg-gradient-white py-5 py-lg-8">\
     <div class="container">
         @include('admin.slider.slider')
         <div class="header-body text-center mt--2 mb-2">

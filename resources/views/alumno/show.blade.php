@@ -55,10 +55,10 @@
                 {{ $alumno->contacto_emergencia }}</div>
                 <div class="form-group">
                 <strong>Departamento Residencia</strong>
-                {{ $alumno->departamento_residencia_id }}</div>
+                {{ $alumno->departamento_residencia->nombre }}</div>
                 <div class="form-group">
                 <strong>Departamento Residencia</strong>
-                {{ $alumno->municipio_residencia_id }}</div>
+                {{ $alumno->municipio_residencia->nombre }}</div>
 
   </div>                     
   </div>                     

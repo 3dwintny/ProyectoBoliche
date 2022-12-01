@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #FFFFFF;"">
+<nav class="navbar navbar-expand-lg" style="background-color: #FFFFFF;">
     <div class="container px-4">
         <a class="navbar-brand" href="{{ route('home') }}">
             <img src="{{ asset('argon') }}/img/brand/blue.jpg" />

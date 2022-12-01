@@ -15,8 +15,8 @@ class TerapiaController extends Controller
      */
     public function index()
     {
-        $terapias = Terapia::with('psicologia','atleta')->get();
-        return view('psicologia.terapias.create');
+        //$terapias = Terapia::with('psicologia','atleta')->get();
+        return redirect()->action([TerapiaController::class,'create']);
     }
 
     /**
@@ -28,8 +28,7 @@ class TerapiaController extends Controller
     {
         $psicologos = Psicologia::all();
         $atletas = Atleta::all();
-        $terapias = Terapia::all();
-        return view('psicologia.terapias.create',compact("psicologos","atletas","terapias"));
+        return view('psicologia.terapias.create',compact('psicologos','atletas'));
     }
 
     /**

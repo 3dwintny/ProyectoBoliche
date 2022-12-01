@@ -13,5 +13,4 @@
     </div>
 </div>
 @include('configuraciones.varnav')
-
 @endsection

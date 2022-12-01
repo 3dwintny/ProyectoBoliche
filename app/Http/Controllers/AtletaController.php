@@ -72,8 +72,7 @@ class AtletaController extends Controller
     public function creacion($id){
         $centro=Centro::all();
         $entrenador= Entrenador::All();
-        $alumno = Alumno::find($id);
-        $alumno1=Alumno::find($id)->update(['estado' => 'Inscrito']);        
+        $alumno = Alumno::find($id);     
         $categoria = Categoria::all();
         $etapa=Etapa_Deportiva::all();
         $deporteadaptado = Deporte_Adoptado::all();
@@ -82,22 +81,22 @@ class AtletaController extends Controller
         $deporte = Deporte::all();
         $modalidad = Modalidad::all();
         $prt = PRT::all();
-        return view('atletas.create',compact('alumno','alumno1',"centro","entrenador","categoria","etapa",
+        return view('atletas.create',compact('alumno',"centro","entrenador","categoria","etapa",
         "deporteadaptado","otroprograma","lineadesarrollo",
         "deporte","modalidad","prt"));
     }
- 
+    
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        
+        $alumno=Alumno::find($id)->update(['estado' => 'Inscrito']); 
         $atletas = new Atleta($request->all());
-        $atletas->save();
+        $atletas->save();  
         return redirect()->action([AtletaController::class, 'index']);
     }
 
