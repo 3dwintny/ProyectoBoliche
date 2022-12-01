@@ -31,11 +31,9 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\NacionalidadController;
 use App\Http\Controllers\Tipo_UsuarioController;
-
 use App\Http\Controllers\Otro_ProgramaController;
 use App\Http\Controllers\Tipo_ContratoController;
 use App\Http\Controllers\Etapa_DeportivaController;
-
 use App\Http\Controllers\Deporte_AdoptadoController;
 use App\Http\Controllers\Linea_DesarrolloController;
 use App\Http\Controllers\Frontend\FrontendController;
@@ -76,7 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('icons', function () {return view('pages.icons');})->name('icons');
 	Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
-    
+
     Route::resource('entrenadores',EntrenadorController::class);
 	Route::resource('psicologia',PsicologiaController::class);
     //Controlador de roles
@@ -175,7 +173,7 @@ Route::resource('edg-27-2',EDG272Controller::class);
 //ruta para mostrar el nombre del atleta
     Route::get('atl/{id}',[AtletaController::class,'creacion'])->name('creacion');
     Route::post('alc/{id}',[AtletaController::class,'store'])->name('ac_estado');
-    
+
 
     Route::get('for31', function () {return view('Reportes.for31');})->name('for31');
     Route::get('for30', function () {return view('Reportes.for30');})->name('for30');

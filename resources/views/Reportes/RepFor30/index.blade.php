@@ -129,7 +129,6 @@
                                 <td></td>
                                 <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
                         </tr>
-
                         @php
                         $c=$c+1;
                         $s=$s+count($fs)
