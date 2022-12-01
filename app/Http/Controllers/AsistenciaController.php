@@ -23,7 +23,8 @@ class AsistenciaController extends Controller
         whereMonth('fecha',$hoy->month)
         ->whereYear('fecha',$hoy->year)
         ->get();
-        $ads = Asistencia::whereMonth('fecha',$hoy->month)
+        if (count($mes)>0){
+            $ads = Asistencia::whereMonth('fecha',$hoy->month)
         ->whereYear('fecha',$hoy->year)
         ->get()
         ->sortBy('atleta_id');
@@ -158,6 +159,10 @@ class AsistenciaController extends Controller
             }
         }
         return view('asistencia.show',compact('atleta','fs','estado','contarDias','promedio'));
+        }
+        else{
+            return view('asistencia.sinresultados');
+        }
     }
 
     /**
