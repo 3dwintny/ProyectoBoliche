@@ -816,11 +816,12 @@ class EDG31Controller extends Controller
         $tVeteranos = array_sum($veteranos);
         $fVeteranos = $veteranos[0]+$veteranos[2]+$veteranos[4]+$veteranos[6]+$veteranos[8]+$veteranos[10];
         $mVeteranos = $veteranos[1]+$veteranos[3]+$veteranos[5]+$veteranos[7]+$veteranos[9]+$veteranos[11];
-        return view('Reportes.edg31.index',compact("s9","s11","s13","s16","s18","s21","sSF","sM",
+        /* return view('Reportes.edg31.index',compact("s9","s11","s13","s16","s18","s21","sSF","sM",
         "tS9","f9","m9","tS11","f11","m11","tS13","f13","m13","tS16","f16","m16",
         "tS18","f18","m18","tS21","f21","m21","tSF","fF","mF","tM","fM","mM",
         "practicantes","discapacidad","veteranos","tPracticantes","fPracticantes","mPracticantes",
-        "tDiscapacidad","fDiscapacidad","mDiscapacidad","tVeteranos","fVeteranos","mVeteranos"));
+        "tDiscapacidad","fDiscapacidad","mDiscapacidad","tVeteranos","fVeteranos","mVeteranos")); */
+        return $s9;
     }
 
     /**
