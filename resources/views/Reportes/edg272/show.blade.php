@@ -22,8 +22,7 @@
         <div class="pb-4 pt-5 pt-md-1">
             <div class="card-body">
                 <table class="table table-responsive table-bordered border-light">
-                    <thead class="table-dark ">
-                       
+                    <thead class="table table-dark">
                         <tr>
                             <th>No</th>
                             <th>Nombre(s) Apellido(s) completos</th>
