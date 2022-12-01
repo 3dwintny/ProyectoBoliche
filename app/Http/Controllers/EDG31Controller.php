@@ -1207,6 +1207,10 @@ class EDG31Controller extends Controller
         $fM = $sM[0]+$sM[2]+$sM[4]+$sM[6]+$sM[8];
         $mM = $sM[1]+$sM[3]+$sM[5]+$sM[7]+$sM[9];
 
+        $totalFemeninosFederados = $f9+$f11+$f13+$f16+$f18+$f21+$fF+$fM;
+        $totalMasculinosFederados = $m9+$m11+$m13+$m16+$m18+$m21+$mF+$mM;
+        $totalFederados = $tS9+$tS11+$tS13+$tS16+$tS18+$tS21+$tSF+$tM;
+
         //OTROS PROGRAMAS DE ATENCIÓN
         $tPracticantes = array_sum($practicantes);
         $fPracticantes = $practicantes[0]+$practicantes[2]+$practicantes[4]+$practicantes[6]+$practicantes[8]+$practicantes[10];
@@ -1219,6 +1223,9 @@ class EDG31Controller extends Controller
         $tVeteranos = array_sum($veteranos);
         $fVeteranos = $veteranos[0]+$veteranos[2]+$veteranos[4]+$veteranos[6]+$veteranos[8]+$veteranos[10];
         $mVeteranos = $veteranos[1]+$veteranos[3]+$veteranos[5]+$veteranos[7]+$veteranos[9]+$veteranos[11];
+        $totalMasculinosOtros = $mPracticantes+$mDiscapacidad+$mVeteranos;
+        $totalFemeninosOtros = $fPracticantes+$fDiscapacidad+$fVeteranos;
+        $totalOtros = $tPracticantes+$tDiscapacidad+$tVeteranos;
 
         //DEPORTE ADAPTADO
         $tvisuales = array_sum($visuales);
@@ -1248,6 +1255,10 @@ class EDG31Controller extends Controller
         $tauditivos = array_sum($auditivos);
         $fauditivos = $auditivos[0]+$auditivos[2]+$auditivos[4]+$auditivos[6]+$auditivos[8];
         $mauditivos = $auditivos[1]+$auditivos[3]+$auditivos[5]+$auditivos[7]+$auditivos[9];
+
+        $totalAdaptados=$fauditivos+$truedas+$tamputados+$tparalisis+$tsindrome+$tintelecto+$tvisuales;
+        $totalMasculinosAdaptados=$mauditivos+$mruedas+$mamputados+$mparalisis+$msindrome+$mintelecto+$mvisuales;
+        $totalFemeninosAdaptados=$fauditivos+$fruedas+$famputados+$fparalisis+$fsindrome+$fintelecto+$fvisuales;
 
         //SUMA DE COLUMNAS
         $FFI=$s9[0]+$s11[0]+$s13[0]+$s16[0]+$s18[0]+$s21[0]+$sSF[0]+$sM[0];
@@ -1342,7 +1353,9 @@ class EDG31Controller extends Controller
         "tsindrome","fsindrome","msindrome","tparalisis","fparalisis","mparalisis",
         "tamputados","famputados","mamputados","truedas","fruedas","mruedas",
         "tauditivos","fauditivos","mauditivos","columnasFederados","columnasAdaptados",
-        "columnasOtros"));
+        "columnasOtros","totalFemeninosFederados","totalMasculinosFederados",
+        "totalFederados","totalMasculinosOtros","totalFemeninosOtros","totalOtros",
+        "totalFemeninosAdaptados","totalMasculinosAdaptados","totalAdaptados"));
     }
 
     /**

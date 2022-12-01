@@ -128,6 +128,15 @@
                 <td>{{$mM}}</td>
                 <td>{{$tM}}</td>
             </tr>
+            <tr>
+                <td>TOTAL</td>
+                @foreach($columnasFederados as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$totalFemeninosFederados}}</td>
+                <td>{{$totalMasculinosFederados}}</td>
+                <td>{{$totalFederados}}</td>
+            </tr>
         </tbody>
     </table>
     <br>
@@ -194,6 +203,15 @@
                 <td>{{$fVeteranos}}</td>
                 <td>{{$mVeteranos}}</td>
                 <td>{{$tVeteranos}}</td>
+            </tr>
+            <tr>
+                <td>TOTAL</td>
+                @foreach($columnasOtros as $item)
+                <td>{{$item}}</td>
+                @endforeach
+                <td>{{$totalMasculinosOtros}}</td>
+                <td>{{$totalFemeninosOtros}}</td>
+                <td>{{$totalOtros}}</td>
             </tr>
         </tbody>
     </table>
@@ -301,6 +319,9 @@
                 @foreach($columnasAdaptados as $item)
                 <td>{{$item}}</td>
                 @endforeach
+                <td>{{$totalFemeninosAdaptados}}</td>
+                <td>{{$totalMasculinosAdaptados}}</td>
+                <td>{{$totalAdaptados}}</td>
             </tr>
         </tbody>
     </table>
