@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="header bg-dark pb-4 pt-5 pt-md-6">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Reporte de Asistencia </h1>
+                    <h1 class="text-white">Reporte de Asistencia de {{$mostrarMes}} de {{$mostrarAnioReporte}}</h1>
                 </div>
             </div>
         </div>
@@ -109,6 +108,8 @@
                 @csrf
                 <input class="btn btn-outline-info " type="submit" value="Generar PDF Carta">
                 <input type="hidden" name="carta" id="carta" value="1">
+                <input type="hidden" name="meses" id="meses" value="{{$m}}">
+                <input type="hidden" name="anios" id="anios" value="{{$y}}">
             </form>
 
         </div>
@@ -118,11 +119,10 @@
                 @csrf
                 <input class="btn btn-outline-info" type="submit" value="Generar PDF Oficio">
                 <input type="hidden" name="carta" id="carta" value="2">
+                <input type="hidden" name="meses" id="meses" value="{{$m}}">
+                <input type="hidden" name="anios" id="anios" value="{{$y}}">
             </form>
         </div>
         </div>
-
-
-
     </div>
     @endsection

@@ -27,26 +27,24 @@
                 <th rowspan="3"><p style="writing-mode: vertical-lr;
                     transform: rotate(270deg);">Modalidad</p></th>
                 <th colspan="{{count($fs)}}" rowspan="2">Control de Asistencia</th>
-                <th rowspan="3"><p style="writing-mode: vertical-lr;
+                <th rowspan="3" colspan="1"><p style="writing-mode: vertical-lr;
                     transform: rotate(270deg);">Días Entrenados</p></th>
-                <th rowspan="3"><p style="writing-mode: vertical-lr;
+                <th rowspan="3" ><p colspan="1" style="writing-mode: vertical-lr;
                     transform: rotate(270deg);">% de Asistencia</p></th>
-                <th rowspan="3"><p style="writing-mode: vertical-lr;
+                <th rowspan="3" ><p colspan="1" style="writing-mode: vertical-lr;
                     transform: rotate(270deg);">Etapa Deportiva</p></th>
             </tr>
-            <tr>
-                @for ($i=0;$i<count($fs);$i++)
-                <th>{{$fs[$i]}}</th>
-                @endfor
-            </tr>
+            <tr></tr>
         </thead>
         <tbody>
             @php
                 $s=0;
                 $c=0;
             @endphp
+            <tr>@for ($i=0;$i<count($fs);$i++)
+                <th>{{$fs[$i]}}</th>
+                @endfor</tr>
             @foreach($atleta as $item)
-
             <tr id="{{$c}}" style="text-align: center;"><!--Filas-->
                 <td ><!--Columnas-->
                     {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}} {{$item->atleta->alumno->nombre3}}
@@ -60,8 +58,8 @@
                 @for($i=$s;$i<count($fs)+$s;$i++)
                 <td>{{$estado[$i]}}</td>
                 @endfor
-                <td></td>
-                <td></td>
+                <td>{{$contarDias[$c]}}</td>
+                <td>{{$promedio[$c]}}</td>
                 <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
             </tr>
 
