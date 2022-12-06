@@ -84,16 +84,20 @@
 
                     <div class="collapse show" id="navbar-atleta">
                         <ul class="nav nav-sm flex-column">
+                        @can('solicitud-Atletas')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('alumnos.index') }}">
                                     {{ __('Solicitudes') }}
                                 </a>
                             </li>
+                            @endcan
+                            @can('listado-Atletas')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('atletas.index') }}">
                                     {{ __('Listado de Atletas') }}
                                 </a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
@@ -110,20 +114,24 @@
                                     {{ __('Asistencia') }}
                                 </a>
                             </li>
+                            @can('registrar-Entrenadores')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.create') }}">
                                     {{ __('Registrar Entrenador') }}
                                 </a>
                             </li>
+                            @endcan
+                            @can('ver-Entrenadores')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.index') }}">
                                     {{ __('Listado de Entrenadores') }}
                                 </a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
-
+                @can('ver-Psicologos')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-atom text-dark"></i>
@@ -144,6 +152,7 @@
                         </ul>
                     </div>
                 </li>
+                @endcan('can')
                 @can('configuraciones')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('conf') }}">
@@ -159,11 +168,13 @@
 
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
+                @can('ver-EDG-30')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('edg-31.index')}}">
                         <i class="ni ni-bullet-list-67" style="color: #f4645f;"></i> Reporte EGD FOR31
                     </a>
                 </li>
+                @endcan
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('edg-27.index') }}">
                         <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR27

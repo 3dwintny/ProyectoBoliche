@@ -72,7 +72,7 @@
                                     <select class="form-control" name="tipo_usuario_id" id="tipo_usuario_id" required autofocus>
                                     <option selected disabled >Tipo de usuario</option>
                                     @foreach ($tipo_usuarios as $item){
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    <option value="{{$item->id}}">{{$item->tipo}}</option>
                                             }
                                     @endforeach
                                     </select>

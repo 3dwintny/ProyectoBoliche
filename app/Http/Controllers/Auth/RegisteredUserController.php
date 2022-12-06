@@ -25,7 +25,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $tipo_usuarios = Role::all();
+        $tipo_usuarios = Tipo_Usuario::all();
        /*  $roles = Role::pluck('name','name')->all(); */
         return view('auth.register',compact("tipo_usuarios"));
     }
