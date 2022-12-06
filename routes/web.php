@@ -57,6 +57,7 @@ Route::get('wel', function () {return view('welcome');})->name('wel'); */
 
 //Son para los sliders
 
+Route::resource('index', FrontendController::class);
 Route::resource('/', FrontendController::class);
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
@@ -183,6 +184,7 @@ Route::get('asistencias-PDF',[AsistenciaController::class,'generarPDF'])->name('
     Route::get('conf', function () {return view('configuraciones.index');})->name('conf');
     Route::get('us', function () {return view('configuraciones.us');})->name('us');
     Route::get('otros', function () {return view('configuraciones.otros');})->name('otros');
+    
     });
 
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);

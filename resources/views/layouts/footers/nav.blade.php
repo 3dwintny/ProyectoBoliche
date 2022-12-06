@@ -6,7 +6,6 @@
                 <a href="#" class="font-weight-bold ml-1" target="_blank">Axel</a> &amp;
                 <a href="#" class="font-weight-bold ml-1" target="_blank">Tony</a>
             </div>
-
         </div>
     </footer>
 </div>

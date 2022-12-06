@@ -16,6 +16,14 @@ class AsistenciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+        $this->middleware('permission:reportes-EDG-31(asistencia)|crear-rol|editar-rol|eliminar-rol',['only'=> ['index','']]);
+        /* $this->middleware('permission:crear-rol', ['only'=> ['create','store']]);
+        $this->middleware('permission:editar-rol', ['only'=> ['edit','update']]);
+        $this->middleware('permission:eliminar-rol', ['only'=> ['destroy']]); */
+    }
+
     public function index()
     {
         $hoy = Carbon::now();

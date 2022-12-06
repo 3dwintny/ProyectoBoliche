@@ -1,5 +1,4 @@
 @extends('layouts.app', ['class' => 'bg-default'])
-
 @section('content')
 @include('layouts.headers.guest')
     <div class="container mt--9 pb-5">
@@ -14,7 +13,6 @@
                         </div>
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
-
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
@@ -28,7 +26,7 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                            <div class="form-group{{ $errors->has('password') ? ' has-danger':''}}">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
@@ -48,7 +46,7 @@
                                 </label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4">{{ __('Sign in') }}</button>
+                                <button type="submit" class="btn btn" style="background-color:#fba313;">{{ __('Ingresar') }}</button>
                             </div>
                         </form>
                     </div>
@@ -70,6 +68,4 @@
             </div>
         </div>
     </div>
-
-
 @endsection

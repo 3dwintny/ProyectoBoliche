@@ -12,7 +12,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                    @if ($errors->any())
+                        @if ($errors->any())
                             <div class="alert alert-dark alert-dismissible fade show" role="alert">
                             <strong>¡Revise los campos!</strong>
                                 @foreach ($errors->all() as $error)
@@ -35,7 +35,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="email">E-mail</label>
-                                    {!! Form::text('email', null, array('class' => 'form-control')) !!}
+                                    {!! Form::email('email', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">

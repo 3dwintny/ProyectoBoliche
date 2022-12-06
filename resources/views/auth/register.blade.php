@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="card bg-light shadow border-0">
-       
+
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
                             <small>{{ __('Sign up') }}</small>
@@ -68,11 +68,11 @@
                                 <div class="input-group input-group-alternative mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-single-02"></i></span>
-                                    </div>  
+                                    </div>
                                     <select class="form-control" name="tipo_usuario_id" id="tipo_usuario_id" required autofocus>
                                     <option selected disabled >Tipo de usuario</option>
                                     @foreach ($tipo_usuarios as $item){
-                                    <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
                                             }
                                     @endforeach
                                     </select>
@@ -90,9 +90,9 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary mt-4">{{ __('Crear Cuenta') }}</button>
+                                <button type="submit" class="btn" style="background-color:#fba313;">{{ __('Crear Cuenta') }}</button>
                             </div>
                         </form>
                     </div>

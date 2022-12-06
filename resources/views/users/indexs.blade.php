@@ -17,7 +17,9 @@
 
 <div class="card container">
   <div class="table-responsive container">
-  <a class="btn btn-light" href="{{ route('usuarios.create') }}">Nuevo</a>
+    <hr>
+  <a class="btn btn-primary, text-light" style="background-color:#13213c;" href="{{ route('usuarios.create') }}">Nuevo</a>
+  <hr>
     <table class="table align-items-center mb-0" >
       <thead class="container">
         <tr>
@@ -51,18 +53,19 @@
                 @foreach($usuario->getRoleNames() as $rolNombre)
             <p class="text-xs font-weight-bold mb-0">{{ $rolNombre }}</p>
             @endforeach
-            @endif 
+            @endif
             <p class="text-xs text-secondary mb-0">Federeacion de boliche</p>
           </td>
           <td class="align-middle text-center">
             <span class="text-secondary text-xs font-weight-normal">23/04/18</span>
           </td>
           <td class="align-middle">
-            <a href="{{ route('usuarios.edit',$usuario->id) }}" class="text-secondary font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Edit user">
-              Edit
+            <a href="{{ route('usuarios.edit',$usuario->id) }}" style="background-color:#fba313;" class="btn  font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Edit user">
+              Editar
             </a>
-            {!! Form::open(['method' => 'DELETE','route' => ['user.destroy',
-                                        $usuario->id],'style'=>'display:inline']) !!}
+            {!! Form::open(['method'=> 'DELETE', 'route' => ['usuarios.destroy', $usuario->id], 'style'=>'display:inline'])!!}
+            {!! Form::submit('Eliminar', ['class' => 'btn btn-danger'])!!}
+                                            {!! Form::close() !!}
           </td>
         </tr>
 

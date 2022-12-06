@@ -13,14 +13,14 @@
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
 <!-- Icons -->
-<link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-<link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
+<link href="{{ asset('../assets') }}/css/nucleo-icons.css" rel="stylesheet" />
+<link href="{{ asset('../assets') }}/css/nucleo-svg.css" rel="stylesheet" />
 
 <!-- Font Awesome Icons -->
 <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 
 <!-- CSS Files -->
-<link id="pagestyle" href="../assets/css/soft-ui-dashboard.css" rel="stylesheet" />
+<link id="pagestyle" href="{{ asset('../assets')}}/css/soft-ui-dashboard.css" rel="stylesheet" />
     <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
 

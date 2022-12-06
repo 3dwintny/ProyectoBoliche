@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 
+
 class UserController extends Controller
 {
     /**
@@ -20,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios =User::paginate(5);
+        $usuarios =User::paginate();
         return view('users.indexs', compact('usuarios'));
     }
 
@@ -54,9 +55,9 @@ class UserController extends Controller
         $input ['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
-        $user->assignRole($request -> input('role'));
+        $user->assignRole($request -> input('roles'));
 
-        return redirect()-route('usuarios.index');
+        return redirect()->route('usuarios.index');
 
     }
 
@@ -125,7 +126,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        return redirect()-route('usuarios.index');
+
+        DB::table('users')->where('id',$id)->delete();
+        return redirect()->route('usuarios.index');
     }
 }

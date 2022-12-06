@@ -17,12 +17,20 @@ class EntrenadorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    function __construct()
+    {
+        $this->middleware('permission:ver-rol | crear-rol | editar-rol |  eliminar-rol ', ['only'=> ['index']]);
+        $this->middleware('permission:crear-rol', ['only'=> ['create','store']]);
+        $this->middleware('permission:editar-rol', ['only'=> ['edit','update']]);
+        $this->middleware('permission:eliminar-rol', ['only'=> ['destroy']]);
+    }
+
     public function index()
     {
-     
+
         $entrenadores = Entrenador::paginate();
         return view('entrenador.index', compact('entrenadores'))
-            ->with('i', (request()->input('page', 1) - 1) * $entrenadores->perPage());   
+            ->with('i', (request()->input('page', 1) - 1) * $entrenadores->perPage());
     }
 
     /**

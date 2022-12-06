@@ -13,7 +13,7 @@ class RolController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:ver-rol | crear-rol | editar-rol |  eliminar-rol ', ['only'=> ['index']]);
+        $this->middleware('permission:ver-rol|crear-rol|editar-rol|eliminar-rol',['only'=> ['index']]);
         $this->middleware('permission:crear-rol', ['only'=> ['create','store']]);
         $this->middleware('permission:editar-rol', ['only'=> ['edit','update']]);
         $this->middleware('permission:eliminar-rol', ['only'=> ['destroy']]);
@@ -25,7 +25,7 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate(5);
+        $roles = Role::paginate();
         return view('roles.index', compact('roles'));
     }
     /**

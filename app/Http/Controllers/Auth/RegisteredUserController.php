@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use App\Models\Alumno;
-use App\Models\Tipo_Usuario;
 use App\Models\Entrenador;
 use App\Models\Psicologia;
+use App\Models\Tipo_Usuario;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Auth\Events\Registered;
+use App\Providers\RouteServiceProvider;
 
 class RegisteredUserController extends Controller
 {
@@ -24,7 +25,8 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $tipo_usuarios = Tipo_Usuario::all();
+        $tipo_usuarios = Role::all();
+       /*  $roles = Role::pluck('name','name')->all(); */
         return view('auth.register',compact("tipo_usuarios"));
     }
 
@@ -38,7 +40,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $tipoUsuario = $_POST['tipo_usuario_id'];
         $correo = $_POST['email'];
         switch($tipoUsuario){
@@ -59,7 +61,7 @@ class RegisteredUserController extends Controller
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
                         'tipo_usuario_id' => ['required','integer'],
                     ]);
-            
+
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
@@ -87,7 +89,7 @@ class RegisteredUserController extends Controller
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
                         'tipo_usuario_id' => ['required','integer'],
                     ]);
-            
+
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
@@ -115,7 +117,7 @@ class RegisteredUserController extends Controller
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
                         'tipo_usuario_id' => ['required','integer'],
                     ]);
-            
+
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,

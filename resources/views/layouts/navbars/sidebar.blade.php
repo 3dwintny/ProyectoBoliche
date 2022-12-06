@@ -1,4 +1,4 @@
-<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-ligth bg-light" id="sidenav-main">
+<nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-light" id="sidenav-main">
     <div class="container-fluid">
         <!-- Toggler -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main"
@@ -7,7 +7,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.jpg" class="navbar-brand-img img-fluid" alt="...">
+            <img src="{{ asset('argon') }}/img/brand/federacion1.jpg" class="navbar-brand-img img-fluid" alt="...">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -16,7 +16,7 @@
                     aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/brand/blue.jpg">
+                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/brand/federacion2.jpg">
                         </span>
                     </div>
                 </a>
@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png" class="img-fluid">
+                            <img src="{{ asset('argon') }}/img/brand/federacion1.jpg" class="img-fluid">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -144,12 +144,14 @@
                         </ul>
                     </div>
                 </li>
+                @can('configuraciones')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('conf') }}">
                         <i class="ni ni-settings-gear-65 text-dark"></i>
                         <span class="nav-link-text text-dark">{{ __('Configuraciones') }}</span>
                     </a>
                 </li>
+                @endcan
             </ul>
             <!-- Divider -->
             <hr class="my-3">

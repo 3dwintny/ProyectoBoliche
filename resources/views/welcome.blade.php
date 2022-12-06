@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="header bg-gradient-white py-5 py-lg-8">\
+<div class="header bg-gradient-white py-5 py-lg-8">
     <div class="container">
         @include('admin.slider.slider')
         <div class="header-body text-center mt--2 mb-2">
@@ -18,8 +18,6 @@
             <polygon class="fill-default" points="2560 0 2560 100 0 100"></polygon>
         </svg>
     </div>
-
-
 </div>
 
 

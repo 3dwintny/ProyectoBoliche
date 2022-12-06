@@ -12,6 +12,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navigation">
                 <ul class="navbar-nav navbar-nav-hover ms-auto">
+                    @can('ver-rol')
                     <div class="row">
                         <li class="nav-item">
                             <a class="nav-link nav-link-icon" href="{{ route('us') }}">
@@ -20,6 +21,8 @@
                             </a>
                         </li>
                     </div>
+                    @endcan
+
                     <div class="row">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="{{ route('slider.index') }}" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

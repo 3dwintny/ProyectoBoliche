@@ -18,15 +18,42 @@ class SeederTablaPermisos extends Seeder
     public function run()
     {
         $permisos = [
-            //tabla roles
             'ver-rol',
             'crear-rol',
             'editar-rol',
             'eliminar-rol',
-            //tabla Alumnos
-            //tabla Profesores
-            //Tabla Psicologo
-            //tabla Administradores
+            //Reportes
+            'ver-EDG-30',
+            'ver-EDG-27',
+            'ver-EDG-27-2',
+            //Reportes de asistencia
+            'ver-EDG-31-Asistencia',
+            'crear-EDG-31-Asistencia',
+            //Atletas
+            'solicitud-Atletas',
+            'listado-Atletas',
+            //Configuraciones
+            'ver-configuraciones',
+            //Entrenadores
+            'ver-Entrenadores',
+            'registrar-Entrenadores',
+            //Psicologa
+            'registrar-Psicologo',
+            'ver-Psicologos',
+            'slider-crear',
+            'slider-editar',
+            'slider-ver',
+            'notificaciones',
+            'crear-Usuarios',
+            'eliminar-Usuarios',
+            'editarUsuarios',
+            'otras-configuraciones',
+            'ver-Tareas-Asignada',
+            'crearTerapias',
+            'lista-Terapias',
+            'ver-listado-tareas',
+            'asignar-Tareas',
+
         ];
         foreach($permisos as $permiso){
             Permission::create(['name' => $permiso]);
