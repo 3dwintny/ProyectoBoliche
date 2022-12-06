@@ -32,6 +32,8 @@ class SeederTablaPermisos extends Seeder
             //Atletas
             'solicitud-Atletas',
             'listado-Atletas',
+            'eliminar-atleta',
+            'editar-atleta',
             //Configuraciones
             'ver-configuraciones',
             //Entrenadores
@@ -53,6 +55,10 @@ class SeederTablaPermisos extends Seeder
             'lista-Terapias',
             'ver-listado-tareas',
             'asignar-Tareas',
+            //Funcionalidades del sedevar
+            'SeedAtletas',
+            'seedEntrenador',
+            'seedPsicologia',
 
         ];
         foreach($permisos as $permiso){

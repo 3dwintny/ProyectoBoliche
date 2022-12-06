@@ -57,9 +57,13 @@
           <td>{{$atleta->etapa_deportiva->nombre}}</td>
           <td>
             <form action="" method="POST">
+            @can('editar-atleta')
             <a class="btn btn-sm btn-info" href="{{route('atletas.edit',$atleta->id)}}"><i class="fa fa-fw fa-edit"></i>Editar</a>
-            <a class="btn btn-sm btn-danger" href="{{route('atletas.edit',$atleta->id)}}"><i class="fa fa-fw fa-trash"></i>Eliminar</a>
-            </form>
+            @endcan
+            @can('eliminar-atleta')
+            <a class="btn btn-sm btn-danger" href="{{route('atletas.destroy',$atleta->id)}}"><i class="fa fa-fw fa-trash"></i>Eliminar</a>
+            @endcan
+        </form>
           </td>
         </tr>
         @endforeach

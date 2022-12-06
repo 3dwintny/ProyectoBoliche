@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Spatie\Permission\Models\Role;
 namespace App\Http\Controllers\Auth;
 
 
@@ -62,10 +62,10 @@ class RegisterController extends Controller
      */
     protected function validator(Request $request)
     {
-        
-        $tipoUsuario = $_POST['tipo_usuario_id'];
+
+        $roles = $_POST['roles'];
         $correo = $_POST['email'];
-        switch($tipoUsuario){
+        switch($roles){
             case 1:
                 $contadorC=0;
                 $contadorE=0;
@@ -81,17 +81,18 @@ class RegisterController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'tipo_usuario_id' => ['required','integer'],
+                        'roles' => ['required','integer'],
                     ]);
-            
+
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->tipo_usuario_id,
+                        /* 'tipo_usuario_id' => $request->tipo_usuario_id, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
+                    $user->assignRole($request -> input('roles'));
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
@@ -109,14 +110,14 @@ class RegisterController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'tipo_usuario_id' => ['required','integer'],
+                        'roles' => ['required','integer'],
                     ]);
-            
+
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->tipo_usuario_id,
+                        /* 'tipo_usuario_id' => $request->tipo_usuario_id, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -137,26 +138,30 @@ class RegisterController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'tipo_usuario_id' => ['required','integer'],
+                        'roles' => ['required','integer'],
                     ]);
-            
+
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->tipo_usuario_id,
+                        /* 'roles' => $request->roles, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
+                    $user->assignRole($request -> input('roles'));
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
                     echo "Valió Queso";
                 }
                 break;
+            default:
+                echo 'Porfavor verifique las opciones';
+                break;
         }
     }
-    
+
 
     /**
      * Create a new user instance after a valid registration.

@@ -69,10 +69,10 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                                     </div>
-                                    <select class="form-control" name="tipo_usuario_id" id="tipo_usuario_id" required autofocus>
+                                    <select class="form-control" name="roles" id="roles" required autofocus>
                                     <option selected disabled >Tipo de usuario</option>
-                                    @foreach ($tipo_usuarios as $item){
-                                    <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                    @foreach ($roles as $item){
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
                                             }
                                     @endforeach
                                     </select>

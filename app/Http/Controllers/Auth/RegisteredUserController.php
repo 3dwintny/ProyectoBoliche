@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Console\View\Components\Alert;
+use Illuminate\Support\Facades\DB;
 
 class RegisteredUserController extends Controller
 {
@@ -25,9 +27,9 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        $tipo_usuarios = Tipo_Usuario::all();
+        $roles = Role::all();
        /*  $roles = Role::pluck('name','name')->all(); */
-        return view('auth.register',compact("tipo_usuarios"));
+        return view('auth.register',compact("roles"));
     }
 
     /**
@@ -41,9 +43,9 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
 
-        $tipoUsuario = $_POST['tipo_usuario_id'];
+        $roles = $_POST['roles'];
         $correo = $_POST['email'];
-        switch($tipoUsuario){
+        switch($roles){
             case 1:
                 $contadorC=0;
                 $contadorE=0;
@@ -59,21 +61,23 @@ class RegisteredUserController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'tipo_usuario_id' => ['required','integer'],
+                        'roles' => ['required','integer'],
                     ]);
 
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->tipo_usuario_id,
+                        /* 'tipo_usuario_id' => $request->tipo_usuario_id, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
+                    $user->assignRole($request->input('roles'));
                     return redirect(RouteServiceProvider::HOME);
+
                 }
                 else{
-                    echo "Valió Queso";
+                    Alert('Usted no esta registrado en la base de datos');
                 }
                 break;
             case 2:
@@ -87,21 +91,22 @@ class RegisteredUserController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'tipo_usuario_id' => ['required','integer'],
+                        'roles' => ['required','integer'],
                     ]);
 
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->tipo_usuario_id,
+                       /*  'tipo_usuario_id' => $request->tipo_usuario_id, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
+                    $user->assignRole($request->input('roles'));
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
-                    echo "Valió Queso";
+                    echo "Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Entrenador)";
                 }
                 break;
             case 3:
@@ -115,22 +120,26 @@ class RegisteredUserController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'tipo_usuario_id' => ['required','integer'],
+                        'roles' => ['required','integer'],
                     ]);
 
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->tipo_usuario_id,
+                        /* 'tipo_usuario_id' => $request->tipo_usuario_id, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
+                    $user->assignRole($request->input('roles'));
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
-                    echo "Valió Queso";
+                    echo "Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Psicologia)";
                 }
+                break;
+            default:
+                echo 'Porfavor verifique las opciones';
                 break;
         }
     }

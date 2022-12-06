@@ -74,8 +74,9 @@
                 </div>
             </form>
             <!-- Navigation -->
-            <ul class="navbar-nav">
 
+            <ul class="navbar-nav">
+                @can('SeedAtletas')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-atleta" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-user-run"></i>
@@ -101,7 +102,8 @@
                         </ul>
                     </div>
                 </li>
-
+                @endcan
+                @can('seedEntrenador')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-entrenador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-time-alarm"></i>
@@ -109,11 +111,13 @@
                     </a>
                     <div class="collapse show" id="navbar-entrenador">
                         <ul class="nav nav-sm flex-column">
+                            @can('crear-EDG-31-Asistencia')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistencias.create') }}">
                                     {{ __('Asistencia') }}
                                 </a>
                             </li>
+                            @endcan
                             @can('registrar-Entrenadores')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.create') }}">
@@ -131,7 +135,8 @@
                         </ul>
                     </div>
                 </li>
-                @can('ver-Psicologos')
+                @endcan
+                @can('seedPsicologia')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-atom text-dark"></i>
@@ -139,16 +144,20 @@
                     </a>
                     <div class="collapse show" id="navbar-psico">
                         <ul class="nav nav-sm flex-column">
+                            @can('crearTerapias')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('terapias.create') }}">
                                     {{ __('Terapias') }}
                                 </a>
                             </li>
+                            @endcan
+                            @can('ver-Psicologos')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('psicologia.create') }}">
                                     {{ __('Registrar Piscologo') }}
                                 </a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
@@ -175,21 +184,27 @@
                     </a>
                 </li>
                 @endcan
+                @can('ver-EDG-27')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('edg-27.index') }}">
                         <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR27
                     </a>
                 </li>
+                @endcan
+                @can('ver-EDG-27-2')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('edg-27-2.index') }}">
                         <i class="ni ni-bullet-list-67" style="color: #fea735;"></i> Reporte EGD FOR27.2
                     </a>
                 </li>
+                @endcan
+                @can('ver-EDG-31-Asistencia')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('asistencias.index') }}">
                         <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
                     </a>
                 </li>
+                @endcan
             </ul>
         </div>
     </div>

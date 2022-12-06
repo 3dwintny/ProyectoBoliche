@@ -10,7 +10,7 @@
           border: 1px solid black;
           border-collapse: collapse;
         }
-        </style>
+    </style>
 </head>
 <body>
     <table class="table table-responsive table-bordered border-light">

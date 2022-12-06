@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Atleta;
+use PDF;
 
 class EDG272Controller extends Controller
 {
@@ -87,5 +88,16 @@ class EDG272Controller extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function generarPDF()
+    {
+        $atletas = Atleta::where('otro_programa_id',2)->get();
+        if(count($atletas)>0){
+            return PDF::loadView('Reportes.edg272.pdf',compact('atletas'))->setPaper('8.5x11')->stream();
+        }
+        else{
+            return view('Reportes.edg272.sinresultados');
+        }
     }
 }
