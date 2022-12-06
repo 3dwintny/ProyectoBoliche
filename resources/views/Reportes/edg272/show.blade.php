@@ -17,11 +17,16 @@
         </div>
     </div>
 </div>
+<form method="GET" action="{{route('edg272PDF')}}">
+    @csrf
+    <input class="btn btn-outline-info" type="submit" value="Generar PDF">
+    <input type="hidden" name="carta" id="carta">
+</form>
 <div class="card">
     <div class="col-xl-12 col-lg-12 ">
         <div class="pb-4 pt-5 pt-md-1">
             <div class="card-body">
-                <table class="table table-responsive table-bordered border-light">
+                <table class="table table-responsive table-bordered border-light" style="align-content: center;">
                     <thead class="table-dark ">
                        
                         <tr>

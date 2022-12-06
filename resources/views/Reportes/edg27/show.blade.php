@@ -11,12 +11,17 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Reporte EDG-27.2 </h1>
+                    <h1 class="text-white">Reporte EDG-27 </h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<form method="GET" action="{{route('edg27PDF')}}">
+    @csrf
+    <input class="btn btn-outline-info" type="submit" value="Generar PDF">
+    <input type="hidden" name="carta" id="carta">
+</form>
 <div class="card">
     <div class="col-xl-12 col-lg-12 ">
         <div class="pb-4 pt-5 pt-md-1">
