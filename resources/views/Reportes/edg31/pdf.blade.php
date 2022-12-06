@@ -1,32 +1,19 @@
-@extends('layouts.app')
-
-@section('content')
-<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
-
-<script type="text/javascript" src="DataTables/datatables.min.js"></script>
-
-<div class="header bg-dark pb-4 pt-5 pt-md-6">
-    <div class="container-fluid">
-        <div class="header-body">
-            <!-- Card stats -->
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Reporte EDG-31 </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<form method="GET" action="{{route('edg31PDF')}}">
-    @csrf
-    <input class="btn btn-outline-info" type="submit" value="Generar PDF">
-    <input type="hidden" name="carta" id="carta">
-</form>
-<div class="card">
-    <div class="col-xl-12 col-lg-12 ">
-        <div class="pb-4 pt-5 pt-md-1">
-            <div class="card-body">
-            <table class="table table-responsive table-bordered border-light">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PDF EDG-31</title>
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        </style>
+</head>
+<body>
+    <table class="table table-responsive table-bordered border-light">
         <thead class="table-dark ">
             <tr>
                 <th rowspan="2">Etapas Deportivas</th>
@@ -330,8 +317,5 @@
             </tr>
         </tbody>
     </table>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+</body>
+</html>

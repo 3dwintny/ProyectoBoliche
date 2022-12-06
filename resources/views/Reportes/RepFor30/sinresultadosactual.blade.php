@@ -67,8 +67,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <a type="submit" class=" btn btn-outline-danger btn-sm float-left"
-                    href="{{ url('asistencias') }}">Regresar</a>
             </div>
         </div>
     </div>
