@@ -119,7 +119,21 @@ class AtletaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $atleta = Atleta::find($id);
+        $centro=Centro::all();
+        $entrenador= Entrenador::All();
+        $alumno = Alumno::all();     
+        $categoria = Categoria::all();
+        $etapa=Etapa_Deportiva::all();
+        $deporteadaptado = Deporte_Adoptado::all();
+        $otroprograma = Otro_Programa::all();
+        $lineadesarrollo = Linea_Desarrollo::all();
+        $deporte = Deporte::all();
+        $modalidad = Modalidad::all();
+        $prt = PRT::all();
+        return view('Atletas.edit', compact('alumno','atleta',"centro","entrenador","categoria","etapa",
+        "deporteadaptado","otroprograma","lineadesarrollo",
+        "deporte","modalidad","prt"));
     }
 
     /**
@@ -131,7 +145,9 @@ class AtletaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $atletas=Atleta::find($id);
+        $atletas->update($request->all());
+        return redirect()->route('Atletas.index');
     }
 
     /**
