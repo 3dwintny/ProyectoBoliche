@@ -17,6 +17,11 @@
         </div>
     </div>
 </div>
+<form method="GET" action="{{route('edg31PDF')}}">
+    @csrf
+    <input class="btn btn-outline-info" type="submit" value="Generar PDF">
+    <input type="hidden" name="carta" id="carta">
+</form>
 <div class="card">
     <div class="col-xl-12 col-lg-12 ">
         <div class="pb-4 pt-5 pt-md-1">
@@ -25,18 +30,18 @@
         <thead class="table-dark ">
             <tr>
                 <th rowspan="2">Etapas Deportivas</th>
-                <th colspan="4">Formación</th>
+                <th colspan="4" style="text-align: center;">Formación</th>
                 <th colspan="2" rowspan="2">Perfeccionamiento</th>
                 <th rowspan="2" colspan="2">Especialización</th>
                 <th rowspan="2" colspan="2">Alto Rendimiento</th>
-                <th colspan="3" rowspan="2">Total</th>
+                <th colspan="3" rowspan="2" style="text-align: center;">Total</th>
             </tr>
             <tr>
                 <th colspan="2">Iniciación</th>
                 <th colspan="2">Desarrollo</th>
             </tr>
             <tr>
-                <th colspan="14">ATLETAS EN PROCESO SITEMÁTICO DE DESARROLLO "FEDERADOS"</th>
+                <th colspan="14" style="text-align: center;">ATLETAS EN PROCESO SITEMÁTICO DE DESARROLLO "FEDERADOS"</th>
             </tr>
             <tr>
                 <th>Categorías/Género</th>
@@ -129,7 +134,7 @@
                 <td>{{$tM}}</td>
             </tr>
             <tr>
-                <td>TOTAL</td>
+                <td style="text-align: right;">TOTAL</td>
                 @foreach($columnasFederados as $item)
                 <td>{{$item}}</td>
                 @endforeach
@@ -151,10 +156,10 @@
                     <th colspan="2">22-35</th>
                     <th colspan="2">36-50</th>
                     <th colspan="2">Mas de 50</th>
-                    <th colspan="3">Total</th>
+                    <th colspan="3" style="text-align: center;">Total</th>
                 </tr>
                 <tr>
-                    <th colspan="16">OTROS PROGRAMAS DE ATENCIÓN</th>
+                    <th colspan="16" style="text-align: center;">OTROS PROGRAMAS DE ATENCIÓN</th>
                 </tr>
                 <tr>
                     <th>Categorías/Género</th>
@@ -205,7 +210,7 @@
                 <td>{{$tVeteranos}}</td>
             </tr>
             <tr>
-                <td>TOTAL</td>
+                <td style="text-align: right;">TOTAL</td>
                 @foreach($columnasOtros as $item)
                 <td>{{$item}}</td>
                 @endforeach
@@ -220,18 +225,18 @@
         <thead class="table-dark ">
             <tr>
                 <th rowspan="2">Etapas Deportivas</th>
-                <th colspan="4">Formación</th>
+                <th colspan="4" style="text-align: center;">Formación</th>
                 <th colspan="2" rowspan="2">Perfeccionamiento</th>
                 <th rowspan="2" colspan="2">Especialización</th>
                 <th rowspan="2" colspan="2">Alto Rendimiento</th>
-                <th colspan="3" rowspan="2">Total</th>
+                <th colspan="3" rowspan="2" style="text-align: center;">Total</th>
             </tr>
             <tr>
                 <th colspan="2">Iniciación</th>
                 <th colspan="2">Desarrollo</th>
             </tr>
             <tr>
-                <th colspan="14">ATLETAS EN PROCESO SITEMÁTICO DE ENTRENAMIENTO "DEPORTE ADAPTADO"</th>
+                <th colspan="14" style="text-align: center;">ATLETAS EN PROCESO SITEMÁTICO DE ENTRENAMIENTO "DEPORTE ADAPTADO"</th>
             </tr>
             <tr>
                 <th>Categorías/Género</th>
@@ -315,7 +320,7 @@
                 <td>{{$tauditivos}}</td>
             </tr>
             <tr>
-                <td>TOTAL</td>
+                <td style="text-align: right;">TOTAL</td>
                 @foreach($columnasAdaptados as $item)
                 <td>{{$item}}</td>
                 @endforeach
