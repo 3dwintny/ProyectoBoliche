@@ -45,33 +45,7 @@
         </tr>
       </thead>
       <tbody class="table-hover">
-        @foreach ($historial as $item)
-        <tr>
-          <td>{{$item->numero_terapia}}</td>
-          <td>{{$item->fecha}}</td>
-          <td>{{$item->hora_inicio}}</td>
-          <td>{{$item->impresion_clinica}}</td>
-          <td>{{$item->analisis_semiologico}}</td>
-          <td>{{$item->desarrollo}}</td>
-          <td>{{$item->observaciones}}</td>
-          <td>{{$item->tarea}}</td>
-          <td>{{$item->conciencia_corporal}}</td>
-          <td>{{$item->dominio_corporal}}</td>
-          <td>{{$item->dominio_respiracion}}</td>
-          <td>{{$item->dialogo_interno}}</td>
-          <td>{{$item->atencion}}</td>
-          <td>{{$item->concentracion}}</td>
-          <td>{{$item->motivacion}}</td>
-          <td>{{$item->confianza}}</td>
-          <td>{{$item->activacion}}</td>
-          <td>{{$item->relajacion}}</td>
-          <td>{{$item->estres}}</td>
-          <td>{{$item->ansiedad_cognitiva}}</td>
-          <td>{{$item->ansiedad_fisica}}</td>
-          <td>{{$item->miedo}}</td>
-          <td>{{$item->frustracion}}</td>
-        </tr>
-        @endforeach
+        <tr><td colspan="23" style="text-align: center; font-weight:bolder;">SIN RESULTADOS</td></tr>
       </tbody>
     </table>
   </div>
