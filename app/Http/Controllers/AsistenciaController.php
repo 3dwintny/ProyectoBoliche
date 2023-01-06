@@ -258,7 +258,9 @@ class AsistenciaController extends Controller
             $m=$ms->month;
             $y=$ms->year;
         }
-        $atletas = Asistencia::all('atleta_id');
+        $atletas = Asistencia::whereMonth('fecha',$m)
+        ->whereYear('fecha',$y)
+        ->get('atleta_id');
         $ast = Asistencia::all('fecha');
         //Array en el que se almacenan las fechas una sola vez
         $fechas = array();
@@ -405,12 +407,15 @@ class AsistenciaController extends Controller
         ->whereYear('fecha',$obtenerAnio)
         ->get()
         ->sortBy('atleta_id');
+
         $estados = DB::table('asistencia')
         -> whereMonth('fecha',$obtenerMes)
         ->whereYear('fecha',$obtenerAnio)->orderBy('fecha')
         ->get();
-        $atletas = Asistencia::all('atleta_id');
-        $ast = Asistencia::all('fecha');
+
+        $atletas = Asistencia::whereMonth('fecha',$obtenerMes)
+        ->whereYear('fecha',$obtenerAnio)
+        ->get('atleta_id');
         //Array en el que se almacenan las fechas una sola vez
         $fechas = array();
 
@@ -424,7 +429,7 @@ class AsistenciaController extends Controller
 
         $atls = array();
 
-        $f = array();
+        //$f = array();
 
         $fs = array();
 
@@ -452,7 +457,7 @@ class AsistenciaController extends Controller
             }
         }
 
-        //Inserta una sola vez información del atleta
+        //Ingresa una sola vez la información del atleta
         for($i=0;$i<count($atletas);$i++){
             if(count($atleta)==0){
                 array_push($atleta,$atletas[$i]);
@@ -525,6 +530,8 @@ class AsistenciaController extends Controller
             array_push($fs,substr($da,8,2));
         }
 
+        //Obtiene el estado de los atletas para calcular el promedio de días entrenados
+        //así como también la cantidad de días entrenados
         foreach ($atleta as $item){
             $dias = Asistencia::where('atleta_id',$item->atleta_id)
             ->whereMonth('fecha',$obtenerMes)
@@ -547,6 +554,7 @@ class AsistenciaController extends Controller
                 array_push($promedio,round((count($dias)/count($fs))*100,2));
             }
         }
+        
         return view('Reportes.RepFor30.index',compact('atleta','fs','estado','contarDias','promedio','m','y','mostrarAnioReporte','mostrarMes'));
     }
 }

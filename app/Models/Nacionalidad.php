@@ -10,4 +10,8 @@ class Nacionalidad extends Model
     use HasFactory;
     protected $table = "nacionalidad";
     protected $fillable = ['id','descripcion','created_at','updated_at'];
+
+    public function obtenerNacionalidadesById($id){
+        return Nacionalidad::find($id);
+    }
 }

@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\PRT;
+use Carbon\Carbon;
 
 class PRTController extends Controller
 {
+    protected $p;
+    public function __construct(PRT $p){
+        $this->p = $p;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class PRTController extends Controller
      */
     public function index()
     {
-        //
+        $prts = PRT::all();
+        return view('configuraciones.prt.show', compact('prts'));
     }
 
     /**
@@ -23,7 +30,8 @@ class PRTController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.prt.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +42,9 @@ class PRTController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $prt = new PRT($request->all());
+        $prt->save();
+        return redirect()->action([PRTController::class, 'index']);
     }
 
     /**
@@ -56,7 +66,8 @@ class PRTController extends Controller
      */
     public function edit($id)
     {
-        //
+        $prt = $this->p->obtenerPRTById($id);
+        return view('configuraciones.prt.edit',['prt' => $prt]);
     }
 
     /**
@@ -68,7 +79,10 @@ class PRTController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $prt = PRT::find($id);
+        $prt ->fill($request->all());
+        $prt->save();
+        return redirect()->action([PRTController::class,'index']);
     }
 
     /**
@@ -79,6 +93,8 @@ class PRTController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $prt = PRT::find($id);
+        $prt->delete();
+        return redirect()->action([PRTController::class,'index']);
     }
 }

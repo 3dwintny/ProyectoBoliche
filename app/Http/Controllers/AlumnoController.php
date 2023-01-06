@@ -12,8 +12,6 @@ use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
-use Symfony\Component\Console\Input\Input;
 
 class AlumnoController extends Controller
 {

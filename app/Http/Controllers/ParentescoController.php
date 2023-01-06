@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Parentezco;
+use App\Models\Parentesco;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
-class ParentezcoController extends Controller
+class ParentescoController extends Controller
 {
+    protected $p;
+    public function __construct(Parentesco $p){
+        $this->p = $p;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +18,8 @@ class ParentezcoController extends Controller
      */
     public function index()
     {
-        $parentezcos = Parentezco::all();
-        return view('parentezco.show',compact("parentezcos"));
+        $parentescos = Parentesco::all();
+        return view('configuraciones.parentesco.show',compact("parentescos"));
 
     }
 
@@ -25,7 +30,8 @@ class ParentezcoController extends Controller
      */
     public function create()
     {
-        return view('parentezco.create');
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.parentesco.create',compact('hoy'));
     }
 
     /**
@@ -36,9 +42,9 @@ class ParentezcoController extends Controller
      */
     public function store(Request $request)
     {
-        $parentezcos = new Parentezco($request->all());
-        $parentezcos->save();
-        return redirect()->action([ParentezcoController::class,'index']);
+        $parentescos = new Parentesco($request->all());
+        $parentescos->save();
+        return redirect()->action([ParentescoController::class,'index']);
 
     }
 
@@ -61,7 +67,8 @@ class ParentezcoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $parentesco = $this->p->obtenerParentescoById($id);
+        return view('configuraciones.parentesco.edit',['parentesco' => $parentesco]);
     }
 
     /**
@@ -73,7 +80,10 @@ class ParentezcoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $parentesco = Parentesco::find($id);
+        $parentesco ->fill($request->all());
+        $parentesco->save();
+        return redirect()->action([ParentescoController::class,'index']);
     }
 
     /**
@@ -84,6 +94,8 @@ class ParentezcoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $parentesco = Parentesco::find($id);
+        $parentesco->delete();
+        return redirect()->action([ParentescoController::class,'index']);
     }
 }
