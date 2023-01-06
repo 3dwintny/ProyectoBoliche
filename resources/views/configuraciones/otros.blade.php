@@ -21,9 +21,9 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    Alergia
+                                    Alergía
 
                                 </h5>
                             </div>
@@ -45,7 +45,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
                                     Deporte
                                     <span class="text-success text-sm font-weight-bolder"></span>
@@ -68,9 +68,9 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    Categoria
+                                    Categoría
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -93,7 +93,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
                                     Deporte Adaptado
                                     <span class="text-success text-sm font-weight-bolder"></span>
@@ -117,9 +117,9 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    Etapa deportiva
+                                    Etapa Deportiva
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -141,10 +141,9 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    Datos
-                                    Form
+                                    Formulario de Inscripción
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -167,7 +166,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
                                     Horario
                                     <span class="text-success text-sm font-weight-bolder"></span>
@@ -191,9 +190,9 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    Linea Desarrollo
+                                    Línea de Desarrollo
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -214,7 +213,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
                                     Modalidad
                                     <span class="text-success text-sm font-weight-bolder"></span>
@@ -239,7 +238,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
                                     Nacionalidad
                                     <span class="text-success text-sm font-weight-bolder"></span>
@@ -263,7 +262,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
                                     Nivel CDAG
                                     <span class="text-success text-sm font-weight-bolder"></span>
@@ -286,7 +285,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
                                     Nivel FADN
                                     <span class="text-success text-sm font-weight-bolder"></span>
@@ -311,7 +310,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
                                     Otro Programa
                                     <span class="text-success text-sm font-weight-bolder"></span>
@@ -335,9 +334,9 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    Parentezco
+                                    Parentesco
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -358,9 +357,9 @@
                     <div class="row">
                         <div class="col-6">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-capitalize font-weight-bold">Tabla</p>
+                                <p class="text-sm mb-0 text-capitalize font-weight-bold"></p>
                                 <h5 class="font-weight-bolder mb-0">
-                                    Tipo contrato
+                                    Tipo de Contrato
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>

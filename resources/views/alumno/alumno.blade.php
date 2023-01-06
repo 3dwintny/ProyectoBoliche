@@ -36,7 +36,8 @@
                             </div>
                         </div>
 
-                        <form action="{{ route('alumnos.store') }}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
+                        <form action="{{ route('alumnos.store') }}" id="register_form" method="POST" role="form"
+                            enctype="multipart/form-data">
                             @csrf
                             <fieldset class="card-body bg-light">
                                 <div class="form-group">
@@ -44,33 +45,55 @@
                                         <div class="card-body bg-light">
                                             <h2 class="mb-2">Información Personal</h2>
                                             <div class="row">
+                                                <!-- Esto es para tener el formulario Ordenado -->
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark"
-                                                        aria-describedby="basic-addon2"
-                                                        placeholder="{{ __('Primer Nombre') }}" type="text"
-                                                        name="nombre1" value="{{ old('Primer Nombre') }}" required>
+                                                    <!-- Para segir viendo el nombre del placeholder -->
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark"
+                                                            aria-describedby="basic-addon2"
+                                                            placeholder="{{ __('Primer Nombre') }}" id="formIns"
+                                                            type="text" name="nombre1"
+                                                            value="{{ old('Primer Nombre') }}" required>
+                                                        <!-- Esto es lo que aparece como placeholder, en el fomulario -->
+                                                        <label for="formIns">Primer Nombre</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark"
-                                                        placeholder="{{ __('Segundo Nombre') }}" type="text"
-                                                        name="nombre2" value="{{ old('Segundo Nombre') }}" required>
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns"
+                                                            placeholder="{{ __('Segundo Nombre') }}" type="text"
+                                                            name="nombre2" value="{{ old('Segundo Nombre') }}" required>
+                                                        <label for="formIns">Segundo Nombre</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark"
-                                                        placeholder="{{ __('Tercer Nombre') }}" type="text"
-                                                        name="nombre3" value="{{ old('Tercer Nombre') }}" required>
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns"
+                                                            placeholder="{{ __('Tercer Nombre') }}" type="text"
+                                                            name="nombre3" value="{{ old('Tercer Nombre') }}">
+                                                        <label for="formIns">Tercer Nombre</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido1"
-                                                        placeholder="Primer Apellido">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="text"
+                                                            name="apellido1" placeholder="Primer Apellido">
+                                                        <label for="formIns">Primer Apellido</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido2"
-                                                        placeholder="Segundo Apellido">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="text"
+                                                            name="apellido2" placeholder="Segundo Apellido">
+                                                        <label for="formIns">Segundo Apellido</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-12 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="cui"
-                                                        placeholder="CUI">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="number"
+                                                            name="cui" placeholder="CUI">
+                                                        <label for="formIns">CUI</label>
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-md-6 mb-2">
@@ -91,54 +114,87 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="peso"
-                                                        placeholder="Peso">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="number"
+                                                            name="peso" placeholder="Peso">
+                                                        <label for="formIns">Peso (libras)</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="altura"
-                                                        placeholder="Altura">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="number"
+                                                            name="altura" placeholder="Altura">
+                                                        <label for="formIns">Altura (metros)</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2"><select class="form-control text-dark"
-                                                        name="genero">
+                                                        id="formIns" name="genero">
                                                         <option selected disabled>Género</option>
                                                         <option>Femenino</option>
                                                         <option>Masculino</option>
                                                     </select>
                                                 </div>
-
-                                                <div class="col-md-12 mb-2"><input class="form-control text-dark"
-                                                        type="text" name="direccion" placeholder="Dirección">
+                                                <div class="col-md-12 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="text"
+                                                            name="direccion" placeholder="Dirección">
+                                                        <label for="formIns">Dirección</label>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 mb-2"><input class="form-control text-dark"
-                                                        type="tel" name="telefono_casa"
-                                                        placeholder="Teléfono Residencial">
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="number"
+                                                            name="telefono_casa" placeholder="Teléfono Residencial">
+                                                        <label for="formIns">Teléfono Residencial</label>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 mb-2"><input class="form-control text-dark"
-                                                        type="tel" name="celular" placeholder="Celular">
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="number"
+                                                            name="celular" placeholder="Celular">
+                                                        <label for="formIns">Celular</label>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-4 mb-2"><input class="form-control text-dark"
-                                                        type="tel" name="contacto_emergencia"
-                                                        placeholder="Numero Contacto de Emergencia">
-                                                </div>
-                                                <div class="col-md-6 mb-2"><input class="form-control text-dark"
-                                                        type="email" name="correo" placeholder="Correo">
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="number"
+                                                            name="contacto_emergencia"
+                                                            placeholder="Contacto de Emergencia">
+                                                        <label for="formIns">Contacto de Emergencia</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
-                                                    <input class="form-control text-dark "
-                                                        type="file" name="foto">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="email"
+                                                            name="correo" placeholder="Correo">
+                                                        <label for="formIns">Correo</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
-                                                    <input type="text" class="form-control text-dark" name="fecha_fotografia" id="fecha_sistema" readonly>
+                                                    <label for="ft">Seleccionar fotografía:</label>
+                                                    <input class="form-control text-dark" id="ft" type="file" name="foto">
                                                 </div>
-
-                                                <div class="col-md-4 mb-2"><input class="form-control text-dark"
-                                                        type="text" name="nit" placeholder="NIT">
+                                                <div class="col-md-6 mb-2">
+                                                    <input type="text" class="form-control text-dark"
+                                                        placeholder="Fecha Fotografia" name="fecha_fotografia"
+                                                        id="fecha_sistema" readonly>
                                                 </div>
-                                                <div class="col-md-4 mb-2"><input class="form-control text-dark"
-                                                        type="text" name="pasaporte" placeholder="Pasaporte">
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="text"
+                                                            name="nit" placeholder="NIT">
+                                                        <label for="formIns">NIT</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control text-dark" id="formIns" type="number"
+                                                            name="pasaporte" placeholder="Pasaporte">
+                                                        <label for="formIns">Pasaporte</label>
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2"><select class="form-control text-dark"
-                                                        name="alergia_id" id="">
+                                                        name="alergia_id" id="formIns">
                                                         <div class="col-md-4 mb-2">
                                                             <option selected disabled>Alergia</option>
                                                             @foreach ($alergia as $item)
@@ -147,15 +203,15 @@
                                                             @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-md-4 mb-2"><select class="form-control text-dark"
-                                                        name="nacionalidad_id" id="">
-                                                        <div class="col-md-4 mb-2">
-                                                            <option selected disabled>Nacionalidad</option>
-                                                            @foreach ($nacionalidades as $item)
-                                                            <option value="{{$item->id}}">{{$item->descripcion}}
-                                                            </option>
-                                                            @endforeach
-                                                    </select>
+                                                <div class="col-md-4 mb-2">
+                                                        <select class="form-control text-dark" name="nacionalidad_id">
+                                                            <div class="col-md-4 mb-2">
+                                                                <option selected disabled>Nacionalidad</option>
+                                                                @foreach ($nacionalidades as $item)
+                                                                <option value="{{$item->id}}">{{$item->descripcion}}
+                                                                </option>
+                                                                @endforeach
+                                                        </select>
                                                 </div>
                                                 <label class="col-md-12 mb-2">Lugar de Nacimiento</label>
                                                 <div class="col-md-6 mb-2"><select class="form-control"
@@ -179,7 +235,8 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6 mb-2"><select class="form-control"
-                                                        name="municipio_residencia_id" id="_municipioR" required></select>
+                                                        name="municipio_residencia_id" id="_municipioR"
+                                                        required></select>
                                                 </div>
                                             </div>
                                         </div>
@@ -207,7 +264,7 @@
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark"
                                                         placeholder="{{ __('Tercer Nombre') }}" type="text"
-                                                        name="nombre3p" value="{{ old('Tercer Nombre') }}" required>
+                                                        name="nombre3p" value="{{ old('Tercer Nombre') }}">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark" type="text" name="apellido1p"
@@ -243,7 +300,7 @@
                                                 </div>
                                                 <div class="col-md-12 mb-2">
                                                     <select class="form-control" name="parentezco_id" required>
-                                                        <option selected disabled>Parentezco</option>
+                                                        <option selected disabled>Parentesco</option>
                                                         @foreach ($parentezcos as $item)
                                                         <option value="{{$item->id}}">{{$item->tipo}}</option>
                                                         @endforeach
@@ -266,8 +323,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <input type="button" name="previous" class="previous-form btn btn-outline-warning" value="Atras" />
-                                <input type="submit" name="submit" class="submit btn btn-outline-success" value="Enviar" />
+                                <input type="button" name="previous" class="previous-form btn btn-outline-warning"
+                                    value="Atras" />
+                                <input type="submit" name="submit" class="submit btn btn-outline-success"
+                                    value="Enviar" />
                             </fieldset>
                         </form>
                     </div>
@@ -333,9 +392,9 @@ $(document).ready(function() {
 </script>
 
 <script type="text/javascript">
-$(document).ready(function () {
-        $('#fecha').on('change', function () {
-            function calcularEdad(fechas) {
+$(document).ready(function() {
+    $('#fecha').on('change', function() {
+        function calcularEdad(fechas) {
             var hoy = new Date();
             var cumpleanos = new Date(fechas);
             var edad = hoy.getFullYear() - cumpleanos.getFullYear();
@@ -345,47 +404,47 @@ $(document).ready(function () {
             }
             return edad;
         }
-        document.getElementById('_edad').value=calcularEdad(document.getElementById('fecha').value);
+        document.getElementById('_edad').value = calcularEdad(document.getElementById('fecha').value);
+    });
+});
+$(document).ready(function() {
+    $('#_departamento').on('change', function() {
+        var dptoId = this.value;
+        $('#_municipio').html('');
+        $.ajax({
+            url: '{{ route("municipios") }}?departamento_id=' + dptoId,
+            type: 'get',
+            success: function(res) {
+                $('#_municipio').html('<option value="">Municipio</option>');
+                $.each(res, function(key, value) {
+                    $('#_municipio').append('<option value="' + value.id +
+                        '">' + value.nombre + '</option>');
+                });
+            }
         });
     });
-    $(document).ready(function () {
-        $('#_departamento').on('change', function () {
-            var dptoId = this.value;
-            $('#_municipio').html('');
-            $.ajax({
-                url: '{{ route("municipios") }}?departamento_id='+dptoId,
-                type: 'get',
-                success: function (res) {
-                    $('#_municipio').html('<option value="">Municipio</option>');
-                    $.each(res, function (key, value) {
-                        $('#_municipio').append('<option value="' + value.id
-                            + '">' + value.nombre + '</option>');
-                    });
-                }
-            });
+});
+$(document).ready(function() {
+    $('#_departamentoR').on('change', function() {
+        var dptoId = this.value;
+        $('#_municipioR').html('');
+        $.ajax({
+            url: '{{ route("municipios") }}?departamento_id=' + dptoId,
+            type: 'get',
+            success: function(res) {
+                $('#_municipioR').html('<option value="">Municipio</option>');
+                $.each(res, function(key, value) {
+                    $('#_municipioR').append('<option value="' + value.id +
+                        '">' + value.nombre + '</option>');
+                });
+            }
         });
     });
-    $(document).ready(function () {
-        $('#_departamentoR').on('change', function () {
-            var dptoId = this.value;
-            $('#_municipioR').html('');
-            $.ajax({
-                url: '{{ route("municipios") }}?departamento_id='+dptoId,
-                type: 'get',
-                success: function (res) {
-                    $('#_municipioR').html('<option value="">Municipio</option>');
-                    $.each(res, function (key, value) {
-                        $('#_municipioR').append('<option value="' + value.id
-                            + '">' + value.nombre + '</option>');
-                    });
-                }
-            });
-        });
-    });
-    date = new Date();
-    year = date.getFullYear();
-    month = date.getMonth()+1;
-    day = date.getDate();
-    document.getElementById("fecha_sistema").value = year+"/"+month+"/"+day;
+});
+date = new Date();
+year = date.getFullYear();
+month = date.getMonth() + 1;
+day = date.getDate();
+document.getElementById("fecha_sistema").value = year + "/" + month + "/" + day;
 </script>
 @endsection

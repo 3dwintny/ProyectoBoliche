@@ -5,10 +5,10 @@
 <div class="header bg-gradient-white py-5 py-lg-8">
     <div class="container">
         @include('admin.slider.slider')
+
         <div class="header-body text-center mt--2 mb-2">
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-md-6">
-                    <h1 class="text-white" </h1>
                 </div>
             </div>
         </div>
