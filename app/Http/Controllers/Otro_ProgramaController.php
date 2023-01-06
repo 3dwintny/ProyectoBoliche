@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Otro_Programa;
+use Carbon\Carbon;
 
 class Otro_ProgramaController extends Controller
 {
+    protected $o;
+    public function __construct(Otro_Programa $o){
+        $this->o = $o;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class Otro_ProgramaController extends Controller
      */
     public function index()
     {
-        //
+        $programas = Otro_Programa::all();
+        return view('configuraciones.otros_programas.show',compact('programas'));
     }
 
     /**
@@ -23,7 +30,8 @@ class Otro_ProgramaController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.otros_programas.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +42,9 @@ class Otro_ProgramaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $programas = new Otro_Programa($request->all());
+        $programas->save();
+        return redirect()->action([Otro_ProgramaController::class, 'index']);
     }
 
     /**
@@ -56,7 +66,8 @@ class Otro_ProgramaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $otro_programa = $this->o->obtenerOtroProgramaById($id);
+        return view('configuraciones.otros_programas.edit',['otro_programa' => $otro_programa]);
     }
 
     /**
@@ -68,7 +79,10 @@ class Otro_ProgramaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $otro_programa = Otro_Programa::find($id);
+        $otro_programa ->fill($request->all());
+        $otro_programa->save();
+        return redirect()->action([Otro_ProgramaController::class,'index']);
     }
 
     /**
@@ -79,6 +93,8 @@ class Otro_ProgramaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $otro_programa = Otro_Programa::find($id);
+        $otro_programa->delete();
+        return redirect()->action([Otro_ProgramaController::class,'index']);
     }
 }

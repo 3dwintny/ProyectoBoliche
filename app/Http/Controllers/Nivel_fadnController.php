@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use App\Models\Nivel_fadn;
 
 class Nivel_fadnController extends Controller
 {
+    protected $n;
+    public function __construct(Nivel_fadn $n){
+        $this->n = $n;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class Nivel_fadnController extends Controller
      */
     public function index()
     {
-        //
+        $niveles = Nivel_fadn::all();
+        return view('configuraciones.nivel_fadn.show', compact('niveles'));
     }
 
     /**
@@ -23,7 +30,8 @@ class Nivel_fadnController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.nivel_fadn.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +42,9 @@ class Nivel_fadnController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nivel = new Nivel_fadn($request->all());
+        $nivel->save();
+        return redirect()->action([Nivel_fadnController::class, 'index']);
     }
 
     /**
@@ -56,7 +66,8 @@ class Nivel_fadnController extends Controller
      */
     public function edit($id)
     {
-        //
+        $nivel = $this->n->obtenerNivelFADNById($id);
+        return view('configuraciones.nivel_fadn.edit',['nivel' => $nivel]);
     }
 
     /**
@@ -68,7 +79,10 @@ class Nivel_fadnController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $nivel = Nivel_fadn::find($id);
+        $nivel ->fill($request->all());
+        $nivel->save();
+        return redirect()->action([Nivel_fadnController::class,'index']);
     }
 
     /**
@@ -79,6 +93,8 @@ class Nivel_fadnController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $nivel = Nivel_fadn::find($id);
+        $nivel->delete();
+        return redirect()->action([Nivel_fadnController::class,'index']);
     }
 }

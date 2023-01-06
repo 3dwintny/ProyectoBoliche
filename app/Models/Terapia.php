@@ -23,4 +23,7 @@ class Terapia extends Model
         return $this->belongsTo('App\Models\Atleta');
     }
 
+    public function obtenerTerapiaById($id){
+        return Terapia::find($id);
+    }
 }

@@ -44,11 +44,13 @@
                             <tbody>
                                 @php
                                 $c = 0;
+                                $contador = 1;
                                 @endphp
                                 @foreach($atletas as $item)
                                 <tr class="table-sm">
                                     <td>
-                                        <input  type="text" name="atleta_id[]" value="{{$item->id}}" readonly>
+                                        <input type="hidden" class="text-white bg-dark" name="atleta_id[]" value="{{$item->id}}">
+                                        <input type="text" value="{{$contador}}" disabled readonly>
                                     </td>
                                     <td>
                                         <input type="text" name="fecha[]" value="{{$hoy->format('Y-m-d')}}" id="fecha_registro{{$c}}" readonly>
@@ -89,6 +91,7 @@
                                 </tr>
                                 @php
                                 $c = $c+1;
+                                $contador++;
                                 @endphp
                                 @endforeach
                             </tbody>

@@ -9,6 +9,9 @@ class PRT extends Model
 {
     use HasFactory;
     protected $table = "prt";
-protected $fillable = ['id','nombre','created_at','updated_at'];
+    protected $fillable = ['id','nombre','created_at','updated_at'];
 
+    public function obtenerPRTById($id){
+        return PRT::find($id);
+    }
 }

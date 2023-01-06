@@ -39,10 +39,16 @@
                                 </tr>
                             </thead>
                             <tbody class="table-dark">
+                                @php
+                                    $contador = 1;
+                                @endphp
                                 @foreach($atletas as $item)
                                 <tr>
                                     <td>
-                                        <input type="text" class="text-white bg-dark" name="atleta_id[]" value="{{$item->id}}" disabled readonly>
+                                        <input type="hidden" class="text-white bg-dark" name="atleta_id[]" value="{{$item->id}}" disabled readonly>
+                                    </td>
+                                    <td>
+                                        <input type="text" value="{{$contador}}" disabled readonly>
                                     </td>
                                     <td>
                                         <input type="text" class="text-white bg-dark" value="{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}" disabled readonly>
@@ -79,6 +85,9 @@
                                         </td>
                                 </tr>
                                 <input type="hidden" name="fecha[]" id="" value="{{$hoy->format('Y-m-d')}}" readonly>
+                                @php
+                                    $contador++;
+                                @endphp
                                 @endforeach
                             </tbody>
                         </table>

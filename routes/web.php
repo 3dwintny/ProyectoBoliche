@@ -25,7 +25,7 @@ use App\Http\Controllers\EntrenadorController;
 use App\Http\Controllers\FormularioController;
 use App\Http\Controllers\Nivel_cdagController;
 use App\Http\Controllers\Nivel_fadnController;
-use App\Http\Controllers\ParentezcoController;
+use App\Http\Controllers\ParentescoController;
 use App\Http\Controllers\PsicologiaController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\DepartamentoController;
@@ -57,7 +57,6 @@ Route::get('wel', function () {return view('welcome');})->name('wel'); */
 
 //Son para los sliders
 
-Route::resource('index', FrontendController::class);
 Route::resource('/', FrontendController::class);
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
@@ -144,10 +143,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('niveles-fadn',Nivel_fadnController::class);
 
     //Rutas Otro_Programa
-    Route::resource('otros_programas',Otro_ProgramaController::class);
+    Route::resource('otros-programas',Otro_ProgramaController::class);
 
-    //Rutas Parentezco
-    Route::resource('parentezcos',ParentezcoController::class);
+    //Rutas Parentesco
+    Route::resource('parentescos',ParentescoController::class);
 
     //Rutas PRT
     Route::resource('prt',PRTController::class);
@@ -159,7 +158,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('terapias',TerapiaController::class);
 
     //Rutas Tipo_Contrato
-    Route::resource('tipo_contratos',Tipo_ContratoController::class);
+    Route::resource('tipo-contratos',Tipo_ContratoController::class);
 
     //Rutas Tipo_Usuario
     Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
@@ -193,12 +192,13 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('conf', function () {return view('configuraciones.index');})->name('conf');
     Route::get('us', function () {return view('configuraciones.us');})->name('us');
     Route::get('otros', function () {return view('configuraciones.otros');})->name('otros');
-    
     });
 
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
 Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
+Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
+Route::post('historiales', [TerapiaController::class, 'getHistorial'])->name('historiales');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

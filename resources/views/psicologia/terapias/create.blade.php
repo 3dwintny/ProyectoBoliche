@@ -1,10 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
 <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
 <div class="header bg-dark pb-9 pt-5 pt-md-5">
     <div class="container-fluid">
@@ -22,15 +19,20 @@
     <div class="header-body text-center  mb-2 container">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-10">
+                <form action="{{route('historiales')}}" method="POST" enctype="multipart/form-data" role="form">
+                    @csrf
+                    <div class="col-md-2 mb-4"><input type="hidden" class="form-control text-dark" name="atleta" id="atleta"></div>
+                    <div class="col-md-4 mb-4"><input type="submit" class="btn btn-warning" value="Historial Clínico del Atleta"></div>
+                </form>
                 <form method="POST" action="{{route('terapias.store')}}" enctype="multipart/form-data" role="form">
                     @csrf
                     <div class="card">
                         <div class="card-header bg-light mb-2">
                             <div class="row justify-content-center">
                                 <div class="col-md-10 mb-3">
-                                    <h3 class="card-title text-dark">Nota evolutiva</h3>
+                                    <h3 class="card-title text-dark">Nota Evolutiva</h3>
                                 </div>
-                                <div class="col-md-2 mb-2"><input type="text" class="form-control text-dark" name="numero_terapia" placeholder="No. Sesion" value= ""></div>
+                                <div class="col-md-2 mb-2"><input type="text" class="form-control text-dark" name="numero_terapia" placeholder="No. Sesion" id="numero_terapia" readonly required></div>
                             </div>
                         </div>
                         <div class="row justify-content-center">
@@ -42,7 +44,7 @@
                                     </option>
                                     @endforeach
                                 </select></div>
-                            <div class="col-md-4 mb-4"><select name="atleta_id" class="form-control text-dark">
+                            <div class="col-md-4 mb-4"><select name="atleta_id" class="form-control text-dark" id="atleta_id" required>
                                     <option selected disabled>Atleta</option>
                                     @foreach ($atletas as $item)
                                     <option value="{{$item->id}}">{{$item->alumno->nombre1}} {{$item->alumno->nombre2}}
@@ -51,9 +53,10 @@
                                     @endforeach
                             </select></div>
                         </div>
+                        
                         <div class="row justify-content-center">
-                            <div class="col-md-4 mb-13"><input type="text" class="form-control text-center" name="fecha" id="fecha_sistema" readonly></div>
-                            <div class="col-md-4 mb-4"><input type="time" class="form-control text-dark" name="hora_inicio" id="hora_inicio"></div>
+                            <div class="col-md-2 mb-13"><input type="date" class="form-control text-center" name="fecha" value="{{$hoy->format('Y-m-d')}}" required></div>
+                            <div class="col-md-2 mb-4"><input type="time" class="form-control text-dark" name="hora_inicio" id="hora_inicio" value="{{$hora}}" required></div>
                         </div>
 
 
@@ -129,7 +132,7 @@
                                                 <td>Conciencia Corporal</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="conciencia_corporal" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="conciencia_corporal" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -139,7 +142,7 @@
                                                 <td> Dominio Corporal</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="dominio_corporal" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="dominio_corporal" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -156,7 +159,7 @@
                                                 <td>Dominio de Respiración</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="dominio_respiracion" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="dominio_respiracion" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -171,7 +174,7 @@
                                                 <td>Diálogo Interno</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="dialogo_interno" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="dialogo_interno" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -186,7 +189,7 @@
                                                 <td>Atención</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="atencion" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="atencion" id="inlineRadio1" value="{{$i}}" required> 
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -201,7 +204,7 @@
                                                 <td>Concentración</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="concentracion" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="concentracion" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -211,7 +214,7 @@
                                                 <td>Motivación</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="motivacion" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="motivacion" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -226,7 +229,7 @@
                                                 <td>Confianza</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="confianza" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="confianza" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -241,7 +244,7 @@
                                                 <td>Activación</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="activacion" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="activacion" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -251,7 +254,7 @@
                                                 <td>Relajación</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="relajacion" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="relajacion" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -261,7 +264,7 @@
                                                 <td>Estrés</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="estres" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="estres" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -276,7 +279,7 @@
                                                 <td>Ansiedad Cognitiva</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="ansiedad_cognitiva" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="ansiedad_cognitiva" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -291,7 +294,7 @@
                                                 <td>Ansiedad Física</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="ansiedad_fisica" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="ansiedad_fisica" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -306,7 +309,7 @@
                                                 <td>Miedo</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="miedo" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="miedo" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -321,7 +324,7 @@
                                                 <td>Frustración</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="frustracion" id="inlineRadio1" value="{{$i}}">
+                                                    <input class="form-check-input" type="radio" name="frustracion" id="inlineRadio1" value="{{$i}}" required>
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -338,40 +341,28 @@
                     </div>
             </div>
             </form>
-
-
         </div>
     </div>
 </div>
 
-
-
-
-
-
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#fecha_nacimiento').on('change', function() {
-            function calcularEdad(fechas) {
-                var hoy = new Date();
-                var cumpleanos = new Date(fechas);
-                var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-                var m = hoy.getMonth() - cumpleanos.getMonth();
-
-                if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                    edad--;
+<script>
+    $(document).ready(function(){
+        $('#atleta_id').on('change', function(){
+            var atletaId = this.value;
+            $('#numero_terapia').html('');
+            $.ajax({
+                url: '{{ route('paciente') }}?atleta_id='+atletaId,
+                type: 'GET',
+                success: function (res) {
+                    document.getElementById('numero_terapia').value = "1";
+                    document.getElementById('atleta').value=document.getElementById('atleta_id').value;
+                    $.each(res, function (key, value) {
+                        document.getElementById('numero_terapia').value=value.numero_terapia+1;
+                        document.getElementById('atleta').value=value.atleta_id;
+                    });
                 }
-
-                return edad;
-            }
-            document.getElementById('_edad').value = calcularEdad(document.getElementById(
-                'fecha_nacimiento').value);
+            });
         });
     });
-    date = new Date();
-    year = date.getFullYear();
-    month = date.getMonth() + 1;
-    day = date.getDate();
-    document.getElementById("fecha_sistema").value = year + "/" + month + "/" + day;
 </script>
 @endsection

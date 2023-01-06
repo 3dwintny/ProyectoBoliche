@@ -6,14 +6,12 @@ use App\Models\Alumno;
 use App\Models\Alergia;
 use App\Models\Encargado;
 use App\Models\Formulario;
-use App\Models\Parentezco;
+use App\Models\Parentesco;
 use App\Models\Departamento;
 use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
-use Symfony\Component\Console\Input\Input;
 
 class AlumnoController extends Controller
 {
@@ -61,7 +59,7 @@ class AlumnoController extends Controller
     {
         $departamentos = Departamento::all();
         $nacionalidades = Nacionalidad::all();
-        $parentezcos = Parentezco::all();
+        $parentezcos = Parentesco::all();
         $formularios = Formulario::all();
         $alergia = Alergia::all();
         return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios", "alergia"));
@@ -150,7 +148,6 @@ class AlumnoController extends Controller
 
 
         /*$factura = Alumno::create($request->all());
-
         return redirect()->route('facturas.index')
             ->with('success', 'Factura created successfully.');*/
     }
