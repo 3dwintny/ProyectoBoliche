@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Nacionalidad;
+use Carbon\Carbon;
 
 class NacionalidadController extends Controller
 {
+    protected $n;
+    public function __construct(Nacionalidad $n){
+        $this->n = $n;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
-        //
+        $nacionalidad = Nacionalidad::all();
+        return view('configuraciones.nacionalidad.show',compact('nacionalidad'));
     }
 
     /**
@@ -23,7 +30,8 @@ class NacionalidadController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.nacionalidad.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +42,9 @@ class NacionalidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $nacionalidad = new Nacionalidad($request->all());
+        $nacionalidad->save();
+        return redirect()->action([NacionalidadController::class, 'index']);
     }
 
     /**
@@ -45,7 +55,6 @@ class NacionalidadController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -56,7 +65,8 @@ class NacionalidadController extends Controller
      */
     public function edit($id)
     {
-        //
+        $nacionalidad = $this->n->obtenerNacionalidadesById($id);
+        return view('configuraciones.nacionalidad.edit',['nacionalidad' => $nacionalidad]);
     }
 
     /**
@@ -68,7 +78,10 @@ class NacionalidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $nacionalidad = Nacionalidad::find($id);
+        $nacionalidad ->fill($request->all());
+        $nacionalidad->save();
+        return redirect()->action([NacionalidadController::class,'index']);
     }
 
     /**
@@ -79,6 +92,8 @@ class NacionalidadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $nacionalidad = Nacionalidad::find($id);
+        $nacionalidad->delete();
+        return redirect()->action([NacionalidadController::class,'index']);
     }
 }

@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tipo_Contrato;
+use Carbon\Carbon;
 
 class Tipo_ContratoController extends Controller
 {
+    protected $t;
+    public function __construct(Tipo_Contrato $t){
+        $this->t = $t;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class Tipo_ContratoController extends Controller
      */
     public function index()
     {
-        //
+        $tipos = Tipo_Contrato::all();
+        return view('configuraciones.tipos_contratos.show', compact('tipos'));
     }
 
     /**
@@ -23,7 +30,8 @@ class Tipo_ContratoController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.tipos_contratos.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +42,9 @@ class Tipo_ContratoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contratos = new Tipo_Contrato($request->all());
+        $contratos->save();
+        return redirect()->action([Tipo_ContratoController::class, 'index']);
     }
 
     /**
@@ -56,7 +66,8 @@ class Tipo_ContratoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contratos = $this->t->obtenerTipoContratoById($id);
+        return view('configuraciones.tipos_contratos.edit',['contratos' => $contratos]);
     }
 
     /**
@@ -68,7 +79,10 @@ class Tipo_ContratoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $contratos = Tipo_Contrato::find($id);
+        $contratos ->fill($request->all());
+        $contratos->save();
+        return redirect()->action([Tipo_ContratoController::class,'index']);
     }
 
     /**
@@ -79,6 +93,8 @@ class Tipo_ContratoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contratos = Tipo_Contrato::find($id);
+        $contratos->delete();
+        return redirect()->action([Tipo_ContratoController::class,'index']);
     }
 }

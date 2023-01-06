@@ -1,11 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Psicologia;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PsicologiaController extends Controller
 {
+    protected $p;
+    public function __construct(Psicologia $p){
+        $this->p = $p;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class PsicologiaController extends Controller
      */
     public function index()
     {
-        //
+        $psicologo = Psicologia::all();
+        return view('configuraciones.psicologia.show', compact('psicologo'));
     }
 
     /**
@@ -23,7 +30,8 @@ class PsicologiaController extends Controller
      */
     public function create()
     {
-        return view('psicologia.create');
+        $hoy = Carbon::now();
+        return view('configuraciones.psicologia.create',compact('hoy'));
     }
 
     /**
@@ -58,7 +66,8 @@ class PsicologiaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $psicologo = $this->p->obtenerPsicologiaById($id);
+        return view('configuraciones.psicologia.edit',['psicologo' => $psicologo]);
     }
 
     /**
@@ -70,7 +79,10 @@ class PsicologiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $psicologo = Psicologia::find($id);
+        $psicologo ->fill($request->all());
+        $psicologo->save();
+        return redirect()->action([PsicologiaController::class,'index']);
     }
 
     /**
@@ -81,6 +93,8 @@ class PsicologiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $psicologo = Psicologia::find($id);
+        $psicologo->delete();
+        return redirect()->action([PsicologiaController::class,'index']);
     }
 }
