@@ -1,8 +1,13 @@
-<nav class="navbar navbar-expand-lg" style="background-color: #FFFFFF;">
+<nav class="navbar navbar-expand-lg" style="background-color: #f7f7f7;">
     <div class="container px-4">
+        <!-- <a class=" navbar-brand" href="{{ route('index') }}">
+            <img class="navbar-brand-img img-fluid" src="{{ asset('argon') }}/img/brand/federacion3.jpg" alt="logo">
+        </a> -->
+        <div class="col-2 collapse-brand">
         <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="{{ asset('argon') }}/img/brand/federacion1.jpg" />
+            <img class="navbar-brand-img img-fluid" src="{{ asset('argon') }}/img/brand/federacion1.jpg" />
         </a>
+        </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,7 +17,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('index') }}">
-                            <img src="{{ asset('argon') }}/img/brand/federacion1.jpg">
+                            <img  class="navbar-brand-img img-fluid" src="{{ asset('argon') }}/img/brand/federacion1.jpg">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -28,7 +33,7 @@
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('alumnos.create') }}">
                         <i class="ni ni-bullet-list-67"></i>
-                        <span class="nav-link-inner--text">{{ __('Formulario de inscripcion') }}</span>
+                        <span class="nav-link-inner--text">{{ __('Formulario de Inscripción') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">

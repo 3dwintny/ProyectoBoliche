@@ -66,7 +66,7 @@
                         <div class="col-6">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Categoria
+                                    Categoría
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -113,7 +113,7 @@
                         <div class="col-6">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Etapa deportiva
+                                    Etapa Deportiva
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -136,8 +136,7 @@
                         <div class="col-6">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Datos
-                                    Form
+                                    Formulario de Inscripción
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -184,7 +183,7 @@
                         <div class="col-6">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Linea Desarrollo
+                                    Línea de Desarrollo
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -222,7 +221,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row container mb-3">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card bg-light">
