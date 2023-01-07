@@ -60,32 +60,32 @@
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="checkbox" id="estado" class="{{$item->id}}" name="estado[]" value="X"> <span></span>
+                                            <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="X" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="checkbox" id="estado" class="{{$item->id}}" name="estado[]" value="O"> <span></span>
+                                            <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="O" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="checkbox" id="estado" class="{{$item->id}}" name="estado[]" value="P"> <span></span>
+                                            <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="P" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="checkbox" id="estado" class="{{$item->id}}" name="estado[]" value="E"> <span></span>
+                                            <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="E" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="checkbox" id="estado" class="{{$item->id}}" name="estado[]" value="L"> <span></span>
+                                            <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="L" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
                                         <label>
-                                            <input type="checkbox" id="estado" class="{{$item->id}}" name="estado[]" value="C"> <span></span>
+                                            <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="C" required> <span></span>
                                         </label>
                                     </td>
                                 </tr>
