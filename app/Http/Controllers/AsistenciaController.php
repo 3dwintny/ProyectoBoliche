@@ -152,17 +152,23 @@ class AsistenciaController extends Controller
 
     public function guardar(Request $request){
         $fecha = $request->fecha;
-        $atleta_id = $request->atleta_id;
-        $estado = $request-> estado;
-        for ($i=0;$i<count($atleta_id);$i++){
-            $informacion = [
-                'fecha' => $fecha[$i],
-                'atleta_id' => $atleta_id[$i],
-                'estado' => $estado[$i],
-            ];
-            DB::table('asistencia')->insert($informacion);
+        $buscar=Asistencia::where('fecha', $fecha[0])->get();
+        if(count($buscar)==0){
+            $atleta_id = $request->atleta_id;
+            $estado = $request-> estado;
+            for ($i=0;$i<count($atleta_id);$i++){
+                $informacion = [
+                    'fecha' => $fecha[$i],
+                    'atleta_id' => $atleta_id[$i],
+                    'estado' => $estado[$i],
+                ];
+                DB::table('asistencia')->insert($informacion);
+            }
+            return redirect()->back()->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
         }
-        return redirect()->back();
+        else{
+            return redirect()->back()->with('warning', 'La asistencia del '.$fecha[0].' ya ha sido tomada');
+        }
     }
 
     public function buscar(Request $request){
