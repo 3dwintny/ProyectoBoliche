@@ -73,7 +73,12 @@ class TerapiaController extends Controller
     public function edit($id)
     {
         $terapia = $this->t->obtenerTerapiaById($id);
-        return view('psicologia.terapias.edit',['terapia' => $terapia]);
+        $atleta = Atleta::where('id',$terapia->atleta_id)->get();
+        foreach ($atleta as $item){
+            $alumno = Alumno::where('id',$item->alumno_id)->get();
+        }
+        //return $alumno;
+        return view('psicologia.terapias.edit',['terapia' => $terapia,'alumno' => $alumno]);
     }
 
     /**
