@@ -16,7 +16,7 @@
 </div>
 
 <div class="card-body pb-4 pt-5 pt-md-3">
-
+    @include('components.flash_alerts')
     <form method="POST" action="{{route('asis')}}" enctype="multipart/form-data" role="form">
         @csrf
         <div class="row mb-2">
