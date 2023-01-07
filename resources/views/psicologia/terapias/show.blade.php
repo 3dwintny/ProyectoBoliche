@@ -42,6 +42,7 @@
           <th scope="col">Ansiedad Física</th>
           <th scope="col">Miedo</th>
           <th scope="col">Frustración</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody class="table-hover">
@@ -70,6 +71,9 @@
           <td>{{$item->ansiedad_fisica}}</td>
           <td>{{$item->miedo}}</td>
           <td>{{$item->frustracion}}</td>
+          <td>
+            <a href="{{route('terapias.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+          </td>
         </tr>
         @endforeach
       </tbody>
