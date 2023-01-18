@@ -1224,6 +1224,7 @@ class EDG31Controller extends Controller
         $tVeteranos = array_sum($veteranos);
         $fVeteranos = $veteranos[0]+$veteranos[2]+$veteranos[4]+$veteranos[6]+$veteranos[8]+$veteranos[10];
         $mVeteranos = $veteranos[1]+$veteranos[3]+$veteranos[5]+$veteranos[7]+$veteranos[9]+$veteranos[11];
+        
         $totalMasculinosOtros = $mPracticantes+$mDiscapacidad+$mVeteranos;
         $totalFemeninosOtros = $fPracticantes+$fDiscapacidad+$fVeteranos;
         $totalOtros = $tPracticantes+$tDiscapacidad+$tVeteranos;
@@ -2635,6 +2636,7 @@ class EDG31Controller extends Controller
         $tVeteranos = array_sum($veteranos);
         $fVeteranos = $veteranos[0]+$veteranos[2]+$veteranos[4]+$veteranos[6]+$veteranos[8]+$veteranos[10];
         $mVeteranos = $veteranos[1]+$veteranos[3]+$veteranos[5]+$veteranos[7]+$veteranos[9]+$veteranos[11];
+        
         $totalMasculinosOtros = $mPracticantes+$mDiscapacidad+$mVeteranos;
         $totalFemeninosOtros = $fPracticantes+$fDiscapacidad+$fVeteranos;
         $totalOtros = $tPracticantes+$tDiscapacidad+$tVeteranos;
