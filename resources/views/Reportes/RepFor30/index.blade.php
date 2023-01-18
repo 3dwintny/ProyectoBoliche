@@ -50,8 +50,12 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table" style="border-radius: 5px;">
+                        @php
+                            $contador = 1;   
+                        @endphp
                         <thead class="table-dark">
                             <tr>
+                                <th>No</th>
                                 <th>Atleta</th>
                                 <th>Edad</th>
                                 <th>Género</th>
@@ -70,8 +74,9 @@
                             $c=0;
                             @endphp
                             @foreach($atleta as $item)
-
+                            
                             <tr id="{{$c}}" style="text-align: center;">
+                                <td>{{$contador}}</td>
                                 <!--Filas-->
                                 <td>
                                     <!--Columnas-->
@@ -89,6 +94,9 @@
                                     <td>{{$contarDias[$c]}}</td>
                                     <td>{{$promedio[$c]}}</td>
                                     <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
+                                @php
+                                    $contador++;
+                                @endphp
                             </tr>
 
                             @php

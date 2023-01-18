@@ -398,12 +398,18 @@ class AsistenciaController extends Controller
         }
         $c = $request->carta;
         if($c=="1"){
-            return PDF::loadView('Reportes.RepFor30.pdf',compact('atleta','fs','estado','contarDias','promedio'))
-                ->setPaper('8.5x11', 'landscape')->stream();
+            return PDF::setOptions(['enable_remote' => true,
+            'chroot'  => public_path('storage/uploads'),])
+            ->loadView('Reportes.RepFor30.pdf',compact('atleta','fs','estado','contarDias','promedio'))
+            ->setPaper('8.5x11', 'landscape')
+            ->stream();
         }
         else{
-            return PDF::loadView('Reportes.RepFor30.pdf',compact('atleta','fs','estado','contarDias','promedio'))
-                ->setPaper('8.5x14', 'landscape')->stream();
+            return PDF::setOptions(['enable_remote' => true,
+            'chroot'  => public_path('storage/uploads'),])
+            ->loadView('Reportes.RepFor30.pdf',compact('atleta','fs','estado','contarDias','promedio'))
+            ->setPaper('8.5x14', 'landscape')
+            ->stream();
         }
     }
 
