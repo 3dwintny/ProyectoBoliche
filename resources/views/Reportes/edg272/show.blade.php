@@ -2,7 +2,7 @@
 
 @section('content')
 <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
-
+ 
 <script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
 <div class="header bg-dark pb-4 pt-5 pt-md-6">
@@ -26,8 +26,11 @@
     <div class="col-xl-12 col-lg-12 ">
         <div class="pb-4 pt-5 pt-md-1">
             <div class="card-body">
-                <table class="table table-responsive table-bordered border-light">
-                    <thead class="table table-dark">
+                <table class="table table-responsive table-bordered border-light" style="align-content: center;">
+                    @php
+                        $contador = 1;   
+                    @endphp
+                    <thead class="table-dark ">
                         <tr>
                             <th>No</th>
                             <th>Nombre(s) Apellido(s) completos</th>
@@ -40,7 +43,7 @@
                     <tbody>
                         @foreach ($atletas as $item)
                         <tr style="text-align: center;">
-                            <td>{{$item->id}}</td>
+                            <td>{{$contador}}</td>
                             <td>
                                 {{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}}
                                 {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
@@ -49,6 +52,9 @@
                             <td>{{$item->alumno->edad}}</td>
                             <td>{{$item->alumno->genero}}</td>
                             <td>{{$item->categoria->tipo}}</td>
+                            @php
+                                $contador++;
+                            @endphp
                         </tr>
                         @endforeach
                     </tbody>
