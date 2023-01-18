@@ -21,11 +21,12 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nivel</th>
+          <th scope="col"></th>
         </tr>
       </thead>
       <tbody class="table-hover">
         @php
-            $contador = 1;   
+            $contador = 1;
         @endphp
         @foreach ($niveles as $item)
         <tr>
