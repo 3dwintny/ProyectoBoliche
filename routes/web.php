@@ -199,6 +199,7 @@ Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('muni
 Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
 Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
 Route::post('historiales', [TerapiaController::class, 'getHistorial'])->name('historiales');
+Route::get('terapias-PDF/{id}', [TerapiaController::class, 'generarPDF'])->name('historialPDF');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
