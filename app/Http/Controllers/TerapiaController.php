@@ -8,6 +8,7 @@ use App\Models\Terapia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class TerapiaController extends Controller
 {
@@ -77,7 +78,6 @@ class TerapiaController extends Controller
         foreach ($atleta as $item){
             $alumno = Alumno::where('id',$item->alumno_id)->get();
         }
-        //return $alumno;
         return view('psicologia.terapias.edit',['terapia' => $terapia,'alumno' => $alumno]);
     }
 
@@ -141,5 +141,15 @@ class TerapiaController extends Controller
         else{
             return view('psicologia.terapias.sinresultados',compact('completo'));
         }
+    }
+
+    public function generarPDF($id)
+    {
+        $terapia = $this->t->obtenerTerapiaById($id);
+        $atleta = Atleta::where('id',$terapia->atleta_id)->get();
+        foreach ($atleta as $item){
+            $alumno = Alumno::where('id',$item->alumno_id)->get();
+        }
+        return PDF::loadView('psicologia.terapias.pdf',['terapia' => $terapia,'alumno' => $alumno])->setPaper('8.5x11')->stream();
     }
 }
