@@ -8,7 +8,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Nueva Asistencia</h1>
+                    <h1 class="text-white">Toma de Asistencia</h1>
                 </div>
             </div>
         </div>
@@ -30,15 +30,15 @@
                         <table class="table table-hover">
                             <thead class="table table-dark mt-2">
                                 <tr>
-                                    <th>No</th>
-                                    <th>Fecha</th>
-                                    <th>Atleta</th>
-                                    <th>Asistencia</th>
-                                    <th>Inasistencia</th>
-                                    <th>Permiso/Descanso</th>
-                                    <th>Enfermo</th>
-                                    <th>Lesión</th>
-                                    <th>Competencia</th>
+                                    <th style="width: 3.5%; text-align:center;">No</th>
+                                    <th style="width:10%; text-align:center;">Fecha</th>
+                                    <th style="width:21.7%; text-align:center;">Atleta</th>
+                                    <th style="width:8%; text-align:center;">Asistencia</th>
+                                    <th style="width:8%; text-align:center;">Inasistencia</th>
+                                    <th style="width:8%; text-align:center;">Permiso/Descanso</th>
+                                    <th style="width:8%; text-align:center;">Enfermo</th>
+                                    <th style="width:8%; text-align:center;">Lesión</th>
+                                    <th style="width:8%; text-align:center;">Competencia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,42 +49,42 @@
                                 @foreach($atletas as $item)
                                 <tr class="table-sm">
                                     <td>
-                                        <input type="hidden" class="text-white bg-dark" name="atleta_id[]" value="{{$item->id}}">
-                                        <input type="text" value="{{$contador}}" disabled readonly>
+                                        <input type="hidden" class="text-white bg-dark" name="atleta_id[]" value="{{$item->id}}" style="width: 100%;">
+                                        <input type="text" value="{{$contador}}" readonly style="width: 100%; text-align:center;">
                                     </td>
                                     <td>
-                                        <input type="text" name="fecha[]" value="{{$hoy->format('Y-m-d')}}" id="fecha_registro{{$c}}" readonly>
+                                        <input type="text" name="fecha[]" value="{{$hoy->format('Y-m-d')}}" id="fecha_registro{{$c}}" readonly style="width: 100%; text-align:center;">
+                                    </td>
+                                    <td >
+                                        <input type="text" value="{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}" readonly style="width: 100%;text-align:center;">
                                     </td>
                                     <td>
-                                        <input type="text" value="{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}" readonly>
-                                    </td>
-                                    <td>
-                                        <label>
+                                        <label style="margin-left: 50%;">
                                             <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="X" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
-                                        <label>
+                                        <label style="margin-left: 50%;">
                                             <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="O" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
-                                        <label>
+                                        <label style="margin-left: 50%;">
                                             <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="P" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
-                                        <label>
+                                        <label style="margin-left: 50%;">
                                             <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="E" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
-                                        <label>
+                                        <label style="margin-left: 50%;">
                                             <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="L" required> <span></span>
                                         </label>
                                     </td>
                                     <td>
-                                        <label>
+                                        <label style="margin-left: 50%;">
                                             <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="C" required> <span></span>
                                         </label>
                                     </td>
@@ -96,7 +96,7 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Guardar Asistencia"></div>
+                        <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar Asistencia"></div>
                     </div>
 
                 </div>

@@ -18,7 +18,7 @@
       <table class="table table-responsive">
         <thead class="table-dark" style="border-radius: 5px;">
           <tr>
-            <th scope="col">Id</th>
+            <th scope="col">No</th>
             <th scope="col">Nombre</th>
             <th scope="col">Apellido</th>
             <th scope="col">CUI</th>
@@ -32,9 +32,12 @@
           </tr>
         </thead>
         <tbody>
+          @php
+            $contador = 1;
+          @endphp
           @foreach ($entrenadores as $entrenador)
           <tr>
-            <td>{{ ++$i }}</td>
+            <td>{{$contador}}</td>
             <td>{{$entrenador->nombre1}}</td>
             <td>{{$entrenador->apellido1}}</td>
             <td>{{$entrenador->cui}}</td>
@@ -51,6 +54,9 @@
               </form>
             </td>
           </tr>
+          @php
+            $contador++;
+          @endphp
           @endforeach
         </tbody>
       </table>

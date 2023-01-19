@@ -23,8 +23,8 @@ class TerapiaController extends Controller
      */
     public function index()
     {
-        $terapia = Terapia::with('atleta')->get();
-        return view('psicologia.terapias.list',compact('terapia'));
+        $atleta = Atleta::with('alumno')->get();
+        return view('psicologia.terapias.list',compact('atleta'));
     }
 
     /**

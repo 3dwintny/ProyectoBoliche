@@ -19,7 +19,7 @@
     <table class="table table-responsive table-hover" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
-          <th scope="col">Id</th>
+          <th scope="col">No</th>
           <th scope="col">Nombre</th>
           <th scope="col">Etnia</th>
           <th scope="col">Estado Civil</th>
@@ -33,9 +33,12 @@
         </tr>
       </thead>
       <tbody class="table-hover">
+        @php
+          $contador = 1;
+        @endphp
         @foreach ($atletas as $atleta)
         <tr>
-          <td>{{$atleta->id}}</td>
+          <td>{{$contador}}</td>
           <td>
           <div class="d-flex px-2 py-1 bg-white">
               <div>
@@ -49,7 +52,7 @@
           </td>
           <td>{{$atleta->etnia}}</td>
           <td>{{$atleta->estado_civil}}</td>
-          <td>{{$atleta->fecha_ingreso}}</td>
+          <td>{{\Carbon\Carbon::parse($atleta->fecha_ingreso)->format('d-m-Y')}}</td>
           <td>{{$atleta->categoria->tipo}}</td>
           <td>{{$atleta->adaptado}}</td>
           <td>{{$atleta->centro->nombre}}</td>
@@ -57,15 +60,18 @@
           <td>{{$atleta->etapa_deportiva->nombre}}</td>
           <td>
             <form action="" method="POST">
-            @can('editar-atleta')
-            <a class="btn btn-sm btn-info" href="{{route('atletas.edit',$atleta->id)}}"><i class="fa fa-fw fa-edit"></i>Editar</a>
-            @endcan
-            @can('eliminar-atleta')
-            <a class="btn btn-sm btn-danger" href="{{route('atletas.destroy',$atleta->id)}}"><i class="fa fa-fw fa-trash"></i>Eliminar</a>
-            @endcan
-        </form>
+              @can('editar-atleta')
+              <a class="btn btn-sm btn-info" href="{{route('atletas.edit',$atleta->id)}}"><i class="fa fa-fw fa-edit"></i>Editar</a>
+              @endcan
+              @can('eliminar-atleta')
+              <a class="btn btn-sm btn-danger" href="{{route('atletas.destroy',$atleta->id)}}"><i class="fa fa-fw fa-trash"></i>Eliminar</a>
+              @endcan
+            </form>
           </td>
         </tr>
+        @php
+          $contador++;
+        @endphp
         @endforeach
       </tbody>
     </table>

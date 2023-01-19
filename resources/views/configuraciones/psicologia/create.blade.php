@@ -7,7 +7,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Psicologia</h1>
+                    <h1 class="text-white">Psicología</h1>
                 </div>
             </div>
         </div>
@@ -26,7 +26,7 @@
                                 <div class="card-header bg-light mb-2">
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 mb-3">
-                                            <h3 class="card-title text-dark">Registrar Nueva(o) Psicologa(o)</h3>
+                                            <h3 class="card-title text-dark">Registrar Nueva(o) Psicóloga(o)</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" name="submit" class="submit btn btn-outline-success" value="Enviar" />
+                        <input type="submit" name="submit" class="btn btn-outline-primary" value="Registrar" />
                     </fieldset>
                 </form>     
             </div>

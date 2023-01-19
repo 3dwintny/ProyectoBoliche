@@ -25,14 +25,14 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar nuevo(a) Psicologo(a) </h2>
+                            <h2> Registrar nuevo(a) Psicólogo(a) </h2>
                         </strong>
 
                     </div>
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('psicologia.store')}}">
                     @csrf
                     <div class="form-group">
-                        <div">Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" readonly>
+                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" readonly>
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">
@@ -51,7 +51,7 @@
                                 <div class="col-md-12 mb-2"><input class="form-control text-dark" type="text" name="direccion" placeholder="Dirección"></div>
                             </div>
                             <div class="container">
-                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>
+                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                             </div>
                 </form>
 

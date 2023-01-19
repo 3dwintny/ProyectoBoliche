@@ -95,7 +95,7 @@
                             @can('listado-Atletas')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('atletas.index') }}">
-                                    {{ __('Listado de Atletas') }}
+                                    {{ __('Atletas') }}
                                 </a>
                             </li>
                             @endcan
@@ -128,7 +128,7 @@
                             @can('ver-Entrenadores')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.index') }}">
-                                    {{ __('Listado de Entrenadores') }}
+                                    {{ __('Entrenadores') }}
                                 </a>
                             </li>
                             @endcan
@@ -140,21 +140,31 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-atom text-dark"></i>
-                        <span class="nav-link-text text-dark">{{ __('Psicologia') }}</span>
+                        <span class="nav-link-text text-dark">{{ __('Psicología') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-psico">
                         <ul class="nav nav-sm flex-column">
                             @can('crearTerapias')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('terapias.create') }}">
-                                    {{ __('Terapias') }}
+                                    {{ __('Nueva Terapia') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('terapias.index') }}">
+                                    {{ __('Control de Terapias') }}
                                 </a>
                             </li>
                             @endcan
                             @can('ver-Psicologos')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('psicologia.create') }}">
-                                    {{ __('Registrar Piscologo') }}
+                                    {{ __('Registrar Piscólogo') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('psicologia.index') }}">
+                                    {{ __('Piscólogos') }}
                                 </a>
                             </li>
                             @endcan
