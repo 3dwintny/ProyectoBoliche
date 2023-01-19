@@ -157,8 +157,8 @@
         <div class="contenido">{{$terapia->tarea}}</div>
     </div>
     <br>
-    <div id="alineacionDerecha">
-        <table cellpading=0 cellspacing=0>
+    <div>
+        <table cellpading=0 cellspacing=0 style="width: 100%;">
             <thead>
                 <tr>
                     <th colspan="2">FACTORES EMOCIONALES Y SENSORIALES</th>

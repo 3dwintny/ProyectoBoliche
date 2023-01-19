@@ -13,7 +13,7 @@ class Encargado extends Model
     'direccion','celular','telefono_casa','correo','dpi','parentezco_id','created_at','updated_at'];
 
     public function parentezco(){
-        return $this->belongsTo('App\Models\Parentezco');
+        return $this->belongsTo('App\Models\Parentesco');
     }
 
     public function alumnos(){

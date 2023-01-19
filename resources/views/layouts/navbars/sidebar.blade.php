@@ -141,6 +141,11 @@
                                     {{ __('Registrar Piscologo') }}
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('terapias.index') }}">
+                                    {{ __('Listado de Terapias') }}
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>

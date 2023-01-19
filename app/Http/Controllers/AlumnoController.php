@@ -6,7 +6,7 @@ use App\Models\Alumno;
 use App\Models\Alergia;
 use App\Models\Encargado;
 use App\Models\Formulario;
-use App\Models\Parentezco;
+use App\Models\Parentesco;
 use App\Models\Departamento;
 use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
@@ -59,7 +59,7 @@ class AlumnoController extends Controller
     {
         $departamentos = Departamento::all();
         $nacionalidades = Nacionalidad::all();
-        $parentezcos = Parentezco::all();
+        $parentezcos = Parentesco::all();
         $formularios = Formulario::all();
         $alergia = Alergia::all();
         return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios", "alergia"));
