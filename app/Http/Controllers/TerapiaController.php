@@ -23,8 +23,8 @@ class TerapiaController extends Controller
      */
     public function index()
     {
-        //$terapias = Terapia::with('psicologia','atleta')->get();
-        return redirect()->action([TerapiaController::class,'create']);
+        $terapia = Terapia::with('atleta')->get();
+        return view('psicologia.terapias.list',compact('terapia'));
     }
 
     /**
@@ -62,7 +62,26 @@ class TerapiaController extends Controller
      */
     public function show($id)
     {
-        //
+        $historial = DB::table('terapia')
+        ->where('atleta_id', $id)->get();
+        $atleta = DB::table('atleta')
+        ->where('id', $id)->get('alumno_id');
+        $alumno = "";
+        foreach ($atleta as $item){
+            $alumno = $item->alumno_id;
+        }
+        $nombre = DB::table('alumno')
+        ->where('id',$alumno)->get();
+        $completo = "";
+        foreach ($nombre as $item){
+            $completo = $item->nombre1." ".$item->nombre2." ".$item->nombre3." ".$item->apellido1." ".$item->apellido2;
+        }
+        if (count($historial)>0){
+            return view('psicologia.terapias.show',compact('historial','completo'));
+        }
+        else{
+            return view('psicologia.terapias.sinresultados',compact('completo'));
+        }
     }
 
     /**
