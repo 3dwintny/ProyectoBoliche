@@ -42,7 +42,7 @@
           <td>
           <div class="d-flex px-2 py-1 bg-white">
               <div>
-                <img src="{{ asset('uploads/alumnos/'.$atleta->alumno->foto) }}" class="avatar avatar-sm me-3">
+                <img src="{{ asset('storage/uploads/'.$atleta->alumno->foto) }}" class="avatar avatar-sm me-3">
               </div>
               <div class="d-flex flex-column justify-content-center">
                 <h6 class="mb-0 text-xs"><strong>{{$atleta->alumno->nombre1 }} {{$atleta->alumno->nombre2}} {{$atleta->alumno->apellido1}} {{$atleta->alumno->apellido2}}</strong></h6>

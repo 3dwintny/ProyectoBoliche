@@ -62,7 +62,7 @@
                                                     <div class="form-floating">
                                                         <input class="form-control text-dark" id="formIns"
                                                             placeholder="{{ __('Segundo Nombre') }}" type="text"
-                                                            name="nombre2" value="{{ old('Segundo Nombre') }}" required>
+                                                            name="nombre2" value="{{ old('Segundo Nombre') }}">
                                                         <label for="formIns">Segundo Nombre</label>
                                                     </div>
                                                 </div>
@@ -259,7 +259,7 @@
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark"
                                                         placeholder="{{ __('Segundo Nombre') }}" type="text"
-                                                        name="nombre2p" value="{{ old('Segundo Nombre') }}" required>
+                                                        name="nombre2p" value="{{ old('Segundo Nombre') }}">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark"
@@ -268,7 +268,7 @@
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark" type="text" name="apellido1p"
-                                                        placeholder="Primer Apellido">
+                                                        placeholder="Primer Apellido" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark" type="text" name="apellido2p"
@@ -280,11 +280,11 @@
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control" type="text" name="direccion"
-                                                        placeholder="Direccion">
+                                                        placeholder="Direccion" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control" type="text" name="celular"
-                                                        placeholder="Celular">
+                                                        placeholder="Celular" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control" type="text" name="telefono_casa"
@@ -296,7 +296,7 @@
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control" type="text" name="dpi"
-                                                        placeholder="DPI">
+                                                        placeholder="DPI" required>
                                                 </div>
                                                 <div class="col-md-12 mb-2">
                                                     <select class="form-control" name="parentezco_id" required>
@@ -326,7 +326,7 @@
                                 <input type="button" name="previous" class="previous-form btn btn-outline-warning"
                                     value="Atras" />
                                 <input type="submit" name="submit" class="submit btn btn-outline-success"
-                                    value="Enviar" />
+                                    value="Registrar Información" />
                             </fieldset>
                         </form>
                     </div>

@@ -12,6 +12,7 @@ use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use PDF;
 
 class AlumnoController extends Controller
 {
@@ -111,7 +112,7 @@ class AlumnoController extends Controller
             $file = $request->file('foto');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
-            $file->move('uploads/alumnos/', $filename);
+            $file->move('storage/uploads/', $filename);
             $alumno->foto = $filename;
         }
         $alumno->fecha_fotografia= $request->input('fecha_fotografia');
@@ -141,8 +142,9 @@ class AlumnoController extends Controller
         $alumno->departamento_residencia_id = $request->input('departamento_residencia_id');
         $alumno->municipio_residencia_id= $request->input('municipio_residencia_id');
         $alumno->save();
+        return $this->generarPDF();
         //return view("Funciona");
-        return redirect()->back()->with('status','Alumno ingresado Correctamente');
+        //return redirect()->back()->with('status','Alumno ingresado Correctamente');
         /* return redirect()->action([AlumnoController::class, 'index']); */
 
 
@@ -200,5 +202,14 @@ class AlumnoController extends Controller
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
         
     }
-   
+
+    public static function generarPDF()
+    {
+        $encargado = Encargado::orderByDesc('id')->limit(1)->get();
+        foreach ($encargado as $item){
+            $alumno = Alumno::where('encargado_id',$item->id)->get();
+        }
+        $formularios = Formulario::all();
+        return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno'))->setPaper('8.5x11')->stream();
+    }
 }

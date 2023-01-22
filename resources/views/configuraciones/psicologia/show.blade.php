@@ -50,7 +50,7 @@
           <td>{{$item->telefono}}</td>
           <td>{{$item->correo}}</td>
           <td>{{$item->direccion}}</td>
-          <td>{{$item->fecha_inicio_labores}}</td>
+          <td>{{\Carbon\Carbon::parse($item->fecha_inicio_labores)->format("d-m-Y")}}</td>
           <td>
             <form action="{{route('psicologia.destroy',$item->id)}}" method="POST">
               <a href="{{route('psicologia.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>

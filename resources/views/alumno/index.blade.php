@@ -18,7 +18,7 @@
     <table class="table table-responsive table-hover" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
-          <th scope="col">Id</th>
+          <th scope="col">No</th>
           <th scope="col">Nombre</th>
           <th scope="col">Apellido</th>
           <th scope="col">CUI</th>
@@ -32,9 +32,12 @@
         </tr>
       </thead>
       <tbody class="table-hover">
+        @php
+          $contador = 1;
+        @endphp
         @foreach ($alumnos as $alumno)
         <tr>
-          <td>{{ $alumno->id }}</td>
+          <td>{{ $contador }}</td>
           <td><strong>{{$alumno->nombre1}}</strong></td>
           <td><strong>{{$alumno->apellido1}}</strong></td>
           <td>{{$alumno->cui}}</td>
@@ -54,6 +57,9 @@
             </form>
           </td>
         </tr>
+        @php
+          $contador++;
+        @endphp
         @endforeach
       </tbody>
     </table>

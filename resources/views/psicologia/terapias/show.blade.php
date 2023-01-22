@@ -19,7 +19,7 @@
     <table class="table table-responsive table-hover" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
-          <th scope="col">Terapia No</th>
+          <th scope="col">No</th>
           <th scope="col">Fecha</th>
           <th scope="col">Hora de Inicio</th>
           <th scope="col">Impresión Clínica</th>
@@ -49,8 +49,8 @@
         @foreach ($historial as $item)
         <tr>
           <td>{{$item->numero_terapia}}</td>
-          <td>{{$item->fecha}}</td>
-          <td>{{$item->hora_inicio}}</td>
+          <td>{{\Carbon\Carbon::parse($item->fecha)->format("d-m-Y")}}</td>
+          <td>{{\Carbon\Carbon::parse($item->hora_inicio)->format("H:i")}}</td>
           <td>{{$item->impresion_clinica}}</td>
           <td>{{$item->analisis_semiologico}}</td>
           <td>{{$item->desarrollo}}</td>
