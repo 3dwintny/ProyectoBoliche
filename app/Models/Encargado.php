@@ -10,7 +10,7 @@ class Encargado extends Model
     use HasFactory;
     protected $table="encargado";
     protected $fillable=['id','nombre1p','nombre2p','nombre3p','apellido1p','apellido2p','apellido_casada',
-    'direccion','celular','telefono_casa','correo','dpi','parentezco_id','created_at','updated_at'];
+    'direccionp','celularp','telefono_casap','correop','dpi','parentezco_id','created_at','updated_at'];
 
     public function parentezco(){
         return $this->belongsTo('App\Models\Parentesco');

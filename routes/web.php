@@ -115,7 +115,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('entrenadores',EntrenadorController::class);
 
     //Rutas Etapa_Deportiva
-    Route::resource('departamentos',Etapa_DeportivaController::class);
+    Route::resource('etapadeps',Etapa_DeportivaController::class);
 
     //Rutas Formulario
     Route::resource('departamentos',FormularioController::class);

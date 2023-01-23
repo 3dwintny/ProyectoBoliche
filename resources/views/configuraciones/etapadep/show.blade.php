@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Nacionalidades</h1>
+          <h1 class="text-white">Etapa Deportiva</h1>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Deporte</th>
+          <th scope="col">Nombre</th>
           
         </tr>
       </thead>
@@ -28,16 +28,16 @@
         @php
             $contador = 1;
         @endphp
-        @foreach ($deporte as $item)
+        @foreach ($etapa as $item)
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('deportes.destroy',$item->id)}}" method="POST">
-              <a href="{{route('deportes.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('etapadeps.destroy',$item->id)}}" method="POST">
+              <a href="{{route('etapadeps.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar Deporte')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarDeportea('Eliminar Etapa')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
           </form>
           </td>
           @php
@@ -51,7 +51,7 @@
 </div>
 </div>
 <script>
-  function eliminarNacionalidad(value){
+  function eliminarDeportea(value){
       action = confirm(value) ? true : event.preventDefault();
   }
 </script>

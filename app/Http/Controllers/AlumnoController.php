@@ -82,10 +82,10 @@ class AlumnoController extends Controller
         $padres->apellido1p = $request->input('apellido1p');
         $padres->apellido2p = $request->input('apellido2p');
         $padres->apellido_casada = $request->input('apellido_casada');
-        $padres->direccion = $request->input('direccion');
-        $padres->celular = $request->input('celular');
-        $padres->telefono_casa = $request->input('telefono_casa');
-        $padres->correo = $request->input('correo');
+        $padres->direccionp = $request->input('direccionp');
+        $padres->celularp = $request->input('celularp');
+        $padres->telefono_casap = $request->input('telefono_casap');
+        $padres->correop = $request->input('correop');
         $padres->dpi = $request->input('dpi');
         $padres->parentezco_id = $request->input('parentezco_id');
         //$padres = new Encargado ($request->all());

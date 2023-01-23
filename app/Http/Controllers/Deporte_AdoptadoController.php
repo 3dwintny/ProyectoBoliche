@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deporte_Adoptado;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class Deporte_AdoptadoController extends Controller
 {
+    protected $n;
+    public function __construct(Deporte_Adoptado $n){
+        $this->n = $n;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class Deporte_AdoptadoController extends Controller
      */
     public function index()
     {
-        //
+        $deporte = Deporte_Adoptado::all();
+        return view('configuraciones.deporte_a.show',compact('deporte'));
     }
 
     /**
@@ -23,7 +30,8 @@ class Deporte_AdoptadoController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.deporte_a.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +42,9 @@ class Deporte_AdoptadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $deporte = new Deporte_Adoptado($request->all());
+        $deporte->save();
+        return redirect()->action([Deporte_AdoptadoController::class, 'index']);
     }
 
     /**
@@ -56,7 +66,9 @@ class Deporte_AdoptadoController extends Controller
      */
     public function edit($id)
     {
-        //
+         
+        $deporte = Deporte_Adoptado::find($id);
+        return view('configuraciones.deporte_a.edit',['deporte' => $deporte]);
     }
 
     /**
@@ -68,7 +80,10 @@ class Deporte_AdoptadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $deporte = Deporte_Adoptado::find($id);
+        $deporte ->fill($request->all());
+        $deporte->save();
+        return redirect()->action([Deporte_AdoptadoController::class,'index']);
     }
 
     /**
@@ -79,6 +94,8 @@ class Deporte_AdoptadoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deporte = Deporte_Adoptado::find($id);
+        $deporte->delete();
+        return redirect()->action([Deporte_AdoptadoController::class,'index']);
     }
 }

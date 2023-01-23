@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Etapa_Deportiva;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class Etapa_DeportivaController extends Controller
 {
+    protected $n;
+    public function __construct(Etapa_Deportiva $n){
+        $this->n = $n;  
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,8 @@ class Etapa_DeportivaController extends Controller
      */
     public function index()
     {
-        //
+        $etapa = Etapa_Deportiva::all();
+        return view('configuraciones.etapadep.show',compact('etapa'));
     }
 
     /**
@@ -23,7 +30,8 @@ class Etapa_DeportivaController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.etapadep.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +42,9 @@ class Etapa_DeportivaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $etapa = new Etapa_Deportiva($request->all());
+        $etapa->save();
+        return redirect()->action([Etapa_DeportivaController::class, 'index']);
     }
 
     /**
@@ -56,7 +66,8 @@ class Etapa_DeportivaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $etapa = Etapa_Deportiva::find($id);
+        return view('configuraciones.etapadep.edit',['deporte' => $etapa]);
     }
 
     /**
@@ -68,7 +79,10 @@ class Etapa_DeportivaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $etapa = Etapa_Deportiva::find($id);
+        $etapa ->fill($request->all());
+        $etapa->save();
+        return redirect()->action([Etapa_DeportivaController::class,'index']);
     }
 
     /**
@@ -79,6 +93,8 @@ class Etapa_DeportivaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $etapa = Etapa_Deportiva::find($id);
+        $etapa->delete();
+        return redirect()->action([Etapa_DeportivaController::class,'index']);
     }
 }
