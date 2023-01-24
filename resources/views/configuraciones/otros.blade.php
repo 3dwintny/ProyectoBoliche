@@ -41,7 +41,7 @@
             <div class="card">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Deporte
@@ -49,11 +49,17 @@
                                 </h5>
                             </div>
                         </div>
-                        <div class="col-6 text-end">
-                            <button type="button" class="btn btn-dark">
-                                <i class="ni ni-settings"></i>
+                        <div class="col-4 text-end">
+                        <button type="button" class="btn btn-dark" onclick="window.location='{{route('deportes.create')}}'">
+                                <i class="fa fa-fw fa-light fa-plus"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder">Modificar</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('deportes.index') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: center;">Ver</span>
                         </div>
                     </div>
                 </div>
@@ -87,7 +93,7 @@
             <div class="card">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Deporte Adaptado
@@ -95,11 +101,17 @@
                                 </h5>
                             </div>
                         </div>
-                        <div class="col-6 text-end">
-                            <button type="button" class="btn btn-dark">
-                                <i class="ni ni-settings"></i>
+                        <div class="col-4 text-end">
+                        <button type="button" class="btn btn-dark" onclick="window.location='{{route('deportes-adoptados.create')}}'">
+                                <i class="fa fa-fw fa-light fa-plus"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder">Modificar</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('deportes-adoptados.index') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: center;">Ver</span>
                         </div>
                     </div>
                 </div>
@@ -110,7 +122,7 @@
             <div class="card">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Etapa Deportiva
@@ -118,11 +130,17 @@
                                 </h5>
                             </div>
                         </div>
-                        <div class="col-6 text-end">
-                            <button type="button" class="btn btn-dark">
-                                <i class="ni ni-settings"></i>
+                        <div class="col-4 text-end">
+                        <button type="button" class="btn btn-dark" onclick="window.location='{{route('etapadeps.create')}}'">
+                                <i class="fa fa-fw fa-light fa-plus"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder">Modificar</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('etapadeps.index') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: center;">Ver</span>
                         </div>
                     </div>
                 </div>

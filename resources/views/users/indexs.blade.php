@@ -60,7 +60,7 @@
             <span class="text-secondary text-xs font-weight-normal">23/04/18</span>
           </td>
           <td class="align-middle">
-            <a href="{{ route('usuarios.edit',$usuario->id) }}" style="background-color:#fba313;" class="btn  font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Edit user">
+            <a href="{{ route('usuarios.edit',$usuario->id) }}" style="background-color:#fba313;" class="btn  font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Editar usuario">
               Editar
             </a>
             {!! Form::open(['method'=> 'DELETE', 'route' => ['usuarios.destroy', $usuario->id], 'style'=>'display:inline'])!!}

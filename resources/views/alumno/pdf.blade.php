@@ -386,14 +386,14 @@
 
             <div class="edad tamanio70 textoCentrado">{{$item->telefono_casap}}</div>
             <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
-            <div class="cui tamanio70 textoCentrado">3557-4211</div>
+            <div class="cui tamanio70 textoCentrado">{{$item->celularp}}</div>
             <div class="correo tamanio70">E-MAIL:</div>
-            <div class="espacioDerecho2 tamanio70">oscar.caceres2321@gmail.com</div>
+            <div class="espacioDerecho2 tamanio70">{{$item->correop}}</div>
 
             <div class="contenedorTitulos tamanio70"></div>
             <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="nombres tamanio70">15 calle 0-61 "A" Interior Zona 7 Quetzaltenango,Quetzaltenango</div>
+            <div class="nombres tamanio70">{{$item->direccionp}}</div>
 
             <div class="contenedorTitulos tamanio70"></div>
             @endforeach

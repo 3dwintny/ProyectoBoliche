@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg" style="background-color: #f7f7f7;">
-    <div class="container px-4">
+    <div class="container px-5">
         <!-- <a class=" navbar-brand" href="{{ route('index') }}">
             <img class="navbar-brand-img img-fluid" src="{{ asset('argon') }}/img/brand/federacion3.jpg" alt="logo">
         </a> -->
-        <div class="col-2 collapse-brand">
+        <div class="col-8 collapse-brand">
         <a class="navbar-brand" href="{{ route('index') }}">
-            <img class="navbar-brand-img img-fluid" src="{{ asset('argon') }}/img/brand/federacion1.jpg" />
+            <img class="navbar-brand-img img-fluid" src="{{ asset('argon') }}/img/brand/federacion1.jpg"class="img-thumbnail" alt="100" height="100" width="100" />
         </a>
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-collapse-main" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

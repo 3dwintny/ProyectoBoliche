@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deporte;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DeporteController extends Controller
 {
+    protected $n;
+    public function __construct(Deporte $n){
+        $this->n = $n;  
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    { 
+        $deporte = Deporte::all();
+        return view('configuraciones.deporte.show',compact('deporte'));
+    
     }
 
     /**
@@ -23,7 +31,8 @@ class DeporteController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now()->toDateString();
+        return view('configuraciones.deporte.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +43,9 @@ class DeporteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $deporte = new Deporte($request->all());
+        $deporte->save();
+        return redirect()->action([DeporteController::class, 'index']);
     }
 
     /**
@@ -56,7 +67,9 @@ class DeporteController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $deporte = Deporte::find($id);
+        return view('configuraciones.deporte.edit',['deporte' => $deporte]);
     }
 
     /**
@@ -68,7 +81,10 @@ class DeporteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $deporte = Deporte::find($id);
+        $deporte ->fill($request->all());
+        $deporte->save();
+        return redirect()->action([DeporteController::class,'index']);
     }
 
     /**
@@ -79,6 +95,8 @@ class DeporteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deporte = Deporte::find($id);
+        $deporte->delete();
+        return redirect()->action([DeporteController::class,'index']);
     }
 }
