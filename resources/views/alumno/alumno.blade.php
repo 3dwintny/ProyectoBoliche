@@ -279,19 +279,19 @@
                                                         placeholder="Apellido de Casada">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="direccion"
+                                                    <input class="form-control" type="text" name="direccionp"
                                                         placeholder="Direccion" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="celular"
+                                                    <input class="form-control" type="text" name="celularp"
                                                         placeholder="Celular" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="telefono_casa"
+                                                    <input class="form-control" type="text" name="telefono_casap"
                                                         placeholder="Teléfono Residencial">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="correo"
+                                                    <input class="form-control" type="text" name="correop"
                                                         placeholder="Correo electronico">
                                                 </div>
                                                 <div class="col-md-4 mb-2">

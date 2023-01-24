@@ -384,7 +384,7 @@
             
             <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="edad tamanio70 textoCentrado">{{$item->telefono_casa}}</div>
+            <div class="edad tamanio70 textoCentrado">{{$item->telefono_casap}}</div>
             <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
             <div class="cui tamanio70 textoCentrado">3557-4211</div>
             <div class="correo tamanio70">E-MAIL:</div>
