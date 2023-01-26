@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use Mail;
+use App\Mail\ProbandoCorreos;
 
 class TerapiaController extends Controller
 {
@@ -32,12 +34,17 @@ class TerapiaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $psicologos = Psicologia::all();
         $atletas = Atleta::all();
         $hoy = Carbon::now();
         $hora = Carbon::now()->toTimeString('minute');
+        $obtenerAtleta = Atleta::where('id',$request->atl);
+        foreach($obtenerAtleta as $item){
+            $almacenarAlumno = $item->alumno_id;
+        }
+        //Mail::to('oscar.caceres2302@gmail.com')->send(new ProbandoCorreos($data));
         return view('psicologia.terapias.create',compact('psicologos','atletas','hoy','hora'));
     }
 
@@ -51,6 +58,10 @@ class TerapiaController extends Controller
     {
         $terapias = new Terapia($request->all());
         $terapias->save();
+        $correoAtleta = $request->correo_electronico;
+        $data = ['name'=>'Oscar'];
+        $tarea = $request->tarea;
+        Mail::to($correoAtleta)->send(new ProbandoCorreos($data,$tarea));
         return redirect()->action([TerapiaController::class,'index']);
     }
 
@@ -135,6 +146,17 @@ class TerapiaController extends Controller
         
         if (count($paciente)>0){
             return response()->json($paciente);
+        }
+    }
+    
+    public function getCorreo(Request $request)
+    {
+        $informacionAtletas = DB::table('atleta')->where('id',$request->atleta_id)->get();
+        foreach($informacionAtletas as $item){
+            $informacionAlumnos = DB::table('alumno')->where('id',$item->alumno_id)->get();
+        }
+        if(count($informacionAlumnos)>0){
+            return response()->json($informacionAlumnos);
         }
     }
 

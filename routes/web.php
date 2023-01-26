@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\PruebaCorreo;
 use App\Http\Controllers\PRTController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UserController;
@@ -37,7 +39,8 @@ use App\Http\Controllers\Etapa_DeportivaController;
 use App\Http\Controllers\Deporte_AdoptadoController;
 use App\Http\Controllers\Linea_DesarrolloController;
 use App\Http\Controllers\Frontend\FrontendController;
-
+use App\Http\Controllers\CorreoController;
+use function Ramsey\Uuid\v1;
 
 /*
 |--------------------------------------------------------------------------
@@ -200,9 +203,12 @@ Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
 Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
 Route::post('historiales', [TerapiaController::class, 'getHistorial'])->name('historiales');
 Route::get('terapias-PDF/{id}', [TerapiaController::class, 'generarPDF'])->name('historialPDF');
+Route::get('correos',[TerapiaController::class,'getCorreo'])->name('correos');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 require __DIR__.'/auth.php';
+
+Route::get('probandoNotificaciones',[CorreoController::class, 'getMail']);
 
