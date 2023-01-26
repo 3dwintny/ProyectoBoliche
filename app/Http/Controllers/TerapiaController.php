@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use PDF;
+use Mail;
+use App\Mail\CorreosTerapia;
 
 class TerapiaController extends Controller
 {
@@ -49,8 +51,11 @@ class TerapiaController extends Controller
      */
     public function store(Request $request)
     {
+        $obtenerTarea = $request->tarea;
+        $correoAtleta = $request->obtenerCorreo;
         $terapias = new Terapia($request->all());
         $terapias->save();
+        Mail::to($correoAtleta)->send(new CorreosTerapia($obtenerTarea));
         return redirect()->action([TerapiaController::class,'index']);
     }
 
@@ -135,6 +140,17 @@ class TerapiaController extends Controller
         
         if (count($paciente)>0){
             return response()->json($paciente);
+        }
+    }
+
+    public function getCorreo(Request $request){
+        $informacionAtleta = DB::table('atleta')->where('id',$request->atleta_id)->get();
+        foreach($informacionAtleta as $item){
+            $informacionAlumno = DB::table('alumno')->where('id',$item->alumno_id)->get();
+        }
+
+        if(count($informacionAlumno)>0){
+            return response()->json($informacionAlumno);
         }
     }
 

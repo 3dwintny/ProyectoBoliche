@@ -10,15 +10,15 @@ use Illuminate\Queue\SerializesModels;
 class CorreosTerapia extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $tarea;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($tarea)
     {
-        //
+        $this->tarea = $tarea;
     }
 
     /**
@@ -28,6 +28,8 @@ class CorreosTerapia extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        $obtenerTarea = $this->tarea;
+        return $this->view('psicologia.terapias.construirCorreo',compact('obtenerTarea'))
+        ->subject('Departamento de Psicología');
     }
 }

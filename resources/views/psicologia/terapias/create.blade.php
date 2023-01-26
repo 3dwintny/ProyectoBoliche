@@ -71,7 +71,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"> <textarea class="form-control" name="impresion_clinica" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                                <div class="accordion-body"> <textarea class="form-control" name="impresion_clinica" placeholder="Impresión Clínica" id="floatingTextarea"></textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -81,7 +81,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"><textarea class="form-control" name="analisis_semiologico" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                                <div class="accordion-body"><textarea class="form-control" name="analisis_semiologico" placeholder="Análisis Semiológico (Signos y Síntomas)" id="floatingTextarea"></textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -91,7 +91,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"><textarea class="form-control" name="desarrollo" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                                <div class="accordion-body"><textarea class="form-control" name="desarrollo" placeholder="Desarrollo" id="floatingTextarea"></textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -111,7 +111,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-heading5" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"> <textarea class="form-control" name="tarea" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                                <div class="accordion-body"> <textarea class="form-control" name="tarea" placeholder="Tarea" id="floatingTextarea"></textarea></div>
                                             </div>
                                         </div>
                                     </div>
@@ -340,6 +340,7 @@
                         </div>
                     </div>
             </div>
+            <input type="hidden" name="obtenerCorreo" id="obtenerCorreo">
             </form>
         </div>
     </div>
@@ -359,6 +360,22 @@
                     $.each(res, function (key, value) {
                         document.getElementById('numero_terapia').value=value.numero_terapia+1;
                         document.getElementById('atleta').value=value.atleta_id;
+                    });
+                }
+            });
+        });
+    });
+
+    $(document).ready(function(){
+        $('#atleta_id').on('change', function(){
+            var atletaId = this.value;
+            $('#obtenerCorreo').html('');
+            $.ajax({
+                url: '{{ route('correos') }}?atleta_id='+atletaId,
+                type: 'GET',
+                success: function (res) {
+                    $.each(res, function (key, value) {
+                        document.getElementById('obtenerCorreo').value=value.correo;
                     });
                 }
             });
