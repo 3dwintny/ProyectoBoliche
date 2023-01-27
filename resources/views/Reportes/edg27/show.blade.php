@@ -17,7 +17,7 @@
         </div>
     </div>
 </div>
-<form method="GET" action="{{route('edg27PDF')}}">
+<form method="GET" action="{{route('edg27PDF')}}" enctype="multipart/form-data" target="_blank" role="form">
     @csrf
     <input class="btn btn-outline-info" type="submit" value="Generar PDF">
     <input type="hidden" name="carta" id="carta">

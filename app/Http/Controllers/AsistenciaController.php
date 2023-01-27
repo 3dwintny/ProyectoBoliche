@@ -373,44 +373,11 @@ class AsistenciaController extends Controller
         {
             array_push($fs,substr($da,8,2));
         }
-
-        foreach ($atleta as $item){
-            $dias = Asistencia::where('atleta_id',$item->atleta_id)
-            ->whereMonth('fecha',$m)
-            ->whereYear('fecha',$y)
-            ->where( function ($query)
-            {
-                $query->where('estado','X')
-                ->orWhere('estado','P')
-                ->orWhere('estado','L')
-                ->orWhere('estado','E')
-                ->orWhere('estado','C');
-            })->get();
-
-            if(count($dias)>0){
-                array_push($contarDias,count($dias));
-                array_push($promedio,round((count($dias)/count($fs))*100,2));
-            }
-            else{
-                array_push($contarDias,0);
-                array_push($promedio,round((count($dias)/count($fs))*100,2));
-            }
-        }
-        $c = $request->carta;
-        if($c=="1"){
-            return PDF::setOptions(['enable_remote' => true,
-            'chroot'  => public_path('storage/uploads'),])
-            ->loadView('Reportes.RepFor30.pdf',compact('atleta','fs','estado','contarDias','promedio'))
-            ->setPaper('8.5x11', 'landscape')
-            ->stream();
-        }
-        else{
-            return PDF::setOptions(['enable_remote' => true,
+        return PDF::setOptions(['enable_remote' => true,
             'chroot'  => public_path('storage/uploads'),])
             ->loadView('Reportes.RepFor30.pdf',compact('atleta','fs','estado','contarDias','promedio'))
             ->setPaper('8.5x14', 'landscape')
             ->stream();
-        }
     }
 
     public static function mostrarAsistencia($obtenerMes,$obtenerAnio,$obtenerFecha,$m,$y,$mostrarAnioReporte,$mostrarMes)
