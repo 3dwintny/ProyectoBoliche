@@ -53,9 +53,12 @@ class TerapiaController extends Controller
     {
         $obtenerTarea = $request->tarea;
         $correoAtleta = $request->obtenerCorreo;
+        $obtenerFechaTarea = $request->fecha;
+        if($obtenerTarea != ""){
+            Mail::to($correoAtleta)->send(new CorreosTerapia($obtenerTarea,$obtenerFechaTarea));
+        }
         $terapias = new Terapia($request->all());
         $terapias->save();
-        Mail::to($correoAtleta)->send(new CorreosTerapia($obtenerTarea));
         return redirect()->action([TerapiaController::class,'index']);
     }
 

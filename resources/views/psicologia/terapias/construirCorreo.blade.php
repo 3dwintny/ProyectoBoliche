@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Tarea Asignada</h1>
+    <h1>Tarea Asignada el {{\Carbon\Carbon::parse($fechaAsignacionTarea)->format("d-m-Y")}}</h1>
     <p>{{$obtenerTarea}}</p>
 </body>
 </html>

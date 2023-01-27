@@ -11,14 +11,16 @@ class CorreosTerapia extends Mailable
 {
     use Queueable, SerializesModels;
     public $tarea;
+    public $fechaTarea;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($tarea)
+    public function __construct($tarea,$fechaTarea)
     {
         $this->tarea = $tarea;
+        $this->fechaTarea = $fechaTarea;
     }
 
     /**
@@ -29,7 +31,8 @@ class CorreosTerapia extends Mailable
     public function build()
     {
         $obtenerTarea = $this->tarea;
-        return $this->view('psicologia.terapias.construirCorreo',compact('obtenerTarea'))
+        $fechaAsignacionTarea = $this->fechaTarea;
+        return $this->view('psicologia.terapias.construirCorreo',compact('obtenerTarea','fechaAsignacionTarea'))
         ->subject('Departamento de Psicología');
     }
 }
