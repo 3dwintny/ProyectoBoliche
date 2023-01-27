@@ -46,6 +46,18 @@
                 </div>
             </form>
         </div>
+        
+        <div class="row mb-2">
+            <div class="col-2">
+                <form method="GET" action="{{route('asistenciasPDF')}}" enctype="multipart/form-data" role="form" target="_blank">
+                    @csrf
+                    <input class="btn btn-outline-info " type="submit" value="Generar PDF">
+                    <input type="hidden" name="meses" id="meses" value="{{$m}}">
+                    <input type="hidden" name="anios" id="anios" value="{{$y}}">
+                </form>
+            </div>
+        </div>
+
         <div class="container">
             <div class="card-body">
                 <div class="table-responsive">
@@ -108,29 +120,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-        <hr>
-        <div class="row mb-2">
-        <div class="col-2">
-            <form method="GET" action="{{route('asistenciasPDF')}}">
-                @csrf
-                <input class="btn btn-outline-info " type="submit" value="Generar PDF Carta">
-                <input type="hidden" name="carta" id="carta" value="1">
-                <input type="hidden" name="meses" id="meses" value="{{$m}}">
-                <input type="hidden" name="anios" id="anios" value="{{$y}}">
-            </form>
-
-        </div>
-
-        <div class="col-2">
-            <form method="GET" action="{{route('asistenciasPDF')}}">
-                @csrf
-                <input class="btn btn-outline-info" type="submit" value="Generar PDF Oficio">
-                <input type="hidden" name="carta" id="carta" value="2">
-                <input type="hidden" name="meses" id="meses" value="{{$m}}">
-                <input type="hidden" name="anios" id="anios" value="{{$y}}">
-            </form>
-        </div>
         </div>
     </div>
     @endsection
