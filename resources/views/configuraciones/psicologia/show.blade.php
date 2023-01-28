@@ -38,6 +38,10 @@
             $contador = 1;   
         @endphp
         @foreach ($psicologo as $item)
+        @php
+          $hashids = new Hashids\Hashids();
+          $idAtleta = $hashids->encode($item->id);
+        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre1}}</td>
@@ -52,12 +56,18 @@
           <td>{{$item->direccion}}</td>
           <td>{{$item->fecha_inicio_labores}}</td>
           <td>
+            <form action="{{route('psicologia.edit',$idAtleta)}}" method="GET" enctype="multipart/form-data" role="form">
+              @csrf
+              <button type="submit" class="btn btn-primary" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <input type="hidden" name="e" id="e" value="{{$idAtleta}}">
+            </form>
+          </td>
+          <td>
             <form action="{{route('psicologia.destroy',$item->id)}}" method="POST">
-              <a href="{{route('psicologia.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger" onclick="return eliminarPsicologia('Eliminar Psicologa(o)')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+            </form>
           </td>
           @php
             $contador++;

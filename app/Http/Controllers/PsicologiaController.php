@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Psicologia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Hashids\Hashids;
 
 class PsicologiaController extends Controller
 {
@@ -64,10 +65,14 @@ class PsicologiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
+        $idEncriptado = $request->e;
+        $hashids = new Hashids();
+        $idDesencriptado = $hashids->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $psicologo = $this->p->obtenerPsicologiaById($id);
-        return view('configuraciones.psicologia.edit',['psicologo' => $psicologo]);
+        return view('configuraciones.psicologia.edit',['psicologo' => $psicologo,'idEncriptado' => $idEncriptado]);
     }
 
     /**
@@ -79,6 +84,10 @@ class PsicologiaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $idEncriptado = $request->e;
+        $hashids = new Hashids();
+        $idDesencriptado = $hashids->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $psicologo = Psicologia::find($id);
         $psicologo ->fill($request->all());
         $psicologo->save();

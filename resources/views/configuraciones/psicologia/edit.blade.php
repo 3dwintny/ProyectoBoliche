@@ -19,6 +19,7 @@
             <div class="col-lg-11 col-md-10">
                 <form action="{{route('psicologia.update',$psicologo->id)}}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
+                    
                     {{method_field('PUT')}}
                     <fieldset class="card-body bg-light">
                         <div class="form-group">
@@ -28,6 +29,7 @@
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 mb-3">
                                             <h3 class="card-title text-dark">Editar Psicologa(o)</h3>
+                                            <input type="hidden" name="e" id="e" value="{{$idEncriptado}}">
                                         </div>
                                     </div>
                                 </div>
