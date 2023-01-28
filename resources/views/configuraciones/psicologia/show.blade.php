@@ -38,6 +38,10 @@
             $contador = 1;   
         @endphp
         @foreach ($psicologo as $item)
+        @php
+        $hashid = new Hashids\Hashids();
+        $idPsicologo = $hashid->encode($item->id)
+        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre1}}</td>
@@ -52,12 +56,18 @@
           <td>{{$item->direccion}}</td>
           <td>{{\Carbon\Carbon::parse($item->fecha_inicio_labores)->format("d-m-Y")}}</td>
           <td>
+            <form action="{{route('psicologia.edit',$idPsicologo)}}" method="GET">
+              @csrf
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <input type="hidden" name="e" id="e" value="{{$idPsicologo}}">
+            </form>
+          </td>
+          <td>
             <form action="{{route('psicologia.destroy',$item->id)}}" method="POST">
-              <a href="{{route('psicologia.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarPsicologia('Eliminar Psicologa(o)')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+              <button class="btn btn-danger" type="submit" onclick="return eliminarPsicologia('Eliminar Psicológa(o)')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+            </form>
           </td>
           @php
             $contador++;

@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "barryvdh/laravel-dompdf": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "hashids/hashids": "^4.1",
         "laravel-frontend-presets/argon": "1.1.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
