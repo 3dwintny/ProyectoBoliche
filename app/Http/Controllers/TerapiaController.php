@@ -70,6 +70,7 @@ class TerapiaController extends Controller
      */
     public function show($id)
     {
+        $guardarAtleta = $id;
         $historial = DB::table('terapia')
         ->where('atleta_id', $id)->get();
         $atleta = DB::table('atleta')
@@ -85,7 +86,7 @@ class TerapiaController extends Controller
             $completo = $item->nombre1." ".$item->nombre2." ".$item->nombre3." ".$item->apellido1." ".$item->apellido2;
         }
         if (count($historial)>0){
-            return view('psicologia.terapias.show',compact('historial','completo'));
+            return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta'));
         }
         else{
             return view('psicologia.terapias.sinresultados',compact('completo'));
@@ -159,6 +160,7 @@ class TerapiaController extends Controller
 
     public function getHistorial(Request $request)
     {
+        $guardarAtleta = $request->atleta; 
         $historial = DB::table('terapia')
         ->where('atleta_id', $request->atleta)->get();
         $atleta = DB::table('atleta')
@@ -174,7 +176,7 @@ class TerapiaController extends Controller
             $completo = $item->nombre1." ".$item->nombre2." ".$item->nombre3." ".$item->apellido1." ".$item->apellido2;
         }
         if (count($historial)>0){
-            return view('psicologia.terapias.show',compact('historial','completo'));
+            return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta'));
         }
         else{
             return view('psicologia.terapias.sinresultados',compact('completo'));
@@ -189,5 +191,33 @@ class TerapiaController extends Controller
             $alumno = Alumno::where('id',$item->alumno_id)->get();
         }
         return PDF::loadView('psicologia.terapias.pdf',['terapia' => $terapia,'alumno' => $alumno])->setPaper('8.5x11')->stream();
+    }
+
+    public function busquedaTerapia(Request $request)
+    {
+        $guardarAtleta = $request->idAtleta;
+        $inicial = $request->fechaInicial;
+        $final = $request->fechaFinal; 
+        $historial = Terapia::whereBetween('fecha',[$inicial,$final])
+        ->where('atleta_id',$guardarAtleta)
+        ->get();
+        $atleta = DB::table('atleta')
+        ->where('id', $guardarAtleta)->get('alumno_id');
+        $alumno = "";
+        foreach ($atleta as $item){
+            $alumno = $item->alumno_id;
+        }
+        $nombre = DB::table('alumno')
+        ->where('id',$alumno)->get();
+        $completo = "";
+        foreach ($nombre as $item){
+            $completo = $item->nombre1." ".$item->nombre2." ".$item->nombre3." ".$item->apellido1." ".$item->apellido2;
+        }
+        if (count($historial)>0){
+            return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta'));
+        }
+        else{
+            return view('psicologia.terapias.sinresultados',compact('completo'));
+        }
     }
 }

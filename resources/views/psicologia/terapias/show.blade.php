@@ -1,6 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  .contenedorFlotante{
+    float: left;
+    position: relative;
+    width: 23%;            
+  }
+  .espacioIzquierda{
+    float: left;
+    position: relative;
+    width: 2%;
+  }
+  #contenedor{
+    width: 99%;
+    margin-left: 1%;
+  }
+  a{
+    text-decoration: none;
+  }
+  #botonBusqueda{
+    float: left;
+    position: relative;
+    width: 7%;
+  }
+  .centrar{
+    float: left;
+    position: relative;
+    width: 21.5%;
+  }
+  #posicionVertical{
+    margin-top: 5%;
+  }
+</style>
 <div class="header bg-dark pb-2 pt-5 pt-md-10">
   <div class="container-fluid">
     <div class="header-body">
@@ -13,6 +45,34 @@
     </div>
   </div>
 </div>
+<div class="contanier"></div>
+<form action="{{route('busquedaFecha')}}" method="POST">
+  <input type="hidden" value="{{$guardarAtleta}}" id="idAtleta" name="idAtleta">
+  @csrf
+  <div id="contenedor">
+    <h3></h3>
+    <div class="centrar"><div class="input-group mb-2"></div></div>
+    <div class="contenedorFlotante">
+      <div class="input-group mb-2">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Inicial</span>
+        <input type="date" class=" container form-control text-center" name="fechaInicial" id="fechaInicial">
+      </div>
+    </div>
+    <div class="espacioIzquierda"><div class="input-group mb-2"></div></div>
+    <div class="contenedorFlotante">
+      <div class="input-group mb-2">
+        <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Final</span>
+        <input type="date" class=" container form-control text-center" name="fechaFinal" id="fechaFinal">
+      </div>
+    </div>
+    <div class="espacioIzquierda"><div class="input-group mb-2"></div></div>
+    <div id="botonBusqueda">
+      <input type="submit" onclick="window.location='{{ route('busquedaFecha') }}'" value="Buscar" class="btn btn-outline-warning">
+    </div>
+    <div class="centrar"><div class="input-group mb-2"></div></div>
+  </div>
+</form>
+
 <div class="container">
 <div class="pb-5 pt-5 pt-md-2">
   <div class="">

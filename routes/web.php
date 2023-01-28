@@ -202,6 +202,7 @@ Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('pacient
 Route::post('historiales', [TerapiaController::class, 'getHistorial'])->name('historiales');
 Route::get('terapias-PDF/{id}', [TerapiaController::class, 'generarPDF'])->name('historialPDF');
 Route::get('correos',[TerapiaController::class,'getCorreo'])->name('correos');
+Route::post('busquedaFecha',[TerapiaController::class,'busquedaTerapia'])->name('busquedaFecha');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
