@@ -20,12 +20,7 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Primer Nombre</th>
-          <th scope="col">Segundo Nombre</th>
-          <th scope="col">Tercer Nombre</th>
-          <th scope="col">Primer Apellido</th>
-          <th scope="col">Segundo Apellido</th>
-          <th scope="col">Apellido de Casada</th>
+          <th scope="col">Nombre Completo</th>
           <th scope="col">Número de Colegiado</th>
           <th scope="col">Teléfono</th>
           <th scope="col">Correo</th>
@@ -44,12 +39,7 @@
         @endphp
         <tr>
           <td>{{$contador}}</td>
-          <td>{{$item->nombre1}}</td>
-          <td>{{$item->nombre2}}</td>
-          <td>{{$item->nombre3}}</td>
-          <td>{{$item->apellido1}}</td>
-          <td>{{$item->apellido2}}</td>
-          <td>{{$item->apellido_casada}}</td>
+          <td>{{$item->nombre1}} {{$item->nombre2}} {{$item->nombre3}} {{$item->apellido1}} {{$item->apellido2}} {{$item->apellido_casada}}</td>
           <td>{{$item->colegiado}}</td>
           <td>{{$item->telefono}}</td>
           <td>{{$item->correo}}</td>
