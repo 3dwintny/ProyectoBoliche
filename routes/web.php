@@ -87,14 +87,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('asistencias',AsistenciaController::class);
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
     Route::post('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
-	Route::resource('alergias',AlergiaController::class);
+	Route::resource('alergia',AlergiaController::class);
     //Ruta Reporte EDG31
     Route::resource('edg-31',EDG31Controller::class);
     //Rutas Atletas
     Route::resource('atletas',AtletaController::class);
 
     //Ruta Categorias
-    Route::resource('categorias',CategoriaController::class);
+    Route::resource('categoria',CategoriaController::class);
 
     //Rutas Centros
     Route::resource('centros',CentroController::class);
@@ -103,10 +103,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('departamentos',DepartamentoController::class);
 
     //Rutas Deporte_Adoptado
-    Route::resource('deportes-adoptados',Deporte_AdoptadoController::class);
+    Route::resource('deporte-adaptado',Deporte_AdoptadoController::class);
 
     //Rutas Deporte
-    Route::resource('deportes',DeporteController::class);
+    Route::resource('deporte',DeporteController::class);
 
     //Rutas Encargado
     Route::resource('encargados',EncargadoController::class);
@@ -115,39 +115,39 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('entrenadores',EntrenadorController::class);
 
     //Rutas Etapa_Deportiva
-    Route::resource('etapadeps',Etapa_DeportivaController::class);
+    Route::resource('etapa-deportiva',Etapa_DeportivaController::class);
 
     //Rutas Formulario
-    Route::resource('departamentos',FormularioController::class);
+    Route::resource('formulario-inscripcion',FormularioController::class);
 
     //Rutas Horario
-    Route::resource('departamentos',HorarioController::class);
+    Route::resource('horario',HorarioController::class);
 
     //Rutas Linea_Desarrollo
-    Route::resource('lineas-desarrollo',Linea_DesarrolloController::class);
+    Route::resource('linea-de-desarrollo',Linea_DesarrolloController::class);
 
     //Rutas Login
     Route::resource('login',LoginController::class);
 
     //Rutas Modalidad
-    Route::resource('modalidades',ModalidadController::class);
+    Route::resource('modalidad',ModalidadController::class);
 
     //Rutas Municipio
 
     //Rutas Nacionalidad
-    Route::resource('nacionalidades',NacionalidadController::class);
+    Route::resource('nacionalidad',NacionalidadController::class);
 
     //Rutas Nivel_cdag
-    Route::resource('niveles-cdag',Nivel_cdagController::class);
+    Route::resource('nivel-cdag',Nivel_cdagController::class);
 
     //Rutas Nivel_fadn
-    Route::resource('niveles-fadn',Nivel_fadnController::class);
+    Route::resource('nivel-fadn',Nivel_fadnController::class);
 
     //Rutas Otro_Programa
-    Route::resource('otros-programas',Otro_ProgramaController::class);
+    Route::resource('otro-programa-de-atencion',Otro_ProgramaController::class);
 
     //Rutas Parentesco
-    Route::resource('parentescos',ParentescoController::class);
+    Route::resource('parentesco',ParentescoController::class);
 
     //Rutas PRT
     Route::resource('prt',PRTController::class);
@@ -159,7 +159,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('terapias',TerapiaController::class);
 
     //Rutas Tipo_Contrato
-    Route::resource('tipo-contratos',Tipo_ContratoController::class);
+    Route::resource('tipo-de-contrato',Tipo_ContratoController::class);
 
     //Rutas Tipo_Usuario
     Route::resource('tipo-usuarios',Tipo_UsuarioController::class);

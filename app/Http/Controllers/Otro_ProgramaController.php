@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Otro_Programa;
 use Carbon\Carbon;
+use Hashids\Hashids;
 
 class Otro_ProgramaController extends Controller
 {
@@ -64,8 +65,12 @@ class Otro_ProgramaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $otro_programa = $this->o->obtenerOtroProgramaById($id);
         return view('configuraciones.otros_programas.edit',['otro_programa' => $otro_programa]);
     }

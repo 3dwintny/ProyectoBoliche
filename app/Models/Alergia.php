@@ -11,6 +11,10 @@ class Alergia extends Model
     protected $table ="alergia";
     protected $fillable = ['id', 'nombre','descripcion','created_at','updated_at'];
 
+    public function obtenerAlergiaById($id) {
+        return Alergia::find($id);
+    }
+    
     public function alumnos(){
         return $this->hasMany('App\Models\Alumno');
     }

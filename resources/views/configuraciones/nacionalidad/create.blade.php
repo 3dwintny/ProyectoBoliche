@@ -25,14 +25,14 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar Nueva Nacionalidad </h2>
+                            <h2>Registrar Nueva Nacionalidad</h2>
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nacionalidades.store')}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nacionalidad.store')}}">
                     @csrf
                     <div class="form-group">
-                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{$hoy}}" readonly>
+                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{\Carbon\Carbon::parse($hoy)->format('d-m-Y')}}" readonly>
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Parentesco;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Hashids\Hashids;
 
 class ParentescoController extends Controller
 {
@@ -65,8 +66,12 @@ class ParentescoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $parentesco = $this->p->obtenerParentescoById($id);
         return view('configuraciones.parentesco.edit',['parentesco' => $parentesco]);
     }

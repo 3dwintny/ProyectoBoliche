@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nacionalidad;
 use Carbon\Carbon;
+use Hashids\Hashids;
 
 class NacionalidadController extends Controller
 {
@@ -63,8 +64,12 @@ class NacionalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $nacionalidad = $this->n->obtenerNacionalidadesById($id);
         return view('configuraciones.nacionalidad.edit',['nacionalidad' => $nacionalidad]);
     }

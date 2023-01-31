@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tipo_Contrato;
 use Carbon\Carbon;
+use Hashids\Hashids;
 
 class Tipo_ContratoController extends Controller
 {
@@ -64,8 +65,12 @@ class Tipo_ContratoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $contratos = $this->t->obtenerTipoContratoById($id);
         return view('configuraciones.tipos_contratos.edit',['contratos' => $contratos]);
     }

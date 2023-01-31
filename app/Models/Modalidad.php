@@ -9,6 +9,10 @@ class Modalidad extends Model
 {
     use HasFactory;
     protected $table = "modalidad";
-protected $fillable = ['id','nombre','medio_comunicacion','created_at','updated_at'];
+    protected $fillable = ['id','nombre','medio_comunicacion','created_at','updated_at'];
+
+    public function obtenerModalidadById($id) { 
+        return Modalidad::find($id);
+    }
 
 }

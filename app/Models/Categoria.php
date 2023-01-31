@@ -9,9 +9,13 @@ class Categoria extends Model
 {
     use HasFactory;
     protected $table = "categoria";
-    protected $fillable = ['id','tipo','rango_edades','created_at',
-    'updated_at'];
+    protected $fillable = ['id','tipo','rango_edades','created_at','updated_at'];
+    
     public function atletas(){
     return $this->hasMany('App\Models\Atleta');
-}
+    }
+
+    public function obtenerCategoriaById($id){
+        return Categoria::find($id);
+    }
 }

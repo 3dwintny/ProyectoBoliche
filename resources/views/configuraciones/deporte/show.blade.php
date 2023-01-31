@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Nacionalidades</h1>
+          <h1 class="text-white">Deportes</h1>
         </div>
       </div>
     </div>
@@ -21,7 +21,6 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Deporte</th>
-          
         </tr>
       </thead>
       <tbody class="table-hover">
@@ -29,15 +28,24 @@
             $contador = 1;
         @endphp
         @foreach ($deporte as $item)
+        @php
+          $hashid = new Hashids\Hashids();
+          $idDeporte = $hashid->encode($item->id);
+        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('deportes.destroy',$item->id)}}" method="POST">
-              <a href="{{route('deportes.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('deporte.edit',$idDeporte)}}" method="GET">
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <input type="hidden" name="e" id="e" value="{{$idDeporte}}">
+            </form>
+          </td>
+          <td>
+            <form action="{{route('deporte.destroy',$item->id)}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar Deporte')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarDeporte('Eliminar Deporte')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
           </form>
           </td>
           @php
@@ -51,7 +59,7 @@
 </div>
 </div>
 <script>
-  function eliminarNacionalidad(value){
+  function eliminarDeporte(value){
       action = confirm(value) ? true : event.preventDefault();
   }
 </script>

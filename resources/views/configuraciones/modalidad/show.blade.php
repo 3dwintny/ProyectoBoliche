@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Deportes Adaptados</h1>
+          <h1 class="text-white">Modalidades</h1>
         </div>
       </div>
     </div>
@@ -20,34 +20,35 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Categoría</th>
-          
+          <th scope="col">Modalidad</th>
+          <th scope="col">Medio de Comunicación</th>
         </tr>
       </thead>
       <tbody class="table-hover">
         @php
             $contador = 1;
         @endphp
-        @foreach ($deporte as $item)
+        @foreach ($modalidad as $item)
         @php
           $hashid = new Hashids\Hashids();
-          $idDeporteAdaptado = $hashid->encode($item->id);
+          $idModalidad = $hashid->encode($item->id)
         @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
+          <td><a href="{{$item->medio_comunicacion}}">{{$item->medio_comunicacion}}</a></td>
           <td>
-            <form action="{{route('deporte-adaptado.edit',$idDeporteAdaptado)}}" method="GET">
+            <form action="{{route('modalidad.edit',$idModalidad)}}" method="GET">
               @csrf
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idDeporteAdaptado}}">
+              <input type="hidden" name="e" id="e" value="{{$idModalidad}}">
             </form>
           </td>
           <td>
-            <form action="{{route('deporte-adaptado.destroy',$item->id)}}" method="POST">
+            <form action="{{route('modalidad.destroy',$item->id)}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarDeportea('Eliminar Deporte Adaptado')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarModalidad('Eliminar Modalidad')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php
@@ -61,7 +62,7 @@
 </div>
 </div>
 <script>
-  function eliminarDeportea(value){
+  function eliminarModalidad(value){
       action = confirm(value) ? true : event.preventDefault();
   }
 </script>

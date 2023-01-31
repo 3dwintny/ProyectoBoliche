@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use Hashids\Hashids;
+use Carbon\Carbon;
+
 class CategoriaController extends Controller
 {
+    protected $c;
+
+    public function __construct(Categoria $c){
+        $this->c = $c;
+    }    
     /**
      * Display a listing of the resource.
      *
@@ -13,9 +21,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::All();
-        return view('categoria.show', compact("categorias"));
-
+        $categoria = Categoria::All();
+        return view('configuraciones.categoria.show', compact("categoria"));
     }
 
     /**
@@ -25,7 +32,8 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return view('categoria.create');
+        $hoy = Carbon::now();
+        return view('configuraciones.categoria.create',compact('hoy'));
     }
 
     /**
@@ -36,10 +44,9 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $categorias = new Categoria($request->all());
-        $categorias->save();
+        $categoria = new Categoria($request->all());
+        $categoria->save();
         return redirect()->action([CategoriaController::class, 'index']);
-
     }
 
     /**
@@ -59,9 +66,14 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $categoria = $this->c->obtenerCategoriaById($id);
+        return view('configuraciones.categoria.edit',['categoria' => $categoria]);
     }
 
     /**
@@ -73,7 +85,10 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categoria = Categoria::find($id);
+        $categoria->fill($request->all());
+        $categoria->save();
+        return redirect()->action([CategoriaController::class,'index']);
     }
 
     /**
@@ -84,6 +99,8 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categoria= Categoria::find($id);
+        $categoria->delete();
+        return redirect()->action([CategoriaController::class,'index']);
     }
 }

@@ -8,6 +8,7 @@ use App\Models\Atleta;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
+use Hashids\Hashids;
 
 class AsistenciaController extends Controller
 {

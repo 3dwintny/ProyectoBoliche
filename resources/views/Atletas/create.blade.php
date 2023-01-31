@@ -151,7 +151,7 @@
                                     <input type="hidden" name="alumno_id" id="" value="{{$alumno->id}}" readonly>
                                 </div>
                                 <div class="container">
-                                    <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>
+                                    <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                                 </div>
                 </form>
 

@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Entrenador</h1>
+                    <h1 class="text-white">Entrenadores</h1>
                 </div>
             </div>
         </div>
@@ -38,16 +38,66 @@
                         <div class="card-body bg-light">
                             <h3 class="mb-2">Información Personal</h3>
                             <div class="row">
-                                <div class="col-md-4 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Nombre') }}" type="text" name="nombre1" value="{{ old('Primer Nombre') }}" required></div>
-                                <div class="col-md-4 mb-2"><input class="form-control text-dark" placeholder="{{ __('Segundo Nombre') }}" type="text" name="nombre2" value="{{ old('Segundo Nombre') }}"></div>
-                                <div class="col-md-4 mb-2"><input class="form-control text-dark" placeholder="{{ __('Tercer Nombre') }}" type="text" name="nombre3" value="{{ old('Tercer Nombre') }}"></div>
-                                <div class="col-md-4 mb-2"><input class="form-control text-dark" type="text" name="apellido1" placeholder="Primer Apellido"></div>
-                                <div class="col-md-4 mb-2"> <input class="form-control text-dark" type="text" name="apellido2" placeholder="Segundo Apellido"></div>
-                                <div class="col-md-4 mb-2"> <input class="form-control text-dark" type="text" name="apellido_casada" placeholder="Apellido Casada"></div>
-                                <div class="col-md-6 mb-2"><input class="form-control text-dark" type="tel" name="celular" placeholder="Celular"></div>
-                                <div class="col-md-6 mb-2"><input class="form-control text-dark" type="tel" name="telefono_casa" placeholder="Teléfono Residencial"></div>
-                                <div class="col-md-6 mb-2"> <input class="form-control text-dark" type="text" name="cui" placeholder="CUI"></div>
-                                <div class="col-md-6 mb-2"><input class="form-control text-dark" type="text" name="pasaporte" placeholder="Pasaporte"></div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Nombre') }}" id="nombre1" type="text" name="nombre1" value="{{ old('Primer Nombre') }}" required>
+                                        <label for="nombre1">Primer Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Segundo Nombre') }}" id="nombre2" type="text" name="nombre2" value="{{ old('Segundo Nombre') }}">
+                                        <label for="nombre2">Segundo Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Tercer Nombre') }}" id="nombre3" type="text" name="nombre3" value="{{ old('Tercer Nombre') }}">
+                                        <label for="nombre3">Tercer Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Apellido') }}" id="apellido1" type="text" name="apellido1" value="{{ old('Primer Apellido') }}" required>
+                                        <label for="apellido1">Primer Apellido</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Segundo Apellido') }}" id="apellido2" type="text" name="apellido2" value="{{ old('Segundo Apellido') }}">
+                                        <label for="apellido2">Segundo Apellido</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Apellido de Casada') }}" id="apellido_casada" type="text" name="apellido_casada" value="{{ old('Apellido de Casada') }}">
+                                        <label for="apellido_casada">Apellido de Casada</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" id="celular" type="tel" name="celular" value="{{ old('Celular') }}">
+                                        <label for="celular">Celular</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono de Casa') }}" id="telefono_casa" type="tel" name="telefono_casa" value="{{ old('Teléfono de Casa') }}">
+                                        <label for="telefono_casa">Teléfono de Casa</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="text" name="cui" value="{{ old('CUI') }}">
+                                        <label for="cui">CUI</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Pasaporte') }}" id="pasaporte" type="text" name="pasaporte" value="{{ old('Pasaporte') }}">
+                                        <label for="celular">Pasaporte</label>
+                                    </div>
+                                </div>
 
 
 
@@ -63,14 +113,38 @@
                                         <input class="form-control text-dark" type="text" name="edad" aria-label="edad" id="_edad" value="" aria-describedby="basic-addon1" readonly>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-2"><select class="form-control text-dark" name="genero">
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo') }}" id="correo" type="email" name="correo" value="{{ old('Correo') }}">
+                                        <label for="correo">Correo</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Años de Experiencia') }}" id="años_experiencia" type="number" name="años_experiencia" value="{{ old('Años de Experiencia') }}">
+                                        <label for="celular">Años de Experiencia</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-8 mb-2">
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-text" id="inputGroup-sizing-sm">Fotografía</span>
+                                        <input class="form-control text-dark" type="file" name="foto" id="foto" accept=".jpg, .jpeg, .png" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('NIT') }}" id="nit" type="text" name="nit" value="{{ old('nit') }}">
+                                        <label for="nit">NIT</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-2"><select class="form-control text-dark" name="genero">
                                         <option selected disabled>Género</option>
                                         <option>Femenino</option>
                                         <option>Masculino</option>
                                     </select></div>
-                                <div class="col-md-4 mb-2"><input class="form-control text-dark" type="text" name="años_experiencia" placeholder="Años de Experiencia" id=""></div>
 
-                                <div class="col-md-4 mb-2"><select name="estado_civil" class="form-control text-dark" required>
+                                <div class="col-md-6 mb-2">
+                                    <select name="estado_civil" class="form-control text-dark" required>
                                         <option selected disabled>Estado Civil</option>
                                         <option value="Soltera/o">Soltera/o</option>
                                         <option value="Casada/o">Casada/o</option>
@@ -79,16 +153,15 @@
                                         <option value="Separada/o">Separada/o</option>
                                         <option value="Divorciada/o">Divorciada/o</option>
                                         <option value="Viuda/o">Viuda/o</option>
-                                    </select></div>
-                                <div class="col-md-4 mb-2"><input class="form-control text-dark" type="email" name="correo" placeholder="Correo"></div>
-                                <div class="col-md-4 mb-2">
-                                    <div class="input-group ">
-                                        <input class="form-control text-dark" type="file" name="foto" id="inputGroupFile02" required>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-floating">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Dirección') }}" id="direccion" type="text" name="direccion" value="{{ old('Dirección') }}">
+                                        <label for="direccion">Dirección</label>
                                     </div>
                                 </div>
-                                <div class="col-md-4 mb-2"><input class="form-control text-dark" type="text" name="nit" placeholder="NIT" id=""></div>
-                                <div class="col-md-12 mb-2"><input class="form-control text-dark" type="text" name="direccion" placeholder="Dirección"></div>
-
 
                                 <div class="col-md-4 mb-2"><select name="escolaridad" class="form-control text-dark" required>
                                         <option selected disabled>Nivel Académico</option>

@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Nivel FADN</h1>
+                    <h1 class="text-white">Niveles FADN</h1>
                 </div>
             </div>
         </div>
@@ -29,19 +29,19 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('niveles-fadn.store')}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nivel-fadn.store')}}">
                     @csrf
                     <div class="form-group">
-                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{$hoy}}" readonly>
+                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{\Carbon\Carbon::parse($hoy)->format('d-m-Y')}}" readonly>
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="tipo" placeholder="Nivel FADN" name="tipo" required>
-                                <label for="tipo">Nivel FADN</label>
+                                <input type="text" class="form-control" id="tipo" placeholder="Nivel" name="tipo" required>
+                                <label for="tipo">Nivel</label>
                             </div>
                             <div class="container">
-                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>
+                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                             </div>
                 </form>
 

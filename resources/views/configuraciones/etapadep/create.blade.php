@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Etapa Deportiva</h1>
+                    <h1 class="text-white">Etapas Deportivas</h1>
                 </div>
             </div>
         </div>
@@ -25,20 +25,20 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar Nueva Etapa Deportiva </h2>
+                            <h2>Registrar Nueva Etapa Deportiva</h2>
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('etapadeps.store')}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('etapa-deportiva.store')}}">
                     @csrf
                     <div class="form-group">
-                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{$hoy}}" readonly>
+                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{\Carbon\Carbon::parse($hoy)->format('d-m-Y')}}" readonly>
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="nombre" placeholder="Etapa Deportiva" name="nombre" required>
-                                <label for="nombre">Descripcion</label>
+                                <label for="nombre">Etapa</label>
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>

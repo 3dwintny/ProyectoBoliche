@@ -121,19 +121,19 @@
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" type="number" name="telefono_casa" placeholder="Teléfono Residencial">
+                                                        <input class="form-control text-dark" id="formIns" type="tel" name="telefono_casa" placeholder="Teléfono Residencial">
                                                         <label for="formIns">Teléfono Residencial</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" type="number" name="celular" placeholder="Celular">
+                                                        <input class="form-control text-dark" id="formIns" type="tel" name="celular" placeholder="Celular">
                                                         <label for="formIns">Celular</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" type="number" name="contacto_emergencia" placeholder="Contacto de Emergencia">
+                                                        <input class="form-control text-dark" id="formIns" type="tel" name="contacto_emergencia" placeholder="Contacto de Emergencia">
                                                         <label for="formIns">Contacto de Emergencia</label>
                                                     </div>
                                                 </div>
@@ -145,7 +145,7 @@
                                                 </div>
                                                 <div class="col-md-6 mb-2">
                                                     <label for="ft">Seleccionar fotografía:</label>
-                                                    <input class="form-control text-dark" id="ft" type="file" name="foto">
+                                                    <input class="form-control text-dark" id="ft" type="file" name="foto" accept=".jpg,.png,.jpeg">
                                                 </div>
                                                 <div class="col-md-6 mb-2">
                                                     <input type="text" class="form-control text-dark" placeholder="Fecha Fotografia" name="fecha_fotografia" id="fecha_sistema" readonly>

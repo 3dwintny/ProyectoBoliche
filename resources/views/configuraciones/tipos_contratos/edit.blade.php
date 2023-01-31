@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Tipos de Contratos</h1>
+                    <h1 class="text-white">Tipos de Contrato</h1>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('tipo-contratos.update',$contratos->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('tipo-de-contrato.update',$contratos->id)}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">

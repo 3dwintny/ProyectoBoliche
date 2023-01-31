@@ -34,8 +34,8 @@
         @endphp
         @foreach ($psicologo as $item)
         @php
-        $hashid = new Hashids\Hashids();
-        $idPsicologo = $hashid->encode($item->id)
+          $hashid = new Hashids\Hashids();
+          $idPsicologo = $hashid->encode($item->id)
         @endphp
         <tr>
           <td>{{$contador}}</td>

@@ -29,13 +29,13 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('deportes.update',$deporte->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('deporte.update',$deporte->id)}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="descripcion" placeholder="Deporte" name="nombre" value="{{$deporte->nombre}}" required>
+                                <input type="text" class="form-control" id="nombre" placeholder="Deporte" name="nombre" value="{{$deporte->nombre}}" required>
                                 <label for="nombre">Deporte</label>
                             </div>
                             <div class="container">

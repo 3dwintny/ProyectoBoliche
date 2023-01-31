@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Deporte Adaptado</h1>
+                    <h1 class="text-white">Deportes Adaptados</h1>
                 </div>
             </div>
         </div>
@@ -29,14 +29,14 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('deportes-adoptados.update',$deporte->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('deporte-adaptado.update',$deporte->id)}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="nombre" placeholder="Descripcion" name="nombre" value="{{$deporte->nombre}}" required>
-                                <label for="nombre">Nacionalidad</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Deporte Adaptado" name="nombre" value="{{$deporte->nombre}}" required>
+                                <label for="nombre">Deporte Adaptado</label>
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>

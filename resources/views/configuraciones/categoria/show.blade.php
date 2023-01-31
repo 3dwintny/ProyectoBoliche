@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Nacionalidades</h1>
+          <h1 class="text-white">Categoría</h1>
         </div>
       </div>
     </div>
@@ -20,25 +20,35 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nacionalidad</th>
-          
+          <th scope="col">Categoría</th>
+          <th>Rango de Edades</th>
         </tr>
       </thead>
       <tbody class="table-hover">
         @php
             $contador = 1;
         @endphp
-        @foreach ($nacionalidad as $item)
+        @foreach ($categoria as $item)
+        @php
+          $hashid = new Hashids\Hashids();
+          $idCategoria = $hashid->encode($item->id);
+        @endphp
         <tr>
           <td>{{$contador}}</td>
-          <td>{{$item->descripcion}}</td>
+          <td>{{$item->tipo}}</td>
+          <td>{{$item->rango_edades}}</td>
           <td>
-            <form action="{{route('nacionalidades.destroy',$item->id)}}" method="POST">
-              <a href="{{route('nacionalidades.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('categoria.edit',$idCategoria)}}" method="GET">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <input type="hidden" name="e" id="e" value="{{$idCategoria}}">
+            </form>
+          </td>
+          <td>
+            <form action="{{route('categoria.destroy',$item->id)}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar Nacionalidad')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarCategoria('Eliminar Categoría')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+            </form>
           </td>
           @php
             $contador++;
@@ -51,7 +61,7 @@
 </div>
 </div>
 <script>
-  function eliminarNacionalidad(value){
+  function eliminarCategoria(value){
       action = confirm(value) ? true : event.preventDefault();
   }
 </script>

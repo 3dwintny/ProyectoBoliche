@@ -19,16 +19,14 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
+          <th scope="col">Nombre Completo</th>
           <th scope="col">CUI</th>
           <th scope="col">Celular</th>
-          <th scope="col">Contacto Emergencia</th>
+          <th scope="col">Contacto de Emergencia</th>
           <th scope="col">Correo</th>
           <th scope="col">Estado</th>
           <th scope="col">Fecha</th>
           <th scope="col">Direccion</th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody class="table-hover">
@@ -38,8 +36,7 @@
         @foreach ($alumnos as $alumno)
         <tr>
           <td>{{ $contador }}</td>
-          <td><strong>{{$alumno->nombre1}}</strong></td>
-          <td><strong>{{$alumno->apellido1}}</strong></td>
+          <td>{{$alumno->nombre1}} {{$alumno->nombre2}} {{$alumno->nombre3}} {{$alumno->apellido1}} {{$alumno->apellido2}}</td>
           <td>{{$alumno->cui}}</td>
           <td>{{$alumno->celular}}</td>
           <td>{{$alumno->contacto_emergencia}}</td>

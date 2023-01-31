@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Nacionalidades</h1>
+          <h1 class="text-white">Alergias</h1>
         </div>
       </div>
     </div>
@@ -20,25 +20,35 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nacionalidad</th>
-          
+          <th scope="col">Tipo</th>
+          <th scope="col">Descripción</th>
         </tr>
       </thead>
       <tbody class="table-hover">
         @php
             $contador = 1;
         @endphp
-        @foreach ($nacionalidad as $item)
+        @foreach ($alergia as $item)
+        @php
+          $hashid = new Hashids\Hashids();
+          $idAlergia = $hashid->encode($item->id);
+        @endphp
         <tr>
           <td>{{$contador}}</td>
+          <td>{{$item->nombre}}</td>
           <td>{{$item->descripcion}}</td>
           <td>
-            <form action="{{route('nacionalidades.destroy',$item->id)}}" method="POST">
-              <a href="{{route('nacionalidades.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('alergia.edit',$idAlergia)}}" method="GET">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <input type="hidden" name="e" id="e" value="{{$idAlergia}}">
+            </form>
+          </td>
+          <td>
+            <form action="{{route('alergia.destroy',$item->id)}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar Nacionalidad')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarAlergia('Eliminar Alergia')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+            </form>
           </td>
           @php
             $contador++;
@@ -51,7 +61,7 @@
 </div>
 </div>
 <script>
-  function eliminarNacionalidad(value){
+  function eliminarAlergia(value){
       action = confirm(value) ? true : event.preventDefault();
   }
 </script>

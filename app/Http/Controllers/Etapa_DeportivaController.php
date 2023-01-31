@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Etapa_Deportiva;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Hashids\Hashids;
 
 class Etapa_DeportivaController extends Controller
 {
@@ -64,10 +65,14 @@ class Etapa_DeportivaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id, Request $request)
+    { 
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $etapa = Etapa_Deportiva::find($id);
-        return view('configuraciones.etapadep.edit',['deporte' => $etapa]);
+        return view('configuraciones.etapadep.edit',['etapa' => $etapa]);
     }
 
     /**

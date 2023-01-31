@@ -32,7 +32,7 @@
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('prt.store')}}">
                     @csrf
                     <div class="form-group">
-                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{$hoy}}" readonly>
+                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{\Carbon\Carbon::parse($hoy)->format('d-m-Y')}}" readonly>
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">
@@ -41,7 +41,7 @@
                                 <label for="nombre">PRT</label>
                             </div>
                             <div class="container">
-                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>
+                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                             </div>
                 </form>
 

@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Departamento;
-use App\Models\Nacionalidad;
 use App\Models\Alergia;
-use Illuminate\Support\Facades\DB;
+use Hashids\Hashids;
+use Carbon\Carbon;
 
 class AlergiaController extends Controller
 {
+    protected $a;
+    public function __construct(Alergia $a){
+        $this->a = $a;
+    }
     /** 
      * Display a listing of the resource.
      *
@@ -17,19 +20,8 @@ class AlergiaController extends Controller
      */
     public function index()
     {
-        $alergias = Alergia::all();
-        return view('alergia.show',compact("alergias"));
-
-    }
-    public function getMunicipios(Request $request)
-    {
-        $municipios = DB::table('municipio')
-            ->where('id_departamento', $request->id_departamento)
-            ->get();
-        
-        if (count($municipios) > 0) {
-            return response()->json($municipios);
-        }
+        $alergia = Alergia::all();
+        return view('configuraciones.alergia.show',compact("alergia"));
     }
     /**
      * Show the form for creating a new resource.
@@ -38,7 +30,8 @@ class AlergiaController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now();
+        return view('configuraciones.alergia.create', compact("hoy"));
     }
 
     /**
@@ -52,7 +45,6 @@ class AlergiaController extends Controller
         $alergia = new Alergia($request->all());
         $alergia->save();
         return redirect()->action([AlergiaController::class,'index']);
-
     }
 
     /**
@@ -72,9 +64,14 @@ class AlergiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $alergia = $this->a->obtenerAlergiaById($id);
+        return view('configuraciones.alergia.edit',['alergia'=>$alergia]);
     }
   
     /**
@@ -86,7 +83,10 @@ class AlergiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $alergia = Alergia::find($id);
+        $alergia->fill($request->all());
+        $alergia->save();
+        return redirect()->action([AlergiaController::class,'index']);
     }
 
     /**
@@ -97,6 +97,8 @@ class AlergiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $alergia = Alergia::find($id);
+        $alergia->delete();
+        return redirect()->action([AlergiaController::class,'index']);
     }
 }

@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Nivel FADN</h1>
+                    <h1 class="text-white">Niveles FADN</h1>
                 </div>
             </div>
         </div>
@@ -29,14 +29,14 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('niveles-fadn.update',$nivel->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nivel-fadn.update',$nivel->id)}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="tipo" placeholder="Nivel FADN" name="tipo" value="{{$nivel->tipo}}" required>
-                                <label for="tipo">Nivel FADN</label>
+                                <label for="tipo">Nivel</label>
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>

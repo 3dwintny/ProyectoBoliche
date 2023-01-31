@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Etapa Deportiva</h1>
+                    <h1 class="text-white">Etapas Deportivas</h1>
                 </div>
             </div>
         </div>
@@ -29,13 +29,13 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('etapadeps.update',$deporte->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('etapa-deportiva.update',$etapa->id)}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="nombre" placeholder="Descripcion" name="nombre" value="{{$etapa->nombre}}" required>
+                                <input type="text" class="form-control" id="nombre" placeholder="Etapa Deportiva" name="nombre" value="{{$etapa->nombre}}" required>
                                 <label for="nombre">Etapa deportiva</label>
                             </div>
                             <div class="container">

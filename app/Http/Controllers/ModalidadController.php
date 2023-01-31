@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Modalidad;
+use Hashids\Hashids;
+use Carbon\Carbon;
 
 class ModalidadController extends Controller
 {
+    protected $m;
+
+    public function __construct (Modalidad $m){
+        $this->m = $m;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,8 @@ class ModalidadController extends Controller
      */
     public function index()
     {
-        //
+        $modalidad = Modalidad::all();
+        return view('configuraciones.modalidad.show',compact('modalidad'));
     }
 
     /**
@@ -23,7 +32,8 @@ class ModalidadController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now();
+        return view('configuraciones.modalidad.create',compact('hoy'));
     }
 
     /**
@@ -34,7 +44,9 @@ class ModalidadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $modalidad = new Modalidad($request->all());
+        $modalidad->save();
+        return redirect()->action([ModalidadController::class,'index']);
     }
 
     /**
@@ -54,9 +66,14 @@ class ModalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $modalidad = $this->m->obtenerModalidadById($id);
+        return view('configuraciones.modalidad.edit',['modalidad' => $modalidad]);
     }
 
     /**
@@ -68,7 +85,10 @@ class ModalidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $modalidad = Modalidad::find($id);
+        $modalidad->fill($request->all());
+        $modalidad->save();
+        return redirect()->action([ModalidadController::class,'index']);
     }
 
     /**
@@ -79,6 +99,8 @@ class ModalidadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $modalidad = Modalidad::find($id);
+        $modalidad->delete();
+        return redirect()->action([ModalidadController::class,'index']);
     }
 }

@@ -36,8 +36,8 @@
               <strong>CUI</strong>
                 {{ $alumno->cui }}</div>
                 <div class="form-group">
-              <strong>Fecha Registro</strong>
-                {{ $alumno->fecha }}</div>
+              <strong>Fecha de Nacimiento</strong>
+                {{\Carbon\Carbon::parse($alumno->fecha)->format('d-m-Y') }}</div>
                 <div class="form-group">
                 <strong>Edad</strong>
                 {{ $alumno->edad }}</div>
@@ -45,7 +45,7 @@
                 <strong>Celular</strong>
                 {{ $alumno->celular }}</div>
                 <div class="form-group">
-                <strong>Telefono Casa</strong>
+                <strong>Teléfono de Casa</strong>
                 {{ $alumno->telefono_casa }}</div>
                 <div class="form-group">
                 <strong>Correo</strong>
@@ -54,7 +54,7 @@
                 <strong>Telefono Emergencia</strong>
                 {{ $alumno->contacto_emergencia }}</div>
                 <div class="form-group">
-                <strong>Departamento Residencia</strong>
+                <strong>Departamento de Nacimiento</strong>
                 {{ $alumno->departamento_residencia->nombre }}</div>
                 <div class="form-group">
                 <strong>Departamento Residencia</strong>

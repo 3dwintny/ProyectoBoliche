@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Nivel_fadn;
+use Hashids\Hashids;
 
 class Nivel_fadnController extends Controller
 {
@@ -64,8 +65,12 @@ class Nivel_fadnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $nivel = $this->n->obtenerNivelFADNById($id);
         return view('configuraciones.nivel_fadn.edit',['nivel' => $nivel]);
     }

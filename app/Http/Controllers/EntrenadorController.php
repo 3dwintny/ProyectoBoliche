@@ -9,6 +9,7 @@ use App\Models\Nacionalidad;
 use App\Models\Deporte;
 use App\Models\Entrenador;
 use Illuminate\Http\Request;
+use Hashids\Hashids;
 
 class EntrenadorController extends Controller
 {

@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Nacionalidades</h1>
+                    <h1 class="text-white">Categoría</h1>
                 </div>
             </div>
         </div>
@@ -25,18 +25,21 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar Nacionalidad </h2>
+                            <h2>Editar Categoría </h2>
                         </strong>
-
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nacionalidades.update',$nacionalidad->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('categoria.update',$categoria->id)}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="descripcion" placeholder="Nacionalidad" name="descripcion" value="{{$nacionalidad->descripcion}}" required>
-                                <label for="descripcion">Nacionalidad</label>
+                                <input type="text" class="form-control" id="tipo" placeholder="Categoría" name="tipo" value="{{$categoria->tipo}}" required>
+                                <label for="tipo">Categoría</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="rango_edades" placeholder="Rango de Edades" name="rango_edades" value="{{$categoria->rango_edades}}">
+                                <label for="tipo">Rango de Edades</label>
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Deporte;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Hashids\Hashids;
 
 class DeporteController extends Controller
 {
@@ -21,7 +22,6 @@ class DeporteController extends Controller
     { 
         $deporte = Deporte::all();
         return view('configuraciones.deporte.show',compact('deporte'));
-    
     }
 
     /**
@@ -31,7 +31,7 @@ class DeporteController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now()->toDateString();
+        $hoy = Carbon::now();
         return view('configuraciones.deporte.create', compact('hoy'));
     }
 
@@ -65,9 +65,12 @@ class DeporteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $deporte = Deporte::find($id);
         return view('configuraciones.deporte.edit',['deporte' => $deporte]);
     }

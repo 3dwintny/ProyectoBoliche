@@ -9,6 +9,9 @@ class Linea_Desarrollo extends Model
 {
     use HasFactory;
     protected $table = "linea_desarrollo";
-protected $fillable=['id','tipo','created_at','updated_at'];
+    protected $fillable=['id','tipo','created_at','updated_at'];
 
+    public function  obtenerLineaDesarrolloById($id){
+        return Linea_Desarrollo::find($id);
+    }
 }

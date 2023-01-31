@@ -25,14 +25,14 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar nuevo deporte </h2>
+                            <h2>Registrar Nuevo Deporte</h2>
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('deportes.store')}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('deporte.store')}}">
                     @csrf
                     <div class="form-group">
-                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{$hoy}}" readonly>
+                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{\Carbon\Carbon::parse($hoy)->format('d-m-Y')}}" readonly>
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">
@@ -41,7 +41,7 @@
                                 <label for="nombre">Deporte</label>
                             </div>
                             <div class="container">
-                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>
+                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                             </div>
                 </form>
 

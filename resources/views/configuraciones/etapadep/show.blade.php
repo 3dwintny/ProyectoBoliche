@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Etapa Deportiva</h1>
+          <h1 class="text-white">Etapas Deportivas</h1>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nombre</th>
+          <th scope="col">Etapa</th>
           
         </tr>
       </thead>
@@ -29,16 +29,26 @@
             $contador = 1;
         @endphp
         @foreach ($etapa as $item)
+        @php
+          $hashid = new Hashids\Hashids();
+          $idEtapaDeportiva = $hashid->encode($item->id);
+        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('etapadeps.destroy',$item->id)}}" method="POST">
-              <a href="{{route('etapadeps.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('etapa-deportiva.edit',$idEtapaDeportiva)}}" method="GET">
+              @csrf
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <input type="hidden" name="e" id="e" value="{{$idEtapaDeportiva}}">
+            </form>
+          </td>
+          <td>
+            <form action="{{route('etapa-deportiva.destroy',$item->id)}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarDeportea('Eliminar Etapa')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarDeportea('Eliminar Etapa Deportiva')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+            </form>
           </td>
           @php
             $contador++;

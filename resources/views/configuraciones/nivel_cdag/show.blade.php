@@ -29,16 +29,26 @@
             $contador = 1;
         @endphp
         @foreach ($niveles as $item)
+        @php
+          $hashid = new Hashids\Hashids();
+          $idNivelCDAG = $hashid->encode($item->id)
+        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('niveles-cdag.destroy',$item->id)}}" method="POST">
-              <a href="{{route('niveles-cdag.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('nivel-cdag.edit',$idNivelCDAG)}}" method="GET">
+              @csrf
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <input type="hidden" name="e" id="e" value="{{$idNivelCDAG}}">
+            </form>
+          </td>
+          <td>
+            <form action="{{route('nivel-cdag.destroy',$item->id)}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNivel('Eliminar Nivel CDAG')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarNivel('Eliminar Nivel CDAG')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+            </form>
           </td>
           @php
             $contador++;

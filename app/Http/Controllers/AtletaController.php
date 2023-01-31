@@ -15,6 +15,8 @@ use App\Models\Linea_Desarrollo;
 use App\Models\Deporte;
 use App\Models\Modalidad;
 use App\Models\PRT;
+use Hashids\Hashids;
+
 class AtletaController extends Controller
 {
     protected $alumnos;
@@ -31,7 +33,6 @@ class AtletaController extends Controller
     {
         
         $atletas = Atleta::paginate();
-        
         return view('Atletas.index', compact('atletas'))
             ->with('i', (request()->input('page', 1) - 1) * $atletas->perPage());
     }
@@ -117,8 +118,12 @@ class AtletaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $atleta = Atleta::find($id);
         $centro=Centro::all();
         $entrenador= Entrenador::All();

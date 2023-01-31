@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PRT;
 use Carbon\Carbon;
+use Hashids\Hashids;
 
 class PRTController extends Controller
 {
@@ -64,8 +65,12 @@ class PRTController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $prt = $this->p->obtenerPRTById($id);
         return view('configuraciones.prt.edit',['prt' => $prt]);
     }
