@@ -172,12 +172,6 @@
                                 </h5>
                             </div>
                         </div>
-                        <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('formulario-inscripcion.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
                         <div class="col-2 text-end">
                             <button type="button" class="btn btn-dark" onclick="window.location='{{ route('formulario-inscripcion.index') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
