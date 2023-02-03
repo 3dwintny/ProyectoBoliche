@@ -70,7 +70,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="radio" value="" name="lunes"  id="lunes">
+                                                <input type="radio" value=" " name="lunes"  id="lunes">
                                             </td>
                                         </tr>
                                         <tr>
@@ -83,7 +83,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="radio" value="" name="martes"  id="martes">
+                                                <input type="radio" value=" " name="martes"  id="martes">
                                             </td>
                                         </tr>
                                         <tr>
@@ -96,7 +96,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="radio" value="" name="miercoles"  id="miercoles">
+                                                <input type="radio" value=" " name="miercoles"  id="miercoles">
                                             </td>
                                         </tr>
                                         <tr>
@@ -109,7 +109,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="radio" value="" name="jueves"  id="jueves">
+                                                <input type="radio" value=" " name="jueves"  id="jueves">
                                             </td>
                                         </tr>
                                         <tr>
@@ -122,7 +122,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="radio" value="" name="viernes"  id="viernes">
+                                                <input type="radio" value=" " name="viernes"  id="viernes">
                                             </td>
                                         </tr>
                                         <tr>
@@ -135,7 +135,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="radio" value="" name="sabado"  id="sabado">
+                                                <input type="radio" value=" " name="sabado"  id="sabado">
                                             </td>
                                         </tr>
                                         <tr>
@@ -148,7 +148,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <input type="radio" value="" name="domingo"  id="domingo">
+                                                <input type="radio" value=" " name="domingo"  id="domingo">
                                             </td>
                                         </tr>
                                     </tbody>

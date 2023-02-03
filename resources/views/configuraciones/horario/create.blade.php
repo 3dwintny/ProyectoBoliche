@@ -50,22 +50,81 @@
                                     </div>
                                 </div>
                             </div>
-                            <label>Lunes</label>
-                            <input type="radio" value="X" name="lunes"  id="lunes">
-                            <label>Martes</label>
-                            <input type="radio" value="X" name="martes"  id="martes">
-                            <label>Miércoles</label>
-                            <input type="radio" value="X" name="miercoles"  id="miercoles">
-                            <label>Jueves</label>
-                            <input type="radio" value="X" name="jueves"  id="jueves">
-                            <label>Viernes</label>
-                            <input type="radio" value="X" name="viernes"  id="viernes">
-                            <label>Sábado</label>
-                            <input type="radio" value="X" name="sabado"  id="sabado">
-                            <label>Domingo</label>
-                            <input type="radio" value="X" name="domingo"  id="domingo">
                             <div class="container">
-                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th></td>
+                                            <th>Seleccionar</th>
+                                            <th>Eliminar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Lunes</td>
+                                            <td>
+                                                <input type="radio" value="X" name="lunes"  id="lunes">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="" name="lunes"  id="lunes" checked>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Martes</td>
+                                            <td>
+                                                <input type="radio" value="X" name="martes"  id="martes">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="" name="martes"  id="martes" checked>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Miércoles</td>
+                                            <td>
+                                                <input type="radio" value="X" name="miercoles"  id="miercoles">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="" name="miercoles"  id="miercoles" checked>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Jueves</td>
+                                            <td>
+                                                <input type="radio" value="X" name="jueves"  id="jueves">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="" name="jueves"  id="jueves" checked>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Viernes</td>
+                                            <td>
+                                                <input type="radio" value="X" name="viernes"  id="viernes">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="" name="viernes"  id="viernes" checked>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sábado</td>
+                                            <td>
+                                                <input type="radio" value="X" name="sabado"  id="sabado">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="" name="sabado"  id="sabado" checked>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Domingo</td>
+                                            <td>
+                                                <input type="radio" value="X" name="domingo"  id="domingo">
+                                            </td>
+                                            <td>
+                                                <input type="radio" value="" name="domingo"  id="domingo" checked>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                 </form>
             </div>
