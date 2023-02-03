@@ -97,7 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('categoria',CategoriaController::class);
 
     //Rutas Centros
-    Route::resource('centros',CentroController::class);
+    Route::resource('centro',CentroController::class);
 
     //Rutas Departamentos
     Route::resource('departamentos',DepartamentoController::class);
@@ -122,6 +122,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Rutas Horario
     Route::resource('horario',HorarioController::class);
+    Route::get('horario-del-centro/{id}',[CentroController::class,'mostrarHorarios'])->name('listarHorarios');
+    Route::get('eliminar-horario/{id}',[CentroController::class,'eliminarHorario'])->name('eliminarHorarios');
+    Route::get('agregar-horario/{id}',[CentroController::class,'agregarHorarios'])->name('agregarHorarios');
+    Route::post('guardar-horario',[CentroController::class,'guardarHorarios'])->name('guardarHorarios');
 
     //Rutas Linea_Desarrollo
     Route::resource('linea-de-desarrollo',Linea_DesarrolloController::class);

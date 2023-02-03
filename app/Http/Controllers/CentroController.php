@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Hashids\Hashids;
+use Carbon\Carbon;
+use App\Models\Centro;
+use App\Models\Departamento;
+use App\Models\Horario;
+use Illuminate\Support\Facades\DB;
 
 class CentroController extends Controller
 {
+    protected $c;
+
+    public function __construct (Centro $c)
+    {
+        $this->c = $c;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +25,8 @@ class CentroController extends Controller
      */
     public function index()
     {
-        //
+        $centro = Centro::with('departamento')->get();
+        return view('configuraciones.centro.show', compact('centro'));
     }
 
     /**
@@ -24,7 +36,10 @@ class CentroController extends Controller
      */
     public function create()
     {
-        //
+        $horario = Horario::all();
+        $hoy = Carbon::now();
+        $departamento = Departamento::all();
+        return view('configuraciones.centro.create',compact('departamento','hoy','horario'));
     }
 
     /**
@@ -35,7 +50,21 @@ class CentroController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $horario_id = $request->horario_id;
+        $centro = new Centro($request->all());
+        $centro->save();
+        $centro = Centro::latest('id')->first();
+        $centro_id = $centro->id;
+        if(count($horario_id)>0){
+            for ($i=0;$i<count($horario_id);$i++){
+                $informacion = [
+                    'horario_id' => $horario_id[$i],
+                    'centro_id' => $centro_id,
+                ];
+                DB::table('centro_horario')->insert($informacion);
+            }
+        }
+        return redirect()->action([CentroController::class,'index']);
     }
 
     /**
@@ -55,9 +84,15 @@ class CentroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $centro = $this->c->obtenerCentroById($id);
+        $departamento = Departamento::all();
+        return  view('configuraciones.centro.edit',['centro'=>$centro,'departamento'=>$departamento]);
     }
 
     /**
@@ -69,7 +104,10 @@ class CentroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $centro = Centro::find($id);
+        $centro ->fill($request->all());
+        $centro->save();
+        return redirect()->action([CentroController::class,'index']);
     }
 
     /**
@@ -81,5 +119,62 @@ class CentroController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function mostrarHorarios($id, Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $centro = Centro::with('horarios')
+        ->where('id', $id)
+        ->get();
+        foreach ($centro as $item){
+            $centro = $item->nombre;
+            $horario = $item->horarios;
+        }
+        return view('configuraciones.centro.horario',compact('horario','centro','idEncriptado'));
+    }
+
+    public function eliminarHorario($id, Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $idCentro = $idDesencriptado[0];
+        $horario = Horario::find($id);
+        $centro = Centro::find($idCentro);
+        $centro->horarios()->detach($horario->id);
+        return redirect()->back();
+    }
+
+    public function agregarHorarios($id, Request $request){
+        $horarios = Horario::all();
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $centros = Centro::where('id', $id)->get();
+        foreach($centros as $item){
+            $centro = $item->nombre;
+        }
+        return view('configuraciones.centro.agregar',compact('horarios','centro','idEncriptado'));
+    }
+
+    public function guardarHorarios(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $centro_id = $idDesencriptado[0];
+        $horario_id = $request->horario_id;
+        if(count($horario_id)>0){
+            for ($i=0;$i<count($horario_id);$i++){
+                $informacion = [
+                    'horario_id' => $horario_id[$i],
+                    'centro_id' => $centro_id,
+                ];
+                DB::table('centro_horario')->insert($informacion);
+            }
+        }
+        return redirect()->action([CentroController::class,'index']);
     }
 }

@@ -51,7 +51,7 @@
             <div class="col-2">
                 <form method="GET" action="{{route('asistenciasPDF')}}" enctype="multipart/form-data" role="form" target="_blank">
                     @csrf
-                    <input class="btn btn-outline-info " type="submit" value="Generar PDF">
+                    <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
                     <input type="hidden" name="meses" id="meses" value="{{$m}}">
                     <input type="hidden" name="anios" id="anios" value="{{$y}}">
                 </form>

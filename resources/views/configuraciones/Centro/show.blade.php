@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Nacionalidades</h1>
+          <h1 class="text-white">Centros de entrenamiento</h1>
         </div>
       </div>
     </div>
@@ -20,24 +20,58 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nacionalidad</th>
-          
+          <th scope="col">Nombre</th>
+          <th>Dirección</th>
+          <th>Accesibilidad</th>
+          <th>Institución</th>
+          <th>Implementación</th>
+          <th>Espacio Físico</th>
+          <th>Fecha de Registro</th>
+          <th>Departamento</th>
         </tr>
       </thead>
       <tbody class="table-hover">
         @php
             $contador = 1;
         @endphp
-        @foreach ($nacionalidad as $item)
+        @foreach ($centro as $item)
+        @php
+          $hashid = new Hashids\Hashids();
+          $idCentro = $hashid->encode($item->id)
+        @endphp
         <tr>
           <td>{{$contador}}</td>
-          <td>{{$item->descripcion}}</td>
+          <td>{{$item->nombre}}</td>
+          <td>{{$item->direccion}}</td>
+          <td>{{$item->accesibilidad}}</td>
+          <td>{{$item->institucion}}</td>
+          <td>{{$item->implementacion}}</td>
+          <td>{{$item->espacio_fisico}}</td>
+          <td>{{\Carbon\Carbon::parse($item->fecha_registro)->format('d-m-Y')}}</td>
+          <td>{{$item->departamento->nombre}}</td>
           <td>
-            <form action="{{route('nacionalidades.destroy',$item->id)}}" method="POST">
-              <a href="{{route('nacionalidades.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('centro.edit',$idCentro)}}" method="GET">
+              <input type="hidden" id="e" name="e" value="{{$idCentro}}">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+            </form>
+          </td>
+          <td>
+            <form action="{{route('listarHorarios',$idCentro)}}" method="GET">
+              <input type="hidden" id="e" name="e" value="{{$idCentro}}">
+              <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-calendar"></i></button>
+            </form>
+          </td>
+          <td>
+            <form action="{{route('agregarHorarios',$idCentro)}}" method="GET">
+              <input type="hidden" id="e" name="e" value="{{$idCentro}}">
+              <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-plus"></i></button>
+            </form>
+          </td>
+          <td>
+            <form action="{{route('centro.destroy',$item->id)}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar Nacionalidad')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarCentro('Eliminar Centro')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
           </form>
           </td>
           @php
@@ -51,7 +85,7 @@
 </div>
 </div>
 <script>
-  function eliminarNacionalidad(value){
+  function eliminarCentro(value){
       action = confirm(value) ? true : event.preventDefault();
   }
 </script>

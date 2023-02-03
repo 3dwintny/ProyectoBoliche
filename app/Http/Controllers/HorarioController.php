@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Hashids\Hashids;
+use App\Models\Horario;
+use Carbon\Carbon;
 
 class HorarioController extends Controller
 {
+    protected $h;
+    public function __construct(Horario $h){
+        $this->h = $h;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        //
+        $horario = Horario::all();
+        return view('configuraciones.horario.show', compact('horario'));
     }
 
     /**
@@ -24,7 +31,8 @@ class HorarioController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now();
+        return view('configuraciones.horario.create',compact('hoy'));
     }
 
     /**
@@ -35,7 +43,9 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $horario = new Horario($request->all());
+        $horario->save();
+        return redirect()->back();
     }
 
     /**
@@ -55,9 +65,14 @@ class HorarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $horario = $this->h->obtenerHorarioById($id);
+        return view('configuraciones.horario.edit',['horario'=>$horario]);
     }
 
     /**
@@ -69,7 +84,10 @@ class HorarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $horario = Horario::find($id);
+        $horario->fill($request->all());
+        $horario->save();
+        return redirect()->action([HorarioController::class,'index']);
     }
 
     /**
@@ -80,6 +98,8 @@ class HorarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $horario = Horario::find($id);
+        $horario->delete();
+        return redirect()->action([HorarioController::class,'index']);
     }
 }

@@ -133,7 +133,7 @@
           <td>{{$item->frustracion}}</td>
           <td>
             <a href="{{route('terapias.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
-            <a href="{{route('historialPDF',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary" target="_blank"><i class="fa fa-fw fa-thin fa-file"></i></a>
+            <a href="{{route('historialPDF',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary" target="_blank"><i class="fa fa-fw fa-regular fa-file-pdf"></i></a>
           </td>
         </tr>
         @endforeach
