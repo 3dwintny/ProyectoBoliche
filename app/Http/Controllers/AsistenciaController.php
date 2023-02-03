@@ -304,7 +304,7 @@ class AsistenciaController extends Controller
                 array_push($fechas,$mes[$i]->fecha);
             }
             else{
-                if(in_array($mes[$i]->fecha,$fechas,)==false){
+                if(in_array($mes[$i]->fecha,$fechas)==false){
                     array_push($fechas,$mes[$i]->fecha);
                 }
             }
@@ -454,7 +454,7 @@ class AsistenciaController extends Controller
                 array_push($fechas,$obtenerFecha[$i]->fecha);
             }
             else{
-                if(in_array($obtenerFecha[$i]->fecha,$fechas,)==false){
+                if(in_array($obtenerFecha[$i]->fecha,$fechas)==false){
                     array_push($fechas,$obtenerFecha[$i]->fecha);
                 }
             }

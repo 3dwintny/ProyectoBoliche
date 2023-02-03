@@ -148,15 +148,37 @@ class CentroController extends Controller
     }
 
     public function agregarHorarios($id, Request $request){
-        $horarios = Horario::all();
+        $idHorariosCentros = array();
+        $idHorarios = array();
+        $horarios = Horario::get('id');
         $idEncriptado = $request->e;
         $hashid = new Hashids();
         $idDesencriptado = $hashid->decode($idEncriptado);
         $id = $idDesencriptado[0];
-        $centros = Centro::where('id', $id)->get();
+        $centros = Centro::where('id', $id)
+        ->with('horarios')
+        ->get();
         foreach($centros as $item){
             $centro = $item->nombre;
+            $horario = $item->horarios;
         }
+
+        foreach($horario as $item){
+            array_push($idHorariosCentros,$item->id);
+        }
+
+        foreach($horarios as $item){
+            array_push($idHorarios,$item->id);
+        }
+        
+        $horariosDisponibles = array();
+
+        for($i=0;$i<count($idHorarios);$i++){
+            if(in_array($idHorarios[$i],$idHorariosCentros)==false){
+                array_push($horariosDisponibles,$idHorarios[$i]);
+            }
+        }
+        $horarios = Horario::wherein('id',$horariosDisponibles)->get();
         return view('configuraciones.centro.agregar',compact('horarios','centro','idEncriptado'));
     }
 
@@ -166,7 +188,7 @@ class CentroController extends Controller
         $idDesencriptado = $hashid->decode($idEncriptado);
         $centro_id = $idDesencriptado[0];
         $horario_id = $request->horario_id;
-        if(count($horario_id)>0){
+        if($horario_id!=0){
             for ($i=0;$i<count($horario_id);$i++){
                 $informacion = [
                     'horario_id' => $horario_id[$i],
@@ -174,7 +196,10 @@ class CentroController extends Controller
                 ];
                 DB::table('centro_horario')->insert($informacion);
             }
+            return redirect()->action([CentroController::class,'index']);
         }
-        return redirect()->action([CentroController::class,'index']);
+        else{
+            return redirect()->back();
+        }
     }
 }
