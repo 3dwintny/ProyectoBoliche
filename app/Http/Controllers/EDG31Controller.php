@@ -549,7 +549,7 @@ class EDG31Controller extends Controller
                     }
                 }
 
-                if($atl->adaptado == "SI"){
+                if($atl->adaptado == "Si"){
                     switch($atl->deporte_adaptado_id){
                         case 2://VISUALES
                             switch($atl->etapa_deportiva_id){
@@ -1000,7 +1000,7 @@ class EDG31Controller extends Controller
                     }
                 }
 
-                if($atl->adaptado == "SI"){
+                if($atl->adaptado == "Si"){
                     switch($atl->deporte_adaptado_id){
                         case 2://VISUALES
                             switch($atl->etapa_deportiva_id){
@@ -1258,7 +1258,7 @@ class EDG31Controller extends Controller
         $fauditivos = $auditivos[0]+$auditivos[2]+$auditivos[4]+$auditivos[6]+$auditivos[8];
         $mauditivos = $auditivos[1]+$auditivos[3]+$auditivos[5]+$auditivos[7]+$auditivos[9];
 
-        $totalAdaptados=$fauditivos+$truedas+$tamputados+$tparalisis+$tsindrome+$tintelecto+$tvisuales;
+        $totalAdaptados=$tauditivos+$truedas+$tamputados+$tparalisis+$tsindrome+$tintelecto+$tvisuales;
         $totalMasculinosAdaptados=$mauditivos+$mruedas+$mamputados+$mparalisis+$msindrome+$mintelecto+$mvisuales;
         $totalFemeninosAdaptados=$fauditivos+$fruedas+$famputados+$fparalisis+$fsindrome+$fintelecto+$fvisuales;
 
@@ -1961,7 +1961,7 @@ class EDG31Controller extends Controller
                     }
                 }
 
-                if($atl->adaptado == "SI"){
+                if($atl->adaptado == "Si"){
                     switch($atl->deporte_adaptado_id){
                         case 2://VISUALES
                             switch($atl->etapa_deportiva_id){
@@ -2412,7 +2412,7 @@ class EDG31Controller extends Controller
                     }
                 }
 
-                if($atl->adaptado == "SI"){
+                if($atl->adaptado == "Si"){
                     switch($atl->deporte_adaptado_id){
                         case 2://VISUALES
                             switch($atl->etapa_deportiva_id){

@@ -95,10 +95,7 @@
                                         <select class="form-control" name="departamento_id" id="departamento_id" required>
                                             <option selected disabled></option>
                                             @foreach ($departamento as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                                @if ($item->id==13)
-                                                    <option value="{{$item->id}}" selected>{{$item->nombre}}</option>
-                                                @endif
+                                            <option value="{{$item->id}}" {{ $item->id == 13 ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
                                         <!-- Esto es lo que aparece como placeholder, en el fomulario -->

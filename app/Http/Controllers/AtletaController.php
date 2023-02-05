@@ -19,7 +19,7 @@ use Hashids\Hashids;
 
 class AtletaController extends Controller
 {
-    protected $alumnos;
+    protected $alumno;
     public function __construct(Alumno $alumno)
     {
         $this->alumno = $alumno;
@@ -31,7 +31,6 @@ class AtletaController extends Controller
      */
     public function index()
     {
-        
         $atletas = Atleta::paginate();
         return view('Atletas.index', compact('atletas'))
             ->with('i', (request()->input('page', 1) - 1) * $atletas->perPage());
