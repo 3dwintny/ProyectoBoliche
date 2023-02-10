@@ -273,7 +273,7 @@ class EDG31Controller extends Controller
 
         foreach($atletas as $atl){
             if($atl->alumno->genero=="Femenino"){
-                if($atl->federado=="SISTEMÁTICO"){
+                if($atl->federado=="SISTEMÁTICO" && $atl->adaptado != "Si"){
                     switch($atl->categoria_id){
                         case 1: //SUB9
                             switch($atl->etapa_deportiva_id){
@@ -724,7 +724,7 @@ class EDG31Controller extends Controller
             }
 
             if($atl->alumno->genero=="Masculino"){
-                if($atl->federado=="SISTEMÁTICO"){
+                if($atl->federado=="SISTEMÁTICO" && $atl->adaptado != "Si"){
                     switch($atl->categoria_id){
                         case 1: //SUB9
                             switch($atl->etapa_deportiva_id){
@@ -1685,7 +1685,7 @@ class EDG31Controller extends Controller
 
         foreach($atletas as $atl){
             if($atl->alumno->genero=="Femenino"){
-                if($atl->federado=="SISTEMÁTICO"){
+                if($atl->federado=="SISTEMÁTICO" && $atl->adaptado != "Si"){
                     switch($atl->categoria_id){
                         case 1: //SUB9
                             switch($atl->etapa_deportiva_id){
@@ -2136,7 +2136,7 @@ class EDG31Controller extends Controller
             }
 
             if($atl->alumno->genero=="Masculino"){
-                if($atl->federado=="SISTEMÁTICO"){
+                if($atl->federado=="SISTEMÁTICO" && $atl->adaptado != "Si"){
                     switch($atl->categoria_id){
                         case 1: //SUB9
                             switch($atl->etapa_deportiva_id){

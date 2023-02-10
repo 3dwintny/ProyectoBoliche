@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Encabezado formulario de inscripción</h1>
+                    <h1 class="text-white">Encabezado de formulario de inscripción</h1>
                 </div>
             </div>
         </div>
@@ -51,27 +51,17 @@
                                         <label for="titulo_ficha">Título ficha</label>
                                     </div>
                                 </div>
-                                <div class="col-md-10 mb-2">
+                                <div class="col-md-12 mb-2">
                                     <!-- Para segir viendo el nombre del placeholder -->
                                     <div class="form-floating">
                                         <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Subtítulo') }}" id="subtitulo" type="text" name="subtitulo" value="{{$formulario->subtitulo}}">
                                         <!-- Esto es lo que aparece como placeholder, en el fomulario -->
-                                        <label for="titulo_ficha">Subtítulo</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-2 mb-2">
-                                    <!-- Para segir viendo el nombre del placeholder -->
-                                    <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Año') }}" id="año_logo" type="text" name="año_logo" value="{{$formulario->año_logo}}">
-                                        <!-- Esto es lo que aparece como placeholder, en el fomulario -->
-                                        <label for="titulo_ficha">Año</label>
+                                        <label for="subtitulo">Subtítulo</label>
                                     </div>
                                 </div>
                                 <label for="titulo_ficha">Declaración</label>
                                 <div class="col-md-12 mb-2">
-                                        <textarea class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Declaración') }}" id="declaracion" type="text" name="declaracion" style="text-align:justify;resize:none;" rows="8">{{$formulario->declaracion}}</textarea>
-                                        <!-- Esto es lo que aparece como placeholder, en el fomulario -->
-                                        
+                                    <textarea class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Declaración') }}" id="declaracion" type="text" name="declaracion" style="text-align:justify;resize:none;" rows="8">{{$formulario->declaracion}}</textarea>
                                 </div>
                             </div>
                             <div class="container">

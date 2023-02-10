@@ -28,7 +28,6 @@
           <th scope="col">No</th>
           <th scope="col">Título</th>
           <th scope="col">Subtítulo</th>
-          <th scope="col">Año</th>
           <th scope="col">Título de ficha</th>
         </tr>
       </thead>
@@ -45,11 +44,10 @@
           <td>{{$contador}}</td>
           <td>{{$item->titulo_principal}}</td>
           <td>{{$item->subtitulo}}</td>
-          <td>{{$item->año_logo}}</td>
           <td>{{$item->titulo_ficha}}</td>
           <td>
             <form action="{{route('formulario-inscripcion.edit',$idFormulario)}}" method="GET" role="form" enctype="multipart/form-data">
-              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
               <input type="hidden" id="e" name="e" value="{{$idFormulario}}">
             </form>
           </td>

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use PDF;
+use Carbon\Carbon;
 
 class AlumnoController extends Controller
 {
@@ -29,8 +30,12 @@ class AlumnoController extends Controller
     public function index()
     {
         $alumnos = Alumno::where('estado','Pendiente')->get();
-        return view('alumno.index', compact('alumnos'));
-        //return view('alumno.show');
+        if(count($alumnos) > 0){
+            return view('alumno.index', compact('alumnos'));
+        }
+        else{
+            return view('alumno.sinresultados');
+        }
     }
 
      /**
@@ -58,12 +63,13 @@ class AlumnoController extends Controller
      */
     public function create()
     {
+        $anio = Carbon::now()->format('Y');
         $departamentos = Departamento::all();
         $nacionalidades = Nacionalidad::all();
         $parentezcos = Parentesco::all();
         $formularios = Formulario::all();
         $alergia = Alergia::all();
-        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios", "alergia"));
+        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios", "alergia","anio"));
     }
 
     /**
@@ -200,16 +206,16 @@ class AlumnoController extends Controller
     {
         $alumno=Alumno::find($id)->update(['estado' => 'Rechazado']);
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
-        
     }
 
     public static function generarPDF()
     {
         $encargado = Encargado::orderByDesc('id')->limit(1)->get();
+        $anio = Carbon::now()->format('Y');
         foreach ($encargado as $item){
             $alumno = Alumno::where('encargado_id',$item->id)->get();
         }
         $formularios = Formulario::all();
-        return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno'))->setPaper('8.5x11')->stream();
+        return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
     }
 }

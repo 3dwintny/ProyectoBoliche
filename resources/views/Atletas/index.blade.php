@@ -37,6 +37,10 @@
           $contador = 1;
         @endphp
         @foreach ($atletas as $atleta)
+        @php
+          $hashid = new Hashids\Hashids();
+          $idAtleta = $hashid->encode($atleta->id);
+        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>
@@ -59,13 +63,9 @@
           <td>{{$atleta->entrenador->nombre1}} {{$atleta->entrenador->nombre2}} {{$atleta->entrenador->apellido1}} {{$atleta->entrenador->apellido2}}</td>
           <td>{{$atleta->etapa_deportiva->nombre}}</td>
           <td>
-            <form action="" method="POST">
-              @can('editar-atleta')
-              <a class="btn btn-sm btn-info" href="{{route('atletas.edit',$atleta->id)}}"><i class="fa fa-fw fa-edit"></i>Editar</a>
-              @endcan
-              @can('eliminar-atleta')
-              <a class="btn btn-sm btn-danger" href="{{route('atletas.destroy',$atleta->id)}}"><i class="fa fa-fw fa-trash"></i>Eliminar</a>
-              @endcan
+            <form action="{{route('atletas.edit',$idAtleta)}}" method="GET" role="form" enctype="multipart/form-data">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-edit"></i></button>
+              <input type="hidden" name="e" id="e" value="{{$idAtleta}}">
             </form>
           </td>
         </tr>

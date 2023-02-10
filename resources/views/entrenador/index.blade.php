@@ -19,8 +19,7 @@
         <thead class="table-dark" style="border-radius: 5px;">
           <tr>
             <th scope="col">No</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
+            <th scope="col">Nombre Completo</th>
             <th scope="col">CUI</th>
             <th scope="col">Estado Civil</th>
             <th scope="col">Celular</th>
@@ -36,10 +35,13 @@
             $contador = 1;
           @endphp
           @foreach ($entrenadores as $entrenador)
+          @php
+            $hashid = new Hashids\Hashids();
+            $idEntrenador = $hashid->encode($entrenador->id);
+          @endphp
           <tr>
             <td>{{$contador}}</td>
-            <td>{{$entrenador->nombre1}}</td>
-            <td>{{$entrenador->apellido1}}</td>
+            <td>{{$entrenador->nombre1}} {{$entrenador->nombre2}} {{$entrenador->nombre3}} {{$entrenador->apellido1}} {{$entrenador->apellido2}} {{$entrenador->apellido_casada}}</td>
             <td>{{$entrenador->cui}}</td>
             <td>{{$entrenador->estado_civil}}</td>
             <td>{{$entrenador->celular}}</td>
@@ -48,9 +50,9 @@
             <td>{{$entrenador->direccion}}</td>
             <td>{{$entrenador->deporte->nombre}}</td>
             <td>
-              <form action="" method="POST">
-                <a class="btn btn-sm btn-info " href="{{ route('entrenadores.edit',$entrenador->id) }}"><i class="fa fa-fw fa-edit"></i>Modificar</a>
-                <a class="btn btn-sm btn-danger" href="{{ route('entrenadores.destroy',$entrenador->id)}}"><i class="fa fa-fw fa-trash"></i>Eliminar</a>
+              <form action="{{route('entrenadores.edit',$idEntrenador)}}" method="GET">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
+                <input type="hidden" name="e" id="e" value="{{$idEntrenador}}">
               </form>
             </td>
           </tr>

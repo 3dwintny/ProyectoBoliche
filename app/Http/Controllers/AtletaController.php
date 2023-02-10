@@ -126,7 +126,7 @@ class AtletaController extends Controller
         $atleta = Atleta::find($id);
         $centro=Centro::all();
         $entrenador= Entrenador::All();
-        $alumno = Alumno::all();     
+        $alumno = Alumno::find($id);     
         $categoria = Categoria::all();
         $etapa=Etapa_Deportiva::all();
         $deporteadaptado = Deporte_Adoptado::all();
@@ -135,9 +135,9 @@ class AtletaController extends Controller
         $deporte = Deporte::all();
         $modalidad = Modalidad::all();
         $prt = PRT::all();
-        return view('Atletas.edit', compact('alumno','atleta',"centro","entrenador","categoria","etapa",
+        return view('atletas.edit',compact('alumno',"centro","entrenador","categoria","etapa",
         "deporteadaptado","otroprograma","lineadesarrollo",
-        "deporte","modalidad","prt"));
+        "deporte","modalidad","prt","atleta"));
     }
 
     /**
@@ -149,9 +149,10 @@ class AtletaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $atletas=Atleta::find($id);
-        $atletas->update($request->all());
-        return redirect()->route('Atletas.index');
+        $atletas = Atleta::find($id);
+        $atletas->fill($request->all());
+        $atletas->save();
+        return redirect()->action([AtletaController::class,'index']);
     }
 
     /**

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
 use Hashids\Hashids;
+use App\Models\Categoria;
 
 class AsistenciaController extends Controller
 {
@@ -90,9 +91,11 @@ class AsistenciaController extends Controller
      */
     public function create()
     {
+        $categoria = Categoria::all();
         $atletas = Atleta::all();
         $hoy = Carbon::now();
-        return view('Reportes.RepFor30.crear',compact("atletas" , "hoy"));
+        $categoria_id = 0;
+        return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
     }
 
     /**
@@ -154,7 +157,14 @@ class AsistenciaController extends Controller
     public function guardar(Request $request){
         $fecha = $request->fecha;
         $buscar=Asistencia::where('fecha', $fecha[0])->get();
-        if(count($buscar)==0){
+        $controlAsistencia = "false";
+        $obtenerAtleta = Asistencia::wherein('atleta_id',$request->atleta_id)->get('fecha');
+        for($i=0;$i<count($obtenerAtleta);$i++){
+            if($obtenerAtleta[$i]->fecha == $fecha[0]){
+                $controlAsistencia = "true";
+            }
+        }
+        if($controlAsistencia=="false"){
             $atleta_id = $request->atleta_id;
             $estado = $request-> estado;
             for ($i=0;$i<count($atleta_id);$i++){
@@ -165,10 +175,10 @@ class AsistenciaController extends Controller
                 ];
                 DB::table('asistencia')->insert($informacion);
             }
-            return redirect()->back()->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
+            return redirect()->action([AsistenciaController::class,'create'])->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
         }
         else{
-            return redirect()->back()->with('warning', 'La asistencia del '.$fecha[0].' ya ha sido tomada');
+            return redirect()->action([AsistenciaController::class,'create'])->with('warning', 'La asistencia del '.$fecha[0].' ya ha sido tomada');
         }
     }
 
@@ -236,6 +246,14 @@ class AsistenciaController extends Controller
         else{
             return view('Reportes.RepFor30.sinresultados',compact('mostrarAnioReporte','mostrarMes'));
         }
+    }
+
+    public function filtroCategoria(Request $request){
+        $categoria = Categoria::all();
+        $categoria_id = $request->categorias;
+        $atletas = Atleta::where('categoria_id',$categoria_id)->get();
+        $hoy = Carbon::now();
+        return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
     }
 
     public function generarPDF(Request $request)

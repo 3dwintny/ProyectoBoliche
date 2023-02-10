@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h3>Inscripcion del Atleta {{ $alumno->nombre1 }}</h3>
+                            <h3>Inscripción del atleta {{ $alumno->nombre1 }}</h3>
                         </strong>
 
                     </div>
@@ -52,23 +52,30 @@
                                         <input type="hidden" name="adaptado" id="adaptadoText" value="No">
                                     </div>
                                     <div class="col-md-6 mb-2 form-control">
-                                    <label>¿El/La atleta es federado/a?</label>
+                                        <label>¿El/La atleta es federado/a?</label>
                                         <div class="form-check form-check-inline">
-                                        <input type="radio" name="federado" id="federado0" value="SISTEMÁTICO" checked>
-                                        <label class="form-check-label" for="inlineRadio3">Si</label>
+                                            <input type="radio" name="federado" id="federado0" value="SISTEMÁTICO" checked>
+                                            <label class="form-check-label" for="inlineRadio3">Si</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                        <input type="radio" name="federado" id="federado1" value="1">
-                                        <label class="form-check-label" for="inlineRadio3">No</label>
+                                            <input type="radio" name="federado" id="federado1" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-2 form-control">
+                                        <label>¿Deporte adaptado?</label>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="adaptado" id="deporteAdaptado">
+                                            <label class="form-check-label" for="inlineRadio3">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="adaptado" id="cancelarAdaptado" checked>
+                                            <label class="form-check-label" for="inlineRadio3">No</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-2 form-control">
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" name="adaptado-otro" id="deporteAdaptado" disabled>
-                                            <label class="form-check-label" for="inlineRadio3">Deporte adaptado</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input type="radio" name="adaptado-otro" id="otroPrograma" disabled>
+                                            <input type="radio" name="otro" id="otroPrograma" disabled>
                                             <label class="form-check-label" for="inlineRadio3">Otro programa de atención</label>
                                         </div>
                                     </div>
@@ -183,32 +190,12 @@
 
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#fecha_nacimiento').on('change', function() {
-            function calcularEdad(fechas) {
-                var hoy = new Date();
-                var cumpleanos = new Date(fechas);
-                var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-                var m = hoy.getMonth() - cumpleanos.getMonth();
-
-                if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                    edad--;
-                }
-
-                return edad;
-            }
-            document.getElementById('_edad').value = calcularEdad(document.getElementById('fecha_nacimiento').value);
-        });
-    });
-    date = new Date();
-    year = date.getFullYear();
-    month = date.getMonth() + 1;
-    day = date.getDate();
-    document.getElementById("fecha_sistema").value = year + "/" + month + "/" + day;
     $(document).ready(function () {
         $('#federado0').on('change', function () {
             document.getElementById('otroPrograma').disabled = true;
-            document.getElementById('deporteAdaptado').disabled = true;
+            document.getElementById('deporteAdaptado').disabled = false;
+            document.getElementById('cancelarAdaptado').disabled = false;
+            document.getElementById('cancelarAdaptado').checked = true;
             document.getElementById('otroPrograma').checked = false;
             document.getElementById('deporteAdaptado').checked = false;
             document.getElementById('otro_programa_id').options[0].selected = true;
@@ -225,12 +212,17 @@
             document.getElementById('otro_programa_id_text').disabled = false;
         });
         $('#federado1').on('change', function () {
+            document.getElementById('deporte_adaptado_id').options[0].selected = true;
             document.getElementById('otroPrograma').disabled = false;
-            document.getElementById('deporteAdaptado').disabled = false;
+            document.getElementById('deporteAdaptado').disabled = true;
+            document.getElementById('cancelarAdaptado').disabled = true;
+            document.getElementById('cancelarAdaptado').checked = false;
+            document.getElementById('deporteAdaptado').checked = false;
             document.getElementById('otroPrograma').required = true;
-            document.getElementById('deporteAdaptado').required = true;
             document.getElementById('deporte_adaptado_id_text').disabled = true;
             document.getElementById('otro_programa_id_text').disabled = true;
+            document.getElementById('adaptado').value="No";
+            document.getElementById('adaptadoText').value="No";
         });
         $('#otroPrograma').on('change', function () {
             for(let i = 0; i<document.getElementById('otro_programa_id').length; i++) {
@@ -257,6 +249,16 @@
             document.getElementById('adaptadoText').value="Si";
             document.getElementById('otro_programa_id_text').disabled = false;
             document.getElementById('deporte_adaptado_id_text').disabled = true;
+            document.getElementById('deporteAdaptado').required = true;
+        });
+        $('#cancelarAdaptado').on('change',function(){
+            document.getElementById('adaptado').value="No";
+            document.getElementById('adaptadoText').value="No";
+            document.getElementById('deporte_adaptado_id_text').disabled = false;
+            document.getElementById('deporte_adaptado_id').options[0].selected = true;
+            for(let i = 0; i<document.getElementById('deporte_adaptado_id').length; i++) {
+                document.getElementById('deporte_adaptado_id').options[i].disabled=true;
+            }
         });
     });
 </script>

@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <div class="header bg-dark pb-4 pt-5 pt-md-6">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Toma de Asistencia</h1>
+                    <h1 class="text-white">Toma de asistencia</h1>
                 </div>
             </div>
         </div>
@@ -17,6 +17,23 @@
 
 <div class="card-body pb-4 pt-5 pt-md-3">
     @include('components.flash_alerts')
+    <form action="{{route('asistenciaCategoria')}}" method="POST" enctype="multipart/form-data" role="form">
+        @csrf
+        <div class="row mb-2">
+            <div class="col-3"><label class="form-control">Filtrar por categoría</label></div>
+            <div class="col-3">
+                <select id="categorias" class="form-control" name="categorias">
+                    <option value="" selected disabled></option>
+                    @foreach($categoria as $item)
+                    <option value="{{$item->id}}">{{$item->tipo}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-3">
+                <button type="submit" class="btn btn-primary">Aplicar filtro</button>
+            </div>
+        </div>
+    </form>
     <form method="POST" action="{{route('asis')}}" enctype="multipart/form-data" role="form">
         @csrf
         <div class="row mb-2">
@@ -106,6 +123,14 @@
     </form>
 
 </div>
+@routes
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#categorias').on('change',function(){
+            console.log(route('asistenciaCategoria'));
+        });
+    });
+</script>
 
 
 @endsection
