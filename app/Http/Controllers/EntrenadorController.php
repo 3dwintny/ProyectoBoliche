@@ -82,7 +82,13 @@ class EntrenadorController extends Controller
      */
     public function show($id)
     {
-        //
+        $entrenador = Entrenador::find($id);
+        $nivel_cdag = Nivel_cdag::find($entrenador->nivel_cdag_id); 
+        $nivel_fadn = Nivel_fadn::find($entrenador->nivel_fadn_id); 
+        $departamento = Departamento::find($entrenador->departamento_id);
+        $nacionalidad = Nacionalidad::find($entrenador->nacionalidad_id);
+        $tipo_contrato = Tipo_Contrato::find($entrenador->tipo_contrato_id);
+        return view('entrenador.show', compact('entrenador','nivel_cdag','nivel_fadn','departamento','nacionalidad','tipo_contrato'));
     }
 
     /**

@@ -20,7 +20,7 @@ class PsicologiaController extends Controller
      */
     public function index()
     {
-        $psicologo = Psicologia::all();
+        $psicologo = Psicologia::where('estado','activo')->paginate(5);
         return view('configuraciones.psicologia.show', compact('psicologo'));
     }
 
@@ -98,8 +98,7 @@ class PsicologiaController extends Controller
      */
     public function destroy($id)
     {
-        $psicologo = Psicologia::find($id);
-        $psicologo->delete();
+        Psicologia::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([PsicologiaController::class,'index']);
     }
 }

@@ -84,9 +84,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('alergias',AlergiaController::class);
 	//Rutas Asistencia
+    Route::get('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
     Route::resource('asistencias',AsistenciaController::class);
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
-    Route::post('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
 	Route::resource('alergia',AlergiaController::class);
     //Ruta Reporte EDG31
     Route::resource('edg-31',EDG31Controller::class);

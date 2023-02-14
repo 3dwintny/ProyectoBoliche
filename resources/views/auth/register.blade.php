@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="card bg-light shadow border-0">
-
+                    @include('components.flash_alerts')
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
                             <small>{{ __('Registrarse') }}</small>
@@ -70,7 +70,7 @@
                                         <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                                     </div>
                                     <select class="form-control" name="roles" id="roles" required autofocus>
-                                    <option selected disabled >Tipo de usuario</option>
+                                    <option selected disabled value="">Tipo de usuario</option>
                                     @foreach ($roles as $item){
                                     <option value="{{$item->id}}">{{$item->name}}</option>
                                             }

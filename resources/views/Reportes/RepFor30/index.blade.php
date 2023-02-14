@@ -16,11 +16,10 @@
 <div>
     <div class="pb-4 pt-5 pt-md-3">
         <div class="card-body">
-            <form method="POST" action="{{route('buscar')}}">
-                @csrf
-
-                <div class="row mb-2">
-                    <div class="col-3">
+            <form action="{{route('buscar')}}" role="form">
+                <div class="row">
+                  <div class="col-md-4 mb-2">
+                    <div class="form-floating">
                         <select class="form-control" name="mes" id="mes">
                             <option selected disabled>Mes</option>
                             <option value="1">Enero</option>
@@ -36,15 +35,23 @@
                             <option value="11">Noviembre</option>
                             <option value="12">Diciembre</option>
                         </select>
+                        <label for="mes">Mes</label>
                     </div>
-                    <div class="col-3">
-                        <input type="number" class="form-control" placeholder="Año" name="anio" id="anio" required>
+                  </div>
+                  <div class="col-md-4 mb-2">
+                    <div class="form-floating">
+                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Año" id="anio" type="number" name="anio" value="" required>
+                        <label for="anio">Año</label>
                     </div>
-                    <div class="col-3">
-                        <input class="btn btn-outline-info" type="submit" value="Buscar">
-                    </div>
+                  </div>
+                  <div class="col-md-1 mb-2">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                  </div>
+                  <div class="col-md-2 mb-2">
+                    <button type="button" class="btn btn-light" onclick="window.location='{{route('asistencias.index')}}'">Cancelar búsqueda</button>
+                  </div>
                 </div>
-            </form>
+              </form>
         </div>
         
         <div class="row mb-2">
@@ -117,7 +124,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{$atleta->links('vendor.pagination.custom')}}
+                    {{$atleta->appends(['mes'=>$obtenerMes,'anio'=>$obtenerAnio])->links('vendor.pagination.custom')}}
                 </div>
             </div>
         </div>

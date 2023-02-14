@@ -42,7 +42,6 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-
         $roles = $_POST['roles'];
         $correo = $_POST['email'];
         switch($roles){
@@ -77,7 +76,7 @@ class RegisteredUserController extends Controller
 
                 }
                 else{
-                    Alert('Usted no esta registrado en la base de datos');
+                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Atleta)');
                 }
                 break;
             case 2:
@@ -106,7 +105,7 @@ class RegisteredUserController extends Controller
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
-                    echo "Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Entrenador)";
+                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Entrenador)');
                 }
                 break;
             case 3:
@@ -135,11 +134,8 @@ class RegisteredUserController extends Controller
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
-                    echo "Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Psicologia)";
+                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Psicología)');
                 }
-                break;
-            default:
-                echo 'Porfavor verifique las opciones';
                 break;
         }
     }

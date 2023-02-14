@@ -146,7 +146,6 @@ class AtletaController extends Controller
             }
             $atletas = Atleta::where('estado','activo')->wherein('alumno_id',$indices)->paginate(5);
         }
-        //return $atletas;
         return view('Atletas.index', compact('atletas','buscarAtleta','categoria','filtrarCategoria'));
     }
 

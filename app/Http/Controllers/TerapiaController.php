@@ -23,10 +23,113 @@ class TerapiaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $atleta = Atleta::with('alumno')->paginate(5);
-        return view('psicologia.terapias.list',compact('atleta'));
+        $buscarAtleta = $request->buscarNombre;
+        if($buscarAtleta ==""){
+            $atleta = Atleta::paginate(5);
+        }
+        else{
+            $indices = array();
+            $alumno = Alumno::get(['nombre1','nombre2','nombre3','apellido1','apellido2','id']);
+            for($i=0;$i<count($alumno);$i++){
+                if($buscarAtleta==$alumno[$i]->nombre1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else{
+                    array_push($indices,0);
+                }
+            }
+            $atleta = Atleta::wherein('alumno_id',$indices)->paginate(5);
+        }
+        return view('psicologia.terapias.list',compact('atleta','buscarAtleta'));
     }
 
     /**
