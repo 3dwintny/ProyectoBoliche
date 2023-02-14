@@ -163,6 +163,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('terapias',TerapiaController::class);
 
     //Rutas Tipo_Contrato
+    Route::get('detalles-de-terapia/{id}',[TerapiaController::class,'details'])->name('detallesTerapia');
     Route::resource('tipo-de-contrato',Tipo_ContratoController::class);
 
     //Rutas Tipo_Usuario

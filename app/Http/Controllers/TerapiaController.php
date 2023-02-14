@@ -313,4 +313,11 @@ class TerapiaController extends Controller
         }
         return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta','inicial','final'));
     }
+
+    public function details($id){
+        $terapia = Terapia::find($id);
+        $atleta = Atleta::find($terapia->atleta_id);
+        $paciente = Alumno::find($atleta->alumno_id);
+        return view('psicologia.terapias.details', compact('terapia','paciente'));
+    }
 }

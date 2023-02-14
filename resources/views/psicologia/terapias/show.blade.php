@@ -50,28 +50,9 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Fecha</th>
-          <th scope="col">Hora de Inicio</th>
           <th scope="col">Impresión Clínica</th>
-          <th scope="col">Análisis Semiológico</th>
-          <th scope="col">Desarrollo</th>
           <th scope="col">Observaciones</th>
           <th scope="col">Tarea</th>
-          <th scope="col">Conciencia Corporal</th>
-          <th scope="col">Dominio Corporal</th>
-          <th scope="col">Dominio de Respiración</th>
-          <th scope="col">Diálogo Interno</th>
-          <th scope="col">Atención</th>
-          <th scope="col">Concentración</th>
-          <th scope="col">Motivación</th>
-          <th scope="col">Confianza</th>
-          <th scope="col">Activación</th>
-          <th scope="col">Relajación</th>
-          <th scope="col">Estrés</th>
-          <th scope="col">Ansiedad Cognitiva</th>
-          <th scope="col">Ansiedad Física</th>
-          <th scope="col">Miedo</th>
-          <th scope="col">Frustración</th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody class="table-hover">
@@ -84,30 +65,13 @@
         <tr>
           <td>{{$item->numero_terapia}}</td>
           <td>{{\Carbon\Carbon::parse($item->fecha)->format("d-m-Y")}}</td>
-          <td>{{\Carbon\Carbon::parse($item->hora_inicio)->format("H:i")}}</td>
           <td>{{$item->impresion_clinica}}</td>
-          <td>{{$item->analisis_semiologico}}</td>
-          <td>{{$item->desarrollo}}</td>
           <td>{{$item->observaciones}}</td>
           <td>{{$item->tarea}}</td>
-          <td>{{$item->conciencia_corporal}}</td>
-          <td>{{$item->dominio_corporal}}</td>
-          <td>{{$item->dominio_respiracion}}</td>
-          <td>{{$item->dialogo_interno}}</td>
-          <td>{{$item->atencion}}</td>
-          <td>{{$item->concentracion}}</td>
-          <td>{{$item->motivacion}}</td>
-          <td>{{$item->confianza}}</td>
-          <td>{{$item->activacion}}</td>
-          <td>{{$item->relajacion}}</td>
-          <td>{{$item->estres}}</td>
-          <td>{{$item->ansiedad_cognitiva}}</td>
-          <td>{{$item->ansiedad_fisica}}</td>
-          <td>{{$item->miedo}}</td>
-          <td>{{$item->frustracion}}</td>
           <td>
             <a href="{{route('terapias.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
-            <a href="{{route('historialPDF',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary" target="_blank"><i class="fa fa-fw fa-regular fa-file-pdf"></i></a>
+            <a href="{{route('detallesTerapia',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-success"><i class="fa fa-fw fa-regular fa-eye"></i></a>
+            <a href="{{route('historialPDF',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-info" target="_blank"><i class="fa fa-fw fa-regular fa-file-pdf"></i></a>
           </td>
         </tr>
         @endforeach
