@@ -229,7 +229,17 @@ class AtletaController extends Controller
         $departamento = Departamento::find($alumno->departamento_residencia_id);
         $municipio = Municipio::find($alumno->municipio_residencia_id);
         $nacionalidad = Nacionalidad::find($alumno->nacionalidad_id);
-        return view('Atletas.show', compact('atleta','alumno','departamento','municipio','nacionalidad'));
+        $deporte_adaptado = Deporte_Adoptado::find($atleta->deporte_adaptado_id);
+        $otro_programa = Otro_Programa::find($atleta->otro_programa_id);
+        $categoria = Categoria::find($atleta->categoria_id);
+        $etapa_deportiva = Etapa_Deportiva::find($atleta->etapa_deportiva_id);
+        $linea_desarrollo = Linea_Desarrollo::find($atleta->linea_desarrollo_id);
+        $prt = PRT::find($atleta->prt_id);
+        $modalidad = Modalidad::find($atleta->modalidad_id);
+        $centro = Centro::find($atleta->centro_id);
+        $entrenador = Entrenador::find($atleta->entrenador_id);
+        return view('Atletas.show', compact('atleta','alumno','departamento','municipio','nacionalidad','deporte_adaptado','otro_programa','categoria',
+        'etapa_deportiva','linea_desarrollo','prt','modalidad','centro','entrenador'));
     }
 
     /**

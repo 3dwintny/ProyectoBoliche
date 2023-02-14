@@ -147,28 +147,88 @@
                                 </div>
                                 <h5 class="mb-2">Información deportiva</h5>
                                 <div class="row">
-                                    <div class="col-md-5 mb-2">
-                                        <div class="input-group mb-2">
-                                            <span class="input-group-text" id="inputGroup-sizing-sm">Fecha de ingreso</span>
-                                            <input type="text" class="container form-control text-center" value="{{Carbon\Carbon::parse($atleta->fecha_ingreso)->format('d-m-Y')}}" readonly>
+                                    <div class="col-md-3 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Años') }}" id="fechaIngreso" type="text" value="{{Carbon\Carbon::parse($atleta->fecha_ingreso)->format('d-m-Y')}}" readonly style="background-color: white;">
+                                            <label for="fechaIngreso">Ingreso</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 mb-2">
+                                    <div class="col-md-3 mb-2">
                                         <div class="form-floating">
                                             <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Años') }}" id="anios" type="text" value="{{ $atleta->anios }}" readonly style="background-color: white;">
-                                            <label for="anios">Años</label>
+                                            <label for="anios">Años de exp.</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 mb-2">
+                                    <div class="col-md-3 mb-2">
                                         <div class="form-floating">
                                             <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Meses') }}" id="meses" type="text" value="{{ $atleta->meses }}" readonly style="background-color: white;">
-                                            <label for="meses">Meses</label>
+                                            <label for="meses">Meses de exp.</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Federado') }}" id="federado" type="text" value="{{ $atleta->federado }}" readonly style="background-color: white;">
+                                            <label for="federado">Federado</label>
                                         </div>
                                     </div>
                                     <div class="col-md-3 mb-2">
                                         <div class="form-floating">
                                             <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Adaptado') }}" id="adaptado" type="text" value="{{ $atleta->adaptado }}" readonly style="background-color: white;">
                                             <label for="adaptado">Adaptado</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Deporte Adaptado') }}" id="deporteAdaptado" type="text" value="{{ $deporte_adaptado->nombre }}" readonly style="background-color: white;">
+                                            <label for="deporteAdaptado">Deporte Adaptado</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Otro Programa de Atención') }}" id="otro" type="text" value="{{ $otro_programa->nombre }}" readonly style="background-color: white;">
+                                            <label for="otro">Otro Programa de Atención</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Categoria') }}" id="categoria" type="text" value="{{ $categoria->tipo }}" readonly style="background-color: white;">
+                                            <label for="categoria">Categoria</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Etapa Deportiva') }}" id="etapa_deportiva" type="text" value="{{ $etapa_deportiva->nombre }}" readonly style="background-color: white;">
+                                            <label for="etapa_deportiva">Etapa Deportiva</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('PRT') }}" id="prt" type="text" value="{{ $prt->nombre }}" readonly style="background-color: white;">
+                                            <label for="prt">PRT</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Línea de desarrollo ') }}" id="prt" type="text" value="{{ $linea_desarrollo->tipo }}" readonly style="background-color: white;">
+                                            <label for="prt">Línea de desarrollo</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Entrenador') }}" id="entrenador" type="text" value="{{ $entrenador->nombre1 }} {{ $entrenador->nombre2 }} {{ $entrenador->nombre3 }} {{ $entrenador->apellido1 }} {{ $entrenador->apellido2 }} {{ $entrenador->apellido_casada }}" readonly style="background-color: white;">
+                                            <label for="entrenador">Entrenador</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Centro de entrenamiento') }}" id="centro" type="text" value="{{ $centro->nombre }}" readonly style="background-color: white;">
+                                            <label for="centro">Centro de entrenamiento</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-floating">
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Modalidad') }}" id="modalidad" type="text" value="{{ $modalidad->nombre }}" readonly style="background-color: white;">
+                                            <label for="modalidad">Modalidad</label>
                                         </div>
                                     </div>
                                 </div>
