@@ -9,6 +9,9 @@ class Deporte_Adoptado extends Model
 {
     use HasFactory;
     protected $table = "deporte_adaptado";
-protected $fillable = ['id','nombre','created_at','updated_at'];
+    protected $fillable = ['id','nombre','created_at','updated_at'];
 
+    public function atletas(){
+        return $this->hasMany('App\Models\Atleta');
+    }
 }

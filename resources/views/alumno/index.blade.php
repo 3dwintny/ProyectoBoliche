@@ -60,6 +60,7 @@
         @endforeach
       </tbody>
     </table>
+    {{$alumnos->links('vendor.pagination.custom')}}
   </div>
 </div>
 @include('layouts.footers.auth')

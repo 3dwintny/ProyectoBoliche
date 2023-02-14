@@ -33,7 +33,7 @@
                     <!-- Para segir viendo el nombre del placeholder -->
                     <div class="form-floating">
                         <select id="categorias" class="form-control" name="categorias" onchange="this.form.submit()">
-                            <option value="" selected></option>
+                            <option value="" selected disabled>Sin filtros</option>
                             @foreach($categoria as $item)
                             <option value="{{$item->id}}" {{$item->tipo == "N/A" ? 'disabled' : ''}}>{{$item->tipo}}</option>
                             @endforeach

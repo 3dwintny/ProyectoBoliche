@@ -7,7 +7,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Reporte de Asistencia de {{$mostrarMes}} de {{$mostrarAnioReporte}}</h1>
+                    <h1 class="text-white">Reporte de Asistencia de {{$mostrarMes}} de {{$obtenerAnio}}</h1>
                 </div>
             </div>
         </div>
@@ -52,8 +52,8 @@
                 <form method="GET" action="{{route('asistenciasPDF')}}" enctype="multipart/form-data" role="form" target="_blank">
                     @csrf
                     <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
-                    <input type="hidden" name="meses" id="meses" value="{{$m}}">
-                    <input type="hidden" name="anios" id="anios" value="{{$y}}">
+                    <input type="hidden" name="meses" id="meses" value="{{$obtenerMes}}">
+                    <input type="hidden" name="anios" id="anios" value="{{$obtenerAnio}}">
                 </form>
             </div>
         </div>
@@ -73,7 +73,7 @@
                                 <th>Género</th>
                                 <th>Categoría</th>
                                 <th>Modalidad</th>
-                                @for ($i=0;$i<count($fs);$i++) <th>{{$fs[$i]}}</th>
+                                @for ($i=0;$i<count($fechas);$i++) <th>{{Carbon\Carbon::parse($fechas[$i]->fecha)->format('d')}}</th>
                                     @endfor
                                     <th>Días Entrenados</th>
                                     <th>% de Asistencia</th>
@@ -92,20 +92,19 @@
                                 <!--Filas-->
                                 <td>
                                     <!--Columnas-->
-                                    {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}}
-                                    {{$item->atleta->alumno->nombre3}}
-                                    {{$item->atleta->alumno->apellido1}} {{$item->atleta->alumno->apellido2}}
+                                    {{$item->alumno->nombre1}} {{$item->alumno->nombre2}}
+                                    {{$item->alumno->nombre3}}
+                                    {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
                                 </td>
-                                <td>{{$item->atleta->alumno->edad}}</td>
-                                <td>{{$item->atleta->alumno->genero}}</td>
-                                <td>{{$item->atleta->categoria->tipo}}</td>
-                                <td>{{$item->atleta->modalidad->nombre}}</td>
-
-                                @for($i=$s;$i<count($fs)+$s;$i++) <td>{{$estado[$i]}}</td>
+                                <td>{{$item->alumno->edad}}</td>
+                                <td>{{$item->alumno->genero}}</td>
+                                <td>{{$item->categoria->tipo}}</td>
+                                <td>{{$item->modalidad->nombre}}</td>
+                                @for($i=$s;$i<count($fechas)+$s;$i++) <td>{{$estado[$i]}}</td>
                                     @endfor
-                                    <td>{{$contarDias[$c]}}</td>
-                                    <td>{{$promedio[$c]}}</td>
-                                    <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
+                                <td>{{$contarDias[$c]}}</td>
+                                <td>{{$promedio[$c]}}</td>
+                                <td>{{$item->etapa_deportiva->nombre}}</td>
                                 @php
                                     $contador++;
                                 @endphp
@@ -113,11 +112,12 @@
 
                             @php
                             $c=$c+1;
-                            $s=$s+count($fs)
+                            $s=$s+count($fechas)
                             @endphp
                             @endforeach
                         </tbody>
                     </table>
+                    {{$atleta->links('vendor.pagination.custom')}}
                 </div>
             </div>
         </div>

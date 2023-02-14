@@ -14,4 +14,8 @@ class Otro_Programa extends Model
     public function obtenerOtroProgramaById($id){
         return Otro_Programa::find($id);
     }
+
+    public function atletas(){
+        return $this->hasMany('App\Models\Atleta');
+    }
 }

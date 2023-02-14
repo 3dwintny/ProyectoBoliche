@@ -29,7 +29,7 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        $alumnos = Alumno::where('estado','Pendiente')->get();
+        $alumnos = Alumno::where('estado','Pendiente')->paginate(5);
         if(count($alumnos) > 0){
             return view('alumno.index', compact('alumnos'));
         }

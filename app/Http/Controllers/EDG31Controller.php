@@ -16,7 +16,7 @@ class EDG31Controller extends Controller
      */
     public function index()
     {
-        $atletas = Atleta::all();
+        $atletas = Atleta::where('estado','activo')->get();
         $etapa = Etapa_Deportiva::all();
 
         //FEDERADOS
@@ -1428,7 +1428,7 @@ class EDG31Controller extends Controller
 
     public function generarPDF()
     {
-        $atletas = Atleta::all();
+        $atletas = Atleta::where('estado','activo')->get();
         $etapa = Etapa_Deportiva::all();
 
         //FEDERADOS
@@ -2670,7 +2670,7 @@ class EDG31Controller extends Controller
         $fauditivos = $auditivos[0]+$auditivos[2]+$auditivos[4]+$auditivos[6]+$auditivos[8];
         $mauditivos = $auditivos[1]+$auditivos[3]+$auditivos[5]+$auditivos[7]+$auditivos[9];
 
-        $totalAdaptados=$fauditivos+$truedas+$tamputados+$tparalisis+$tsindrome+$tintelecto+$tvisuales;
+        $totalAdaptados=$tauditivos+$truedas+$tamputados+$tparalisis+$tsindrome+$tintelecto+$tvisuales;
         $totalMasculinosAdaptados=$mauditivos+$mruedas+$mamputados+$mparalisis+$msindrome+$mintelecto+$mvisuales;
         $totalFemeninosAdaptados=$fauditivos+$fruedas+$famputados+$fparalisis+$fsindrome+$fintelecto+$fvisuales;
 

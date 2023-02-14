@@ -15,6 +15,7 @@
 </div>
 <div class="container">
   <div class="pt-md-2 pb-4 pt-5">
+    @include('components.flash_alerts')
       <table class="table table-responsive">
         <thead class="table-dark" style="border-radius: 5px;">
           <tr>
@@ -55,6 +56,13 @@
                 <input type="hidden" name="e" id="e" value="{{$idEntrenador}}">
               </form>
             </td>
+            <td>
+              <form action="{{route('entrenadores.destroy',$entrenador->id)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return eliminarEntrenador('Eliminar Entrenador')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              </form>
+            </td>
           </tr>
           @php
             $contador++;
@@ -67,6 +75,11 @@
 </div>
 @include('layouts.footers.auth')
 </div>
+<script type="text/javascript">
+  function eliminarEntrenador(value){
+      action = confirm(value) ? true : event.preventDefault();
+  }
+</script>
 @endsection
 
 @push('js')

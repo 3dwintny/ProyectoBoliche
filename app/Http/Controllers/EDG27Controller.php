@@ -15,7 +15,7 @@ class EDG27Controller extends Controller
      */
     public function index()
     {
-        $atletas = Atleta::where('federado','SISTEMÁTICO')->get();
+        $atletas = Atleta::where('federado','SISTEMÁTICO')->where('estado','activo')->get();
         if(count($atletas)>0){
             return view('Reportes.edg27.show',compact('atletas'));
         }
@@ -92,7 +92,7 @@ class EDG27Controller extends Controller
 
     public function generarPDF()
     {
-        $atletas = Atleta::where('federado','SISTEMÁTICO')->get();
+        $atletas = Atleta::where('federado','SISTEMÁTICO')->where('estado','activo')->get();
         if(count($atletas)>0){
             return PDF::loadView('Reportes.edg27.pdf',compact('atletas'))->setPaper('8.5x11')->stream();
         }

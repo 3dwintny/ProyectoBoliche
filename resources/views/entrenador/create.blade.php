@@ -32,7 +32,7 @@
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('entrenadores.store')}}">
                     @csrf
                     <div class="form-group">
-                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{$hoy}}" readonly>
+                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{Carbon\Carbon::parse($hoy)->format('Y-m-d')}}" readonly>
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">

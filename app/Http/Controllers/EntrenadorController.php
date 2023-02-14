@@ -31,9 +31,8 @@ class EntrenadorController extends Controller
     public function index()
     {
 
-        $entrenadores = Entrenador::paginate();
-        return view('entrenador.index', compact('entrenadores'))
-            ->with('i', (request()->input('page', 1) - 1) * $entrenadores->perPage());
+        $entrenadores = Entrenador::where('estado','activo')->get();
+        return view('entrenador.index', compact('entrenadores'));
     }
 
     /**
@@ -143,6 +142,7 @@ class EntrenadorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Entrenador::find($id)->update(['estado' => 'inactivo']);
+        return redirect()->route('entrenadores.index')->with('message', 'Entrenador eliminado');;
     }
 }

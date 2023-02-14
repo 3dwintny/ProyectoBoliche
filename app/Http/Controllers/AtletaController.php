@@ -16,6 +16,10 @@ use App\Models\Deporte;
 use App\Models\Modalidad;
 use App\Models\PRT;
 use Hashids\Hashids;
+use Carbon\Carbon;
+use App\Models\Departamento;
+use App\Models\Municipio;
+use App\Models\Nacionalidad;
 
 class AtletaController extends Controller
 {
@@ -29,11 +33,121 @@ class AtletaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $atletas = Atleta::paginate();
-        return view('Atletas.index', compact('atletas'))
-            ->with('i', (request()->input('page', 1) - 1) * $atletas->perPage());
+        $buscarAtleta = $request->buscarNombre;
+        $filtrarCategoria = $request->filtroCategoria;
+        $categoria = Categoria::all();
+        if($buscarAtleta ==""){
+            if($filtrarCategoria==""){
+                $atletas = Atleta::where('estado','activo')->paginate(5);
+            }
+            else{
+                $atletas = Atleta::where('estado','activo')->where('categoria_id',$filtrarCategoria)->paginate(5);
+            }
+        }
+        else{
+            $indices = array();
+            $alumno = Alumno::get(['nombre1','nombre2','nombre3','apellido1','apellido2','id']);
+            for($i=0;$i<count($alumno);$i++){
+                if($buscarAtleta==$alumno[$i]->nombre1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                    array_push($indices,$alumno[$i]->id);
+                }
+                else{
+                    array_push($indices,0);
+                }
+            }
+            $atletas = Atleta::where('estado','activo')->wherein('alumno_id',$indices)->paginate(5);
+        }
+        //return $atletas;
+        return view('Atletas.index', compact('atletas','buscarAtleta','categoria','filtrarCategoria'));
     }
 
       /**
@@ -44,6 +158,7 @@ class AtletaController extends Controller
      */
     public function create($id)
     {
+        $hoy = Carbon::now(); 
         $centro=Centro::all();
         $entrenador= Entrenador::All();
         $alumnos = Alumno::all();
@@ -60,7 +175,7 @@ class AtletaController extends Controller
         $prt = PRT::all();
         return view('atletas.create',compact("centro","entrenador","alumnos","categoria","etapa",
                                             "deporteadaptado","otroprograma","lineadesarrollo",
-                                            "deporte","modalidad","prt"));
+                                            "deporte","modalidad","prt","hoy"));
         
 
                                             /*$municipios = DB::table('municipio')
@@ -81,9 +196,10 @@ class AtletaController extends Controller
         $deporte = Deporte::all();
         $modalidad = Modalidad::all();
         $prt = PRT::all();
+        $hoy = Carbon::now();
         return view('atletas.create',compact('alumno',"centro","entrenador","categoria","etapa",
         "deporteadaptado","otroprograma","lineadesarrollo",
-        "deporte","modalidad","prt"));
+        "deporte","modalidad","prt","hoy"));
     }
     
     /**
@@ -108,7 +224,12 @@ class AtletaController extends Controller
      */
     public function show($id)
     {
-        //
+        $atleta = Atleta::find($id);
+        $alumno = Alumno::find($atleta->alumno_id);
+        $departamento = Departamento::find($alumno->departamento_residencia_id);
+        $municipio = Municipio::find($alumno->municipio_residencia_id);
+        $nacionalidad = Nacionalidad::find($alumno->nacionalidad_id);
+        return view('Atletas.show', compact('atleta','alumno','departamento','municipio','nacionalidad'));
     }
 
     /**
@@ -163,6 +284,7 @@ class AtletaController extends Controller
      */
     public function destroy($id)
     {
-        
+        Atleta::find($id)->update(['estado' => 'inactivo']);
+        return redirect()->action([AtletaController::class,'index'])->with('message','Atleta eliminado');
     }
 }

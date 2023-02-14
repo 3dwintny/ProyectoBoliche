@@ -15,7 +15,7 @@ class EDG272Controller extends Controller
      */
     public function index()
     {
-        $atletas = Atleta::where('otro_programa_id',2)->get();
+        $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
         if(count($atletas)>0){
             return view('Reportes.edg272.show',compact('atletas'));
         }
@@ -92,7 +92,7 @@ class EDG272Controller extends Controller
 
     public function generarPDF()
     {
-        $atletas = Atleta::where('otro_programa_id',2)->get();
+        $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
         if(count($atletas)>0){
             return PDF::loadView('Reportes.edg272.pdf',compact('atletas'))->setPaper('8.5x11')->stream();
         }

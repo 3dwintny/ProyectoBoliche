@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Atleta</h1>
+                    <h1 class="text-white">Atletas</h1>
                 </div>
             </div>
         </div>
@@ -27,7 +27,6 @@
                         <strong>
                             <h3>Inscripción del atleta {{ $alumno->nombre1 }}</h3>
                         </strong>
-
                     </div>
                 </div>
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('ac_estado',$alumno->id)}}">
@@ -36,12 +35,12 @@
                         <div class="card">
                             <div class="card-body bg-light">
                             <div class="col-12 mb-2"><img src="{{ asset('storage/uploads/'.$alumno->foto) }}" class="img-thumbnail" alt="50" height="50" width="50"></div>
-                                <h5 class="mb-2">Información Adicional</h5>
+                                <h5 class="mb-2">Información adicional</h5>
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
                                         <div class="input-group mb-2">
                                             <span class="input-group-text" id="inputGroup-sizing-sm">Fecha de ingreso</span>
-                                            <input type="text" class=" container form-control text-center" name="fecha_ingreso" id="fecha_sistema" readonly>
+                                            <input type="text" class=" container form-control text-center" name="fecha_ingreso" value="{{Carbon\Carbon::parse($hoy)->format('Y-m-d')}}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-2">
