@@ -202,6 +202,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
 
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
+Route::resource('municipio',MunicipioController::class);
 Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
 Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
 Route::post('historiales', [TerapiaController::class, 'getHistorial'])->name('historiales');

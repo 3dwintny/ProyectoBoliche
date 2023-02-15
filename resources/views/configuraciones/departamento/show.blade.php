@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Categorías</h1>
+          <h1 class="text-white">Departamentos</h1>
         </div>
       </div>
     </div>
@@ -20,34 +20,32 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Categoría</th>
-          <th>Rango de Edades</th>
+          <th scope="col">Nombre</th>
         </tr>
       </thead>
       <tbody class="table-hover">
         @php
             $contador = 1;
         @endphp
-        @foreach ($categoria as $item)
+        @foreach ($departamento as $item)
         @php
           $hashid = new Hashids\Hashids();
-          $idCategoria = $hashid->encode($item->id);
+          $idDepartamento = $hashid->encode($item->id);
         @endphp
         <tr>
           <td>{{$contador}}</td>
-          <td>{{$item->tipo}}</td>
-          <td>{{$item->rango_edades}}</td>
+          <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('categoria.edit',$idCategoria)}}" method="GET">
+            <form action="{{route('departamentos.edit',$idDepartamento)}}" method="GET">
               <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idCategoria}}">
+              <input type="hidden" name="e" id="e" value="{{$idDepartamento}}">
             </form>
           </td>
           <td>
-            <form action="{{route('categoria.destroy',$item->id)}}" method="POST">
+            <form action="{{route('departamentos.destroy',$item->id)}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarCategoria('Eliminar Categoría')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarDepartamento('Eliminar Departamento')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php
@@ -57,11 +55,12 @@
         @endforeach
       </tbody>
     </table>
+    {{$departamento->links('vendor.pagination.custom')}}
   </div>
 </div>
 </div>
 <script>
-  function eliminarCategoria(value){
+  function eliminarDepartamento(value){
       action = confirm(value) ? true : event.preventDefault();
   }
 </script>

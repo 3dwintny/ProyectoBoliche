@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Departamento;
 use Hashids\Hashids;
+use Symfony\Component\ErrorHandler\Debug;
 
 class DepartamentoController extends Controller
 {
@@ -15,8 +16,8 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        $departamento = Departamento::where('estado','activo')->get();
-        return view('departamento.show',compact('departamento')); 
+        $departamento = Departamento::where('estado','activo')->paginate(6);
+        return view('configuraciones.departamento.show',compact('departamento')); 
     }
 
     /**
@@ -26,7 +27,7 @@ class DepartamentoController extends Controller
      */
     public function create()
     {
-        //
+        return view('configuraciones.departamento.create');
     }
 
     /**
@@ -59,9 +60,14 @@ class DepartamentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $departamento = Departamento::find($id);
+        return view('configuraciones.departamento.edit', compact('departamento'));
     }
 
     /**
@@ -73,7 +79,10 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $departamento = Departamento::find($id);
+        $departamento->fill($request->all());
+        $departamento->save();
+        return redirect()->action([DepartamentoController::class,'index']);
     }
 
     /**

@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Categorías</h1>
+                    <h1 class="text-white">Departamentos</h1>
                 </div>
             </div>
         </div>
@@ -25,24 +25,20 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar Categoría </h2>
+                            <h2>Registrar nuevo departamento</h2>
                         </strong>
+
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('categoria.update',$categoria->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('departamentos.store')}}">
                     @csrf
-                    {{method_field('PUT')}}
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="tipo" placeholder="Categoría" name="tipo" value="{{$categoria->tipo}}" required>
-                                <label for="tipo">Categoría</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="rango_edades" placeholder="Rango de Edades" name="rango_edades" value="{{$categoria->rango_edades}}">
-                                <label for="tipo">Rango de Edades</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Departamento" name="nombre" required>
+                                <label for="nombre">Departamento</label>
                             </div>
                             <div class="container">
-                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>
+                                <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                             </div>
                 </form>
 

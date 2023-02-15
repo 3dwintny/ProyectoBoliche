@@ -43,7 +43,94 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Categorías
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('categoria.create')}}'">
+                                <i class="fa fa-fw fa-light fa-plus"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
+                        </div>
+                        <div class="col-2 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('categoria.index') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Centros de Entrenamiento
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('centro.create')}}'">
+                                <i class="fa fa-fw fa-light fa-plus"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
+                        </div>
+                        <div class="col-2 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('centro.index') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+    <div class="row container mb-3">
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Departamentos
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('departamentos.create')}}'">
+                                <i class="fa fa-fw fa-light fa-plus"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
+                        </div>
+                        <div class="col-2 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('departamentos.index') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
@@ -79,36 +166,6 @@
                         <div class="col-6">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Categorías
-                                    <span class="text-success text-sm font-weight-bolder"></span>
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('categoria.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('categoria.index') }}'">
-                                <i class="fa fa-fw fa-eye"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row container mb-3">
-        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-            <div class="card bg-light">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="numbers">
-                                <h5 class="font-weight-bolder mb-0">
                                     Deportes Adaptados
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
@@ -130,7 +187,9 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    
+    <div class="row container mb-3">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
@@ -159,7 +218,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
@@ -182,8 +240,6 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row container mb-3">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
@@ -212,7 +268,9 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="row container mb-3">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
@@ -241,7 +299,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
@@ -250,6 +307,34 @@
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Modalidades
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('modalidad.create')}}'">
+                                <i class="fa fa-fw fa-light fa-plus"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
+                        </div>
+                        <div class="col-2 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('modalidad.index') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Municipios
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -449,6 +534,7 @@
             </div>
         </div>
     </div>
+
     <div class="row container mb-3">
         <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
             <div class="card bg-light">
@@ -470,34 +556,6 @@
                         </div>
                         <div class="col-2 text-end">
                             <button type="button" class="btn btn-dark" onclick="window.location='{{ route('tipo-de-contrato.index') }}'">
-                                <i class="fa fa-fw fa-eye"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-            <div class="card bg-light">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="numbers">
-                                <h5 class="font-weight-bolder mb-0">
-                                    Centros de Entrenamiento
-                                    <span class="text-success text-sm font-weight-bolder"></span>
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('centro.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('centro.index') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
