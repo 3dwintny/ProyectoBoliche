@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alergia;
+use App\Models\Control;
 use Hashids\Hashids;
 use Carbon\Carbon;
 
@@ -31,6 +32,9 @@ class AlergiaController extends Controller
     public function create()
     {
         $hoy = Carbon::now();
+        // $fecha = Carbon::now()->format('Y-m-d');
+        // $control = new Control(['Usuario'=> auth()->user()->name,'Descripcion'=>'Insertando datos en la tabla alergía','Fecha'=>$fecha]);
+        // $control->save();
         return view('configuraciones.alergia.create', compact("hoy"));
     }
 
@@ -42,6 +46,9 @@ class AlergiaController extends Controller
      */
     public function store(Request $request)
     {
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['Usuario'=> auth()->user()->name,'Descripcion'=>'Insertando datos en la tabla alergía','Fecha'=>$fecha]);
+        $control->save();
         $alergia = new Alergia($request->all());
         $alergia->save();
         return redirect()->action([AlergiaController::class,'index']);
