@@ -16,8 +16,8 @@ class MunicipioController extends Controller
      */
     public function index()
     {
-        $municipios = Municipio::where('estado','activo')->with('departamento')->get();
-        return view('municipio.show',compact('municipios')); 
+        $municipio = Municipio::where('estado','activo')->with('departamento')->paginate(6);
+        return view('configuraciones.municipio.show',compact('municipio')); 
     }
 
     /**
@@ -27,10 +27,8 @@ class MunicipioController extends Controller
      */
     public function create()
     {
-    
-        $departamentos = Departamento::all();
-        return view('municipio.create',compact("departamentos"));
-
+        $departamentos = Departamento::where('estado','activo')->get();
+        return view('configuraciones.municipio.create',compact("departamentos"));
     }
 
     /**
@@ -44,7 +42,6 @@ class MunicipioController extends Controller
         $municipios = new Municipio($request->all());
         $municipios->save();
         return redirect()->action([MunicipioController::class,'index']);
-
     }
 
     /**
@@ -64,9 +61,15 @@ class MunicipioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $municipio = Municipio::find($id);
+        $departamentos = Departamento::where('estado','activo')->get();
+        return view('configuraciones.municipio.edit',compact('municipio','departamentos'));
     }
 
     /**
@@ -78,7 +81,10 @@ class MunicipioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $municipio = Municipio::find($id);
+        $municipio->fill($request->all());
+        $municipio->save();
+        return redirect()->action([MunicipioController::class,'index']);
     }
 
     /**
@@ -89,6 +95,7 @@ class MunicipioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Municipio::find($id)->update(['estado' => 'inactivo']);
+        return redirect()->action([MunicipioController::class,'index']);
     }
 }

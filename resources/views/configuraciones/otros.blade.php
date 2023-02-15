@@ -340,13 +340,13 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('modalidad.create')}}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('municipio.create')}}'">
                                 <i class="fa fa-fw fa-light fa-plus"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder">Agregar</span>
                         </div>
                         <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('modalidad.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('municipio.index') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
