@@ -54,15 +54,23 @@
               </form>
         </div>
         
-        <div class="row mb-2">
-            <div class="col-2">
+        <div class="container">
                 <form method="GET" action="{{route('asistenciasPDF')}}" enctype="multipart/form-data" role="form" target="_blank">
                     @csrf
-                    <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
-                    <input type="hidden" name="meses" id="meses" value="{{$obtenerMes}}">
-                    <input type="hidden" name="anios" id="anios" value="{{$obtenerAnio}}">
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <div class="form-floating">
+                                <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Fecha de aprobación') }}" id="fechaAprobacion" type="date" name="fechaAprobacion" required>
+                                <label for="fechaAprobacion">Fecha de aprobación</label>
+                            </div>
+                        </div>
+                        <div class="col-md-1 mb-2">
+                            <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                        </div>
+                        <input type="hidden" name="meses" id="meses" value="{{$obtenerMes}}">
+                        <input type="hidden" name="anios" id="anios" value="{{$obtenerAnio}}">
+                    </div>
                 </form>
-            </div>
         </div>
 
         <div class="container">

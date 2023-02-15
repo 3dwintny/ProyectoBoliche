@@ -25,7 +25,7 @@ class CentroController extends Controller
      */
     public function index()
     {
-        $centro = Centro::with('departamento')->get();
+        $centro = Centro::where('estado','activo')->with('departamento')->get();
         return view('configuraciones.centro.show', compact('centro'));
     }
 
@@ -118,7 +118,8 @@ class CentroController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Centro::find($id)->update(['estado' => 'inactivo']);
+        return redirect()->action([CentroController::class,'index']);
     }
 
     public function mostrarHorarios($id, Request $request){

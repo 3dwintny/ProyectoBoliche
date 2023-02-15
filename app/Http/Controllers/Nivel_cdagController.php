@@ -20,7 +20,7 @@ class Nivel_cdagController extends Controller
      */
     public function index()
     {
-        $niveles = Nivel_cdag::all();
+        $niveles = Nivel_cdag::where('estado','activo')->get();
         return view('configuraciones.nivel_cdag.show', compact('niveles'));
     }
 
@@ -98,8 +98,7 @@ class Nivel_cdagController extends Controller
      */
     public function destroy($id)
     {
-        $nivel = Nivel_cdag::find($id);
-        $nivel->delete();
+        $nivel = Nivel_cdag::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([Nivel_cdagController::class,'index']);
     }
 }

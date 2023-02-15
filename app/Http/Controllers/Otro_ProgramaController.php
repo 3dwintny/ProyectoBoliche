@@ -20,7 +20,7 @@ class Otro_ProgramaController extends Controller
      */
     public function index()
     {
-        $programas = Otro_Programa::all();
+        $programas = Otro_Programa::where('estado','activo')->get();
         return view('configuraciones.otros_programas.show',compact('programas'));
     }
 
@@ -98,8 +98,7 @@ class Otro_ProgramaController extends Controller
      */
     public function destroy($id)
     {
-        $otro_programa = Otro_Programa::find($id);
-        $otro_programa->delete();
+        $otro_programa = Otro_Programa::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([Otro_ProgramaController::class,'index']);
     }
 }

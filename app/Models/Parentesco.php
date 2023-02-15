@@ -9,7 +9,7 @@ class Parentesco extends Model
 {
     use HasFactory;
     protected $table = "parentezco";
-    protected $fillable = ['id','tipo','created_at','updated_at'];
+    protected $fillable = ['id','tipo','created_at','updated_at','estado'];
 
     public function obtenerParentescoById($id){
         return Parentesco::find($id);

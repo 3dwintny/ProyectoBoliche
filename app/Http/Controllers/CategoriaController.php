@@ -21,7 +21,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categoria = Categoria::All();
+        $categoria = Categoria::where('estado','activo')->get();
         return view('configuraciones.categoria.show', compact("categoria"));
     }
 
@@ -99,8 +99,7 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        $categoria= Categoria::find($id);
-        $categoria->delete();
+        $categoria= Categoria::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([CategoriaController::class,'index']);
     }
 }

@@ -20,7 +20,7 @@ class Nivel_fadnController extends Controller
      */
     public function index()
     {
-        $niveles = Nivel_fadn::all();
+        $niveles = Nivel_fadn::where('estado','activo')->get();
         return view('configuraciones.nivel_fadn.show', compact('niveles'));
     }
 
@@ -98,8 +98,7 @@ class Nivel_fadnController extends Controller
      */
     public function destroy($id)
     {
-        $nivel = Nivel_fadn::find($id);
-        $nivel->delete();
+        $nivel = Nivel_fadn::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([Nivel_fadnController::class,'index']);
     }
 }

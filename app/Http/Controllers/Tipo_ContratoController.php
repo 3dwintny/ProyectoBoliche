@@ -20,7 +20,7 @@ class Tipo_ContratoController extends Controller
      */
     public function index()
     {
-        $tipos = Tipo_Contrato::all();
+        $tipos = Tipo_Contrato::where('estado','activo')->get();
         return view('configuraciones.tipos_contratos.show', compact('tipos'));
     }
 

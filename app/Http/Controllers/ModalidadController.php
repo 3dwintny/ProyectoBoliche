@@ -21,7 +21,7 @@ class ModalidadController extends Controller
      */
     public function index()
     {
-        $modalidad = Modalidad::all();
+        $modalidad = Modalidad::where('estado','activo')->get();
         return view('configuraciones.modalidad.show',compact('modalidad'));
     }
 
@@ -99,8 +99,7 @@ class ModalidadController extends Controller
      */
     public function destroy($id)
     {
-        $modalidad = Modalidad::find($id);
-        $modalidad->delete();
+        $modalidad = Modalidad::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([ModalidadController::class,'index']);
     }
 }

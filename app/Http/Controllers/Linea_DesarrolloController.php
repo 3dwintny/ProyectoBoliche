@@ -20,7 +20,7 @@ class Linea_DesarrolloController extends Controller
      */
     public function index()
     {
-        $lineaDesarrollo = Linea_Desarrollo::all();
+        $lineaDesarrollo = Linea_Desarrollo::where('estado','activo')->get();
         return view('configuraciones.linea_desarrollo.show',compact('lineaDesarrollo'));
     }
 
@@ -98,8 +98,7 @@ class Linea_DesarrolloController extends Controller
      */
     public function destroy($id)
     {
-        $lineaDesarrollo = Linea_Desarrollo::find($id);
-        $lineaDesarrollo->delete();
+        $lineaDesarrollo = Linea_Desarrollo::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
 }

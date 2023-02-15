@@ -20,7 +20,7 @@ class Etapa_DeportivaController extends Controller
      */
     public function index()
     {
-        $etapa = Etapa_Deportiva::all();
+        $etapa = Etapa_Deportiva::where('estado','activo')->get();
         return view('configuraciones.etapadep.show',compact('etapa'));
     }
 
@@ -98,8 +98,7 @@ class Etapa_DeportivaController extends Controller
      */
     public function destroy($id)
     {
-        $etapa = Etapa_Deportiva::find($id);
-        $etapa->delete();
+        $etapa = Etapa_Deportiva::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([Etapa_DeportivaController::class,'index']);
     }
 }

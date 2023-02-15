@@ -247,6 +247,7 @@ class AsistenciaController extends Controller
 
     public function generarPDF(Request $request)
     {
+        $aprobacion = $request->fechaAprobacion;
         $obtenerMes = $request->meses;
         $obtenerAnio = $request->anios;
         $hoy = Carbon::now();
@@ -361,7 +362,7 @@ class AsistenciaController extends Controller
         }
         return PDF::setOptions(['enable_remote' => true,
         'chroot'  => public_path('storage/uploads'),])
-        ->loadView('Reportes.RepFor30.pdf',compact('atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes'))
+        ->loadView('Reportes.RepFor30.pdf',compact('atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion'))
         ->setPaper('8.5x14', 'landscape')
         ->stream();
     }

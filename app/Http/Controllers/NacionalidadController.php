@@ -20,7 +20,7 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
-        $nacionalidad = Nacionalidad::all();
+        $nacionalidad = Nacionalidad::where('estado','activo')->get();
         return view('configuraciones.nacionalidad.show',compact('nacionalidad'));
     }
 
@@ -97,8 +97,7 @@ class NacionalidadController extends Controller
      */
     public function destroy($id)
     {
-        $nacionalidad = Nacionalidad::find($id);
-        $nacionalidad->delete();
+        $nacionalidad = Nacionalidad::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([NacionalidadController::class,'index']);
     }
 }

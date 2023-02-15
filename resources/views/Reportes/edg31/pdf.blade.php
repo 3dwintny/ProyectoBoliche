@@ -399,13 +399,13 @@
     <br>
     <div id="contenedor2">
         <div id="fadn">
-            <strong>FEDERACIÓN/ASOCIACIÓN:</strong>_______________________
+            <strong>FEDERACIÓN/ASOCIACIÓN:</strong> {{$federacion->nombre}}
         </div>
         <div id="depto">
-            <strong>DEPARTAMENTO:</strong>_______________________
+            <strong>DEPARTAMENTO:</strong> {{$departamento->nombre}}
         </div>
         <div id="mes">
-            <strong>MES:</strong>______________<strong>2022</strong>
+            <strong>MES:</strong> {{$mostrarMes}}<strong> {{$anio}}</strong>
         </div>   
     </div>
     <br>
@@ -796,7 +796,7 @@
             </tr>
             <tr>
                 <th class="cuerpo fondoCelesteClaro tamanioFuente80 alto40">Persona que entrega</th>
-                <td class="cuerpo tamanioFuente80 textoCentrado" colspan="2">Romeo Danilo Calderón Santos</td>
+                <td class="cuerpo tamanioFuente80 textoCentrado" colspan="2">{{$entrega}}</td>
                 <th class="cuerpo" colspan="2"></th>
             </tr>
             <tr>

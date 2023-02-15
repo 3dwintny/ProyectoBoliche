@@ -11,7 +11,7 @@ class Centro extends Model
     protected $table = "centro";
 
     protected $fillable =['id','nombre','direccion','fecha_registro','institucion','accesibilidad',
-    'implementacion','espacio_fisico','departamento_id','created_at','updated_at'];
+    'implementacion','espacio_fisico','departamento_id','created_at','updated_at','estado'];
     public function departamento(){
         return $this->belongsTo('App\Models\Departamento');
     }

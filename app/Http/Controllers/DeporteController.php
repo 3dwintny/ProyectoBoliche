@@ -20,7 +20,7 @@ class DeporteController extends Controller
      */
     public function index()
     { 
-        $deporte = Deporte::all();
+        $deporte = Deporte::where('estado','activo')->get();
         return view('configuraciones.deporte.show',compact('deporte'));
     }
 
@@ -98,8 +98,7 @@ class DeporteController extends Controller
      */
     public function destroy($id)
     {
-        $deporte = Deporte::find($id);
-        $deporte->delete();
+        $deporte = Deporte::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([DeporteController::class,'index']);
     }
 }

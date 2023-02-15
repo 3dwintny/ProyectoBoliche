@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Departamento;
 use Hashids\Hashids;
 
 class DepartamentoController extends Controller
@@ -14,7 +15,8 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        //
+        $departamento = Departamento::where('estado','activo')->get();
+        return view('departamento.show',compact('departamento')); 
     }
 
     /**
@@ -35,7 +37,9 @@ class DepartamentoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $departamento = new Departamento($request->all());
+        $departamento->save();
+        return redirect()->action([DepartamentoController::class,'index']);
     }
 
     /**
@@ -80,6 +84,7 @@ class DepartamentoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Departamento::find($id)->update(['estado' => 'inactivo']);
+        return redirect()->action([DepartamentoController::class,'index']);
     }
 }

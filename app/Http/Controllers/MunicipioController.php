@@ -16,9 +16,8 @@ class MunicipioController extends Controller
      */
     public function index()
     {
-        $municipios = Municipio::with('departamento')->get();
+        $municipios = Municipio::where('estado','activo')->with('departamento')->get();
         return view('municipio.show',compact('municipios')); 
-
     }
 
     /**

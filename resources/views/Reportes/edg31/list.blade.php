@@ -17,9 +17,14 @@
         </div>
     </div>
 </div>
+<div class="container">
 <form method="GET" action="{{route('edg31PDF')}}" enctype="multipart/form-data" role="form" target="_blank">
     @csrf
-    <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+    <div class="row my-1">
+        <div class="col-md-1 mb-2">
+            <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+        </div>
+    </div>
 </form>
 <div class="card">
     <div class="col-xl-12 col-lg-12 ">
@@ -332,5 +337,6 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection

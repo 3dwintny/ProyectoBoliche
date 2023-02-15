@@ -20,7 +20,7 @@ class PRTController extends Controller
      */
     public function index()
     {
-        $prts = PRT::all();
+        $prts = PRT::where('estado','activo')->get();
         return view('configuraciones.prt.show', compact('prts'));
     }
 
@@ -98,8 +98,7 @@ class PRTController extends Controller
      */
     public function destroy($id)
     {
-        $prt = PRT::find($id);
-        $prt->delete();
+        $prt = PRT::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([PRTController::class,'index']);
     }
 }

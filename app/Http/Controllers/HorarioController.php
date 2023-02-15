@@ -20,7 +20,7 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        $horario = Horario::all();
+        $horario = Horario::where('estado','activo')->get();
         return view('configuraciones.horario.show', compact('horario'));
     }
 
@@ -98,8 +98,7 @@ class HorarioController extends Controller
      */
     public function destroy($id)
     {
-        $horario = Horario::find($id);
-        $horario->delete();
+        $horario = Horario::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([HorarioController::class,'index']);
     }
 }

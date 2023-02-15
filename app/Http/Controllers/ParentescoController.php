@@ -19,7 +19,7 @@ class ParentescoController extends Controller
      */
     public function index()
     {
-        $parentescos = Parentesco::all();
+        $parentescos = Parentesco::where('estado','activo')->get();
         return view('configuraciones.parentesco.show',compact("parentescos"));
 
     }
@@ -99,8 +99,7 @@ class ParentescoController extends Controller
      */
     public function destroy($id)
     {
-        $parentesco = Parentesco::find($id);
-        $parentesco->delete();
+        $parentesco = Parentesco::find($id)->update(['estado' => 'inactivo']);
         return redirect()->action([ParentescoController::class,'index']);
     }
 }
