@@ -44,7 +44,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('login') }}">
-                        <i class="ni ni-key-25"></i>
+                        <i class="fa fa-sign-in"></i>
                         <span class="nav-link-inner--text">{{ __('Ingresar') }}</span>
                     </a>
                 </li>

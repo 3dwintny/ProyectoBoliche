@@ -106,7 +106,7 @@
                 @can('seedEntrenador')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-entrenador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-time-alarm"></i>
+                        <i class="fa fa-stopwatch"></i>
                         <span class="nav-link-text text-dark">{{ __('Entrenador') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-entrenador">
