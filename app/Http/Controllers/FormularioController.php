@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Hashids\Hashids;
 use App\Models\Formulario;
+use App\Models\Control;
+use Carbon\Carbon;
 
 class FormularioController extends Controller
 {
@@ -85,6 +87,9 @@ class FormularioController extends Controller
         $formulario = $this->f->obtenerFormularioById($id);
         $formulario->fill($request->all());
         $formulario->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>16]);
+        $control->save();
         return redirect()->action([FormularioController::class,'index']);
     }
 

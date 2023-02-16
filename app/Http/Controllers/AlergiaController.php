@@ -32,9 +32,6 @@ class AlergiaController extends Controller
     public function create()
     {
         $hoy = Carbon::now();
-        // $fecha = Carbon::now()->format('Y-m-d');
-        // $control = new Control(['Usuario'=> auth()->user()->name,'Descripcion'=>'Insertando datos en la tabla alergía','Fecha'=>$fecha]);
-        // $control->save();
         return view('configuraciones.alergia.create', compact("hoy"));
     }
 
@@ -46,11 +43,11 @@ class AlergiaController extends Controller
      */
     public function store(Request $request)
     {
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['Usuario'=> auth()->user()->name,'Descripcion'=>'Insertando datos en la tabla alergía','Fecha'=>$fecha]);
-        $control->save();
         $alergia = new Alergia($request->all());
         $alergia->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>1]);
+        $control->save();
         return redirect()->action([AlergiaController::class,'index']);
     }
 
@@ -93,6 +90,9 @@ class AlergiaController extends Controller
         $alergia = Alergia::find($id);
         $alergia->fill($request->all());
         $alergia->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>1]);
+        $control->save();
         return redirect()->action([AlergiaController::class,'index']);
     }
 
@@ -104,8 +104,10 @@ class AlergiaController extends Controller
      */
     public function destroy($id)
     {
-        $alergia = Alergia::find($id);
-        $alergia->delete();
+        Alergia::find($id)->update(['estado'=>'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>1]);
+        $control->save();
         return redirect()->action([AlergiaController::class,'index']);
     }
 }

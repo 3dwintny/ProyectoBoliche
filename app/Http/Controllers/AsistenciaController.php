@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use PDF;
 use Hashids\Hashids;
 use App\Models\Categoria;
+use App\Models\Control;
 
 class AsistenciaController extends Controller
 {
@@ -166,7 +167,13 @@ class AsistenciaController extends Controller
                     'estado' => $estado[$i],
                 ];
                 DB::table('asistencia')->insert($informacion);
+                $fecha = Carbon::now()->format('Y-m-d');
+                $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>1]);
+                $control->save();
             }
+            $fecha = Carbon::now()->format('Y-m-d');
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>3]);
+            $control->save();
             return redirect()->action([AsistenciaController::class,'create'])->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
         }
         else{

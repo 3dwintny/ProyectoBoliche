@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Nivel_cdag;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class Nivel_cdagController extends Controller
 {
@@ -45,6 +46,9 @@ class Nivel_cdagController extends Controller
     {
         $nivel = new Nivel_cdag($request->all());
         $nivel->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>22]);
+        $control->save();
         return redirect()->action([Nivel_cdagController::class, 'index']);
     }
 
@@ -87,6 +91,9 @@ class Nivel_cdagController extends Controller
         $nivel = Nivel_cdag::find($id);
         $nivel ->fill($request->all());
         $nivel->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>22]);
+        $control->save();
         return redirect()->action([Nivel_cdagController::class,'index']);
     }
 
@@ -98,7 +105,10 @@ class Nivel_cdagController extends Controller
      */
     public function destroy($id)
     {
-        $nivel = Nivel_cdag::find($id)->update(['estado' => 'inactivo']);
+        Nivel_cdag::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>22]);
+        $control->save();
         return redirect()->action([Nivel_cdagController::class,'index']);
     }
 }

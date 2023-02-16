@@ -6,6 +6,7 @@ use App\Models\Etapa_Deportiva;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class Etapa_DeportivaController extends Controller
 {
@@ -45,6 +46,9 @@ class Etapa_DeportivaController extends Controller
     {
         $etapa = new Etapa_Deportiva($request->all());
         $etapa->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>15]);
+        $control->save();
         return redirect()->action([Etapa_DeportivaController::class, 'index']);
     }
 
@@ -87,6 +91,9 @@ class Etapa_DeportivaController extends Controller
         $etapa = Etapa_Deportiva::find($id);
         $etapa ->fill($request->all());
         $etapa->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>15]);
+        $control->save();
         return redirect()->action([Etapa_DeportivaController::class,'index']);
     }
 
@@ -98,7 +105,10 @@ class Etapa_DeportivaController extends Controller
      */
     public function destroy($id)
     {
-        $etapa = Etapa_Deportiva::find($id)->update(['estado' => 'inactivo']);
+        Etapa_Deportiva::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>15]);
+        $control->save();
         return redirect()->action([Etapa_DeportivaController::class,'index']);
     }
 }

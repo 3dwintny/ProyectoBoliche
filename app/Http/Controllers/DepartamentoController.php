@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Departamento;
 use Hashids\Hashids;
 use Symfony\Component\ErrorHandler\Debug;
+use App\Models\Control;
+use Carbon\Carbon;
 
 class DepartamentoController extends Controller
 {
@@ -40,6 +42,9 @@ class DepartamentoController extends Controller
     {
         $departamento = new Departamento($request->all());
         $departamento->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>7]);
+        $control->save();
         return redirect()->action([DepartamentoController::class,'index']);
     }
 
@@ -82,6 +87,9 @@ class DepartamentoController extends Controller
         $departamento = Departamento::find($id);
         $departamento->fill($request->all());
         $departamento->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>7]);
+        $control->save();
         return redirect()->action([DepartamentoController::class,'index']);
     }
 
@@ -94,6 +102,9 @@ class DepartamentoController extends Controller
     public function destroy($id)
     {
         Departamento::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>7]);
+        $control->save();
         return redirect()->action([DepartamentoController::class,'index']);
     }
 }

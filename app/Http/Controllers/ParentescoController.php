@@ -5,6 +5,7 @@ use App\Models\Parentesco;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class ParentescoController extends Controller
 {
@@ -45,6 +46,9 @@ class ParentescoController extends Controller
     {
         $parentescos = new Parentesco($request->all());
         $parentescos->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>25]);
+        $control->save();
         return redirect()->action([ParentescoController::class,'index']);
 
     }
@@ -88,6 +92,9 @@ class ParentescoController extends Controller
         $parentesco = Parentesco::find($id);
         $parentesco ->fill($request->all());
         $parentesco->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>25]);
+        $control->save();
         return redirect()->action([ParentescoController::class,'index']);
     }
 
@@ -99,7 +106,10 @@ class ParentescoController extends Controller
      */
     public function destroy($id)
     {
-        $parentesco = Parentesco::find($id)->update(['estado' => 'inactivo']);
+        Parentesco::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>25]);
+        $control->save();
         return redirect()->action([ParentescoController::class,'index']);
     }
 }

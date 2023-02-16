@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Municipio;
 use App\Models\Departamento;
 use Hashids\Hashids;
+use App\Models\Control;
+use Carbon\Carbon;
 
 class MunicipioController extends Controller
 {
@@ -41,6 +43,9 @@ class MunicipioController extends Controller
     {
         $municipios = new Municipio($request->all());
         $municipios->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>20]);
+        $control->save();
         return redirect()->action([MunicipioController::class,'index']);
     }
 
@@ -84,6 +89,9 @@ class MunicipioController extends Controller
         $municipio = Municipio::find($id);
         $municipio->fill($request->all());
         $municipio->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>20]);
+        $control->save();
         return redirect()->action([MunicipioController::class,'index']);
     }
 
@@ -96,6 +104,9 @@ class MunicipioController extends Controller
     public function destroy($id)
     {
         Municipio::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>20]);
+        $control->save();
         return redirect()->action([MunicipioController::class,'index']);
     }
 }

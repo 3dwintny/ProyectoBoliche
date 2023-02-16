@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\Nacionalidad;
+use App\Models\Control;
 
 class AtletaController extends Controller
 {
@@ -209,9 +210,12 @@ class AtletaController extends Controller
      */
     public function store(Request $request,$id)
     {
-        $alumno=Alumno::find($id)->update(['estado' => 'Inscrito']); 
+        Alumno::find($id)->update(['estado' => 'Inscrito']); 
         $atletas = new Atleta($request->all());
-        $atletas->save();  
+        $atletas->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>4]);
+        $control->save(); 
         return redirect()->action([AtletaController::class, 'index']);
     }
 
@@ -282,6 +286,9 @@ class AtletaController extends Controller
         $atletas = Atleta::find($id);
         $atletas->fill($request->all());
         $atletas->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>4]);
+        $control->save();
         return redirect()->action([AtletaController::class,'index']);
     }
 
@@ -294,6 +301,9 @@ class AtletaController extends Controller
     public function destroy($id)
     {
         Atleta::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>4]);
+        $control->save();
         return redirect()->action([AtletaController::class,'index'])->with('message','Atleta eliminado');
     }
 }

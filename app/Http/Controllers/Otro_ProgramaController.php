@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Otro_Programa;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class Otro_ProgramaController extends Controller
 {
@@ -45,6 +46,9 @@ class Otro_ProgramaController extends Controller
     {
         $programas = new Otro_Programa($request->all());
         $programas->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>24]);
+        $control->save();
         return redirect()->action([Otro_ProgramaController::class, 'index']);
     }
 
@@ -87,6 +91,9 @@ class Otro_ProgramaController extends Controller
         $otro_programa = Otro_Programa::find($id);
         $otro_programa ->fill($request->all());
         $otro_programa->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>24]);
+        $control->save();
         return redirect()->action([Otro_ProgramaController::class,'index']);
     }
 
@@ -98,7 +105,10 @@ class Otro_ProgramaController extends Controller
      */
     public function destroy($id)
     {
-        $otro_programa = Otro_Programa::find($id)->update(['estado' => 'inactivo']);
+        Otro_Programa::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>24]);
+        $control->save();
         return redirect()->action([Otro_ProgramaController::class,'index']);
     }
 }

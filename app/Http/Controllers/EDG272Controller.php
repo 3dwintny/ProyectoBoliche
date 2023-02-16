@@ -8,6 +8,7 @@ use PDF;
 use App\Models\Departamento;
 use App\Models\Deporte;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class EDG272Controller extends Controller
 {

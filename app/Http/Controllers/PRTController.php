@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PRT;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class PRTController extends Controller
 {
@@ -45,6 +46,9 @@ class PRTController extends Controller
     {
         $prt = new PRT($request->all());
         $prt->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>26]);
+        $control->save();
         return redirect()->action([PRTController::class, 'index']);
     }
 
@@ -87,6 +91,9 @@ class PRTController extends Controller
         $prt = PRT::find($id);
         $prt ->fill($request->all());
         $prt->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>26]);
+        $control->save();
         return redirect()->action([PRTController::class,'index']);
     }
 
@@ -98,7 +105,10 @@ class PRTController extends Controller
      */
     public function destroy($id)
     {
-        $prt = PRT::find($id)->update(['estado' => 'inactivo']);
+        PRT::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>26]);
+        $control->save();
         return redirect()->action([PRTController::class,'index']);
     }
 }

@@ -6,6 +6,7 @@ use App\Models\Psicologia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class PsicologiaController extends Controller
 {
@@ -45,6 +46,9 @@ class PsicologiaController extends Controller
     {
         $psicologo = new Psicologia($request->all());
         $psicologo->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>27]);
+        $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
     }
 
@@ -87,6 +91,9 @@ class PsicologiaController extends Controller
         $psicologo = Psicologia::find($id);
         $psicologo ->fill($request->all());
         $psicologo->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>27]);
+        $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
     }
 
@@ -99,6 +106,9 @@ class PsicologiaController extends Controller
     public function destroy($id)
     {
         Psicologia::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>27]);
+        $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
     }
 }

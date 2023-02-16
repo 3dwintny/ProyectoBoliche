@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Nivel_fadn;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class Nivel_fadnController extends Controller
 {
@@ -45,6 +46,9 @@ class Nivel_fadnController extends Controller
     {
         $nivel = new Nivel_fadn($request->all());
         $nivel->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>23]);
+        $control->save();
         return redirect()->action([Nivel_fadnController::class, 'index']);
     }
 
@@ -87,6 +91,9 @@ class Nivel_fadnController extends Controller
         $nivel = Nivel_fadn::find($id);
         $nivel ->fill($request->all());
         $nivel->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>23]);
+        $control->save();
         return redirect()->action([Nivel_fadnController::class,'index']);
     }
 
@@ -98,7 +105,10 @@ class Nivel_fadnController extends Controller
      */
     public function destroy($id)
     {
-        $nivel = Nivel_fadn::find($id)->update(['estado' => 'inactivo']);
+        Nivel_fadn::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>23]);
+        $control->save();
         return redirect()->action([Nivel_fadnController::class,'index']);
     }
 }

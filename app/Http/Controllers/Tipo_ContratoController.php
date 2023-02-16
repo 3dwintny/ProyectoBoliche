@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tipo_Contrato;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class Tipo_ContratoController extends Controller
 {
@@ -45,6 +46,9 @@ class Tipo_ContratoController extends Controller
     {
         $contratos = new Tipo_Contrato($request->all());
         $contratos->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>29]);
+        $control->save();
         return redirect()->action([Tipo_ContratoController::class, 'index']);
     }
 
@@ -87,6 +91,9 @@ class Tipo_ContratoController extends Controller
         $contratos = Tipo_Contrato::find($id);
         $contratos ->fill($request->all());
         $contratos->save();
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>29]);
+        $control->save();
         return redirect()->action([Tipo_ContratoController::class,'index']);
     }
 
@@ -98,8 +105,10 @@ class Tipo_ContratoController extends Controller
      */
     public function destroy($id)
     {
-        $contratos = Tipo_Contrato::find($id);
-        $contratos->delete();
+        Tipo_Contrato::find($id)->update(['estado' => 'inactivo']);
+        $fecha = Carbon::now()->format('Y-m-d');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>29]);
+        $control->save();
         return redirect()->action([Tipo_ContratoController::class,'index']);
     }
 }
