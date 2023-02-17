@@ -47,8 +47,7 @@ class ModalidadController extends Controller
     {
         $modalidad = new Modalidad($request->all());
         $modalidad->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>19]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>19]);
         $control->save();
         return redirect()->action([ModalidadController::class,'index']);
     }
@@ -92,8 +91,7 @@ class ModalidadController extends Controller
         $modalidad = Modalidad::find($id);
         $modalidad->fill($request->all());
         $modalidad->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>19]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>19]);
         $control->save();
         return redirect()->action([ModalidadController::class,'index']);
     }
@@ -107,9 +105,13 @@ class ModalidadController extends Controller
     public function destroy($id)
     {
         Modalidad::find($id)->update(['estado' => 'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>19]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>19]);
         $control->save();
         return redirect()->action([ModalidadController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',19)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

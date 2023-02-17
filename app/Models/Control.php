@@ -9,5 +9,9 @@ class Control extends Model
 {
     use HasFactory;
     protected $table = 'control';
-    protected $fillable = ['id','usario_id','Descripcion','Fecha','created_at','updated_at','tabla_accion_id'];
+    protected $fillable = ['id','usuario_id','Descripcion','created_at','updated_at','tabla_accion_id'];
+
+    public function usuario(){
+        return $this->belongsTo('App\Models\User');
+    }
 }

@@ -46,8 +46,7 @@ class Nivel_fadnController extends Controller
     {
         $nivel = new Nivel_fadn($request->all());
         $nivel->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>23]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>23]);
         $control->save();
         return redirect()->action([Nivel_fadnController::class, 'index']);
     }
@@ -91,8 +90,7 @@ class Nivel_fadnController extends Controller
         $nivel = Nivel_fadn::find($id);
         $nivel ->fill($request->all());
         $nivel->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>23]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>23]);
         $control->save();
         return redirect()->action([Nivel_fadnController::class,'index']);
     }
@@ -106,9 +104,13 @@ class Nivel_fadnController extends Controller
     public function destroy($id)
     {
         Nivel_fadn::find($id)->update(['estado' => 'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>23]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>23]);
         $control->save();
         return redirect()->action([Nivel_fadnController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',23)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

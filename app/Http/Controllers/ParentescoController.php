@@ -46,8 +46,7 @@ class ParentescoController extends Controller
     {
         $parentescos = new Parentesco($request->all());
         $parentescos->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>25]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>25]);
         $control->save();
         return redirect()->action([ParentescoController::class,'index']);
 
@@ -92,8 +91,7 @@ class ParentescoController extends Controller
         $parentesco = Parentesco::find($id);
         $parentesco ->fill($request->all());
         $parentesco->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>25]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>25]);
         $control->save();
         return redirect()->action([ParentescoController::class,'index']);
     }
@@ -107,9 +105,13 @@ class ParentescoController extends Controller
     public function destroy($id)
     {
         Parentesco::find($id)->update(['estado' => 'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>25]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>25]);
         $control->save();
         return redirect()->action([ParentescoController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',25)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

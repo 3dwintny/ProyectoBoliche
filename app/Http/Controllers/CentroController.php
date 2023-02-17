@@ -63,8 +63,8 @@ class CentroController extends Controller
                     'centro_id' => $centro_id,
                 ];
                 DB::table('centro_horario')->insert($informacion);
-                $fecha = Carbon::now()->format('Y-m-d');
-                $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>6]);
+    
+                $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>6]);
                 $control->save();
             }
         }
@@ -111,8 +111,7 @@ class CentroController extends Controller
         $centro = Centro::find($id);
         $centro ->fill($request->all());
         $centro->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>6]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>6]);
         $control->save();
         return redirect()->action([CentroController::class,'index']);
     }
@@ -126,8 +125,7 @@ class CentroController extends Controller
     public function destroy($id)
     {
         Centro::find($id)->update(['estado' => 'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>6]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>6]);
         $control->save();
         return redirect()->action([CentroController::class,'index']);
     }
@@ -212,5 +210,10 @@ class CentroController extends Controller
         else{
             return redirect()->back();
         }
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',6)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

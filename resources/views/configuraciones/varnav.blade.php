@@ -45,7 +45,7 @@
                     </div>
                     <div class="row">
                         <li class="nav-item">
-                            <a class="nav-link nav-link-icon" href="{{ route('otros') }}">
+                            <a class="nav-link nav-link-icon" href="{{ route('seguridad') }}">
                                 <i class="fa fa-lock"></i>
                                 <span class="nav-link-inner--text">{{ __('Seguridad') }}</span>
                             </a>

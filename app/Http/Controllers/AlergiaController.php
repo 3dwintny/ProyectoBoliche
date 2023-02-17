@@ -45,8 +45,7 @@ class AlergiaController extends Controller
     {
         $alergia = new Alergia($request->all());
         $alergia->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>1]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>1]);
         $control->save();
         return redirect()->action([AlergiaController::class,'index']);
     }
@@ -90,8 +89,7 @@ class AlergiaController extends Controller
         $alergia = Alergia::find($id);
         $alergia->fill($request->all());
         $alergia->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>1]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>1]);
         $control->save();
         return redirect()->action([AlergiaController::class,'index']);
     }
@@ -105,9 +103,13 @@ class AlergiaController extends Controller
     public function destroy($id)
     {
         Alergia::find($id)->update(['estado'=>'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>1]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>1]);
         $control->save();
         return redirect()->action([AlergiaController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',1)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

@@ -47,8 +47,7 @@ class CategoriaController extends Controller
     {
         $categoria = new Categoria($request->all());
         $categoria->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>5]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>5]);
         $control->save();
         return redirect()->action([CategoriaController::class, 'index']);
     }
@@ -92,8 +91,7 @@ class CategoriaController extends Controller
         $categoria = Categoria::find($id);
         $categoria->fill($request->all());
         $categoria->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>5]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>5]);
         $control->save();
         return redirect()->action([CategoriaController::class,'index']);
     }
@@ -107,9 +105,13 @@ class CategoriaController extends Controller
     public function destroy($id)
     {
         Categoria::find($id)->update(['estado' => 'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>5]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>5]);
         $control->save();
         return redirect()->action([CategoriaController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',5)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

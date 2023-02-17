@@ -163,8 +163,7 @@ class TerapiaController extends Controller
         }
         $terapias = new Terapia($request->all());
         $terapias->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>28]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>29]);
         $control->save();
         return redirect()->action([TerapiaController::class,'index']);
     }
@@ -224,8 +223,7 @@ class TerapiaController extends Controller
         $terapia = Terapia::find($id);
         $terapia ->fill($request->all());
         $terapia->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>28]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>29]);
         $control->save();
         return redirect()->action([TerapiaController::class,'index']);
     }
@@ -323,5 +321,10 @@ class TerapiaController extends Controller
         $atleta = Atleta::find($terapia->atleta_id);
         $paciente = Alumno::find($atleta->alumno_id);
         return view('psicologia.terapias.details', compact('terapia','paciente'));
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',29)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

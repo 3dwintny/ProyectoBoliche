@@ -2806,6 +2806,8 @@ class EDG31Controller extends Controller
         }
         $federacion = Deporte::find(1);
         $departamento = Departamento::find(13);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>12]);
+        $control->save();
         return PDF::loadView('Reportes.edg31.pdf',compact("s9","s11","s13","s16","s18","s21","sSF","sM",
         "tS9","f9","m9","tS11","f11","m11","tS13","f13","m13","tS16","f16","m16",
         "tS18","f18","m18","tS21","f21","m21","tSF","fF","mF","tM","fM","mM",
@@ -2819,5 +2821,10 @@ class EDG31Controller extends Controller
         "columnasOtros","totalFemeninosFederados","totalMasculinosFederados",
         "totalFederados","totalMasculinosOtros","totalFemeninosOtros","totalOtros",
         "totalFemeninosAdaptados","totalMasculinosAdaptados","totalAdaptados","entrega","anio","mostrarMes","federacion","departamento"))->setPaper('8.5x11')->stream();
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',12)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

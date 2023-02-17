@@ -72,8 +72,7 @@ class EntrenadorController extends Controller
             $entrenador->foto = $filename;
         }
         $entrenador->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>14]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>14]);
         $control->save();
         return redirect()->action([EntrenadorController::class, 'index']);
     }
@@ -141,8 +140,7 @@ class EntrenadorController extends Controller
             $entrenador->foto = $filename;
         }
         $entrenador->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>14]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
         $control->save();
         return redirect()->action([EntrenadorController::class,'index']);
     }
@@ -156,9 +154,13 @@ class EntrenadorController extends Controller
     public function destroy($id)
     {
         Entrenador::find($id)->update(['estado' => 'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>14]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>14]);
         $control->save();
         return redirect()->route('entrenadores.index')->with('message', 'Entrenador eliminado');;
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',14)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

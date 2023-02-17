@@ -167,12 +167,9 @@ class AsistenciaController extends Controller
                     'estado' => $estado[$i],
                 ];
                 DB::table('asistencia')->insert($informacion);
-                $fecha = Carbon::now()->format('Y-m-d');
-                $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>1]);
-                $control->save();
             }
-            $fecha = Carbon::now()->format('Y-m-d');
-            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>3]);
+
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>3]);
             $control->save();
             return redirect()->action([AsistenciaController::class,'create'])->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
         }
@@ -367,6 +364,8 @@ class AsistenciaController extends Controller
         if($antiguos == "true"){
             $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->get();
         }
+            $control = new Control(['usuario_id' => auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>3]);
+            $control->save();
         return PDF::setOptions(['enable_remote' => true,
         'chroot'  => public_path('storage/uploads'),])
         ->loadView('Reportes.RepFor30.pdf',compact('atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion'))
@@ -487,6 +486,11 @@ class AsistenciaController extends Controller
             $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->paginate(5);
         }
         return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes'));
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',3)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }
 

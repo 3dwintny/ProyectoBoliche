@@ -15,7 +15,7 @@
 @include('configuraciones.varnav')
 <div class="align-center">
     <div class="row container mb-3">
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -27,14 +27,8 @@
                                 </h5>
                             </div>
                         </div>
-                        <div class="col-4 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('alergia.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('alergia.index') }}'">
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesAlergia') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -43,11 +37,33 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Atletas
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesAtletas') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Categorías
@@ -56,13 +72,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('categoria.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('categoria.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesCategoria') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -71,26 +81,20 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Centros de Entrenamiento
+                                    Centros de entrenamiento
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('centro.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('centro.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesCentro') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -99,27 +103,20 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
-                                <h5 class="font-weight-bolder mb-0" style="font-size:120%;">
+                                <h5 class="font-weight-bolder mb-0">
                                     Departamentos
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('departamentos.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('departamentos.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesDepartamento') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -128,11 +125,33 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Deportes adaptados
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesAdaptado') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Deportes
@@ -141,13 +160,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('deporte.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('deporte.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesDeporte') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -156,26 +169,20 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Deportes Adaptados
+                                    EDG-27
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('deporte-adaptado.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('deporte-adaptado.index')}}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesEDG27') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -184,27 +191,20 @@
                 </div>
             </div>
         </div>
-        
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Etapas Deportivas
+                                    EDG-27.2
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('etapa-deportiva.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('etapa-deportiva.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesEDG272') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -213,20 +213,20 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Formulario de Inscripción
+                                    EDG-30
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('formulario-inscripcion.index') }}'">
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesAsistencia') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -235,11 +235,121 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    EDG-31
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesEDG31') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Encargados
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesEncargado') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Entrenadores
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesEntrenador') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Etapas deportivas
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesEtapa') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Formulario
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesFormulario') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Horarios
@@ -248,13 +358,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('horario.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('horario.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesHorario') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -263,27 +367,20 @@
                 </div>
             </div>
         </div>
-        
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Líneas de Desarrollo
+                                    Líneas de desarrollo
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('linea-de-desarrollo.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('linea-de-desarrollo.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesLinea') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -292,11 +389,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Modalidades
@@ -305,13 +402,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('modalidad.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('modalidad.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesModalidad') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -320,11 +411,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Municipios
@@ -333,13 +424,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('municipio.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('municipio.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesMunicipio') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -348,27 +433,20 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
-                                <h5 class="font-weight-bolder mb-0" style="font-size: 122%;">
+                                <h5 class="font-weight-bolder mb-0">
                                     Nacionalidades
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('nacionalidad.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('nacionalidad.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesNacionalidad') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -377,12 +455,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Niveles CDAG
@@ -391,13 +468,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('nivel-cdag.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('nivel-cdag.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesCDAG') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -406,12 +477,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Niveles FADN
@@ -420,13 +490,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('nivel-fadn.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('nivel-fadn.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesFADN') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -435,27 +499,20 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Otros Programas de Atención
+                                    Otros programas de atención
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('otro-programa-de-atencion.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('otro-programa-de-atencion.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesOtro') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -464,12 +521,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     Parentescos
@@ -478,13 +534,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('parentesco.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('parentesco.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesParentesco') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -493,12 +543,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
                                     PRT
@@ -507,13 +556,7 @@
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('prt.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('prt.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesPRT') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -522,27 +565,20 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-4 col-md-6 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Tipos de Contrato
+                                    Psicólogos
                                     <span class="text-success text-sm font-weight-bolder"></span>
                                 </h5>
                             </div>
                         </div>
                         <div class="col-3 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('tipo-de-contrato.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                            <span class="text-warning text-sm font-weight-bolder">Agregar</span>
-                        </div>
-                        <div class="col-2 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('tipo-de-contrato.index') }}'">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesPsicologia') }}'">
                                 <i class="fa fa-fw fa-eye"></i>
                             </button>
                             <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
@@ -551,5 +587,72 @@
                 </div>
             </div>
         </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Terapias
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesTerapia') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Tipos de contrato
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesContrato') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-sm-7 mb-xl-0 mb-4 my-1">
+            <div class="card bg-light">
+                <div class="card-body p-3">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="numbers">
+                                <h5 class="font-weight-bolder mb-0">
+                                    Usuarios
+                                    <span class="text-success text-sm font-weight-bolder"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-3 text-end">
+                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesUsuarios') }}'">
+                                <i class="fa fa-fw fa-eye"></i>
+                            </button>
+                            <span class="text-warning text-sm font-weight-bolder" style="text-align: left;">Ver</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

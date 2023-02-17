@@ -87,8 +87,7 @@ class FormularioController extends Controller
         $formulario = $this->f->obtenerFormularioById($id);
         $formulario->fill($request->all());
         $formulario->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>16]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>16]);
         $control->save();
         return redirect()->action([FormularioController::class,'index']);
     }
@@ -102,5 +101,10 @@ class FormularioController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',16)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

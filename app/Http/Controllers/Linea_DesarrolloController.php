@@ -46,8 +46,7 @@ class Linea_DesarrolloController extends Controller
     {
         $lineaDesarrollo = new Linea_Desarrollo($request->all());
         $lineaDesarrollo->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>18]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>18]);
         $control->save();
         return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
@@ -91,8 +90,7 @@ class Linea_DesarrolloController extends Controller
         $lineaDesarrollo = Linea_Desarrollo::find($id);
         $lineaDesarrollo->fill($request->all());
         $lineaDesarrollo->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>18]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>18]);
         $control->save();
         return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
@@ -106,9 +104,13 @@ class Linea_DesarrolloController extends Controller
     public function destroy($id)
     {
         Linea_Desarrollo::find($id)->update(['estado' => 'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>18]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>18]);
         $control->save();
         return redirect()->action([Linea_DesarrolloController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',18)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

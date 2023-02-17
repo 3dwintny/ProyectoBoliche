@@ -46,8 +46,7 @@ class NacionalidadController extends Controller
     {
         $nacionalidad = new Nacionalidad($request->all());
         $nacionalidad->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR','Fecha'=>$fecha, 'tabla_accion_id'=>21]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>21]);
         $control->save();
         return redirect()->action([NacionalidadController::class, 'index']);
     }
@@ -90,8 +89,7 @@ class NacionalidadController extends Controller
         $nacionalidad = Nacionalidad::find($id);
         $nacionalidad ->fill($request->all());
         $nacionalidad->save();
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR','Fecha'=>$fecha, 'tabla_accion_id'=>21]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>21]);
         $control->save();
         return redirect()->action([NacionalidadController::class,'index']);
     }
@@ -105,9 +103,13 @@ class NacionalidadController extends Controller
     public function destroy($id)
     {
         Nacionalidad::find($id)->update(['estado' => 'inactivo']);
-        $fecha = Carbon::now()->format('Y-m-d');
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR','Fecha'=>$fecha, 'tabla_accion_id'=>21]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>21]);
         $control->save();
         return redirect()->action([NacionalidadController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',21)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }
