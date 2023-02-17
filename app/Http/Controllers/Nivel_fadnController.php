@@ -111,6 +111,6 @@ class Nivel_fadnController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',23)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.nivel_fadn.control',compact('control'));
     }
 }

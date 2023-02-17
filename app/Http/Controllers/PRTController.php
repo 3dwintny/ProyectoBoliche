@@ -111,6 +111,6 @@ class PRTController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',26)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.prt.control',compact('control'));
     }
 }

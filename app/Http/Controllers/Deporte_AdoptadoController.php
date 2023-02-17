@@ -111,6 +111,6 @@ class Deporte_AdoptadoController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',8)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.deporte_a.control',compact('control'));
     }
 }

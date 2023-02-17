@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Etapas deportivas</h1>
+          <h1 class="text-white">Entrenadores</h1>
         </div>
       </div>
     </div>

@@ -111,6 +111,6 @@ class Tipo_ContratoController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',30)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.tipos_contratos.control',compact('control'));
     }
 }

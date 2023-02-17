@@ -109,6 +109,6 @@ class MunicipioController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',20)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.municipio.control',compact('control'));
     }
 }

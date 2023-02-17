@@ -112,6 +112,6 @@ class CategoriaController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',5)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.categoria.control',compact('control'));
     }
 }

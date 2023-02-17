@@ -111,6 +111,6 @@ class Nivel_cdagController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',22)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.nivel_cdag.control',compact('control'));
     }
 }

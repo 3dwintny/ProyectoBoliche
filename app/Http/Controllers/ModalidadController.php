@@ -112,6 +112,6 @@ class ModalidadController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',19)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.modalidad.control',compact('control'));
     }
 }

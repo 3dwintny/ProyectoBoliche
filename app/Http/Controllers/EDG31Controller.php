@@ -2825,6 +2825,6 @@ class EDG31Controller extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',12)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('Reportes.edg31.control',compact('control'));
     }
 }

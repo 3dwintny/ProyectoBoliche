@@ -76,7 +76,7 @@ class RegisteredUserController extends Controller
 
                 }
                 else{
-                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Atleta)');
+                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administración');
                 }
                 break;
             case 2:
@@ -105,7 +105,7 @@ class RegisteredUserController extends Controller
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
-                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Entrenador)');
+                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administración');
                 }
                 break;
             case 3:
@@ -134,7 +134,7 @@ class RegisteredUserController extends Controller
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
-                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administracion(Psicología)');
+                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administración');
                 }
                 break;
         }

@@ -111,6 +111,6 @@ class HorarioController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',17)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.horario.control',compact('control'));
     }
 }

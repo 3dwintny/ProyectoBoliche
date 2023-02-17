@@ -111,6 +111,6 @@ class Etapa_DeportivaController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',15)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.etapadep.control',compact('control'));
     }
 }

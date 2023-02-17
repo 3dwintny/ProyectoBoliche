@@ -213,7 +213,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('seguridad/edg-31',[EDG31Controller::class,'acciones'])->name('accionesEDG31');
     Route::get('seguridad/encargados',[EncargadoController::class,'acciones'])->name('accionesEncargado');
     Route::get('seguridad/entrenadores',[EntrenadorController::class,'acciones'])->name('accionesEntrenador');
-    Route::get('seguridad/etapa-deportiva',[EtapaDeportivaController::class,'acciones'])->name('accionesEtapa');
+    Route::get('seguridad/etapa-deportiva',[Etapa_DeportivaController::class,'acciones'])->name('accionesEtapa');
     Route::get('seguridad/formulario',[FormularioController::class,'acciones'])->name('accionesFormulario');
     Route::get('seguridad/horarios',[HorarioController::class,'acciones'])->name('accionesHorario');
     Route::get('seguridad/linea-de-desarrollo',[LineaDesarrolloController::class,'acciones'])->name('accionesLinea');

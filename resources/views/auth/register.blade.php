@@ -78,7 +78,7 @@
                                     </select>
                                 </div>
                             <div class="text-muted font-italic">
-                                <small>{{ __('password strength') }}: <span class="text-success font-weight-700">{{ __('strong') }}strong</span></small>
+                                <small>{{ __('password strength') }}: <span class="text-success font-weight-700">{{ __('strong') }}</span></small>
                             </div>
                             <div class="row my-4">
                                 <div class="col-12">

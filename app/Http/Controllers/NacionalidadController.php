@@ -110,6 +110,6 @@ class NacionalidadController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',21)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        return view('configuraciones.nacionalidad.control',compact('control'));
     }
 }
