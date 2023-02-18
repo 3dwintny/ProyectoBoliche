@@ -63,6 +63,11 @@ class EntrenadorController extends Controller
     public function store(Request $request)
     {
         $entrenador = new Entrenador($request->all());
+        $request->validate(
+            [
+                'cui'=>['unique:entrenador'],
+                'correo'=>['unique:entrenador']
+            ]);
         if($request->hasFile('foto'))
         {
             $file = $request->file('foto');

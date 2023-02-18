@@ -40,43 +40,43 @@
                             <div class="row">
                                 <div class="col-md-4 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Nombre') }}" id="nombre1" type="text" name="nombre1" value="{{ old('Primer Nombre') }}" required>
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Nombre') }}" id="nombre1" type="text" name="nombre1" value="{{ old('nombre1') }}" required>
                                         <label for="nombre1">Primer Nombre</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Segundo Nombre') }}" id="nombre2" type="text" name="nombre2" value="{{ old('Segundo Nombre') }}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Segundo Nombre') }}" id="nombre2" type="text" name="nombre2" value="{{ old('nombre2') }}">
                                         <label for="nombre2">Segundo Nombre</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Tercer Nombre') }}" id="nombre3" type="text" name="nombre3" value="{{ old('Tercer Nombre') }}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Tercer Nombre') }}" id="nombre3" type="text" name="nombre3" value="{{ old('nombre3') }}">
                                         <label for="nombre3">Tercer Nombre</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Apellido') }}" id="apellido1" type="text" name="apellido1" value="{{ old('Primer Apellido') }}" required>
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Apellido') }}" id="apellido1" type="text" name="apellido1" value="{{ old('apellido1') }}" required>
                                         <label for="apellido1">Primer Apellido</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Segundo Apellido') }}" id="apellido2" type="text" name="apellido2" value="{{ old('Segundo Apellido') }}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Segundo Apellido') }}" id="apellido2" type="text" name="apellido2" value="{{ old('apellido2') }}">
                                         <label for="apellido2">Segundo Apellido</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Apellido de Casada') }}" id="apellido_casada" type="text" name="apellido_casada" value="{{ old('Apellido de Casada') }}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Apellido de Casada') }}" id="apellido_casada" type="text" name="apellido_casada" value="{{ old('apellido_casada') }}">
                                         <label for="apellido_casada">Apellido de Casada</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input type="tel" name="celular"  id="celular" class="form-control text-dark" aria-describedby="basic-addon2" value="{{ old('Celular') }}" placeholder="{{ __('Celular') }}" pattern="[0-9]{4}[-][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
+                                        <input type="tel" name="celular"  id="celular" class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" value="{{old('celular')}}" pattern="[0-9]{4}[-][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
                                         <label for="celular">Celular</label>
                                     </div>
                                 </div>
@@ -87,9 +87,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="text" name="cui" value="{{ old('CUI') }}">
-                                        <label for="cui">CUI</label>
+                                    <div class="form-group{{ $errors->has('cui') ? ' has-danger' : '' }}">
+                                            <div class="form-floating">
+                                                <input class="form-control {{ $errors->has('cui') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="text" name="cui" value="{{ old('cui') }}" required>
+                                                <label for="cui">CUI</label>
+                                            </div>
+                                        
+                                        @if ($errors->has('cui'))
+                                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                                <strong>{{ $errors->first('cui') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
@@ -114,9 +122,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo') }}" id="correo" type="email" name="correo" value="{{ old('Correo') }}">
-                                        <label for="correo">Correo electrónico</label>
+                                    <div class="form-group{{ $errors->has('correo') ? ' has-danger' : '' }}">
+                                            <div class="form-floating">
+                                                <input class="form-control {{ $errors->has('correo') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo') }}" id="correo" type="email" name="correo" value="{{ old('correo') }}" required>
+                                                <label for="correo">Correo Electrónico</label>
+                                            </div>
+                                        
+                                        @if ($errors->has('correo'))
+                                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                                <strong>{{ $errors->first('correo') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
@@ -291,7 +307,6 @@
         $('#cui').on('keydown',function(){
             var obtenerCui = document.getElementById('cui');
             var codigo = event.which || event.keyCode;
-            console.log(codigo);
             if(obtenerCui.value.length <=14){
                 if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
                     if(obtenerCui.value.length<=4){
