@@ -132,7 +132,11 @@
                                     @endif
                                 </tbody>
                             </table>
-                            <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar Asistencia"></div>
+                            @if(count($atletas)==0)
+                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar Asistencia" disabled></div>
+                            @else
+                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar Asistencia"></div>
+                            @endif
                         </div>
                     </div>
                 </div>
