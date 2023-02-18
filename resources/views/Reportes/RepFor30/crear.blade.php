@@ -76,6 +76,11 @@
                                     $c = 0;
                                     $contador = 1;
                                     @endphp
+                                    @if(count($atletas)==0)
+                                    <tr>
+                                        <td colspan="9">SIN ATLETAS ASIGNADOS</td>
+                                    </tr>
+                                    @else
                                     @foreach($atletas as $item)
                                     <tr class="table-sm">
                                         <td>
@@ -124,6 +129,7 @@
                                     $contador++;
                                     @endphp
                                     @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                             <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar Asistencia"></div>

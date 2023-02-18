@@ -11,6 +11,7 @@ use PDF;
 use Hashids\Hashids;
 use App\Models\Categoria;
 use App\Models\Control;
+use App\Models\Entrenador;
 
 class AsistenciaController extends Controller
 {
@@ -85,8 +86,14 @@ class AsistenciaController extends Controller
      */
     public function create()
     {
+        $entrenador = Entrenador::where('correo', auth()->user()->email)->get();
         $categoria = Categoria::all();
-        $atletas = Atleta::where('estado', 'activo')->get();
+        if(count($entrenador)>0){
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',$entrenador[0]->id)->get();
+        }
+        else{
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->get();
+        }
         $hoy = Carbon::now();
         $categoria_id = 0;
         return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
@@ -242,9 +249,15 @@ class AsistenciaController extends Controller
     }
 
     public function filtroCategoria(Request $request){
+        $entrenador = Entrenador::where('correo', auth()->user()->email)->get();
         $categoria = Categoria::all();
         $categoria_id = $request->categorias;
-        $atletas = Atleta::where('categoria_id',$categoria_id)->where('estado','activo')->get();
+        if(count($entrenador)>0){
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',$entrenador[0]->id)->where('categoria_id',$categoria_id)->get();
+        }
+        else{
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->where('categoria_id',$categoria_id)->get();
+        }
         $hoy = Carbon::now();
         return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
     }
@@ -490,7 +503,7 @@ class AsistenciaController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',3)->with('usuario')->paginate(5);
-        return view('configuraciones.Asistencia.control',compact('control'));
+        return view('Reportes.RepFor30.control',compact('control'));
     }
 }
 

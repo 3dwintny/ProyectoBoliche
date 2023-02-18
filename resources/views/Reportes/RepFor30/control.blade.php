@@ -22,7 +22,7 @@
           <th scope="col">No</th>
           <th scope="col">Usuario</th>
           <th scope="col">Acción</th>
-          <th scope="col">Fecha</th>
+          <th scope="col">Fecha y hora</th>
         </tr>
       </thead>
       <tbody class="table-hover">
@@ -39,7 +39,7 @@
           <td>{{$contador}}</td>
           <td>{{$item->usuario->name}}</td>
           <td>{{$item->Descripcion}}</td>
-          <td>{{Carbon\Carbon::parse($item->Fecha)->format('d-m-Y')}}</td>
+          <td>{{Carbon\Carbon::parse($item->created_at)->format('d-m-Y')}} {{Carbon\Carbon::parse($item->created_at)->format('H:i:s')}}</td>
           @php
             $contador++;
           @endphp

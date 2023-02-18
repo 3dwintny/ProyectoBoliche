@@ -142,7 +142,7 @@ class EDG272Controller extends Controller
         $departamento = Departamento::find(13);
         $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
         if(count($atletas)>0){
-            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>11]);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>11]);
             $control->save();
             return PDF::loadView('Reportes.edg272.pdf',compact('atletas','mostrarMes','anio','federacion','departamento'))->setPaper('8.5x11')->stream();
         }

@@ -291,6 +291,8 @@ class TerapiaController extends Controller
         foreach ($atleta as $item){
             $alumno = Alumno::where('id',$item->alumno_id)->get();
         }
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>29]);
+        $control->save();
         return PDF::loadView('psicologia.terapias.pdf',['terapia' => $terapia,'alumno' => $alumno])->setPaper('8.5x11')->stream();
     }
 
