@@ -17,6 +17,8 @@ use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Console\View\Components\Alert;
 use Illuminate\Support\Facades\DB;
+use Validator;
+use Input\Input;
 
 class RegisteredUserController extends Controller
 {
@@ -28,7 +30,6 @@ class RegisteredUserController extends Controller
     public function create()
     {
         $roles = Role::all();
-       /*  $roles = Role::pluck('name','name')->all(); */
         return view('auth.register',compact("roles"));
     }
 
@@ -67,7 +68,6 @@ class RegisteredUserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        /* 'tipo_usuario_id' => $request->tipo_usuario_id, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -76,7 +76,8 @@ class RegisteredUserController extends Controller
 
                 }
                 else{
-                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administración');
+                    $contadorC = -1;
+                    return redirect()->action([RegisteredUserController::class,'create'])->with("contadorC",$contadorC)->withInput();
                 }
                 break;
             case 2:
@@ -97,7 +98,6 @@ class RegisteredUserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                       /*  'tipo_usuario_id' => $request->tipo_usuario_id, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -105,7 +105,8 @@ class RegisteredUserController extends Controller
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
-                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administración');
+                    $contadorC = -1;
+                    return redirect()->action([RegisteredUserController::class,'create'])->with("contadorC",$contadorC)->withInput();
                 }
                 break;
             case 3:
@@ -126,7 +127,6 @@ class RegisteredUserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        /* 'tipo_usuario_id' => $request->tipo_usuario_id, */
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -134,7 +134,8 @@ class RegisteredUserController extends Controller
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
-                    return redirect()->action([RegisteredUserController::class,'create'])->with('warning', 'Su correo no esta registrado en nuestra base de datos, porfavor comuniquese con administración');
+                    $contadorC = -1;
+                    return redirect()->action([RegisteredUserController::class,'create'])->with("contadorC",$contadorC)->withInput();
                 }
                 break;
         }

@@ -41,6 +41,11 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                                @if (session('contadorC')<0)
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>Su correo no está registrado en nuestra base de datos, porfavor comuníquese con administración</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -90,7 +95,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="text-center">
                                 <button type="submit" class="btn" style="background-color:#fba313;">{{ __('Crear Cuenta') }}</button>
                             </div>
