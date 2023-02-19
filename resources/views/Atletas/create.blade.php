@@ -61,7 +61,7 @@
                                             <label class="form-check-label" for="inlineRadio3">No</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-2 form-control">
+                                    <div class="col-md-4 mb-2 form-control">
                                         <label>¿Deporte adaptado?</label>
                                         <div class="form-check form-check-inline">
                                             <input type="radio" name="adaptado" id="deporteAdaptado">
@@ -72,13 +72,13 @@
                                             <label class="form-check-label" for="inlineRadio3">No</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-2 form-control">
+                                    <div class="col-md-4 mb-2 form-control">
                                         <div class="form-check form-check-inline">
                                             <input type="radio" name="otro" id="otroPrograma" disabled>
                                             <label class="form-check-label" for="inlineRadio3">Otro programa de atención</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-2">
+                                    <div class="col-md-4 mb-2">
                                         <div class="form-floating">
                                             <select name="estado_civil" id="estado_civil" class="form-control text-dark" required>
                                                 <option selected value=""></option>
@@ -93,7 +93,7 @@
                                             <label for="estado_civil">Estado civil</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-2">
+                                    <div class="col-md-4 mb-2">
                                         <div class="form-floating">
                                             <select name="etnia" class="form-control text-dark" id="etnia" required>
                                                 <option selected value=""></option>
