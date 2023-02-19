@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alergia;
+use App\Models\Control;
 use Hashids\Hashids;
 use Carbon\Carbon;
 
@@ -42,8 +43,13 @@ class AlergiaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => ['unique:alergia']
+        ]);
         $alergia = new Alergia($request->all());
         $alergia->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>1]);
+        $control->save();
         return redirect()->action([AlergiaController::class,'index']);
     }
 
@@ -86,6 +92,8 @@ class AlergiaController extends Controller
         $alergia = Alergia::find($id);
         $alergia->fill($request->all());
         $alergia->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>1]);
+        $control->save();
         return redirect()->action([AlergiaController::class,'index']);
     }
 
@@ -97,8 +105,14 @@ class AlergiaController extends Controller
      */
     public function destroy($id)
     {
-        $alergia = Alergia::find($id);
-        $alergia->delete();
+        Alergia::find($id)->update(['estado'=>'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>1]);
+        $control->save();
         return redirect()->action([AlergiaController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',1)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

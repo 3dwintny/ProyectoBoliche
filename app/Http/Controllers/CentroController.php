@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use App\Models\Centro;
 use App\Models\Departamento;
 use App\Models\Horario;
+use App\Models\Control;
 use Illuminate\Support\Facades\DB;
 
 class CentroController extends Controller
@@ -25,7 +26,7 @@ class CentroController extends Controller
      */
     public function index()
     {
-        $centro = Centro::with('departamento')->get();
+        $centro = Centro::where('estado','activo')->with('departamento')->get();
         return view('configuraciones.centro.show', compact('centro'));
     }
 
@@ -50,6 +51,9 @@ class CentroController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => ['unique:centro']
+        ]);
         $horario_id = $request->horario_id;
         $centro = new Centro($request->all());
         $centro->save();
@@ -62,6 +66,9 @@ class CentroController extends Controller
                     'centro_id' => $centro_id,
                 ];
                 DB::table('centro_horario')->insert($informacion);
+    
+                $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>6]);
+                $control->save();
             }
         }
         return redirect()->action([CentroController::class,'index']);
@@ -107,6 +114,8 @@ class CentroController extends Controller
         $centro = Centro::find($id);
         $centro ->fill($request->all());
         $centro->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>6]);
+        $control->save();
         return redirect()->action([CentroController::class,'index']);
     }
 
@@ -118,7 +127,10 @@ class CentroController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Centro::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>6]);
+        $control->save();
+        return redirect()->action([CentroController::class,'index']);
     }
 
     public function mostrarHorarios($id, Request $request){
@@ -201,5 +213,10 @@ class CentroController extends Controller
         else{
             return redirect()->back();
         }
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',6)->with('usuario')->paginate(5);
+        return view('configuraciones.Centro.control',compact('control'));
     }
 }

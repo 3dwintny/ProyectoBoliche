@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
+use App\Models\Control;
+use Carbon\Carbon;
 
 
 class UserController extends Controller
@@ -57,6 +59,8 @@ class UserController extends Controller
         $user = User::create($input);
         
         $user->assignRole($request -> input('roles'));
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>31]);
+        $control->save();
 
         return redirect()->route('usuarios.index');
 
@@ -84,7 +88,6 @@ class UserController extends Controller
         $user = User::find($id);
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
-
         return view('users.editar', compact('user', 'roles', 'userRole'));
     }
 
@@ -116,6 +119,8 @@ class UserController extends Controller
         DB::table('model_has_roles')->where('model_id',$id)->delete();
 
         $user->assignRole($request->input('roles'));
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>31]);
+        $control->save();
         return redirect()->route('usuarios.index');
     }
 
@@ -127,8 +132,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
         DB::table('users')->where('id',$id)->delete();
         return redirect()->route('usuarios.index');
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',31)->with('usuario')->paginate(5);
+        return view('users.control',compact('control'));
     }
 }

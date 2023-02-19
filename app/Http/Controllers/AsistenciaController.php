@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use PDF;
 use Hashids\Hashids;
 use App\Models\Categoria;
+use App\Models\Control;
+use App\Models\Entrenador;
 
 class AsistenciaController extends Controller
 {
@@ -84,8 +86,14 @@ class AsistenciaController extends Controller
      */
     public function create()
     {
+        $entrenador = Entrenador::where('correo', auth()->user()->email)->get();
         $categoria = Categoria::all();
-        $atletas = Atleta::where('estado', 'activo')->get();
+        if(count($entrenador)>0){
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',$entrenador[0]->id)->get();
+        }
+        else{
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->get();
+        }
         $hoy = Carbon::now();
         $categoria_id = 0;
         return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
@@ -167,6 +175,9 @@ class AsistenciaController extends Controller
                 ];
                 DB::table('asistencia')->insert($informacion);
             }
+
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>3]);
+            $control->save();
             return redirect()->action([AsistenciaController::class,'create'])->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
         }
         else{
@@ -238,15 +249,22 @@ class AsistenciaController extends Controller
     }
 
     public function filtroCategoria(Request $request){
+        $entrenador = Entrenador::where('correo', auth()->user()->email)->get();
         $categoria = Categoria::all();
         $categoria_id = $request->categorias;
-        $atletas = Atleta::where('categoria_id',$categoria_id)->where('estado','activo')->get();
+        if(count($entrenador)>0){
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',$entrenador[0]->id)->where('categoria_id',$categoria_id)->get();
+        }
+        else{
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->where('categoria_id',$categoria_id)->get();
+        }
         $hoy = Carbon::now();
         return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
     }
 
     public function generarPDF(Request $request)
     {
+        $aprobacion = $request->fechaAprobacion;
         $obtenerMes = $request->meses;
         $obtenerAnio = $request->anios;
         $hoy = Carbon::now();
@@ -359,9 +377,11 @@ class AsistenciaController extends Controller
         if($antiguos == "true"){
             $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->get();
         }
+            $control = new Control(['usuario_id' => auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>3]);
+            $control->save();
         return PDF::setOptions(['enable_remote' => true,
         'chroot'  => public_path('storage/uploads'),])
-        ->loadView('Reportes.RepFor30.pdf',compact('atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes'))
+        ->loadView('Reportes.RepFor30.pdf',compact('atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion'))
         ->setPaper('8.5x14', 'landscape')
         ->stream();
     }
@@ -479,6 +499,11 @@ class AsistenciaController extends Controller
             $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->paginate(5);
         }
         return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes'));
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',3)->with('usuario')->paginate(5);
+        return view('Reportes.RepFor30.control',compact('control'));
     }
 }
 

@@ -5,6 +5,7 @@ use App\Models\Parentesco;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class ParentescoController extends Controller
 {
@@ -19,7 +20,7 @@ class ParentescoController extends Controller
      */
     public function index()
     {
-        $parentescos = Parentesco::all();
+        $parentescos = Parentesco::where('estado','activo')->get();
         return view('configuraciones.parentesco.show',compact("parentescos"));
 
     }
@@ -43,8 +44,13 @@ class ParentescoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'tipo'=>['unique:parentezco'],
+        ]);
         $parentescos = new Parentesco($request->all());
         $parentescos->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>25]);
+        $control->save();
         return redirect()->action([ParentescoController::class,'index']);
 
     }
@@ -88,6 +94,8 @@ class ParentescoController extends Controller
         $parentesco = Parentesco::find($id);
         $parentesco ->fill($request->all());
         $parentesco->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>25]);
+        $control->save();
         return redirect()->action([ParentescoController::class,'index']);
     }
 
@@ -99,8 +107,14 @@ class ParentescoController extends Controller
      */
     public function destroy($id)
     {
-        $parentesco = Parentesco::find($id);
-        $parentesco->delete();
+        Parentesco::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>25]);
+        $control->save();
         return redirect()->action([ParentescoController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',25)->with('usuario')->paginate(5);
+        return view('configuraciones.parentesco.control',compact('control'));
     }
 }

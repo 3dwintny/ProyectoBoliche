@@ -6,6 +6,7 @@ use App\Models\Deporte_Adoptado;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class Deporte_AdoptadoController extends Controller
 {
@@ -20,7 +21,7 @@ class Deporte_AdoptadoController extends Controller
      */
     public function index()
     {
-        $deporte = Deporte_Adoptado::all();
+        $deporte = Deporte_Adoptado::where('estado','activo')->get();
         return view('configuraciones.deporte_a.show',compact('deporte'));
     }
 
@@ -43,8 +44,13 @@ class Deporte_AdoptadoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:deporte_adaptado'],
+        ]);
         $deporte = new Deporte_Adoptado($request->all());
         $deporte->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>8]);
+        $control->save();
         return redirect()->action([Deporte_AdoptadoController::class, 'index']);
     }
 
@@ -87,6 +93,8 @@ class Deporte_AdoptadoController extends Controller
         $deporte = Deporte_Adoptado::find($id);
         $deporte ->fill($request->all());
         $deporte->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>8]);
+        $control->save();
         return redirect()->action([Deporte_AdoptadoController::class,'index']);
     }
 
@@ -98,8 +106,14 @@ class Deporte_AdoptadoController extends Controller
      */
     public function destroy($id)
     {
-        $deporte = Deporte_Adoptado::find($id);
-        $deporte->delete();
+        Deporte_Adoptado::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>8]);
+        $control->save();
         return redirect()->action([Deporte_AdoptadoController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',8)->with('usuario')->paginate(5);
+        return view('configuraciones.deporte_a.control',compact('control'));
     }
 }

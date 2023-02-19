@@ -84,9 +84,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('alergias',AlergiaController::class);
 	//Rutas Asistencia
+    Route::get('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
     Route::resource('asistencias',AsistenciaController::class);
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
-    Route::post('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
 	Route::resource('alergia',AlergiaController::class);
     //Ruta Reporte EDG31
     Route::resource('edg-31',EDG31Controller::class);
@@ -163,6 +163,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('terapias',TerapiaController::class);
 
     //Rutas Tipo_Contrato
+    Route::get('detalles-de-terapia/{id}',[TerapiaController::class,'details'])->name('detallesTerapia');
     Route::resource('tipo-de-contrato',Tipo_ContratoController::class);
 
     //Rutas Tipo_Usuario
@@ -197,10 +198,42 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('conf', function () {return view('configuraciones.index');})->name('conf');
     Route::get('us', function () {return view('configuraciones.us');})->name('us');
     Route::get('otros', function () {return view('configuraciones.otros');})->name('otros');
+    Route::get('seguridad', function () {return view('configuraciones.seguridad');})->name('seguridad');
+    Route::get('seguridad/alergias',[AlergiaController::class,'acciones'])->name('accionesAlergia');
+    Route::get('seguridad/atletas',[AtletaController::class,'acciones'])->name('accionesAtletas');
+    Route::get('seguridad/asistencia',[AsistenciaController::class,'acciones'])->name('accionesAsistencia');
+    Route::get('seguridad/alumnos',[AlumnoController::class,'acciones'])->name('accionesAlumno');
+    Route::get('seguridad/categorias',[CategoriaController::class,'acciones'])->name('accionesCategoria');
+    Route::get('seguridad/centros',[CentroController::class,'acciones'])->name('accionesCentro');
+    Route::get('seguridad/departamentos',[DepartamentoController::class,'acciones'])->name('accionesDepartamento');
+    Route::get('seguridad/deporte-adaptado',[DeporteAdaptadoController::class,'acciones'])->name('accionesAdaptado');
+    Route::get('seguridad/deporte',[DeporteController::class,'acciones'])->name('accionesDeporte');
+    Route::get('seguridad/edg-27',[EDG27Controller::class,'acciones'])->name('accionesEDG27');
+    Route::get('seguridad/edg-272',[EDG272Controller::class,'acciones'])->name('accionesEDG272');
+    Route::get('seguridad/edg-31',[EDG31Controller::class,'acciones'])->name('accionesEDG31');
+    Route::get('seguridad/encargados',[EncargadoController::class,'acciones'])->name('accionesEncargado');
+    Route::get('seguridad/entrenadores',[EntrenadorController::class,'acciones'])->name('accionesEntrenador');
+    Route::get('seguridad/etapa-deportiva',[Etapa_DeportivaController::class,'acciones'])->name('accionesEtapa');
+    Route::get('seguridad/formulario',[FormularioController::class,'acciones'])->name('accionesFormulario');
+    Route::get('seguridad/horarios',[HorarioController::class,'acciones'])->name('accionesHorario');
+    Route::get('seguridad/linea-de-desarrollo',[LineaDesarrolloController::class,'acciones'])->name('accionesLinea');
+    Route::get('seguridad/modalidad',[ModalidadController::class,'acciones'])->name('accionesModalidad');
+    Route::get('seguridad/municipios',[MunicipioController::class,'acciones'])->name('accionesMunicipio');
+    Route::get('seguridad/nacionalidades',[NacionalidadController::class,'acciones'])->name('accionesNacionalidad');
+    Route::get('seguridad/niveles-cdag',[Nivel_cdagController::class,'acciones'])->name('accionesCDAG');
+    Route::get('seguridad/niveles-fadn',[Nivel_fadnController::class,'acciones'])->name('accionesFADN');
+    Route::get('seguridad/otros-programas-de-atencion',[Otro_ProgramaController::class,'acciones'])->name('accionesOtro');
+    Route::get('seguridad/parentescos',[ParentescoController::class,'acciones'])->name('accionesParentesco');
+    Route::get('seguridad/prt',[PRTController::class,'acciones'])->name('accionesPRT');
+    Route::get('seguridad/psicologia',[PsicologiaController::class,'acciones'])->name('accionesPsicologia');
+    Route::get('seguridad/terapias',[TerapiaController::class,'acciones'])->name('accionesTerapia');
+    Route::get('seguridad/tipos-de-contratos',[Tipo_ContratoController::class,'acciones'])->name('accionesContrato');
+    Route::get('seguridad/usuarios',[UserController::class,'acciones'])->name('accionesUsuarios');
     });
 
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
+Route::resource('municipio',MunicipioController::class);
 Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
 Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
 Route::post('historiales', [TerapiaController::class, 'getHistorial'])->name('historiales');

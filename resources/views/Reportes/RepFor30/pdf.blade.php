@@ -178,7 +178,7 @@
                 Código:<strong>EDG-FOR-30.</strong>
             </div>
             <div id="interno3">
-                Fecha de aprob: 00/00/0000
+                Fecha de aprob: {{Carbon\Carbon::parse($aprobacion)->format('d/m/Y')}}
             </div>
             <div id="interno4">
                 Versión: 1.
@@ -191,7 +191,7 @@
     <br>
     <div id="contenedor2">
         <div id="hoja"><strong>Hoja No.</strong>______________ de ______</div>
-        <div id="mesAnio"><strong>Mes y año a Reportar:</strong>______________ 2020</div>
+        <div id="mesAnio"><strong>Mes y año a Reportar:</strong> {{$mostrarMes}} {{$obtenerAnio}}</div>
     </div>
     <table class="anchoFull" cellpading=0 cellspacing=0>
         <thead>

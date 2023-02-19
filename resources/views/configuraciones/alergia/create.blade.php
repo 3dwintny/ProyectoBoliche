@@ -38,12 +38,20 @@
                         
                             <div class="card">
                                 <div class="card-body bg-light">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="nombre" placeholder="Alergia" name="nombre" required>
-                                        <label for="nombre">Alergia</label>
+                                    <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Alergia') }}" id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" required>
+                                            <label for="nombre">Alergia</label>
+                                        </div>
+                                            
+                                        @if ($errors->has('nombre'))
+                                            <span class="invalid-feedback" style="display: block;" role="alert">
+                                                <strong>{{ $errors->first('nombre') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="descripcion" placeholder="Descripçión" name="descripcion">
+                                        <input type="text" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion" value="{{old('descripcion')}}">
                                         <label for="descripcion">Descripción</label>
                                     </div>
                                     <div class="container">

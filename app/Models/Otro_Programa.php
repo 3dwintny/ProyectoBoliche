@@ -9,7 +9,7 @@ class Otro_Programa extends Model
 {
     use HasFactory;
     protected $table = "otro_programa";
-    protected $fillable =['id','nombre','created_at','updated_at'];
+    protected $fillable =['id','nombre','created_at','updated_at','estado'];
 
     public function obtenerOtroProgramaById($id){
         return Otro_Programa::find($id);

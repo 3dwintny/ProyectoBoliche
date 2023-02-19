@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Nacionalidad;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class NacionalidadController extends Controller
 {
@@ -20,7 +21,7 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
-        $nacionalidad = Nacionalidad::all();
+        $nacionalidad = Nacionalidad::where('estado','activo')->get();
         return view('configuraciones.nacionalidad.show',compact('nacionalidad'));
     }
 
@@ -43,8 +44,13 @@ class NacionalidadController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'descripcion'=>['unique:nacionalidad'],
+        ]);
         $nacionalidad = new Nacionalidad($request->all());
         $nacionalidad->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>21]);
+        $control->save();
         return redirect()->action([NacionalidadController::class, 'index']);
     }
 
@@ -86,6 +92,8 @@ class NacionalidadController extends Controller
         $nacionalidad = Nacionalidad::find($id);
         $nacionalidad ->fill($request->all());
         $nacionalidad->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>21]);
+        $control->save();
         return redirect()->action([NacionalidadController::class,'index']);
     }
 
@@ -97,8 +105,14 @@ class NacionalidadController extends Controller
      */
     public function destroy($id)
     {
-        $nacionalidad = Nacionalidad::find($id);
-        $nacionalidad->delete();
+        Nacionalidad::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>21]);
+        $control->save();
         return redirect()->action([NacionalidadController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',21)->with('usuario')->paginate(5);
+        return view('configuraciones.nacionalidad.control',compact('control'));
     }
 }

@@ -181,13 +181,13 @@
     <br>
     <div id="contenedor2">
         <div id="fadn">
-            <strong>FEDERACIÓN/ASOCIACIÓN:</strong>_______________________
+            <strong>FEDERACIÓN/ASOCIACIÓN:</strong> {{$federacion->nombre}}
         </div>
         <div id="depto">
-            <strong>DEPARTAMENTO:</strong>_______________________
+            <strong>DEPARTAMENTO:</strong> {{$departamento->nombre}}
         </div>
         <div id="mes">
-            <strong>MES:</strong>______________<strong>2022</strong>
+            <strong>MES:</strong> {{$mostrarMes}}<strong> {{$anio}}</strong>
         </div>   
     </div>
     <div id="espacio1"></div>

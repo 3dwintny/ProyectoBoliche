@@ -211,11 +211,54 @@
                                         <div class="card-body bg-light">
                                             <div class="row">
                                                 <div class="col-md-11"><h2>Información de encargados</h2></div>
-                                                <div class="col-md-1"><input type="submit" name="submit" class="submit btn btn-outline-warning" value="+"   data-toggle="tooltip" data-original-title="Agregar Encargado"/></div>
+                                                <div class="col-md-1"><input type="button" id="agregarEncargado" name="submit" class="submit btn btn-outline-warning" value="+"   data-toggle="tooltip" data-original-title="Agregar Encargado"/></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" type="text" name="nombre1p" value="{{ old('Primer nombre') }}" required>
+                                                    <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" type="text" name="nombre1p[]" value="{{ old('Primer nombre') }}" required>
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control text-dark" placeholder="{{ __('Segundo nombre') }}" type="text" name="nombre2p" value="{{ old('Segundo nombre') }}">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control text-dark" placeholder="{{ __('Tercer nombre') }}" type="text" name="nombre3p" value="{{ old('Tercer nombre') }}">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control text-dark" type="text" name="apellido1p" placeholder="Primer apellido" required>
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control text-dark" type="text" name="apellido2p" placeholder="Segundo apellido">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="apellido_casada" placeholder="Apellido de casada">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="direccionp" placeholder="Direccion" required>
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="celularp" placeholder="Celular" required>
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="telefono_casap" placeholder="Teléfono residencial">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="correop" placeholder="Correo electrónico">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control" type="text" name="dpi" placeholder="DPI" required>
+                                                </div>
+                                                <div class="col-md-12 mb-2">
+                                                    <select class="form-control" name="parentezco_id" required>
+                                                        <option selected disabled>Parentesco</option>
+                                                        @foreach ($parentezcos as $item)
+                                                        <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 mb-2">
+                                                    <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" type="text" name="nombre1p[]" id="nombre1p[]" value="{{ old('Primer nombre') }}" style="visibility:hidden;">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark" placeholder="{{ __('Segundo nombre') }}" type="text" name="nombre2p" value="{{ old('Segundo nombre') }}">
@@ -385,6 +428,18 @@
                     });
                 }
             });
+        });
+    });
+    $(document).ready(function() {
+        $('#agregarEncargado').on('click', function() {
+            if(document.getElementById('nombre1p[]').style.visibility == 'hidden'){
+                document.getElementById('nombre1p[]').style.visibility = 'visible';
+                document.getElementById('nombre1p[]').required = true;
+            }
+            else{
+                document.getElementById('nombre1p[]').style.visibility = 'hidden';
+                document.getElementById('nombre1p[]').required = false;
+            }
         });
     });
     date = new Date();

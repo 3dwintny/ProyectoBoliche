@@ -36,10 +36,12 @@
                         <i class="ni ni-single-02"></i>
                         <span>{{ __('Mi perfil') }}</span>
                     </a>
-                    <a href="#" class="dropdown-item">
+                    @can('configuraciones')
+                    <a href="{{route('otros')}}" class="dropdown-item">
                         <i class="ni ni-settings"></i>
                         <span>{{ __('Ajustes') }}</span>
                     </a>
+                    @endcan
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

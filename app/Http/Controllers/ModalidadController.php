@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Modalidad;
 use Hashids\Hashids;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class ModalidadController extends Controller
 {
@@ -21,7 +22,7 @@ class ModalidadController extends Controller
      */
     public function index()
     {
-        $modalidad = Modalidad::all();
+        $modalidad = Modalidad::where('estado','activo')->get();
         return view('configuraciones.modalidad.show',compact('modalidad'));
     }
 
@@ -44,8 +45,13 @@ class ModalidadController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:modalidad'],
+        ]);
         $modalidad = new Modalidad($request->all());
         $modalidad->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>19]);
+        $control->save();
         return redirect()->action([ModalidadController::class,'index']);
     }
 
@@ -88,6 +94,8 @@ class ModalidadController extends Controller
         $modalidad = Modalidad::find($id);
         $modalidad->fill($request->all());
         $modalidad->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>19]);
+        $control->save();
         return redirect()->action([ModalidadController::class,'index']);
     }
 
@@ -99,8 +107,14 @@ class ModalidadController extends Controller
      */
     public function destroy($id)
     {
-        $modalidad = Modalidad::find($id);
-        $modalidad->delete();
+        Modalidad::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>19]);
+        $control->save();
         return redirect()->action([ModalidadController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',19)->with('usuario')->paginate(5);
+        return view('configuraciones.modalidad.control',compact('control'));
     }
 }

@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Providers;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 // use Illuminate\Support\Facades\Gate;
 
 //use Illuminate\Auth\Access\Gate;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,5 +33,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::before(function ($user, $ability) {
             return $user->email == 'admin@gmail.com' ?? null;
         });
+ 
+        // ResetPassword::createUrlUsing(function ($user, string $token) {
+        //     return 'https://example.com/reset-password?token='.$token;
+        // });
     }
 }

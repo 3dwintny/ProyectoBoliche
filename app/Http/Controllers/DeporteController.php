@@ -6,6 +6,7 @@ use App\Models\Deporte;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class DeporteController extends Controller
 {
@@ -20,7 +21,7 @@ class DeporteController extends Controller
      */
     public function index()
     { 
-        $deporte = Deporte::all();
+        $deporte = Deporte::where('estado','activo')->get();
         return view('configuraciones.deporte.show',compact('deporte'));
     }
 
@@ -43,8 +44,13 @@ class DeporteController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => ['unique:deporte'],
+        ]);
         $deporte = new Deporte($request->all());
         $deporte->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>9]);
+        $control->save();
         return redirect()->action([DeporteController::class, 'index']);
     }
 
@@ -87,6 +93,8 @@ class DeporteController extends Controller
         $deporte = Deporte::find($id);
         $deporte ->fill($request->all());
         $deporte->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>9]);
+        $control->save();
         return redirect()->action([DeporteController::class,'index']);
     }
 
@@ -98,8 +106,14 @@ class DeporteController extends Controller
      */
     public function destroy($id)
     {
-        $deporte = Deporte::find($id);
-        $deporte->delete();
+        Deporte::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>9]);
+        $control->save();
         return redirect()->action([DeporteController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',9)->with('usuario')->paginate(5);
+        return view('configuraciones.deporte.control',compact('control'));
     }
 }

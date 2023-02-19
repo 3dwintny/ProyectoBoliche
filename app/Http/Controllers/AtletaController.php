@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\Nacionalidad;
+use App\Models\Control;
 
 class AtletaController extends Controller
 {
@@ -146,7 +147,6 @@ class AtletaController extends Controller
             }
             $atletas = Atleta::where('estado','activo')->wherein('alumno_id',$indices)->paginate(5);
         }
-        //return $atletas;
         return view('Atletas.index', compact('atletas','buscarAtleta','categoria','filtrarCategoria'));
     }
 
@@ -210,9 +210,11 @@ class AtletaController extends Controller
      */
     public function store(Request $request,$id)
     {
-        $alumno=Alumno::find($id)->update(['estado' => 'Inscrito']); 
+        Alumno::find($id)->update(['estado' => 'Inscrito']); 
         $atletas = new Atleta($request->all());
-        $atletas->save();  
+        $atletas->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>4]);
+        $control->save(); 
         return redirect()->action([AtletaController::class, 'index']);
     }
 
@@ -229,7 +231,17 @@ class AtletaController extends Controller
         $departamento = Departamento::find($alumno->departamento_residencia_id);
         $municipio = Municipio::find($alumno->municipio_residencia_id);
         $nacionalidad = Nacionalidad::find($alumno->nacionalidad_id);
-        return view('Atletas.show', compact('atleta','alumno','departamento','municipio','nacionalidad'));
+        $deporte_adaptado = Deporte_Adoptado::find($atleta->deporte_adaptado_id);
+        $otro_programa = Otro_Programa::find($atleta->otro_programa_id);
+        $categoria = Categoria::find($atleta->categoria_id);
+        $etapa_deportiva = Etapa_Deportiva::find($atleta->etapa_deportiva_id);
+        $linea_desarrollo = Linea_Desarrollo::find($atleta->linea_desarrollo_id);
+        $prt = PRT::find($atleta->prt_id);
+        $modalidad = Modalidad::find($atleta->modalidad_id);
+        $centro = Centro::find($atleta->centro_id);
+        $entrenador = Entrenador::find($atleta->entrenador_id);
+        return view('Atletas.show', compact('atleta','alumno','departamento','municipio','nacionalidad','deporte_adaptado','otro_programa','categoria',
+        'etapa_deportiva','linea_desarrollo','prt','modalidad','centro','entrenador'));
     }
 
     /**
@@ -273,6 +285,8 @@ class AtletaController extends Controller
         $atletas = Atleta::find($id);
         $atletas->fill($request->all());
         $atletas->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
+        $control->save();
         return redirect()->action([AtletaController::class,'index']);
     }
 
@@ -285,6 +299,12 @@ class AtletaController extends Controller
     public function destroy($id)
     {
         Atleta::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>4]);
+        $control->save();
         return redirect()->action([AtletaController::class,'index'])->with('message','Atleta eliminado');
+    }
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',4)->with('usuario')->paginate(5);
+        return view('Atletas.control',compact('control'));
     }
 }

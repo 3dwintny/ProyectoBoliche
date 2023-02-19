@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Nivel_fadn;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class Nivel_fadnController extends Controller
 {
@@ -20,7 +21,7 @@ class Nivel_fadnController extends Controller
      */
     public function index()
     {
-        $niveles = Nivel_fadn::all();
+        $niveles = Nivel_fadn::where('estado','activo')->get();
         return view('configuraciones.nivel_fadn.show', compact('niveles'));
     }
 
@@ -43,8 +44,13 @@ class Nivel_fadnController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'tipo'=>['unique:nivel_fadn'],
+        ]);
         $nivel = new Nivel_fadn($request->all());
         $nivel->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>23]);
+        $control->save();
         return redirect()->action([Nivel_fadnController::class, 'index']);
     }
 
@@ -87,6 +93,8 @@ class Nivel_fadnController extends Controller
         $nivel = Nivel_fadn::find($id);
         $nivel ->fill($request->all());
         $nivel->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>23]);
+        $control->save();
         return redirect()->action([Nivel_fadnController::class,'index']);
     }
 
@@ -98,8 +106,14 @@ class Nivel_fadnController extends Controller
      */
     public function destroy($id)
     {
-        $nivel = Nivel_fadn::find($id);
-        $nivel->delete();
+        Nivel_fadn::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>23]);
+        $control->save();
         return redirect()->action([Nivel_fadnController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',23)->with('usuario')->paginate(5);
+        return view('configuraciones.nivel_fadn.control',compact('control'));
     }
 }

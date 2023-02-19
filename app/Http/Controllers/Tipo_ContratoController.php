@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tipo_Contrato;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class Tipo_ContratoController extends Controller
 {
@@ -20,7 +21,7 @@ class Tipo_ContratoController extends Controller
      */
     public function index()
     {
-        $tipos = Tipo_Contrato::all();
+        $tipos = Tipo_Contrato::where('estado','activo')->get();
         return view('configuraciones.tipos_contratos.show', compact('tipos'));
     }
 
@@ -43,8 +44,13 @@ class Tipo_ContratoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'descripcion'=>['unique:tipo_contrato'],
+        ]);
         $contratos = new Tipo_Contrato($request->all());
         $contratos->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>30]);
+        $control->save();
         return redirect()->action([Tipo_ContratoController::class, 'index']);
     }
 
@@ -87,6 +93,8 @@ class Tipo_ContratoController extends Controller
         $contratos = Tipo_Contrato::find($id);
         $contratos ->fill($request->all());
         $contratos->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>30]);
+        $control->save();
         return redirect()->action([Tipo_ContratoController::class,'index']);
     }
 
@@ -98,8 +106,14 @@ class Tipo_ContratoController extends Controller
      */
     public function destroy($id)
     {
-        $contratos = Tipo_Contrato::find($id);
-        $contratos->delete();
+        Tipo_Contrato::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>30]);
+        $control->save();
         return redirect()->action([Tipo_ContratoController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',30)->with('usuario')->paginate(5);
+        return view('configuraciones.tipos_contratos.control',compact('control'));
     }
 }

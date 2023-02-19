@@ -48,8 +48,8 @@
           <td>
             <form action="{{route('psicologia.edit',$idPsicologo)}}" method="GET">
               @csrf
-              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
               <input type="hidden" name="e" id="e" value="{{$idPsicologo}}">
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
             </form>
           </td>
           <td>
@@ -66,6 +66,7 @@
         @endforeach
       </tbody>
     </table>
+    {{$psicologo->links('vendor.pagination.custom')}}
   </div>
 </div>
 </div>

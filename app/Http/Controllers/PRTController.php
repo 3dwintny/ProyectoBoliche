@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PRT;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class PRTController extends Controller
 {
@@ -20,7 +21,7 @@ class PRTController extends Controller
      */
     public function index()
     {
-        $prts = PRT::all();
+        $prts = PRT::where('estado','activo')->get();
         return view('configuraciones.prt.show', compact('prts'));
     }
 
@@ -43,8 +44,13 @@ class PRTController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:prt'],
+        ]);
         $prt = new PRT($request->all());
         $prt->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>26]);
+        $control->save();
         return redirect()->action([PRTController::class, 'index']);
     }
 
@@ -87,6 +93,8 @@ class PRTController extends Controller
         $prt = PRT::find($id);
         $prt ->fill($request->all());
         $prt->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>26]);
+        $control->save();
         return redirect()->action([PRTController::class,'index']);
     }
 
@@ -98,8 +106,14 @@ class PRTController extends Controller
      */
     public function destroy($id)
     {
-        $prt = PRT::find($id);
-        $prt->delete();
+        PRT::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>26]);
+        $control->save();
         return redirect()->action([PRTController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',26)->with('usuario')->paginate(5);
+        return view('configuraciones.prt.control',compact('control'));
     }
 }

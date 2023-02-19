@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Hashids\Hashids;
 use App\Models\Horario;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class HorarioController extends Controller
 {
@@ -20,7 +21,7 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        $horario = Horario::all();
+        $horario = Horario::where('estado','activo')->get();
         return view('configuraciones.horario.show', compact('horario'));
     }
 
@@ -45,6 +46,8 @@ class HorarioController extends Controller
     {
         $horario = new Horario($request->all());
         $horario->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>17]);
+        $control->save();
         return redirect()->back();
     }
 
@@ -87,6 +90,8 @@ class HorarioController extends Controller
         $horario = Horario::find($id);
         $horario->fill($request->all());
         $horario->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>17]);
+        $control->save();
         return redirect()->action([HorarioController::class,'index']);
     }
 
@@ -98,8 +103,14 @@ class HorarioController extends Controller
      */
     public function destroy($id)
     {
-        $horario = Horario::find($id);
-        $horario->delete();
+        Horario::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>17]);
+        $control->save();
         return redirect()->action([HorarioController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',17)->with('usuario')->paginate(5);
+        return view('configuraciones.horario.control',compact('control'));
     }
 }

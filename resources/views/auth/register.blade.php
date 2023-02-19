@@ -8,7 +8,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-6 col-md-8">
                 <div class="card bg-light shadow border-0">
-
+                    @include('components.flash_alerts')
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
                             <small>{{ __('Registrarse') }}</small>
@@ -41,6 +41,11 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                                @if (session('contadorC')<0)
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>Su correo no está registrado en nuestra base de datos, porfavor comuníquese con administración</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                                 <div class="input-group input-group-alternative">
@@ -70,7 +75,7 @@
                                         <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                                     </div>
                                     <select class="form-control" name="roles" id="roles" required autofocus>
-                                    <option selected disabled >Tipo de usuario</option>
+                                    <option selected disabled value="">Tipo de usuario</option>
                                     @foreach ($roles as $item){
                                     <option value="{{$item->id}}">{{$item->name}}</option>
                                             }
@@ -78,7 +83,7 @@
                                     </select>
                                 </div>
                             <div class="text-muted font-italic">
-                                <small>{{ __('password strength') }}: <span class="text-success font-weight-700">{{ __('strong') }}strong</span></small>
+                                <small>{{ __('password strength') }}: <span class="text-success font-weight-700">{{ __('strong') }}</span></small>
                             </div>
                             <div class="row my-4">
                                 <div class="col-12">
@@ -90,7 +95,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="text-center">
                                 <button type="submit" class="btn" style="background-color:#fba313;">{{ __('Crear Cuenta') }}</button>
                             </div>

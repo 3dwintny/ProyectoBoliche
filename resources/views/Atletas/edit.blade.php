@@ -59,7 +59,7 @@
                                                 <label class="form-check-label" for="inlineRadio3">Si</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input type="radio" name="federado" id="federado1" value="1">
+                                                <input type="radio" name="federado" id="federado1" value="No">
                                                 <label class="form-check-label" for="inlineRadio3">No</label>
                                             </div>
                                         @else

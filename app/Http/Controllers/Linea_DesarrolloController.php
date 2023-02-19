@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Hashids\Hashids;
 use App\Models\Linea_Desarrollo;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class Linea_DesarrolloController extends Controller
 {
@@ -20,7 +21,7 @@ class Linea_DesarrolloController extends Controller
      */
     public function index()
     {
-        $lineaDesarrollo = Linea_Desarrollo::all();
+        $lineaDesarrollo = Linea_Desarrollo::where('estado','activo')->get();
         return view('configuraciones.linea_desarrollo.show',compact('lineaDesarrollo'));
     }
 
@@ -43,8 +44,13 @@ class Linea_DesarrolloController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'tipo'=>['unique:linea_desarrollo'],
+        ]);
         $lineaDesarrollo = new Linea_Desarrollo($request->all());
         $lineaDesarrollo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>18]);
+        $control->save();
         return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
 
@@ -87,6 +93,8 @@ class Linea_DesarrolloController extends Controller
         $lineaDesarrollo = Linea_Desarrollo::find($id);
         $lineaDesarrollo->fill($request->all());
         $lineaDesarrollo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>18]);
+        $control->save();
         return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
 
@@ -98,8 +106,14 @@ class Linea_DesarrolloController extends Controller
      */
     public function destroy($id)
     {
-        $lineaDesarrollo = Linea_Desarrollo::find($id);
-        $lineaDesarrollo->delete();
+        Linea_Desarrollo::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>18]);
+        $control->save();
         return redirect()->action([Linea_DesarrolloController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',18)->with('usuario')->paginate(5);
+        return view('configuraciones.linea_desarrollo.control',compact('control'));
     }
 }

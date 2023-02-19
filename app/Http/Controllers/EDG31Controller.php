@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Atleta;
 use App\Models\Etapa_Deportiva;
+use App\Models\Deporte;
+use App\Models\Departamento;
 use PDF;
+use Carbon\Carbon;
+use App\Models\Control;
 
 class EDG31Controller extends Controller
 {
@@ -1430,6 +1434,7 @@ class EDG31Controller extends Controller
     {
         $atletas = Atleta::where('estado','activo')->get();
         $etapa = Etapa_Deportiva::all();
+        $entrega = auth()->user()->name;
 
         //FEDERADOS
         $s9=array();
@@ -2757,6 +2762,52 @@ class EDG31Controller extends Controller
         array_push($columnasOtros,$M36);
         array_push($columnasOtros,$F50);
         array_push($columnasOtros,$M50);
+        $fecha = Carbon::now();
+        $mes = Carbon::parse($fecha)->format('m');
+        $anio = Carbon::parse($fecha)->format('Y');
+        $mostrarMes = "";
+        switch ($mes){
+            case 1:
+                $mostrarMes = "Enero";
+                break;
+            case 2:
+                $mostrarMes = "Febrero";
+                break;
+            case 3:
+                $mostrarMes = "Marzo";
+                break;
+            case 4:
+                $mostrarMes = "Abril";
+                break;
+            case 5:
+                $mostrarMes = "Mayo";
+                break;
+            case 6:
+                $mostrarMes = "Junio";
+                break;
+            case 7:
+                $mostrarMes = "Julio";
+                break;
+            case 8:
+                $mostrarMes = "Agosto";
+                break;
+            case 9:
+                $mostrarMes = "Septiembre";
+                break;
+            case 10:
+                $mostrarMes = "Octubre";
+                break;
+            case 11:
+                $mostrarMes = "Noviembre";
+                break;
+            case 12:
+                $mostrarMes = "Diciembre";
+                break;
+        }
+        $federacion = Deporte::find(1);
+        $departamento = Departamento::find(13);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>12]);
+        $control->save();
         return PDF::loadView('Reportes.edg31.pdf',compact("s9","s11","s13","s16","s18","s21","sSF","sM",
         "tS9","f9","m9","tS11","f11","m11","tS13","f13","m13","tS16","f16","m16",
         "tS18","f18","m18","tS21","f21","m21","tSF","fF","mF","tM","fM","mM",
@@ -2769,6 +2820,11 @@ class EDG31Controller extends Controller
         "tauditivos","fauditivos","mauditivos","columnasFederados","columnasAdaptados",
         "columnasOtros","totalFemeninosFederados","totalMasculinosFederados",
         "totalFederados","totalMasculinosOtros","totalFemeninosOtros","totalOtros",
-        "totalFemeninosAdaptados","totalMasculinosAdaptados","totalAdaptados"))->setPaper('8.5x11')->stream();
+        "totalFemeninosAdaptados","totalMasculinosAdaptados","totalAdaptados","entrega","anio","mostrarMes","federacion","departamento"))->setPaper('8.5x11')->stream();
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',12)->with('usuario')->paginate(5);
+        return view('Reportes.edg31.control',compact('control'));
     }
 }

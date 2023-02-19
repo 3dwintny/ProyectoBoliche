@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Encargado;
+use App\Models\Control;
 
 class EncargadoController extends Controller
 {
@@ -80,5 +82,10 @@ class EncargadoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',11)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

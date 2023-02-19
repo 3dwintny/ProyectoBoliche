@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use PDF;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class AlumnoController extends Controller
 {
@@ -204,7 +205,7 @@ class AlumnoController extends Controller
      */
     public function destroy($id)
     {
-        $alumno=Alumno::find($id)->update(['estado' => 'Rechazado']);
+        Alumno::find($id)->update(['estado' => 'Rechazado']);
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
     }
 
@@ -217,5 +218,10 @@ class AlumnoController extends Controller
         }
         $formularios = Formulario::all();
         return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',2)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

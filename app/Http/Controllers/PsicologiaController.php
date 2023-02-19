@@ -6,6 +6,7 @@ use App\Models\Psicologia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Hashids\Hashids;
+use App\Models\Control;
 
 class PsicologiaController extends Controller
 {
@@ -20,7 +21,7 @@ class PsicologiaController extends Controller
      */
     public function index()
     {
-        $psicologo = Psicologia::all();
+        $psicologo = Psicologia::where('estado','activo')->paginate(5);
         return view('configuraciones.psicologia.show', compact('psicologo'));
     }
 
@@ -43,8 +44,14 @@ class PsicologiaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'correo'=>['unique:psicologia'],
+            'colegiado'=>['unique:psicologia'],
+        ]);
         $psicologo = new Psicologia($request->all());
         $psicologo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>27]);
+        $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
     }
 
@@ -87,6 +94,8 @@ class PsicologiaController extends Controller
         $psicologo = Psicologia::find($id);
         $psicologo ->fill($request->all());
         $psicologo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
+        $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
     }
 
@@ -98,8 +107,14 @@ class PsicologiaController extends Controller
      */
     public function destroy($id)
     {
-        $psicologo = Psicologia::find($id);
-        $psicologo->delete();
+        Psicologia::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>27]);
+        $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',27)->with('usuario')->paginate(5);
+        return view('psicologia.terapias.control',compact('control'));
     }
 }

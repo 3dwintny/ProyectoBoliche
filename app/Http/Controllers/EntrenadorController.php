@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Hashids\Hashids;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
+use App\Models\Control;
 
 class EntrenadorController extends Controller
 {
@@ -62,6 +63,11 @@ class EntrenadorController extends Controller
     public function store(Request $request)
     {
         $entrenador = new Entrenador($request->all());
+        $request->validate(
+            [
+                'cui'=>['unique:entrenador'],
+                'correo'=>['unique:entrenador']
+            ]);
         if($request->hasFile('foto'))
         {
             $file = $request->file('foto');
@@ -71,6 +77,8 @@ class EntrenadorController extends Controller
             $entrenador->foto = $filename;
         }
         $entrenador->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>14]);
+        $control->save();
         return redirect()->action([EntrenadorController::class, 'index']);
     }
 
@@ -82,7 +90,13 @@ class EntrenadorController extends Controller
      */
     public function show($id)
     {
-        //
+        $entrenador = Entrenador::find($id);
+        $nivel_cdag = Nivel_cdag::find($entrenador->nivel_cdag_id); 
+        $nivel_fadn = Nivel_fadn::find($entrenador->nivel_fadn_id); 
+        $departamento = Departamento::find($entrenador->departamento_id);
+        $nacionalidad = Nacionalidad::find($entrenador->nacionalidad_id);
+        $tipo_contrato = Tipo_Contrato::find($entrenador->tipo_contrato_id);
+        return view('entrenador.show', compact('entrenador','nivel_cdag','nivel_fadn','departamento','nacionalidad','tipo_contrato'));
     }
 
     /**
@@ -131,6 +145,8 @@ class EntrenadorController extends Controller
             $entrenador->foto = $filename;
         }
         $entrenador->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
+        $control->save();
         return redirect()->action([EntrenadorController::class,'index']);
     }
 
@@ -143,6 +159,13 @@ class EntrenadorController extends Controller
     public function destroy($id)
     {
         Entrenador::find($id)->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>14]);
+        $control->save();
         return redirect()->route('entrenadores.index')->with('message', 'Entrenador eliminado');;
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',14)->with('usuario')->paginate(5);
+        return view('entrenador.control',compact('control'));
     }
 }

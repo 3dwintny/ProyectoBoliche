@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Atleta;
 use PDF;
+use App\Models\Departamento;
+use App\Models\Deporte;
+use Carbon\Carbon;
+use App\Models\Control;
 
 class EDG27Controller extends Controller
 {
@@ -92,12 +96,63 @@ class EDG27Controller extends Controller
 
     public function generarPDF()
     {
+        $fecha = Carbon::now();
+        $mes = Carbon::parse($fecha)->format('m');
+        $anio = Carbon::parse($fecha)->format('Y');
+        $mostrarMes = "";
+        switch ($mes){
+            case 1:
+                $mostrarMes = "Enero";
+                break;
+            case 2:
+                $mostrarMes = "Febrero";
+                break;
+            case 3:
+                $mostrarMes = "Marzo";
+                break;
+            case 4:
+                $mostrarMes = "Abril";
+                break;
+            case 5:
+                $mostrarMes = "Mayo";
+                break;
+            case 6:
+                $mostrarMes = "Junio";
+                break;
+            case 7:
+                $mostrarMes = "Julio";
+                break;
+            case 8:
+                $mostrarMes = "Agosto";
+                break;
+            case 9:
+                $mostrarMes = "Septiembre";
+                break;
+            case 10:
+                $mostrarMes = "Octubre";
+                break;
+            case 11:
+                $mostrarMes = "Noviembre";
+                break;
+            case 12:
+                $mostrarMes = "Diciembre";
+                break;
+        }
+        $federacion = Deporte::find(1);
+        $departamento = Departamento::find(13);
         $atletas = Atleta::where('federado','SISTEMÁTICO')->where('estado','activo')->get();
         if(count($atletas)>0){
-            return PDF::loadView('Reportes.edg27.pdf',compact('atletas'))->setPaper('8.5x11')->stream();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>10]);
+            $control->save();
+            return PDF::loadView('Reportes.edg27.pdf',compact('atletas','mostrarMes','anio','federacion','departamento'))->setPaper('8.5x11')->stream();
         }
         else{
             return view('Reportes.edg27.sinresultados');
         }
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',10)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
     }
 }

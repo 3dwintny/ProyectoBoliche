@@ -63,12 +63,12 @@
                                         <th style="width: 3.5%; text-align:center;">No</th>
                                         <th style="width:10%; text-align:center;">Fecha</th>
                                         <th style="width:21.7%; text-align:center;">Atleta</th>
-                                        <th style="width:8%; text-align:center;">Asistencia</th>
-                                        <th style="width:8%; text-align:center;">Inasistencia</th>
-                                        <th style="width:8%; text-align:center;">Permiso/Descanso</th>
-                                        <th style="width:8%; text-align:center;">Enfermo</th>
-                                        <th style="width:8%; text-align:center;">Lesión</th>
-                                        <th style="width:8%; text-align:center;">Competencia</th>
+                                        <th style="width:8%; text-align:center;"><input name="todo" id="asistencia" type="radio"> Asistencia</th>
+                                        <th style="width:8%; text-align:center;"><input name="todo" id="inasistencia" type="radio"> Inasistencia</th>
+                                        <th style="width:8%; text-align:center;"><input name="todo" id="permiso" type="radio"> Permiso/Descanso</th>
+                                        <th style="width:8%; text-align:center;"><input id="enfermo" type="radio" name="todo"> Enfermo</th>
+                                        <th style="width:8%; text-align:center;"><input id="lesion" type="radio" name="todo"> Lesión</th>
+                                        <th style="width:8%; text-align:center;"><input id="competencia" type="radio" name="todo"> Competencia <input id="cancelar" type="radio" name="todo"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,6 +76,11 @@
                                     $c = 0;
                                     $contador = 1;
                                     @endphp
+                                    @if(count($atletas)==0)
+                                    <tr>
+                                        <td colspan="9">SIN ATLETAS ASIGNADOS</td>
+                                    </tr>
+                                    @else
                                     @foreach($atletas as $item)
                                     <tr class="table-sm">
                                         <td>
@@ -90,32 +95,32 @@
                                         </td>
                                         <td>
                                             <label style="margin-left: 50%;">
-                                                <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="X" required> <span></span>
+                                                <input type="radio" id="estado1{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="X" required> <span></span>
                                             </label>
                                         </td>
                                         <td>
                                             <label style="margin-left: 50%;">
-                                                <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="O" required> <span></span>
+                                                <input type="radio" id="estado2{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="O" required> <span></span>
                                             </label>
                                         </td>
                                         <td>
                                             <label style="margin-left: 50%;">
-                                                <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="P" required> <span></span>
+                                                <input type="radio" id="estado3{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="P" required> <span></span>
                                             </label>
                                         </td>
                                         <td>
                                             <label style="margin-left: 50%;">
-                                                <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="E" required> <span></span>
+                                                <input type="radio" id="estado4{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="E" required> <span></span>
                                             </label>
                                         </td>
                                         <td>
                                             <label style="margin-left: 50%;">
-                                                <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="L" required> <span></span>
+                                                <input type="radio" id="estado5{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="L" required> <span></span>
                                             </label>
                                         </td>
                                         <td>
                                             <label style="margin-left: 50%;">
-                                                <input type="radio" id="estado" class="{{$item->id}}" name="estado[]{{$item->id}}" value="C" required> <span></span>
+                                                <input type="radio" id="estado6{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="C" required> <span></span>
                                             </label>
                                         </td>
                                     </tr>
@@ -124,9 +129,15 @@
                                     $contador++;
                                     @endphp
                                     @endforeach
+                                    <input type="hidden" id="controlador" value="{{$contador}}">
+                                    @endif
                                 </tbody>
                             </table>
-                            <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar Asistencia"></div>
+                            @if(count($atletas)==0)
+                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar Asistencia" disabled></div>
+                            @else
+                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar Asistencia"></div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -134,4 +145,61 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#asistencia').on('change', function(){
+            for(let i = 1; i<document.getElementById('controlador').value; i++){
+                document.getElementById('estado1'+i).checked = true;
+            }
+        });
+        $('#inasistencia').on('change', function(){
+            for(let i = 1; i<document.getElementById('controlador').value; i++){
+                document.getElementById('estado2'+i).checked = true;
+            }
+        });
+        $('#permiso').on('change', function(){
+            for(let i = 1; i<document.getElementById('controlador').value; i++){
+                document.getElementById('estado3'+i).checked = true;
+            }
+        });
+        $('#enfermo').on('change', function(){
+            for(let i = 1; i<document.getElementById('controlador').value; i++){
+                document.getElementById('estado4'+i).checked = true;
+            }
+        });
+        $('#lesion').on('change', function(){
+            for(let i = 1; i<document.getElementById('controlador').value; i++){
+                document.getElementById('estado5'+i).checked = true;
+            }
+        });
+        $('#competencia').on('change', function(){
+            for(let i = 1; i<document.getElementById('controlador').value; i++){
+                document.getElementById('estado6'+i).checked = true;
+            }
+        });
+        $('#cancelar').on('change', function(){
+            for(let i = 1; i<document.getElementById('controlador').value; i++){
+                if(document.getElementById('estado1'+i).checked == true){
+                    document.getElementById('estado1'+i).checked = false;
+                }
+                else if(document.getElementById('estado2'+i).checked == true){
+                    document.getElementById('estado2'+i).checked = false;
+                }
+                else if(document.getElementById('estado3'+i).checked == true){
+                    document.getElementById('estado3'+i).checked = false;
+                }
+                else if(document.getElementById('estado4'+i).checked == true){
+                    document.getElementById('estado4'+i).checked = false;
+                }
+                else if(document.getElementById('estado5'+i).checked == true){
+                    document.getElementById('estado5'+i).checked = false;
+                }
+                else{
+                    document.getElementById('estado6'+i).checked = false;
+                }
+            }
+            document.getElementById('cancelar').checked = false;
+        });
+    });
+</script>
 @endsection

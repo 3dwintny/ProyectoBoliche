@@ -57,7 +57,7 @@
                                             <label class="form-check-label" for="inlineRadio3">Si</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" name="federado" id="federado1" value="1">
+                                            <input type="radio" name="federado" id="federado1" value="No">
                                             <label class="form-check-label" for="inlineRadio3">No</label>
                                         </div>
                                     </div>
@@ -78,110 +78,178 @@
                                             <label class="form-check-label" for="inlineRadio3">Otro programa de atención</label>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-2"><select name="estado_civil" class="form-control text-dark" required>
-                                            <option selected disabled>Estado Civil</option>
-                                            <option value="Soltera/o">Soltera/o</option>
-                                            <option value="Casada/o">Casada/o</option>
-                                            <option value="Unión Libre">Unión Libre</option>
-                                            <option value="Unión de Hecho">Unión de Hecho</option>
-                                            <option value="Separada/o">Separada/o</option>
-                                            <option value="Divorciada/o">Divorciada/o</option>
-                                            <option value="Viuda/o">Viuda/o</option>
-                                        </select></div>
-                                    <div class="col-md-6 mb-2"><select name="etnia" class="form-control text-dark" required>
-                                            <option selected disabled>Etnia</option>
-                                            <option value="Maya">Maya</option>
-                                            <option value="Xinka">Xinka</option>
-                                            <option value="Garífuna">Garifuna</option>
-                                            <option value="Ladino">Ladino</option>
-                                        </select></div>
-                                    <div class="col-md-4 mb-2"><select name="escolaridad" class="form-control text-dark" required>
-                                            <option selected disabled>Nivel Académico</option>
-                                            <option value="Primaria">Primaria</option>
-                                            <option value="Básico">Básico</option>
-                                            <option value="Diversificado">Diversificado</option>
-                                            <option value="Licenciatura">Licenciatura</option>
-                                            <option value="Maestría">Maestría</option>
-                                            <option value="Doctorado">Doctorado</option>
-                                        </select></div>
-                                    <div class="col-md-4 mb-2"><select name="centro_id" class="form-control text-dark" required>
-                                            <option selected disabled>Centro</option>
-                                            @foreach ($centro as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                            @endforeach
-                                        </select></div>
-                                        <div class="col-md-2 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Años" type="text" name="anios"  required></div>
-                                        <div class="col-md-2 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Meses" type="text" name="meses"  required></div>
-                                    <div class="col-md-4 mb-2"><select name="entrenador_id" class="form-control text-dark" required>
-                                            <option selected disabled>Entrenador</option>
-                                            @foreach ($entrenador as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre1}} {{$item->apellido1}}</option>
-                                            @endforeach
-                                        </select></div>
-                                    <div class="col-md-4 mb-2"><select name="categoria_id" class="form-control text-dark" required>
-                                            <option selected disabled>Categoria</option>
-                                            @foreach ($categoria as $item)
-                                            <option value="{{$item->id}}">{{$item->tipo}} ({{$item->rango_edades}} años)</option>
-                                            @endforeach
-                                        </select></div>
-                                    <div class="col-md-4 mb-2"><select name="etapa_deportiva_id" class="form-control text-dark" required>
-                                            <option selected disabled>Etapa Deportiva</option>
-                                            @foreach ($etapa as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                            @endforeach
-                                        </select></div>
-                                    <div class="col-md-4 mb-2">
-                                        <select name="deporte_id" class="form-control text-dark" required>
-                                            @foreach ($deporte as $item)
-                                            <option value="{{$item->id}}" {{ $item->nombre == 'Boliche' ? 'selected' : ''}}>{{$item->nombre}}</option>
-                                            @endforeach
-                                        </select></div>
-                                    <div class="col-md-4 mb-2">
-                                        <select name="deporte_adaptado_id" id="deporte_adaptado_id" class="form-control text-dark">
-                                            @foreach ($deporteadaptado as $item)
-                                            <option value="{{$item->id}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" value="1" name="deporte_adaptado_id" id="deporte_adaptado_id_text">
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-floating">
+                                            <select name="estado_civil" id="estado_civil" class="form-control text-dark" required>
+                                                <option selected value=""></option>
+                                                <option value="Soltera/o">Soltera/o</option>
+                                                <option value="Casada/o">Casada/o</option>
+                                                <option value="Unión Libre">Unión libre</option>
+                                                <option value="Unión de Hecho">Unión de hecho</option>
+                                                <option value="Separada/o">Separada/o</option>
+                                                <option value="Divorciada/o">Divorciada/o</option>
+                                                <option value="Viuda/o">Viuda/o</option>
+                                            </select>
+                                            <label for="estado_civil">Estado civil</label>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 mb-2"><select name="otro_programa_id" id="otro_programa_id" class="form-control text-dark">
-                                            @foreach ($otroprograma as $item)
-                                            <option value="{{$item->id}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" value="1" name="otro_programa_id" id="otro_programa_id_text">
+                                    <div class="col-md-6 mb-2">
+                                        <div class="form-floating">
+                                            <select name="etnia" class="form-control text-dark" id="etnia" required>
+                                                <option selected value=""></option>
+                                                <option value="Maya">Maya</option>
+                                                <option value="Xinka">Xinka</option>
+                                                <option value="Garífuna">Garifuna</option>
+                                                <option value="Ladino">Ladino</option>
+                                            </select>
+                                            <label for="etnia">Etnia</label>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 mb-2"><select name="linea_desarrollo_id" class="form-control text-dark" required>
-                                            <option selected disabled>Linea de Desarrollo</option>
-                                            @foreach ($lineadesarrollo as $item)
-                                            <option value="{{$item->id}}">{{$item->tipo}}</option>
-                                            @endforeach
-                                        </select></div>
-                                    <div class="col-md-4 mb-2"><select name="modalidad_id" class="form-control text-dark" required>
-                                            <option selected disabled>Modalidad</option>
-                                            @foreach ($modalidad as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                            @endforeach
-                                        </select></div>
-                                    <div class="col-md-4 mb-2"><select name="prt_id" class="form-control text-dark" required>
-                                            <option selected disabled>PRT</option>
-                                            @foreach ($prt as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                            @endforeach
-                                        </select></div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="escolaridad" class="form-control text-dark" id="escolaridad" required>
+                                                <option selected value=""></option>
+                                                <option value="Primaria">Primaria</option>
+                                                <option value="Básico">Básico</option>
+                                                <option value="Diversificado">Diversificado</option>
+                                                <option value="Licenciatura">Licenciatura</option>
+                                                <option value="Maestría">Maestría</option>
+                                                <option value="Doctorado">Doctorado</option>
+                                            </select>
+                                            <label for="escolaridad">Nivel académico</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="centro_id" class="form-control text-dark" id="centro_id" required>
+                                                <option selected value=""></option>
+                                                @foreach ($centro as $item)
+                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="centro">Centro de entrenamiento</label>
+                                        </div>
+                                    </div>
+                                        <div class="col-md-2 mb-2">
+                                            <div class="form-floating">
+                                                <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Años" type="text" name="anios"  required>
+                                                <label for="anios">Años</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 mb-2">
+                                            <div class="form-floating">
+                                                <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Meses" type="text" name="meses"  required>
+                                                <label for="meses">Meses</label>
+                                            </div>
+                                        </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="entrenador_id" id="entrenador_id" class="form-control text-dark" required>
+                                                <option selected value=""></option>
+                                                @foreach ($entrenador as $item)
+                                                <option value="{{$item->id}}">{{$item->nombre1}} {{$item->apellido1}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="entrenador_id">Entrenador</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="categoria_id" id="categoria_id" class="form-control text-dark" required>
+                                                <option selected value=""></option>
+                                                @foreach ($categoria as $item)
+                                                <option value="{{$item->id}}">{{$item->tipo}} ({{$item->rango_edades}} años)</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="categoria_id">Categoría</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="etapa_deportiva_id" id="etapa_deportiva_id" class="form-control text-dark" required>
+                                                <option selected value=""></option>
+                                                @foreach ($etapa as $item)
+                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="etapa_deportiva_id">Etapa deportiva</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="deporte_id" class="form-control text-dark" id="deporte_id" required>
+                                                @foreach ($deporte as $item)
+                                                <option value="{{$item->id}}" {{ $item->nombre == 'Boliche' ? 'selected' : ''}}>{{$item->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="deporte_id">Deporte</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="deporte_adaptado_id" id="deporte_adaptado_id" class="form-control text-dark">
+                                                @foreach ($deporteadaptado as $item)
+                                                <option value="{{$item->id}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" value="1" name="deporte_adaptado_id" id="deporte_adaptado_id_text">
+                                            <label for="deporte_adaptado_id">Deporte adaptado</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="otro_programa_id" id="otro_programa_id" class="form-control text-dark">
+                                                @foreach ($otroprograma as $item)
+                                                <option value="{{$item->id}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            <input type="hidden" value="1" name="otro_programa_id" id="otro_programa_id_text">
+                                            <label for="otro_programa_id">Otro programa</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="linea_desarrollo_id" id="linea_desarrollo_id" class="form-control text-dark" required>
+                                                <option selected value=""></option>
+                                                @foreach ($lineadesarrollo as $item)
+                                                <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="linea_desarrollo_id">Línea de desarrollo</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="modalidad_id" class="form-control text-dark" id="modalidad_id" required>
+                                                <option selected value=""></option>
+                                                @foreach ($modalidad as $item)
+                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="modalidad_id">Modalidad</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-floating">
+                                            <select name="prt_id" id="prt_id" class="form-control text-dark" required>
+                                                <option selected value=""></option>
+                                                @foreach ($prt as $item)
+                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label for="prt_id">PRT</label>
+                                        </div>
+                                    </div>
                                     <input type="hidden" name="alumno_id" id="" value="{{$alumno->id}}" readonly>
                                 </div>
                                 <div class="container">
                                     <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                                 </div>
                 </form>
-
-
             </div>
         </div>
     </div>
 </div>
-
 </div>
 
 

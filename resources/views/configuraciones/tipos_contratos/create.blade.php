@@ -36,9 +36,17 @@
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="descripcion" placeholder="Tipo de Contrato" name="descripcion" required>
-                                <label for="descripcion">Tipo de Contrato</label>
+                            <div class="form-group{{ $errors->has('descripcion') ? ' has-danger' : '' }}">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control {{ $errors->has('descripcion') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Alergia') }}" id="descripcion" type="text" name="descripcion" value="{{ old('descripcion') }}" required>
+                                    <label for="descripcion">Tipo de contrato</label>
+                                </div>
+                                    
+                                @if ($errors->has('descripcion'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('descripcion') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>

@@ -28,7 +28,6 @@
             <th scope="col">Edad</th>
             <th scope="col">Direccion</th>
             <th scope="col">Deporte</th>
-            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -54,6 +53,11 @@
               <form action="{{route('entrenadores.edit',$idEntrenador)}}" method="GET">
                 <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
                 <input type="hidden" name="e" id="e" value="{{$idEntrenador}}">
+              </form>
+            </td>
+            <td>
+              <form action="{{route('entrenadores.show',$entrenador->id)}}" action="GET">
+                <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-regular fa-eye"></i></button>
               </form>
             </td>
             <td>

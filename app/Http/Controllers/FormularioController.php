@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Hashids\Hashids;
 use App\Models\Formulario;
+use App\Models\Control;
+use Carbon\Carbon;
 
 class FormularioController extends Controller
 {
@@ -85,6 +87,8 @@ class FormularioController extends Controller
         $formulario = $this->f->obtenerFormularioById($id);
         $formulario->fill($request->all());
         $formulario->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>16]);
+        $control->save();
         return redirect()->action([FormularioController::class,'index']);
     }
 
@@ -97,5 +101,10 @@ class FormularioController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',16)->with('usuario')->paginate(5);
+        return view('configuraciones.formulario.control',compact('control'));
     }
 }
