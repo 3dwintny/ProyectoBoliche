@@ -51,6 +51,9 @@ class CentroController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => ['unique:centro']
+        ]);
         $horario_id = $request->horario_id;
         $centro = new Centro($request->all());
         $centro->save();

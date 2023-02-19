@@ -44,6 +44,9 @@ class Nivel_cdagController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:nivel_cdag'],
+        ]);
         $nivel = new Nivel_cdag($request->all());
         $nivel->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>22]);

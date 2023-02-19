@@ -76,13 +76,13 @@
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input type="tel" name="celular"  id="celular" class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" value="{{old('celular')}}" pattern="[0-9]{4}[-][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
+                                        <input type="tel" name="celular"  id="celular" class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" value="{{old('celular')}}" pattern="[0-9]{4}[ -][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
                                         <label for="celular">Celular</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input type="tel" name="telefono_casa"  id="telefono_casa" class="form-control text-dark" aria-describedby="basic-addon2" value="{{ old('Teléfono de casa') }}" placeholder="{{ __('Teléfono de casa') }}" pattern="[0-9]{4}[-][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
+                                        <input type="tel" name="telefono_casa"  id="telefono_casa" class="form-control text-dark" aria-describedby="basic-addon2" value="{{ old('telefono_casa') }}" placeholder="{{ __('Teléfono de casa') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
                                         <label for="telefono_casa">Teléfono de Casa</label>
                                     </div>
                                 </div>
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Pasaporte') }}" id="pasaporte" type="text" name="pasaporte" value="{{ old('Pasaporte') }}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Pasaporte') }}" id="pasaporte" type="text" name="pasaporte" value="{{ old('pasaporte') }}">
                                         <label for="celular">Pasaporte</label>
                                     </div>
                                 </div>
@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Años de Experiencia') }}" id="años_experiencia" type="number" name="años_experiencia" value="{{ old('Años de Experiencia') }}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Años de Experiencia') }}" id="años_experiencia" type="number" name="años_experiencia" value="{{ old('años_experiencia') }}">
                                         <label for="celular">Años de Experiencia</label>
                                     </div>
                                 </div>
@@ -182,7 +182,7 @@
                                 
                                 <div class="col-md-12 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Dirección') }}" id="direccion" type="text" name="direccion" value="{{ old('Dirección') }}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Dirección') }}" id="direccion" type="text" name="direccion" value="{{ old('direccion') }}">
                                         <label for="direccion">Dirección</label>
                                     </div>
                                 </div>

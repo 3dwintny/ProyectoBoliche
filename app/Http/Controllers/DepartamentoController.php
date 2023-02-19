@@ -40,6 +40,9 @@ class DepartamentoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:departamento'],
+        ]);
         $departamento = new Departamento($request->all());
         $departamento->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>7]);

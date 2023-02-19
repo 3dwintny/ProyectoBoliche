@@ -44,6 +44,9 @@ class PRTController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:prt'],
+        ]);
         $prt = new PRT($request->all());
         $prt->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>26]);

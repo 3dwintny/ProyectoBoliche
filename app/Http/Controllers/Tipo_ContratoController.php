@@ -44,6 +44,9 @@ class Tipo_ContratoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'descripcion'=>['unique:tipo_contrato'],
+        ]);
         $contratos = new Tipo_Contrato($request->all());
         $contratos->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>30]);

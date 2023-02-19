@@ -44,6 +44,9 @@ class Etapa_DeportivaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:etapa_deportiva'],
+        ]);
         $etapa = new Etapa_Deportiva($request->all());
         $etapa->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>15]);

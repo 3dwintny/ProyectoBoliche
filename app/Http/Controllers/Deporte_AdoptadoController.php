@@ -44,6 +44,9 @@ class Deporte_AdoptadoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:deporte_adaptado'],
+        ]);
         $deporte = new Deporte_Adoptado($request->all());
         $deporte->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>8]);

@@ -36,12 +36,20 @@
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="nombre" placeholder="Modalidad" name="nombre" required>
-                                <label for="nombre">Modalidad</label>
+                            <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Modalidad') }}" id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" required>
+                                    <label for="nombre">Modalidad</label>
+                                </div>
+                                    
+                                @if ($errors->has('nombre'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('nombre') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="medio_comunicacion" placeholder="Medio de Comunicación" name="medio_comunicacion">
+                                <input type="text" class="form-control" id="medio_comunicacion" placeholder="Medio de Comunicación" name="medio_comunicacion" value="{{old('medio_comunicacion')}}">
                                 <label for="medio_comunicacion">Medio de Comunicación</label>
                             </div>
                             <div class="container">

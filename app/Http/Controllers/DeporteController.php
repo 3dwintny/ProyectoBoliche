@@ -44,6 +44,9 @@ class DeporteController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => ['unique:deporte'],
+        ]);
         $deporte = new Deporte($request->all());
         $deporte->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>9]);

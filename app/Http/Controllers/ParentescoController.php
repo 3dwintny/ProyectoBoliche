@@ -44,6 +44,9 @@ class ParentescoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'tipo'=>['unique:parentezco'],
+        ]);
         $parentescos = new Parentesco($request->all());
         $parentescos->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>25]);

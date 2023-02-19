@@ -45,6 +45,9 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'tipo' => ['unique:categoria']
+        ]);
         $categoria = new Categoria($request->all());
         $categoria->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>5]);

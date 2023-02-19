@@ -44,6 +44,9 @@ class Nivel_fadnController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'tipo'=>['unique:nivel_fadn'],
+        ]);
         $nivel = new Nivel_fadn($request->all());
         $nivel->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>23]);

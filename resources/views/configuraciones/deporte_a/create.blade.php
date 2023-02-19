@@ -36,9 +36,17 @@
                     </div>
                     <div class="card">
                         <div class="card-body bg-light">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="nombre" placeholder="Deporte Adaptado" name="nombre" required>
-                                <label for="nombre">Categoría</label>
+                            <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Deporte Adaptado') }}" id="nombre" type="text" name="nombre" value="{{ old('nombre') }}" required>
+                                    <label for="nombre">Deporte Adaptado</label>
+                                </div>
+                                    
+                                @if ($errors->has('nombre'))
+                                    <span class="invalid-feedback" style="display: block;" role="alert">
+                                        <strong>{{ $errors->first('nombre') }}</strong>
+                                    </span>
+                                @endif
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>

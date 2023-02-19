@@ -44,6 +44,9 @@ class NacionalidadController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'descripcion'=>['unique:nacionalidad'],
+        ]);
         $nacionalidad = new Nacionalidad($request->all());
         $nacionalidad->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>21]);

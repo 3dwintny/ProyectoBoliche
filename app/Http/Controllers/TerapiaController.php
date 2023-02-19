@@ -140,10 +140,12 @@ class TerapiaController extends Controller
      */
     public function create()
     {
-        $psicologos = Psicologia::all();
+        $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
         $atletas = Atleta::where('estado','activo')->get();
         $hoy = Carbon::now();
         $hora = Carbon::now()->toTimeString('minute');
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'CREACIÓN', 'tabla_accion_id'=>29]);
+        $control->save();
         return view('psicologia.terapias.create',compact('psicologos','atletas','hoy','hora'));
     }
 
@@ -176,10 +178,17 @@ class TerapiaController extends Controller
      */
     public function show($id)
     {
+        $psicologo = Psicologia::where('correo',auth()->user()->email)->get();
+        if(count($psicologo)==0)
+        {
+            $historial = DB::table('terapia')->where('atleta_id',$id)->where('psicologia_id',0)->paginate(5);
+        }
+        else{
+            $historial = DB::table('terapia')->where('atleta_id',$id)->where('psicologia_id',$psicologo[0]->id)->paginate(5);
+        }
         $guardarAtleta = $id;
         $inicial = "";
         $final = "";
-        $historial = DB::table('terapia')->where('atleta_id',$id)->paginate(5);
         $atleta = DB::table('atleta')
         ->where('id', $id)->get('alumno_id');
         $alumno = "";

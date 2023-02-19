@@ -44,6 +44,9 @@ class Otro_ProgramaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre'=>['unique:otro_programa'],
+        ]);
         $programas = new Otro_Programa($request->all());
         $programas->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>24]);
