@@ -260,7 +260,7 @@
         <div id="federacion">
             @foreach($formularios as $item)
             <strong class="tamanio130">{{$item->titulo_principal}}</strong>
-            <strong class="tamanio130">{{$item->año_logo}}</strong>
+            <strong class="tamanio130">{{$anio}}</strong>
             <div id="espacio1"></div>
             <strong id="tamanio60">{{$item->subtitulo}}</strong>
             <div id="espacio2"></div>

@@ -35,9 +35,7 @@
         <tbody>
             <tr>
                 <td colspan="10" style="text-align: center">
-                <div class="alert alert-danger" role="alert">
-                    <strong>NO SE ENCONTRARON RESULTADOS</strong> 
-                </div>
+                    <td colspan="6" id="textoCentrado">SIN RESULTADOS</td>
                 </td>
             </tr>
         </tbody>

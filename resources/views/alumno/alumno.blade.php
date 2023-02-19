@@ -13,7 +13,7 @@
                         <div class="card">
                             <div class="card-header text-bold ">
                                 <strong>
-                                    <h1> Formulario de Inscripción</h1>
+                                    <h1> Formulario de inscripción</h1>
                                 </strong>
                                 <div class="progress">
                                     <div class="progress-bar progress-bar-striped active" style="background-color: primary ;" role="progressbar" aria-valuemin="0" aria-valuemax="100">
@@ -23,7 +23,7 @@
                             <div class="card-body bg-light">
                                 @foreach($formularios as $item)
                                 <label>
-                                    {{$item->titulo_principal}} {{$item->año_logo}}
+                                    {{$item->titulo_principal}} {{$anio}}
                                 </label>
                                 <br>
                                 <label>{{$item->subtitulo}}</label>
@@ -40,39 +40,39 @@
                                 <div class="form-group">
                                     <div class="card">
                                         <div class="card-body bg-light">
-                                            <h2 class="mb-2">Información Personal</h2>
+                                            <h2 class="mb-2">Información personal</h2>
                                             <div class="row">
                                                 <!-- Esto es para tener el formulario Ordenado -->
                                                 <div class="col-md-4 mb-2">
                                                     <!-- Para segir viendo el nombre del placeholder -->
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Nombre') }}" id="formIns" type="text" name="nombre1" value="{{ old('Primer Nombre') }}" required>
+                                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" id="formIns" type="text" name="nombre1" value="{{ old('Primer nombre') }}" required>
                                                         <!-- Esto es lo que aparece como placeholder, en el fomulario -->
-                                                        <label for="formIns">Primer Nombre</label>
+                                                        <label for="formIns">Primer nombre</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" placeholder="{{ __('Segundo Nombre') }}" type="text" name="nombre2" value="{{ old('Segundo Nombre') }}">
-                                                        <label for="formIns">Segundo Nombre</label>
+                                                        <input class="form-control text-dark" id="formIns" placeholder="{{ __('Segundo nombre') }}" type="text" name="nombre2" value="{{ old('Segundo nombre') }}">
+                                                        <label for="formIns">Segundo nombre</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" placeholder="{{ __('Tercer Nombre') }}" type="text" name="nombre3" value="{{ old('Tercer Nombre') }}">
-                                                        <label for="formIns">Tercer Nombre</label>
+                                                        <input class="form-control text-dark" id="formIns" placeholder="{{ __('Tercer nombre') }}" type="text" name="nombre3" value="{{ old('Tercer nombre') }}">
+                                                        <label for="formIns">Tercer nombre</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" type="text" name="apellido1" placeholder="Primer Apellido">
-                                                        <label for="formIns">Primer Apellido</label>
+                                                        <input class="form-control text-dark" id="formIns" type="text" name="apellido1" placeholder="Primer apellido">
+                                                        <label for="formIns">Primer apellido</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" type="text" name="apellido2" placeholder="Segundo Apellido">
-                                                        <label for="formIns">Segundo Apellido</label>
+                                                        <input class="form-control text-dark" id="formIns" type="text" name="apellido2" placeholder="Segundo apellido">
+                                                        <label for="formIns">Segundo apellido</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 mb-2">
@@ -84,8 +84,7 @@
 
                                                 <div class="col-md-6 mb-2">
                                                     <div class="input-group mb-2">
-                                                        <span class="input-group-text" id="inputGroup-sizing-sm">Fecha
-                                                            Nacimiento</span>
+                                                        <span class="input-group-text" id="inputGroup-sizing-sm">Fecha de nacimiento</span>
                                                         <input class="form-control text-dark" type="date" name="fecha" id="fecha">
                                                     </div>
                                                 </div>
@@ -121,8 +120,8 @@
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" type="tel" name="telefono_casa" placeholder="Teléfono Residencial">
-                                                        <label for="formIns">Teléfono Residencial</label>
+                                                        <input class="form-control text-dark" id="formIns" type="tel" name="telefono_casa" placeholder="Teléfono residencial">
+                                                        <label for="formIns">Teléfono residencial</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
@@ -133,14 +132,14 @@
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" type="tel" name="contacto_emergencia" placeholder="Contacto de Emergencia">
-                                                        <label for="formIns">Contacto de Emergencia</label>
+                                                        <input class="form-control text-dark" id="formIns" type="tel" name="contacto_emergencia" placeholder="Contacto de emergencia">
+                                                        <label for="formIns">Contacto de emergencia</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
                                                     <div class="form-floating">
-                                                        <input class="form-control text-dark" id="formIns" type="email" name="correo" placeholder="Correo">
-                                                        <label for="formIns">Correo</label>
+                                                        <input class="form-control text-dark" id="formIns" type="email" name="correo" placeholder="Correo electrónico">
+                                                        <label for="formIns">Correo electrónico</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-2">
@@ -173,7 +172,6 @@
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <select class="form-control text-dark" name="nacionalidad_id">
-                                                        <div class="col-md-4 mb-2">
                                                             <option selected disabled>Nacionalidad</option>
                                                             @foreach ($nacionalidades as $item)
                                                             <option value="{{$item->id}}">{{$item->descripcion}}
@@ -181,7 +179,7 @@
                                                             @endforeach
                                                     </select>
                                                 </div>
-                                                <label class="col-md-12 mb-2">Lugar de Nacimiento</label>
+                                                <label class="col-md-12 mb-2">Lugar de nacimiento</label>
                                                 <div class="col-md-6 mb-2"><select class="form-control" name="departamento_id" id="_departamento">
                                                         <option selected disabled>Departamento</option>
                                                         @foreach ($departamentos as $item)
@@ -191,7 +189,7 @@
                                                 </div>
                                                 <div class="col-md-6 mb-2"><select class="form-control" name="municipio_id" id="_municipio"></select>
                                                 </div>
-                                                <label class="col-md-12 mb-2">Lugar de Residencia</label>
+                                                <label class="col-md-12 mb-2">Lugar de residencia</label>
                                                 <div class="col-md-6 mb-2"><select class="form-control" name="departamento_residencia_id" id="_departamentoR">
                                                         <option selected disabled>Departamento</option>
                                                         @foreach ($departamentos as $item)
@@ -212,27 +210,27 @@
                                     <div class="card">
                                         <div class="card-body bg-light">
                                             <div class="row">
-                                                <div class="col-md-11"><h2>Información de Encargados</h2></div>
+                                                <div class="col-md-11"><h2>Información de encargados</h2></div>
                                                 <div class="col-md-1"><input type="submit" name="submit" class="submit btn btn-outline-warning" value="+"   data-toggle="tooltip" data-original-title="Agregar Encargado"/></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer Nombre') }}" type="text" name="nombre1p" value="{{ old('Primer Nombre') }}" required>
+                                                    <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" type="text" name="nombre1p" value="{{ old('Primer nombre') }}" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" placeholder="{{ __('Segundo Nombre') }}" type="text" name="nombre2p" value="{{ old('Segundo Nombre') }}">
+                                                    <input class="form-control text-dark" placeholder="{{ __('Segundo nombre') }}" type="text" name="nombre2p" value="{{ old('Segundo nombre') }}">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" placeholder="{{ __('Tercer Nombre') }}" type="text" name="nombre3p" value="{{ old('Tercer Nombre') }}">
+                                                    <input class="form-control text-dark" placeholder="{{ __('Tercer nombre') }}" type="text" name="nombre3p" value="{{ old('Tercer nombre') }}">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido1p" placeholder="Primer Apellido" required>
+                                                    <input class="form-control text-dark" type="text" name="apellido1p" placeholder="Primer apellido" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido2p" placeholder="Segundo Apellido">
+                                                    <input class="form-control text-dark" type="text" name="apellido2p" placeholder="Segundo apellido">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="apellido_casada" placeholder="Apellido de Casada">
+                                                    <input class="form-control" type="text" name="apellido_casada" placeholder="Apellido de casada">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control" type="text" name="direccionp" placeholder="Direccion" required>
@@ -241,10 +239,10 @@
                                                     <input class="form-control" type="text" name="celularp" placeholder="Celular" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="telefono_casap" placeholder="Teléfono Residencial">
+                                                    <input class="form-control" type="text" name="telefono_casap" placeholder="Teléfono residencial">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="correop" placeholder="Correo electronico">
+                                                    <input class="form-control" type="text" name="correop" placeholder="Correo electrónico">
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control" type="text" name="dpi" placeholder="DPI" required>

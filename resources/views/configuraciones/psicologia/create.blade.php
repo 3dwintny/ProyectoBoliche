@@ -26,13 +26,13 @@
                                 <div class="card-header bg-light mb-2">
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 mb-3">
-                                            <h3 class="card-title text-dark">Registrar Nueva(o) Psicóloga(o)</h3>
+                                            <h3 class="card-title text-dark">Registrar nueva(o) psicóloga(o)</h3>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="card-body bg-light">
-                                    <h2 class="mb-2">Información Personal</h2>
+                                    <h2 class="mb-2">Información personal</h2>
                                     <div class="row">
                                         <div class="col-md-4 mb-2">
                                             <div class="form-floating mb-3">
@@ -78,7 +78,7 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" id="telefono" placeholder="Teléfono" name="telefono">
+                                                <input type="tel" class="form-control" id="telefono" placeholder="Teléfono" name="telefono">
                                                 <label for="telefono">Teléfono</label>
                                             </div>
                                         </div>

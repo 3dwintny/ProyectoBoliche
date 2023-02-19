@@ -1,13 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+  #declaracion{
+    text-align: justify;
+    resize: none;
+  }
+</style>
 <div class="header bg-dark pb-2 pt-5 pt-md-10">
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Etapa Deportiva</h1>
+          <h1 class="text-white">Encabezado formulario de inscripción</h1>
         </div>
       </div>
     </div>
@@ -16,29 +22,34 @@
 <div class="container">
 <div class="pb-5 pt-5 pt-md-2">
   <div class="">
-    <table class="table table-responsive table-hover" style="border-radius: 5px;">
+    <table class="table table-responsive table-hover col-md-12 mb-10" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nombre</th>
-          
+          <th scope="col">Título</th>
+          <th scope="col">Subtítulo</th>
+          <th scope="col">Título de ficha</th>
         </tr>
       </thead>
       <tbody class="table-hover">
         @php
             $contador = 1;
         @endphp
-        @foreach ($etapa as $item)
+        @foreach ($formulario as $item)
+        @php
+          $hashid = new Hashids\Hashids();
+          $idFormulario = $hashid->encode($item->id);
+        @endphp
         <tr>
           <td>{{$contador}}</td>
-          <td>{{$item->nombre}}</td>
+          <td>{{$item->titulo_principal}}</td>
+          <td>{{$item->subtitulo}}</td>
+          <td>{{$item->titulo_ficha}}</td>
           <td>
-            <form action="{{route('etapadeps.destroy',$item->id)}}" method="POST">
-              <a href="{{route('etapadeps.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarDeportea('Eliminar Etapa')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+            <form action="{{route('formulario-inscripcion.edit',$idFormulario)}}" method="GET" role="form" enctype="multipart/form-data">
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
+              <input type="hidden" id="e" name="e" value="{{$idFormulario}}">
+            </form>
           </td>
           @php
             $contador++;
@@ -47,14 +58,17 @@
         @endforeach
       </tbody>
     </table>
+    <div class="container">
+      <div class="col-md-2 mb-10 center">
+        <label>Declaración</label>
+      </div>
+    </div>  
+    @foreach ($formulario as $item)
+    <textarea name="" id="declaracion" cols="60" rows="5" class="form-control text-dark" readonly>{{$item->declaracion}}</textarea>
+    @endforeach
   </div>
 </div>
 </div>
-<script>
-  function eliminarDeportea(value){
-      action = confirm(value) ? true : event.preventDefault();
-  }
-</script>
 @include('layouts.footers.auth')
 </div>
 @endsection

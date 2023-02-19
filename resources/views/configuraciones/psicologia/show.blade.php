@@ -48,7 +48,7 @@
           <td>
             <form action="{{route('psicologia.edit',$idPsicologo)}}" method="GET">
               @csrf
-              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
               <input type="hidden" name="e" id="e" value="{{$idPsicologo}}">
             </form>
           </td>

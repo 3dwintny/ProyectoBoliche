@@ -60,7 +60,7 @@
   </div>
 </div>
 </div>
-<script>
+<script type="text/javascript">
   function eliminarAlergia(value){
       action = confirm(value) ? true : event.preventDefault();
   }

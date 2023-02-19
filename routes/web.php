@@ -97,7 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('categoria',CategoriaController::class);
 
     //Rutas Centros
-    Route::resource('centros',CentroController::class);
+    Route::resource('centro',CentroController::class);
 
     //Rutas Departamentos
     Route::resource('departamentos',DepartamentoController::class);
@@ -122,6 +122,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Rutas Horario
     Route::resource('horario',HorarioController::class);
+    Route::get('horario-del-centro/{id}',[CentroController::class,'mostrarHorarios'])->name('listarHorarios');
+    Route::get('eliminar-horario/{id}',[CentroController::class,'eliminarHorario'])->name('eliminarHorarios');
+    Route::get('agregar-horario/{id}',[CentroController::class,'agregarHorarios'])->name('agregarHorarios');
+    Route::post('guardar-horario',[CentroController::class,'guardarHorarios'])->name('guardarHorarios');
 
     //Rutas Linea_Desarrollo
     Route::resource('linea-de-desarrollo',Linea_DesarrolloController::class);
@@ -202,7 +206,8 @@ Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('pacient
 Route::post('historiales', [TerapiaController::class, 'getHistorial'])->name('historiales');
 Route::get('terapias-PDF/{id}', [TerapiaController::class, 'generarPDF'])->name('historialPDF');
 Route::get('correos',[TerapiaController::class,'getCorreo'])->name('correos');
-Route::post('busquedaFecha',[TerapiaController::class,'busquedaTerapia'])->name('busquedaFecha');
+Route::get('busquedaFecha',[TerapiaController::class,'busquedaTerapia'])->name('busquedaFecha');
+Route::post('asistenciaCategoria',[AsistenciaController::class,'filtroCategoria'])->name('asistenciaCategoria');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

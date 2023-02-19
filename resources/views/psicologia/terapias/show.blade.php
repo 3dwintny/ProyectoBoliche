@@ -1,54 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-  .contenedorFlotante{
-    float: left;
-    position: relative;
-    width: 23%;            
-  }
-  .espacioIzquierda{
-    float: left;
-    position: relative;
-    width: 2%;
-  }
-  #contenedor{
-    width: 99%;
-    margin-left: 1%;
-  }
-  a{
-    text-decoration: none;
-  }
-  #botonBusqueda{
-    float: left;
-    position: relative;
-    width: 7%;
-  }
-  .centrar{
-    float: left;
-    position: relative;
-    width: 21.5%;
-  }
-  #posicionVertical{
-    margin-top: 5%;
-  }
-</style>
+<link href="{{ asset('/css/terapias/show.css') }}" rel="stylesheet">
 <div class="header bg-dark pb-2 pt-5 pt-md-10">
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Historial Clínico de {{$completo}}</h1>
+          <h1 class="text-white">Historial clínico de {{$completo}}</h1>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="contanier"></div>
-<form action="{{route('busquedaFecha')}}" method="POST">
-  <input type="hidden" value="{{$guardarAtleta}}" id="idAtleta" name="idAtleta">
+<form action="{{route('busquedaFecha')}}" method="GET">
   @csrf
+  <input type="hidden" id="idAtleta" name="idAtleta" value="{{$guardarAtleta}}">
   <div id="contenedor">
     <h3></h3>
     <div class="centrar"><div class="input-group mb-2"></div></div>
@@ -67,7 +36,7 @@
     </div>
     <div class="espacioIzquierda"><div class="input-group mb-2"></div></div>
     <div id="botonBusqueda">
-      <input type="submit" onclick="window.location='{{ route('busquedaFecha') }}'" value="Buscar" class="btn btn-outline-warning">
+      <input type="submit" value="Buscar" class="btn btn-outline-warning">
     </div>
     <div class="centrar"><div class="input-group mb-2"></div></div>
   </div>
@@ -106,6 +75,11 @@
         </tr>
       </thead>
       <tbody class="table-hover">
+        @if(count($historial)<=0)
+        <tr>
+          <td colspan="24" id="sinResultados">NO SE ENCONTRARON RESULTADOS</td>
+        </tr>
+        @else
         @foreach ($historial as $item)
         <tr>
           <td>{{$item->numero_terapia}}</td>
@@ -133,12 +107,14 @@
           <td>{{$item->frustracion}}</td>
           <td>
             <a href="{{route('terapias.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
-            <a href="{{route('historialPDF',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary" target="_blank"><i class="fa fa-fw fa-thin fa-file"></i></a>
+            <a href="{{route('historialPDF',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary" target="_blank"><i class="fa fa-fw fa-regular fa-file-pdf"></i></a>
           </td>
         </tr>
         @endforeach
+        @endif
       </tbody>
     </table>
+    {{$historial->appends(['idAtleta'=>$guardarAtleta,'fechaInicial'=>$inicial,'fechaFinal'=>$final])->links('vendor.pagination.custom')}}
   </div>
 </div>
 </div>

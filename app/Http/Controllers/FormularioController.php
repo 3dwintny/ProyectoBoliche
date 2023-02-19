@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Hashids\Hashids;
+use App\Models\Formulario;
 
 class FormularioController extends Controller
 {
+    protected $f;
+
+    public function __construct (Formulario $f){
+        $this->f = $f;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class FormularioController extends Controller
      */
     public function index()
     {
-        //
+        $formulario = Formulario::all();
+        return view(' configuraciones.formulario.show',compact('formulario'));
     }
 
     /**
@@ -55,9 +63,14 @@ class FormularioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $formulario = $this->f->obtenerFormularioById($id);
+        return view('configuraciones.formulario.edit',compact('formulario'));
     }
 
     /**
@@ -69,7 +82,10 @@ class FormularioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $formulario = $this->f->obtenerFormularioById($id);
+        $formulario->fill($request->all());
+        $formulario->save();
+        return redirect()->action([FormularioController::class,'index']);
     }
 
     /**

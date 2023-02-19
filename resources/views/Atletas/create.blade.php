@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Atleta</h1>
+                    <h1 class="text-white">Atletas</h1>
                 </div>
             </div>
         </div>
@@ -25,9 +25,8 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h3>Inscripcion del Atleta {{ $alumno->nombre1 }}</h3>
+                            <h3>Inscripción del atleta {{ $alumno->nombre1 }}</h3>
                         </strong>
-
                     </div>
                 </div>
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('ac_estado',$alumno->id)}}">
@@ -36,28 +35,47 @@
                         <div class="card">
                             <div class="card-body bg-light">
                             <div class="col-12 mb-2"><img src="{{ asset('storage/uploads/'.$alumno->foto) }}" class="img-thumbnail" alt="50" height="50" width="50"></div>
-                                <h5 class="mb-2">Informacion Adicional</h5>
+                                <h5 class="mb-2">Información adicional</h5>
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
                                         <div class="input-group mb-2">
-                                            <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Ingreso</span>
-                                            <input type="text" class=" container form-control text-center" name="fecha_ingreso" id="fecha_sistema" readonly>
+                                            <span class="input-group-text" id="inputGroup-sizing-sm">Fecha de ingreso</span>
+                                            <input type="text" class=" container form-control text-center" name="fecha_ingreso" value="{{Carbon\Carbon::parse($hoy)->format('Y-m-d')}}" readonly>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-2"><select name="adaptado" class="form-control text-dark" required>
-                                            <option selected disabled>Adaptado</option>
-                                            <option value="Si">Si</option>
-                                            <option value="No">No</option>
-                                        </select></div>
+                                    <div class="col-md-6 mb-2">
+                                        <select name="adaptado" id="adaptado" class="form-control text-dark" required>
+                                            <option value="Si" disabled>Si</option>
+                                            <option value="No" disabled selected>No</option>
+                                        </select>
+                                        <input type="hidden" name="adaptado" id="adaptadoText" value="No">
+                                    </div>
                                     <div class="col-md-6 mb-2 form-control">
-                                    <label>¿El/La Atleta es Federado ?</label>
+                                        <label>¿El/La atleta es federado/a?</label>
                                         <div class="form-check form-check-inline">
-                                        <input type="radio" name="federado" id="federado0" value="SISTEMÁTICO" checked>
-                                        <label class="form-check-label" for="inlineRadio3">Si</label>
+                                            <input type="radio" name="federado" id="federado0" value="SISTEMÁTICO" checked>
+                                            <label class="form-check-label" for="inlineRadio3">Si</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                        <input type="radio" name="federado" id="federado1" value="1">
-                                        <label class="form-check-label" for="inlineRadio3">No</label>
+                                            <input type="radio" name="federado" id="federado1" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-2 form-control">
+                                        <label>¿Deporte adaptado?</label>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="adaptado" id="deporteAdaptado">
+                                            <label class="form-check-label" for="inlineRadio3">Si</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="adaptado" id="cancelarAdaptado" checked>
+                                            <label class="form-check-label" for="inlineRadio3">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-2 form-control">
+                                        <div class="form-check form-check-inline">
+                                            <input type="radio" name="otro" id="otroPrograma" disabled>
+                                            <label class="form-check-label" for="inlineRadio3">Otro programa de atención</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-2"><select name="estado_civil" class="form-control text-dark" required>
@@ -112,24 +130,27 @@
                                             <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
-                                    <div class="col-md-4 mb-2"><select name="deporte_id" class="form-control text-dark" required>
-                                            <option selected disabled>Deporte</option>
+                                    <div class="col-md-4 mb-2">
+                                        <select name="deporte_id" class="form-control text-dark" required>
                                             @foreach ($deporte as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                            <option value="{{$item->id}}" {{ $item->nombre == 'Boliche' ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
-                                    <div class="col-md-4 mb-2"><select name="deporte_adaptado_id" class="form-control text-dark" required>
-                                            <option selected disabled>Deporte Adaptado</option>
+                                    <div class="col-md-4 mb-2">
+                                        <select name="deporte_adaptado_id" id="deporte_adaptado_id" class="form-control text-dark">
                                             @foreach ($deporteadaptado as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                            <option value="{{$item->id}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
                                             @endforeach
-                                        </select></div>
-                                    <div class="col-md-4 mb-2"><select name="otro_programa_id" id="otro_programa_id" class="form-control text-dark" disabled>
-                                            <option selected disabled>Otro Programa</option>
+                                        </select>
+                                        <input type="hidden" value="1" name="deporte_adaptado_id" id="deporte_adaptado_id_text">
+                                    </div>
+                                    <div class="col-md-4 mb-2"><select name="otro_programa_id" id="otro_programa_id" class="form-control text-dark">
                                             @foreach ($otroprograma as $item)
-                                            <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                            <option value="{{$item->id}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
                                             @endforeach
-                                        </select></div>
+                                        </select>
+                                        <input type="hidden" value="1" name="otro_programa_id" id="otro_programa_id_text">
+                                    </div>
                                     <div class="col-md-4 mb-2"><select name="linea_desarrollo_id" class="form-control text-dark" required>
                                             <option selected disabled>Linea de Desarrollo</option>
                                             @foreach ($lineadesarrollo as $item)
@@ -168,34 +189,75 @@
 
 </div>
 <script type="text/javascript">
-    $(document).ready(function() {
-        $('#fecha_nacimiento').on('change', function() {
-            function calcularEdad(fechas) {
-                var hoy = new Date();
-                var cumpleanos = new Date(fechas);
-                var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-                var m = hoy.getMonth() - cumpleanos.getMonth();
-
-                if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-                    edad--;
-                }
-
-                return edad;
-            }
-            document.getElementById('_edad').value = calcularEdad(document.getElementById('fecha_nacimiento').value);
-        });
-    });
-    date = new Date();
-    year = date.getFullYear();
-    month = date.getMonth() + 1;
-    day = date.getDate();
-    document.getElementById("fecha_sistema").value = year + "/" + month + "/" + day;
     $(document).ready(function () {
         $('#federado0').on('change', function () {
-            document.getElementById('otro_programa_id').disabled = true;
+            document.getElementById('otroPrograma').disabled = true;
+            document.getElementById('deporteAdaptado').disabled = false;
+            document.getElementById('cancelarAdaptado').disabled = false;
+            document.getElementById('cancelarAdaptado').checked = true;
+            document.getElementById('otroPrograma').checked = false;
+            document.getElementById('deporteAdaptado').checked = false;
+            document.getElementById('otro_programa_id').options[0].selected = true;
+            document.getElementById('deporte_adaptado_id').options[0].selected = true;
+            for(let i = 0; i<document.getElementById('otro_programa_id').length; i++) {
+                document.getElementById('otro_programa_id').options[i].disabled=true;
+            }
+            for(let i = 0; i<document.getElementById('deporte_adaptado_id').length; i++) {
+                document.getElementById('deporte_adaptado_id').options[i].disabled=true;
+            }
+            document.getElementById('adaptado').value="No";
+            document.getElementById('adaptadoText').value="No";
+            document.getElementById('deporte_adaptado_id_text').disabled = false;
+            document.getElementById('otro_programa_id_text').disabled = false;
         });
         $('#federado1').on('change', function () {
-            document.getElementById('otro_programa_id').disabled = false;
+            document.getElementById('deporte_adaptado_id').options[0].selected = true;
+            document.getElementById('otroPrograma').disabled = false;
+            document.getElementById('deporteAdaptado').disabled = true;
+            document.getElementById('cancelarAdaptado').disabled = true;
+            document.getElementById('cancelarAdaptado').checked = false;
+            document.getElementById('deporteAdaptado').checked = false;
+            document.getElementById('otroPrograma').required = true;
+            document.getElementById('deporte_adaptado_id_text').disabled = true;
+            document.getElementById('otro_programa_id_text').disabled = true;
+            document.getElementById('adaptado').value="No";
+            document.getElementById('adaptadoText').value="No";
+        });
+        $('#otroPrograma').on('change', function () {
+            for(let i = 0; i<document.getElementById('otro_programa_id').length; i++) {
+                document.getElementById('otro_programa_id').options[i].disabled=false;
+            }
+            for(let i = 0; i<document.getElementById('deporte_adaptado_id').length; i++) {
+                document.getElementById('deporte_adaptado_id').options[i].disabled=true;
+            }
+            document.getElementById('adaptado').value="No";
+            document.getElementById('adaptadoText').value="No"; 
+            document.getElementById('deporte_adaptado_id').options[0].selected = true;
+            document.getElementById('deporte_adaptado_id_text').disabled = false;
+            document.getElementById('otro_programa_id_text').disabled = true;
+        });
+        $('#deporteAdaptado').on('change', function () {
+            for(let i = 0; i<document.getElementById('otro_programa_id').length; i++) {
+                document.getElementById('otro_programa_id').options[i].disabled=true;
+            }
+            for(let i = 0; i<document.getElementById('deporte_adaptado_id').length; i++) {
+                document.getElementById('deporte_adaptado_id').options[i].disabled=false;
+            }
+            document.getElementById('otro_programa_id').options[0].selected = true;
+            document.getElementById('adaptado').value="Si";
+            document.getElementById('adaptadoText').value="Si";
+            document.getElementById('otro_programa_id_text').disabled = false;
+            document.getElementById('deporte_adaptado_id_text').disabled = true;
+            document.getElementById('deporteAdaptado').required = true;
+        });
+        $('#cancelarAdaptado').on('change',function(){
+            document.getElementById('adaptado').value="No";
+            document.getElementById('adaptadoText').value="No";
+            document.getElementById('deporte_adaptado_id_text').disabled = false;
+            document.getElementById('deporte_adaptado_id').options[0].selected = true;
+            for(let i = 0; i<document.getElementById('deporte_adaptado_id').length; i++) {
+                document.getElementById('deporte_adaptado_id').options[i].disabled=true;
+            }
         });
     });
 </script>

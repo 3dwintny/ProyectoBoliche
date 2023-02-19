@@ -9,5 +9,9 @@ class Formulario extends Model
 {
     use HasFactory;
     protected $table = "formulario";
-    protected $fillable = ['id','titulo_principal','subtitulo','año_logo','titulo_ficha','declaracion','created_at','updated_at'];
+    protected $fillable = ['id','titulo_principal','subtitulo','titulo_ficha','declaracion','created_at','updated_at'];
+
+    public function obtenerFormularioById($id){
+        return Formulario::find($id);
+    }
 }

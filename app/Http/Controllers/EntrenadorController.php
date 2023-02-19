@@ -10,6 +10,8 @@ use App\Models\Deporte;
 use App\Models\Entrenador;
 use Illuminate\Http\Request;
 use Hashids\Hashids;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class EntrenadorController extends Controller
 {
@@ -29,9 +31,8 @@ class EntrenadorController extends Controller
     public function index()
     {
 
-        $entrenadores = Entrenador::paginate();
-        return view('entrenador.index', compact('entrenadores'))
-            ->with('i', (request()->input('page', 1) - 1) * $entrenadores->perPage());
+        $entrenadores = Entrenador::where('estado','activo')->get();
+        return view('entrenador.index', compact('entrenadores'));
     }
 
     /**
@@ -41,7 +42,7 @@ class EntrenadorController extends Controller
      */
     public function create()
     {
-        //return view('entrenador.create');
+        $hoy = Carbon::now();
         $niveles_cdag = Nivel_cdag::All();
         $niveles_fadn = Nivel_fadn::All();
         $departamentos = Departamento::All();
@@ -49,7 +50,7 @@ class EntrenadorController extends Controller
         $deportes = Deporte::All();
         $tipos_contratos = Tipo_Contrato::All();
         return view('entrenador.create',compact("niveles_cdag","niveles_fadn","departamentos","nacionalidades"
-        ,"deportes","tipos_contratos"));
+        ,"deportes","tipos_contratos","hoy"));
     }
 
     /**
@@ -61,6 +62,14 @@ class EntrenadorController extends Controller
     public function store(Request $request)
     {
         $entrenador = new Entrenador($request->all());
+        if($request->hasFile('foto'))
+        {
+            $file = $request->file('foto');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('storage/uploads/', $filename);
+            $entrenador->foto = $filename;
+        }
         $entrenador->save();
         return redirect()->action([EntrenadorController::class, 'index']);
     }
@@ -82,9 +91,20 @@ class EntrenadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
-        //
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        $entrenador = Entrenador::find($id);
+        $niveles_cdag = Nivel_cdag::All();
+        $niveles_fadn = Nivel_fadn::All();
+        $departamentos = Departamento::All();
+        $nacionalidades = Nacionalidad::All();
+        $deportes = Deporte::All();
+        $tipos_contratos = Tipo_Contrato::All();
+        return view('entrenador.edit',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
     }
 
     /**
@@ -96,7 +116,22 @@ class EntrenadorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $entrenador = Entrenador::find($id);
+        $entrenador->fill($request->all());
+        if($request->hasFile('foto'))
+        {
+            $destination = 'storage/uploads/'.$entrenador->foto;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('foto');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('storage/uploads/', $filename);
+            $entrenador->foto = $filename;
+        }
+        $entrenador->save();
+        return redirect()->action([EntrenadorController::class,'index']);
     }
 
     /**
@@ -107,6 +142,7 @@ class EntrenadorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Entrenador::find($id)->update(['estado' => 'inactivo']);
+        return redirect()->route('entrenadores.index')->with('message', 'Entrenador eliminado');;
     }
 }
