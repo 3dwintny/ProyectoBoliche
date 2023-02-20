@@ -13,7 +13,7 @@
       </div>
     </div>
 </div>
-<div class="container-fluid mt--6">
+<div class="container-fluid mt--4">
     <div class="header-body text-center  mb-7">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">

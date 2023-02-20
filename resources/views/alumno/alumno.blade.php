@@ -172,7 +172,6 @@
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <select class="form-control text-dark" name="nacionalidad_id">
-                                                        <div class="col-md-4 mb-2">
                                                             <option selected disabled>Nacionalidad</option>
                                                             @foreach ($nacionalidades as $item)
                                                             <option value="{{$item->id}}">{{$item->descripcion}}
