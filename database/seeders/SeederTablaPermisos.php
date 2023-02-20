@@ -56,6 +56,7 @@ class SeederTablaPermisos extends Seeder
             'lista-Terapias',
             'ver-listado-tareas',
             'asignar-Tareas',
+            'Ver acciones',
             //Funcionalidades del sedevar
             'SeedAtletas',
             'seedEntrenador',

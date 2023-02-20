@@ -28,6 +28,8 @@ class TerapiaController extends Controller
     {
         $buscarAtleta = $request->buscarNombre;
         if($buscarAtleta ==""){
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'LISTAR', 'tabla_accion_id'=>29]);
+            $control->save();
             $atleta = Atleta::paginate(5);
         }
         else{
@@ -201,6 +203,8 @@ class TerapiaController extends Controller
         foreach ($nombre as $item){
             $completo = $item->nombre1." ".$item->nombre2." ".$item->nombre3." ".$item->apellido1." ".$item->apellido2;
         }
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'HISTORIAL', 'tabla_accion_id'=>29]);
+        $control->save();
         return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta','inicial','final'));
     }
 
@@ -217,6 +221,8 @@ class TerapiaController extends Controller
         foreach ($atleta as $item){
             $alumno = Alumno::where('id',$item->alumno_id)->get();
         }
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'EDICIÓN', 'tabla_accion_id'=>29]);
+        $control->save();
         return view('psicologia.terapias.edit',['terapia' => $terapia,'alumno' => $alumno]);
     }
 

@@ -34,6 +34,12 @@
                         <span>{{ __('Ajustes') }}</span>
                     </a>
                     @endcan
+                    @can('Ver acciones')
+                    <a href="{{route('accionesTerapia')}}" class="dropdown-item">
+                        <i class="fa fa-lock"></i>
+                        <span>{{ __('Seguridad') }}</span>
+                    </a>
+                    @endcan
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
