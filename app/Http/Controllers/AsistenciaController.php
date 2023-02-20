@@ -12,6 +12,7 @@ use Hashids\Hashids;
 use App\Models\Categoria;
 use App\Models\Control;
 use App\Models\Entrenador;
+use App\Models\Alumno;
 
 class AsistenciaController extends Controller
 {
@@ -37,44 +38,7 @@ class AsistenciaController extends Controller
         if(count($fechaAsistencia)>0){
             return $this->mostrarAsistencia($ms->month,$ms->year);  
         }else{
-            switch ($ms->month){
-                case 1:
-                    $mostrarMes = "Enero";
-                    break;
-                case 2:
-                    $mostrarMes = "Febrero";
-                    break;
-                case 3:
-                    $mostrarMes = "Marzo";
-                    break;
-                case 4:
-                    $mostrarMes = "Abril";
-                    break;
-                case 5:
-                    $mostrarMes = "Mayo";
-                    break;
-                case 6:
-                    $mostrarMes = "Junio";
-                    break;
-                case 7:
-                    $mostrarMes = "Julio";
-                    break;
-                case 8:
-                    $mostrarMes = "Agosto";
-                    break;
-                case 9:
-                    $mostrarMes = "Septiembre";
-                    break;
-                case 10:
-                    $mostrarMes = "Octubre";
-                    break;
-                case 11:
-                    $mostrarMes = "Noviembre";
-                    break;
-                case 12:
-                    $mostrarMes = "Diciembre";
-                    break;
-            }
+            $mostarMes = $this->mesLetras($ms->month);
             return view('Reportes.RepFor30.sinresultadosactual',compact('mostrarAnioReporte','mostrarMes'));
         }
     }
@@ -206,44 +170,7 @@ class AsistenciaController extends Controller
             return $this->mostrarAsistencia($m,$y);
         }
         else{
-            switch ($m){
-                case 1:
-                    $mostrarMes = "Enero";
-                    break;
-                case 2:
-                    $mostrarMes = "Febrero";
-                    break;
-                case 3:
-                    $mostrarMes = "Marzo";
-                    break;
-                case 4:
-                    $mostrarMes = "Abril";
-                    break;
-                case 5:
-                    $mostrarMes = "Mayo";
-                    break;
-                case 6:
-                    $mostrarMes = "Junio";
-                    break;
-                case 7:
-                    $mostrarMes = "Julio";
-                    break;
-                case 8:
-                    $mostrarMes = "Agosto";
-                    break;
-                case 9:
-                    $mostrarMes = "Septiembre";
-                    break;
-                case 10:
-                    $mostrarMes = "Octubre";
-                    break;
-                case 11:
-                    $mostrarMes = "Noviembre";
-                    break;
-                case 12:
-                    $mostrarMes = "Diciembre";
-                    break;
-            }
+            $mostrarMes = $this->mesLetras($m);
             return view('Reportes.RepFor30.sinresultados',compact('mostrarAnioReporte','mostrarMes'));
         }
     }
@@ -270,44 +197,7 @@ class AsistenciaController extends Controller
         $hoy = Carbon::now();
         $antiguos = "false";
         //Muestra el mes de la asistencia en el reporte
-        switch ($obtenerMes){
-            case 1:
-                $mostrarMes = "Enero";
-                break;
-            case 2:
-                $mostrarMes = "Febrero";
-                break;
-            case 3:
-                $mostrarMes = "Marzo";
-                break;
-            case 4:
-                $mostrarMes = "Abril";
-                break;
-            case 5:
-                $mostrarMes = "Mayo";
-                break;
-            case 6:
-                $mostrarMes = "Junio";
-                break;
-            case 7:
-                $mostrarMes = "Julio";
-                break;
-            case 8:
-                $mostrarMes = "Agosto";
-                break;
-            case 9:
-                $mostrarMes = "Septiembre";
-                break;
-            case 10:
-                $mostrarMes = "Octubre";
-                break;
-            case 11:
-                $mostrarMes = "Noviembre";
-                break;
-            case 12:
-                $mostrarMes = "Diciembre";
-                break;
-        }
+        $mostrarMes = $this->mesLetras($obtenerMes);
 
         //Obtiene una sola vez la fecha de la asistencia
         $fechas= Asistencia::groupBy('fecha')->whereMonth('fecha',$obtenerMes)
@@ -386,12 +276,8 @@ class AsistenciaController extends Controller
         ->stream();
     }
 
-    public static function mostrarAsistencia($obtenerMes,$obtenerAnio)
-    {
-        $hoy = Carbon::now();
-        $antiguos = "false";
-        //Muestra el mes de la asistencia en el reporte
-        switch ($obtenerMes){
+    private function mesLetras($m){
+        switch ($m){
             case 1:
                 $mostrarMes = "Enero";
                 break;
@@ -429,7 +315,15 @@ class AsistenciaController extends Controller
                 $mostrarMes = "Diciembre";
                 break;
         }
+        return $mostrarMes;
+    }
 
+    private function mostrarAsistencia($obtenerMes,$obtenerAnio)
+    {
+        $hoy = Carbon::now();
+        $antiguos = "false";
+        //Muestra el mes de la asistencia en el reporte
+        $mostrarMes = $this->mesLetras($obtenerMes);
         //Obtiene una sola vez la fecha de la asistencia
         $fechas= Asistencia::groupBy('fecha')->whereMonth('fecha',$obtenerMes)
         ->whereYear('fecha',$obtenerAnio)->get('fecha');
@@ -499,6 +393,62 @@ class AsistenciaController extends Controller
             $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->paginate(5);
         }
         return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes'));
+    }
+    public function asistenciaIndividual(){
+        $hoy = Carbon::now();
+        $mes = $hoy->month;
+        $obtenerAnio = $hoy->year;
+        $mostrarMes = $this->mesLetras($mes);
+        $fechas= Asistencia::groupBy('fecha')->whereMonth('fecha',$mes)
+        ->whereYear('fecha',$obtenerAnio)->get('fecha');
+        $alumno = Alumno::where('correo',auth()->user()->email)->get();
+        if(count($alumno)>0){
+            $atleta = Atleta::where('alumno_id',$alumno[0]->id)->get();
+        }
+        else{
+            $atleta = Atleta::where('alumno_id',0)->get();
+        }
+        $estado = array();
+        $contarDias = array();
+        $promedio = array();
+        for($i=0;$i<count($atleta);$i++){
+            //Recorre el array de la asistencia
+            for($j=0;$j<count($fechas);$j++){
+                $obtenerEstado =  DB::table('asistencia')
+                ->where('atleta_id',$atleta[$i]->id)
+                ->where('fecha',$fechas[$j]->fecha)
+                ->get('estado');
+                if(count($obtenerEstado)>0){
+                    array_push($estado,$obtenerEstado[0]->estado);
+                }
+                else{
+                    array_push($estado,"");
+                }
+            }
+        }
+        foreach ($atleta as $item){
+            $diasEntrenados = Asistencia::where('atleta_id',$item->id)
+            ->whereMonth('fecha',$mes)
+            ->whereYear('fecha',$obtenerAnio)
+            ->where( function ($query)
+            {
+                $query->where('estado','X')
+                ->orWhere('estado','P')
+                ->orWhere('estado','L')
+                ->orWhere('estado','E')
+                ->orWhere('estado','C');
+            })->get();
+
+            if(count($diasEntrenados)>0){
+                array_push($contarDias,count($diasEntrenados));
+                array_push($promedio,round((count($diasEntrenados)/count($fechas))*100,2));
+            }
+            else{
+                array_push($contarDias,0);
+                array_push($promedio,round((count($diasEntrenados)/count($fechas))*100,2));
+            }
+        }
+        return view('Atletas.asistencia',compact('fechas','mostrarMes','obtenerAnio','estado','promedio','contarDias'));
     }
 
     public function acciones(){

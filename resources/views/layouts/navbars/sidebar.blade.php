@@ -101,6 +101,13 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('Asistencia por atleta')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('asistenciaIndividual') }}">
+                                    {{ __('Mi asistencia') }}
+                                </a>
+                            </li>
+                            @endcan
                         </ul>
                     </div>
                 </li>
@@ -116,7 +123,7 @@
                             @can('crear-EDG-31-Asistencia')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistencias.create') }}">
-                                    {{ __('Asistencia') }}
+                                    {{ __('Registrar Asistencia') }}
                                 </a>
                             </li>
                             @endcan

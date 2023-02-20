@@ -34,6 +34,7 @@ class SeederTablaPermisos extends Seeder
             'listado-Atletas',
             'eliminar-atleta',
             'editar-atleta',
+            'Asistencia por atleta',
             //Configuraciones
             'ver-configuraciones',
             //Entrenadores

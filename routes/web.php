@@ -84,6 +84,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('alergias',AlergiaController::class);
 	//Rutas Asistencia
+    Route::get('asistencia-atleta',[AsistenciaController::class, 'asistenciaIndividual'])->name('asistenciaIndividual');
     Route::get('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
     Route::resource('asistencias',AsistenciaController::class);
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
