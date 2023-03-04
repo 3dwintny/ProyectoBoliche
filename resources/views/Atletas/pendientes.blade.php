@@ -16,40 +16,42 @@
 <div class="pb-4 pt-5 pt-md-3">
     <div class="container">
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>No.</th>
-                            <th>Tarea</th>
-                            <th>Finalizada</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                        $contador = 1;
-                        @endphp
-                        @if(count($tarea)<=0)
+            <form method="POST" action="{{route('finalizarTarea')}}" enctype="multipart/form-data" role="form">
+                @csrf
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="table-dark">
                             <tr>
-                                <td colspan="3">SIN TAREAS PENDIENTES</td>
+                                <th>No.</th>
+                                <th>Tarea</th>
+                                <th>Finalizada</th>
                             </tr>
-                        @else
-                            @foreach($tarea as $item)
-                            <tr>
-                                <input type="hidden" value="{{$item->id}}"/>
-                                <td>{{$contador}}</td>
-                                <td>{{$item->tarea}}</td>
-                                <td><input type="checkbox"/></td>
-                            </tr>
-                                @php
-                                $contador++;
-                                @endphp
-                            @endforeach
-                        @endif
-                    </tbody>
-                </table>
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
-            </div>
+                        </thead>
+                        <tbody>
+                            @php
+                            $contador = 1;
+                            @endphp
+                            @if(count($tarea)<=0)
+                                <tr>
+                                    <td colspan="3">SIN TAREAS PENDIENTES</td>
+                                </tr>
+                            @else
+                                @foreach($tarea as $item)
+                                <tr>
+                                    <td>{{$contador}}</td>
+                                    <td>{{$item->tarea}}</td>
+                                    <td><input type="checkbox" name="id[]" value="{{$item->id}}"/></td>
+                                </tr>
+                                    @php
+                                    $contador++;
+                                    @endphp
+                                @endforeach
+                            @endif
+                        </tbody>
+                    </table>
+                        <button type="submit" class="btn btn-primary">Aceptar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

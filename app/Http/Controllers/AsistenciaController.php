@@ -130,7 +130,7 @@ class AsistenciaController extends Controller
         }
         if($controlAsistencia=="false"){
             $atleta_id = $request->atleta_id;
-            $estado = $request-> estado;
+            $estado = $request->estado;
             for ($i=0;$i<count($atleta_id);$i++){
                 $informacion = [
                     'fecha' => $fecha[$i],

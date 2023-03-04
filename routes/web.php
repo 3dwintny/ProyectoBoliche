@@ -162,6 +162,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Rutas Terapia
     Route::get('tareas-pendientes',[TerapiaController::class,'tareaPendiente'])->name('tareaPendiente');
+    Route::post('finalizar-tarea',[TerapiaController::class,'finalizarTarea'])->name('finalizarTarea');
     Route::resource('terapias',TerapiaController::class);
 
     //Rutas Tipo_Contrato

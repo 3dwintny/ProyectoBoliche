@@ -357,4 +357,15 @@ class TerapiaController extends Controller
         $control = Control::where('tabla_accion_id',29)->with('usuario')->paginate(5);
         return view('configuraciones.psicologia.control',compact('control'));
     }
+
+    public function finalizarTarea(Request $request){
+        $terapia_id = $request->id;
+        for ($i=0;$i<count($terapia_id);$i++){
+            $informacion = [
+                'estado_tarea' => 'fin',
+            ];
+            DB::table('terapia')->where('id',$terapia_id[$i])->update($informacion);
+        }
+        return redirect()->action([TerapiaController::class,'tareaPendiente']);
+    }
 }
