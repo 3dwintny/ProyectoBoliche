@@ -340,6 +340,19 @@ class TerapiaController extends Controller
         return view('psicologia.terapias.details', compact('terapia','paciente'));
     }
 
+    public function tareaPendiente(){
+        $alumno = Alumno::where('correo',auth()->user()->email)->get();
+        if(count($alumno)>0){
+            $atleta = Atleta::where('alumno_id',$alumno[0]->id)->get();
+            $tarea = Terapia::where('estado_tarea','pendiente')->where('atleta_id',$atleta[0]->id)->get();
+        }
+        else{
+            $atleta = Atleta::where('alumno_id',0)->get();
+            $tarea = Terapia::where('estado_tarea','pendiente')->where('atleta_id',0)->get();
+        }
+        return view('Atletas.pendientes',compact('tarea'));
+    }
+
     public function acciones(){
         $control = Control::where('tabla_accion_id',29)->with('usuario')->paginate(5);
         return view('configuraciones.psicologia.control',compact('control'));

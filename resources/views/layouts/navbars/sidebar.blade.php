@@ -40,6 +40,12 @@
                         <span>{{ __('Seguridad') }}</span>
                     </a>
                     @endcan
+                    @can('ver-listado-tareas')
+                    <a href="{{route('tareaPendiente')}}" class="dropdown-item">
+                        <i class="ni ni-collection"></i>
+                        <span>{{ __('Tareas Pendientes') }}</span>
+                    </a>
+                    @endcan
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

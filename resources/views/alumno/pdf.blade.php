@@ -30,18 +30,18 @@
             height: 100%;
         }
         .tamanio130{
-            font-size: 130%;
+            font-size: 140%;
         }
         #tamanio60{
             font-size: 73%;
         }
         #espacio1{
             width: 100%;
-            height: 27.5%;
+            height: 25.5%;
         }
         #espacio2{
             width: 100%;
-            height: 24%;
+            height: 22.5%;
         }
         #datosPersonales{
             border: 2px solid black;
@@ -379,38 +379,36 @@
             <div class="contenedorTitulos tamanio65">EL ATLETA ES ALÉRGICO A:</div>
         </div>
         <div class="contenedorDerecho">
-            @foreach($encargado as $item)
-                <div class="nombres tamanio70">{{$item->nombre1p}} {{$item->nombre2p}} {{$item->nombre3p}} {{$item->apellido1p}} {{$item->apellido2p}}</div>
+                <div class="nombres tamanio70">NOMBRE DEL PADRE</div>
             
             <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="edad tamanio70 textoCentrado">{{$item->telefono_casap}}</div>
+            <div class="edad tamanio70 textoCentrado">7767-5255</div>
             <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
-            <div class="cui tamanio70 textoCentrado">{{$item->celularp}}</div>
+            <div class="cui tamanio70 textoCentrado">5545-8565</div>
             <div class="correo tamanio70">E-MAIL:</div>
-            <div class="espacioDerecho2 tamanio70">{{$item->correop}}</div>
+            <div class="espacioDerecho2 tamanio70">correo.encargado1@dominio.com</div>
 
             <div class="contenedorTitulos tamanio70"></div>
             <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="nombres tamanio70">{{$item->direccionp}}</div>
+            <div class="nombres tamanio70">DIRECCIÓN DEL PRIMER ENCARGADO</div>
 
             <div class="contenedorTitulos tamanio70"></div>
-            @endforeach
-            <div class="nombres tamanio70">FLOR DE MARÍA CASTILLO BARRIOS</div>
+            <div class="nombres tamanio70">NOMBRE DE LA MADRE</div>
 
             <div class="contenedorTitulos tamanio70"></div>
             
-            <div class="edad tamanio70 textoCentrado">7767-2328</div>
+            <div class="edad tamanio70 textoCentrado">7785-4521</div>
             <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
-            <div class="cui tamanio70 textoCentrado">3557-4211</div>
+            <div class="cui tamanio70 textoCentrado">4648-1545</div>
             <div class="correo tamanio70">E-MAIL:</div>
-            <div class="espacioDerecho2 tamanio70">oscar.caceres2321@gmail.com</div>
+            <div class="espacioDerecho2 tamanio70">correo.encargado2@dominio.com</div>
 
             <div class="contenedorTitulos tamanio70"></div>
             <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="nombres tamanio70">15 calle 0-61 "A" Interior Zona 7 Quetzaltenango,Quetzaltenango</div>
+            <div class="nombres tamanio70">DIRECCIÓN DEL ENCARGADO2</div>
 
             <div class="contenedorTitulos tamanio70"></div>
 

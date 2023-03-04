@@ -303,6 +303,7 @@ class AtletaController extends Controller
         $control->save();
         return redirect()->action([AtletaController::class,'index'])->with('message','Atleta eliminado');
     }
+    
     public function acciones(){
         $control = Control::where('tabla_accion_id',4)->with('usuario')->paginate(5);
         return view('Atletas.control',compact('control'));

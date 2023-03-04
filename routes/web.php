@@ -161,6 +161,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('psicologia',PsicologiaController::class);
 
     //Rutas Terapia
+    Route::get('tareas-pendientes',[TerapiaController::class,'tareaPendiente'])->name('tareaPendiente');
     Route::resource('terapias',TerapiaController::class);
 
     //Rutas Tipo_Contrato

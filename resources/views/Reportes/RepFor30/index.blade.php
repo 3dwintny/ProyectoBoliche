@@ -16,7 +16,7 @@
 <div>
     <div class="pb-4 pt-5 pt-md-3">
         <div class="card-body">
-            <form action="{{route('buscar')}}" role="form">
+            <form action="{{route('buscar')}}" role="form" method="GET">
                 <div class="row">
                   <div class="col-md-4 mb-2">
                     <div class="form-floating">

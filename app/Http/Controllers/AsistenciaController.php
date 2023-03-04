@@ -38,7 +38,7 @@ class AsistenciaController extends Controller
         if(count($fechaAsistencia)>0){
             return $this->mostrarAsistencia($ms->month,$ms->year);  
         }else{
-            $mostarMes = $this->mesLetras($ms->month);
+            $mostrarMes = $this->mesLetras($ms->month);
             return view('Reportes.RepFor30.sinresultadosactual',compact('mostrarAnioReporte','mostrarMes'));
         }
     }
@@ -249,9 +249,7 @@ class AsistenciaController extends Controller
             ->where( function ($query)
             {
                 $query->where('estado','X')
-                ->orWhere('estado','P')
                 ->orWhere('estado','L')
-                ->orWhere('estado','E')
                 ->orWhere('estado','C');
             })->get();
 
@@ -368,32 +366,37 @@ class AsistenciaController extends Controller
         //Obtiene el estado de los atletas para calcular el promedio de días entrenados
         //así como también la cantidad de días entrenados FUNCIONANDO PARA ENTREGA FINAL
         foreach ($atleta as $item){
+            $totalFechas = 0;
             $diasEntrenados = Asistencia::where('atleta_id',$item->id)
             ->whereMonth('fecha',$obtenerMes)
             ->whereYear('fecha',$obtenerAnio)
             ->where( function ($query)
             {
                 $query->where('estado','X')
-                ->orWhere('estado','P')
                 ->orWhere('estado','L')
-                ->orWhere('estado','E')
                 ->orWhere('estado','C');
             })->get();
-
+            for($i=0;$i<count($mostrarAtletas);$i++){
+                if($mostrarAtletas[$i]==$item->id){
+                    $totalFechas++;
+                }
+            }
             if(count($diasEntrenados)>0){
                 array_push($contarDias,count($diasEntrenados));
-                array_push($promedio,round((count($diasEntrenados)/count($fechas))*100,2));
+                array_push($promedio,round((count($diasEntrenados)/$totalFechas)*100,2));
             }
             else{
                 array_push($contarDias,0);
-                array_push($promedio,round((count($diasEntrenados)/count($fechas))*100,2));
+                array_push($promedio,round(0*100,2));
             }
         }
         if($antiguos == "true"){
             $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->paginate(5);
         }
+        //return $atleta;
         return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes'));
     }
+    
     public function asistenciaIndividual(){
         $hoy = Carbon::now();
         $mes = $hoy->month;
@@ -433,9 +436,7 @@ class AsistenciaController extends Controller
             ->where( function ($query)
             {
                 $query->where('estado','X')
-                ->orWhere('estado','P')
                 ->orWhere('estado','L')
-                ->orWhere('estado','E')
                 ->orWhere('estado','C');
             })->get();
 
@@ -445,7 +446,7 @@ class AsistenciaController extends Controller
             }
             else{
                 array_push($contarDias,0);
-                array_push($promedio,round((count($diasEntrenados)/count($fechas))*100,2));
+                array_push($promedio,round(0*100,2));
             }
         }
         return view('Atletas.asistencia',compact('fechas','mostrarMes','obtenerAnio','estado','promedio','contarDias'));
