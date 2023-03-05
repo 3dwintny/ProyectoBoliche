@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Mail\ActualizarCorreos;
 use App\Models\Psicologia;
 use App\Models\Atleta;
 use App\Models\Alumno;
@@ -236,6 +238,20 @@ class TerapiaController extends Controller
     public function update(Request $request, $id)
     {
         $terapia = Terapia::find($id);
+        $correoAtleta = $request->correo;
+        $obtenerTarea = $request->tarea;
+        $obtenerFechaTarea = $request->fecha;
+        if($terapia->tarea!=$obtenerTarea)
+        {
+            if($obtenerTarea!="" || $obtenerTarea!=NULL){
+                DB::table('terapia')->where('id',$id)->update(['estado_tarea'=>'pendiente']);
+            }
+            else{
+                $obtenerTarea = "Se ha eliminado la tarea asignada";
+                DB::table('terapia')->where('id',$id)->update(['estado_tarea'=>'sin']);
+            }
+            Mail::to($correoAtleta)->send(new ActualizarCorreos($obtenerTarea,$obtenerFechaTarea));
+        }
         $terapia ->fill($request->all());
         $terapia->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>29]);

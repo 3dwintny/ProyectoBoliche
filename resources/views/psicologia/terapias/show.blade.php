@@ -67,7 +67,11 @@
           <td>{{\Carbon\Carbon::parse($item->fecha)->format("d-m-Y")}}</td>
           <td>{{$item->impresion_clinica}}</td>
           <td>{{$item->observaciones}}</td>
+          @if($item->estado_tarea=="pendiente")
+          <td style="color:red; background-color:#fff3ef;">{{$item->tarea}}</td>
+          @else
           <td>{{$item->tarea}}</td>
+          @endif
           <td>
             <a href="{{route('terapias.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
             <a href="{{route('detallesTerapia',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-success"><i class="fa fa-fw fa-regular fa-eye"></i></a>

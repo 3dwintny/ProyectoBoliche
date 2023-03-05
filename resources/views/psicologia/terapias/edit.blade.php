@@ -32,6 +32,7 @@
                                 <div class="col-md-10 mb-3">
                                     @foreach($alumno as $item)
                                     <h3 class="card-title text-dark">Editar Nota Evolutiva de {{$item->nombre1}} {{$item->nombre2}} {{$item->nombre3}} {{$item->apellido1}} {{$item->apellido2}}</h3>
+                                    <input type="hidden" value="{{$item->correo}}" name="correo" id="correo">
                                     @endforeach
                                 </div>
                                 <div class="col-md-2 mb-2"><input type="text" class="form-control text-dark" name="numero_terapia" placeholder="No. Sesion" id="numero_terapia" value="{{$terapia->numero_terapia}}" readonly required></div>
@@ -60,7 +61,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"> <textarea class="form-control" name="impresion_clinica" placeholder="Observaciones" id="floatingTextarea">{{$terapia->impresion_clinica}}</textarea></div>
+                                                <div class="accordion-body"> <textarea class="form-control" name="impresion_clinica" placeholder="Impresión Clínica" id="floatingTextarea">{{$terapia->impresion_clinica}}</textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -70,7 +71,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"><textarea class="form-control" name="analisis_semiologico" placeholder="Observaciones" id="floatingTextarea">{{$terapia->analisis_semiologico}}</textarea></div>
+                                                <div class="accordion-body"><textarea class="form-control" name="analisis_semiologico" placeholder="Análisis Semiológico (Signos y Síntomas)" id="floatingTextarea">{{$terapia->analisis_semiologico}}</textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -80,7 +81,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"><textarea class="form-control" name="desarrollo" placeholder="Observaciones" id="floatingTextarea">{{$terapia->desarrollo}}</textarea></div>
+                                                <div class="accordion-body"><textarea class="form-control" name="desarrollo" placeholder="Desarrollo" id="floatingTextarea">{{$terapia->desarrollo}}</textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -100,7 +101,8 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-heading5" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"> <textarea class="form-control" name="tarea" placeholder="Observaciones" id="floatingTextarea">{{$terapia->tarea}}</textarea></div>
+                                                <div class="accordion-body"> <textarea class="form-control" name="tarea" placeholder="Tarea" id="floatingTextarea">{{$terapia->tarea}}</textarea></div>
+                                                <input type="hidden" value="{{$terapia->estado_tarea}}" name="estado_tarea" id="estado_tarea">
                                             </div>
                                         </div>
                                     </div>
@@ -374,8 +376,6 @@
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>
                             </div>
                 </form>
-
-
             </div>
         </div>
     </div>
