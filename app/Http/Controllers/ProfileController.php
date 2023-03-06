@@ -32,7 +32,7 @@ class ProfileController extends Controller
 
         auth()->user()->update($request->all());
 
-        return back()->withStatus(__('Profile successfully updated.'));
+        return back()->withStatus(__('Información actualizada exitosamente.'));
     }
 
     /**
@@ -43,12 +43,12 @@ class ProfileController extends Controller
      */
     public function password(PasswordRequest $request)
     {
-        if (auth()->user()->id == 1) {
-            return back()->withErrors(['not_allow_password' => __('You are not allowed to change the password for a default user.')]);
-        }
+        // if (auth()->user()->id == 1) {
+        //     return back()->withErrors(['not_allow_password' => __('You are not allowed to change the password for a default user.')]);
+        // }
 
         auth()->user()->update(['password' => Hash::make($request->get('password'))]);
 
-        return back()->withPasswordStatus(__('Password successfully updated.'));
+        return back()->withPasswordStatus(__('Contraseña actualizada exitosamente'));
     }
 }
