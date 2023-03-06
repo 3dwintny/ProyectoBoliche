@@ -376,12 +376,17 @@ class TerapiaController extends Controller
 
     public function finalizarTarea(Request $request){
         $terapia_id = $request->id;
-        for ($i=0;$i<count($terapia_id);$i++){
-            $informacion = [
-                'estado_tarea' => 'fin',
-            ];
-            DB::table('terapia')->where('id',$terapia_id[$i])->update($informacion);
+        if($terapia_id!==null){
+            for ($i=0;$i<count($terapia_id);$i++){
+                $informacion = [
+                    'estado_tarea' => 'fin',
+                ];
+                DB::table('terapia')->where('id',$terapia_id[$i])->update($informacion);
+            }
+            return redirect()->action([TerapiaController::class,'tareaPendiente']);
         }
-        return redirect()->action([TerapiaController::class,'tareaPendiente']);
+        else{
+            return redirect()->action([TerapiaController::class,'tareaPendiente'])->with('warning', 'Debe de seleccionar al menos una tarea');
+        }
     }
 }

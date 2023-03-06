@@ -16,6 +16,7 @@
 <div class="pb-4 pt-5 pt-md-3">
     <div class="container">
         <div class="card-body">
+            @include('components.flash_alerts')
             <form method="POST" action="{{route('finalizarTarea')}}" enctype="multipart/form-data" role="form">
                 @csrf
                 <div class="table-responsive">
@@ -33,7 +34,7 @@
                             @endphp
                             @if(count($tarea)<=0)
                                 <tr>
-                                    <td colspan="3">SIN TAREAS PENDIENTES</td>
+                                    <th colspan="3" style="text-align: center;">SIN TAREAS PENDIENTES</th>
                                 </tr>
                             @else
                                 @foreach($tarea as $item)
@@ -49,7 +50,11 @@
                             @endif
                         </tbody>
                     </table>
+                    @if(count($tarea)<=0)
+                        <button type="submit" class="btn btn-primary" @disabled(true)>Aceptar</button>
+                    @else
                         <button type="submit" class="btn btn-primary">Aceptar</button>
+                    @endif
                 </div>
             </form>
         </div>
