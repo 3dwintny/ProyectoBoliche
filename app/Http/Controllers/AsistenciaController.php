@@ -393,7 +393,6 @@ class AsistenciaController extends Controller
         if($antiguos == "true"){
             $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->paginate(5);
         }
-        //return $atleta;
         return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes'));
     }
     
