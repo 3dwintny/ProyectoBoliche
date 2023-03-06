@@ -78,6 +78,11 @@ class AuthenticatedSessionController extends Controller
                 return redirect('home');
             }
         }
+        else{
+            $request->authenticate();
+            $request->session()->regenerate();
+            return redirect('home');
+        }
     }
 
     /**
