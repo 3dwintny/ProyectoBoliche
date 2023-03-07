@@ -113,6 +113,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('encargados',EncargadoController::class);
 
     //Rutas de Entrenador
+    Route::get('editar-perfil-entrenador',[EntrenadorController::class,'modificar'])->name('modificar');
+    Route::put('actualizar-informacion-entrenador',[EntrenadorController::class,'actualizar'])->name('actualizar');
     Route::resource('entrenadores',EntrenadorController::class);
 
     //Rutas Etapa_Deportiva
@@ -158,6 +160,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('prt',PRTController::class);
 
     //Ruta Psicologia
+    Route::get('editar-perfil-psicologia',[PsicologiaController::class,'modificar'])->name('modificarPsicologia');
+    Route::put('actualizar-informacion-psicologia',[PsicologiaController::class,'actualizar'])->name('actualizarPsicologia');
     Route::resource('psicologia',PsicologiaController::class);
 
     //Rutas Terapia

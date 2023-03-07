@@ -113,6 +113,27 @@ class PsicologiaController extends Controller
         return redirect()->action([PsicologiaController::class,'index']);
     }
 
+    public function modificar(){
+        $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
+        if(count($psicologos)>0){
+            $psicologo = Psicologia::find($psicologos[0]->id);
+            return view('configuraciones.psicologia.informacionPersonal',compact('psicologo'));
+        }
+        else{
+            return redirect('home');
+        }
+    }
+
+    public function actualizar(Request $request){
+        $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
+        $psicologo = Psicologia::find($psicologos[0]->id);
+        $psicologo->fill($request->all());
+        $psicologo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
+        $control->save();
+        return redirect('home');
+    }
+
     public function acciones(){
         $control = Control::where('tabla_accion_id',27)->with('usuario')->paginate(5);
         return view('psicologia.terapias.control',compact('control'));

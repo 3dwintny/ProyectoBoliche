@@ -30,9 +30,9 @@ class ProfileController extends Controller
             return back()->withErrors(['not_allow_profile' => __('You are not allowed to change data for a default user.')]);
         }
 
-        auth()->user()->update($request->all());
+        // auth()->user()->update($request->all());
 
-        return back()->withStatus(__('Información actualizada exitosamente.'));
+        // return back()->withStatus(__('Información actualizada exitosamente.'));
     }
 
     /**

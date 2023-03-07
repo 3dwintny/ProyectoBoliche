@@ -4,17 +4,6 @@
     <div class="container-fluid">
         <!-- Brand -->
         <a class="h6 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home') }}">{{ __('INICIO') }}</a>
-        <!-- Form -->
-        <!--form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-            <div class="form-group mb-0">
-                <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Search" type="text">
-                </div>
-            </div>
-        </form-->
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
@@ -33,25 +22,13 @@
                         <h6 class="text-overflow m-0">{{ __('Bienvenido!') }}</h6>
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>{{ __('Mi perfil') }}</span>
+                        <i class="fa fa-key"></i>
+                        <span>{{ __('Cambiar contraseña') }}</span>
                     </a>
                     @can('configuraciones')
                     <a href="{{route('otros')}}" class="dropdown-item">
                         <i class="ni ni-settings"></i>
                         <span>{{ __('Ajustes') }}</span>
-                    </a>
-                    @endcan
-                    @can('Ver acciones')
-                    <a href="{{route('accionesTerapia')}}" class="dropdown-item">
-                        <i class="fa fa-lock"></i>
-                        <span>{{ __('Seguridad') }}</span>
-                    </a>
-                    @endcan
-                    @can('ver-listado-tareas')
-                    <a href="{{route('tareaPendiente')}}" class="dropdown-item">
-                        <i class="ni ni-collection"></i>
-                        <span>{{ __('Tareas Pendientes') }}</span>
                     </a>
                     @endcan
                     <div class="dropdown-divider"></div>

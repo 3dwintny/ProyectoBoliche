@@ -78,7 +78,7 @@
                                     @endphp
                                     @if(count($atletas)==0)
                                     <tr>
-                                        <td colspan="9">SIN ATLETAS ASIGNADOS</td>
+                                        <td colspan="9" style="font-weight: bolder;text-align:center;">SIN ATLETAS ASIGNADOS</td>
                                     </tr>
                                     @else
                                     @foreach($atletas as $item)

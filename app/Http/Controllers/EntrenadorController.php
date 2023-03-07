@@ -31,7 +31,6 @@ class EntrenadorController extends Controller
 
     public function index()
     {
-
         $entrenadores = Entrenador::where('estado','activo')->get();
         return view('entrenador.index', compact('entrenadores'));
     }
@@ -167,5 +166,44 @@ class EntrenadorController extends Controller
     public function acciones(){
         $control = Control::where('tabla_accion_id',14)->with('usuario')->paginate(5);
         return view('entrenador.control',compact('control'));
+    }
+
+    public function modificar(){
+        $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
+        if(count($entrenadores)>0){
+            $entrenador = Entrenador::find($entrenadores[0]->id);
+            $niveles_cdag = Nivel_cdag::All();
+            $niveles_fadn = Nivel_fadn::All();
+            $departamentos = Departamento::All();
+            $nacionalidades = Nacionalidad::All();
+            $deportes = Deporte::All();
+            $tipos_contratos = Tipo_Contrato::All();
+            return view('entrenador.informacionPersonal',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
+        }
+        else{
+            return redirect('home');
+        }
+    }
+
+    public function actualizar(Request $request){
+        $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
+        $entrenador = Entrenador::find($entrenadores[0]->id);
+        $entrenador->fill($request->all());
+        if($request->hasFile('foto'))
+        {
+            $destination = 'storage/uploads/'.$entrenador->foto;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('foto');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('storage/uploads/', $filename);
+            $entrenador->foto = $filename;
+        }
+        $entrenador->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
+        $control->save();
+        return redirect('home');
     }
 }

@@ -76,7 +76,7 @@
                                                         <input class="form-control {{ $errors->has('colegiado') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Número de colegiado') }}" id="colegiado" type="text" name="colegiado" value="{{ old('colegiado') }}" required>
                                                         <label for="colegiado">Número de colegiado</label>
                                                     </div>
-                                                
+                                        
                                                 @if ($errors->has('colegiado'))
                                                     <span class="invalid-feedback" style="display: block;" role="alert">
                                                         <strong>{{ $errors->first('colegiado') }}</strong>

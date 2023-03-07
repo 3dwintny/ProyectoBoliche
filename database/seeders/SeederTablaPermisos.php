@@ -35,11 +35,13 @@ class SeederTablaPermisos extends Seeder
             'eliminar-atleta',
             'editar-atleta',
             'Asistencia por atleta',
+            'atletaPerfil',
             //Configuraciones
             'ver-configuraciones',
             //Entrenadores
             'ver-Entrenadores',
             'registrar-Entrenadores',
+            'entrenadorPerfil',
             //Psicologa
             'registrar-Psicologo',
             'ver-Psicologos',
@@ -57,6 +59,7 @@ class SeederTablaPermisos extends Seeder
             'ver-listado-tareas',
             'asignar-Tareas',
             'Ver acciones',
+            'psicologoPerfil',
             //Funcionalidades del sedevar
             'SeedAtletas',
             'seedEntrenador',

@@ -25,8 +25,8 @@
                         <h6 class="text-overflow m-0">{{ __('Bienvenido!') }}</h6>
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>{{ __('Mi perfil') }}</span>
+                        <i class="fa fa-key"></i>
+                        <span>{{ __('Cambiar contraseña') }}</span>
                     </a>
                     @can('configuraciones')
                     <a href="{{route('otros')}}" class="dropdown-item">
@@ -38,12 +38,6 @@
                     <a href="{{route('accionesTerapia')}}" class="dropdown-item">
                         <i class="fa fa-lock"></i>
                         <span>{{ __('Seguridad') }}</span>
-                    </a>
-                    @endcan
-                    @can('ver-listado-tareas')
-                    <a href="{{route('tareaPendiente')}}" class="dropdown-item">
-                        <i class="ni ni-collection"></i>
-                        <span>{{ __('Tareas Pendientes') }}</span>
                     </a>
                     @endcan
                     <div class="dropdown-divider"></div>
@@ -113,6 +107,13 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('ver-listado-tareas')
+                            <li class="nav-item">
+                                <a href="{{route('tareaPendiente')}}" class="nav-link">
+                                    {{ __('Tareas Pendientes') }}
+                                </a>
+                            </li>
+                            @endcan
                             @can('Asistencia por atleta')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistenciaIndividual') }}">
@@ -153,6 +154,13 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('entrenadorPerfil')
+                            <li>
+                                <a href="{{ route('modificar') }}" class="nav-link">
+                                    {{ __('Mi perfil') }}
+                                </a>
+                            </li>  
+                            @endcan
                         </ul>
                     </div>
                 </li>
@@ -186,6 +194,20 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('psicologia.index') }}">
                                     {{ __('Piscólogos') }}
+                                </a>
+                            </li>
+                            @endcan
+                            @can('psicologoPerfil')
+                            <li class="nav-item">
+                                <a href="{{ route('modificarPsicologia') }}" class="nav-link">
+                                    {{ __('Mi perfil') }}
+                                </a>
+                            </li>  
+                            @endcan
+                            @can('Ver acciones')
+                            <li class="nav-item">
+                                <a href="{{route('accionesTerapia')}}" class="nav-link">
+                                    {{ __('Seguridad') }}
                                 </a>
                             </li>
                             @endcan

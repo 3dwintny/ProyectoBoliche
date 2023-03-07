@@ -25,11 +25,12 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Editar entrenador </h2>
+                            <h2>Editar entrenador</h2>
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('entrenadores.update',$entrenador->id)}}">
+                @can('entrenadorPerfil')
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('actualizar')}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="form-group">
@@ -100,6 +101,9 @@
                                         <label for="celular">Pasaporte</label>
                                     </div>
                                 </div>
+
+
+
                                 <div class="col-md-6 mb-2">
                                     <div class="input-group mb-2">
                                         <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Nacimiento</span>
@@ -146,6 +150,7 @@
                                         <label for="genero">Género</label>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
                                         <select name="estado_civil" id="estado_civil" class="form-control text-dark" required>
@@ -254,8 +259,7 @@
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>
                             </div>
                 </form>
-
-
+                @endcan
             </div>
         </div>
     </div>
