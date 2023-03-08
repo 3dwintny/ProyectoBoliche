@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Administracion;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,9 +74,15 @@ class AuthenticatedSessionController extends Controller
                 }  
             }
             else{
-                $request->authenticate();
-                $request->session()->regenerate();
-                return redirect('home');
+                $administracion = Administracion::where('user_id',$usuario[0]->id)->get();
+                if($administracion[0]->estado == 'inactivo'){
+                    return redirect()->back()->with('warning','Usted ya no forma parte de la asociación, para más información, comuníquese con la administración.');
+                }
+                else{
+                    $request->authenticate();
+                    $request->session()->regenerate();
+                    return redirect('home');
+                }
             }
         }
         else{

@@ -37,7 +37,7 @@ use App\Http\Controllers\Etapa_DeportivaController;
 use App\Http\Controllers\Deporte_AdoptadoController;
 use App\Http\Controllers\Linea_DesarrolloController;
 use App\Http\Controllers\Frontend\FrontendController;
-
+use App\Http\Controllers\AdministracionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +82,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('roles',RolController::class);
     Route::resource('usuarios',UserController::class);
 
+    //Ruta administracion
+    Route::resource('administradores',AdministracionController::class);
+    //Ruta alergias
     Route::resource('alergias',AlergiaController::class);
 	//Rutas Asistencia
     Route::get('asistencia-atleta',[AsistenciaController::class, 'asistenciaIndividual'])->name('asistenciaIndividual');

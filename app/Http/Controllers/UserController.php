@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 use App\Models\Control;
 use Carbon\Carbon;
+use App\Models\Administracion;
 
 
 class UserController extends Controller
@@ -52,7 +53,7 @@ class UserController extends Controller
             'password' => 'required | same:confirm-password',
             'roles' => 'required'
         ]);
-
+        $rol = $request->roles;
         $input = $request-> all();
         $input ['password'] = Hash::make($input['password']);
 
@@ -61,7 +62,11 @@ class UserController extends Controller
         $user->assignRole($request -> input('roles'));
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>31]);
         $control->save();
-
+        if($rol[0] == 'Administrador'){
+            $ultimoUsuario = User::max('id');
+            $administrador = new Administracion(['estado'=>'activo','user_id'=>$ultimoUsuario]);
+            $administrador->save();
+        }
         return redirect()->route('usuarios.index');
 
     }

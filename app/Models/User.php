@@ -51,4 +51,8 @@ class User extends Authenticatable
     public function controles(){
         return $this->hasMany('App\Models\Control');
     }
+
+    public function administraciones(){
+        return $this->hasMany('App\Models\Administracion');
+    }
 }

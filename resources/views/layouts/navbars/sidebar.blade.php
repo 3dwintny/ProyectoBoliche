@@ -34,6 +34,12 @@
                         <span>{{ __('Ajustes') }}</span>
                     </a>
                     @endcan
+                    @can('administracion')
+                    <a href="{{route('administradores.index')}}" class="dropdown-item">
+                        <i class="fa fa-magic" aria-hidden="true"></i>
+                        <span>{{ __('Administración') }}</span>
+                    </a>
+                    @endcan
                     @can('Ver acciones')
                     <a href="{{route('accionesTerapia')}}" class="dropdown-item">
                         <i class="fa fa-lock"></i>

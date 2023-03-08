@@ -31,6 +31,12 @@
                         <span>{{ __('Ajustes') }}</span>
                     </a>
                     @endcan
+                    @can('administracion')
+                    <a href="{{route('administradores.index')}}" class="dropdown-item">
+                        <i class="fa fa-magic" aria-hidden="true"></i>
+                        <span>{{ __('Administración') }}</span>
+                    </a>
+                    @endcan
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
