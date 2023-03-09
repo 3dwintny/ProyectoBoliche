@@ -116,4 +116,18 @@ class PRTController extends Controller
         $control = Control::where('tabla_accion_id',26)->with('usuario')->paginate(5);
         return view('configuraciones.prt.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = PRT::where('estado', 'inactivo')->get();
+        return view('configuraciones.prt.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        PRT::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([PRTController::class,'index']);
+    }
 }

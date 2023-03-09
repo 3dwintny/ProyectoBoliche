@@ -51,6 +51,14 @@
                             </a>
                         </li>
                     </div>
+                    <div class="row">
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-icon" href="{{ route('restaurar') }}">
+                                <i class="fa fa-history" aria-hidden="true"></i>
+                                <span class="nav-link-inner--text">{{ __('Restaurar') }}</span>
+                            </a>
+                        </li>
+                    </div>
                 </ul>
             </div>
         </div>

@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Líneas de Desarrollo</h1>
+          <h1 class="text-white">Líneas de desarrollo</h1>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Línea de Desarrollo</th>
+          <th scope="col">Línea</th>
         </tr>
       </thead>
       <tbody class="table-hover">

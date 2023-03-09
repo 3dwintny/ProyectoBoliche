@@ -116,4 +116,18 @@ class Nivel_fadnController extends Controller
         $control = Control::where('tabla_accion_id',23)->with('usuario')->paginate(5);
         return view('configuraciones.nivel_fadn.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Nivel_fadn::where('estado', 'inactivo')->get();
+        return view('configuraciones.nivel_fadn.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Nivel_fadn::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([Nivel_fadnController::class,'index']);
+    }
 }

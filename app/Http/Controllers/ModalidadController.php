@@ -117,4 +117,18 @@ class ModalidadController extends Controller
         $control = Control::where('tabla_accion_id',19)->with('usuario')->paginate(5);
         return view('configuraciones.modalidad.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Modalidad::where('estado', 'inactivo')->get();
+        return view('configuraciones.modalidad.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Modalidad::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([ModalidadController::class,'index']);
+    }
 }

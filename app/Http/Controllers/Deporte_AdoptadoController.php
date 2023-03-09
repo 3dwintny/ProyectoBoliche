@@ -116,4 +116,18 @@ class Deporte_AdoptadoController extends Controller
         $control = Control::where('tabla_accion_id',8)->with('usuario')->paginate(5);
         return view('configuraciones.deporte_a.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Deporte_Adoptado::where('estado', 'inactivo')->get();
+        return view('configuraciones.deporte_a.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Deporte_Adoptado::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([Deporte_AdoptadoController::class,'index']);
+    }
 }

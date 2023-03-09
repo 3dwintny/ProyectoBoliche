@@ -13,7 +13,13 @@
     </div>
 </div>
 @include('configuraciones.varnav')
-<div class="col-8 ">
+<div class="container">
+    <div>
+        <h1 style="text-align: right;">USUARIOS</h1>
+        <hr>
+    </div>
+</div>
+<div class="col-8">
     <div class="row container-fluid mb-3">
         <div class="card">
             <div class="card-body justify-content-center">

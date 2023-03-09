@@ -116,4 +116,18 @@ class Linea_DesarrolloController extends Controller
         $control = Control::where('tabla_accion_id',18)->with('usuario')->paginate(5);
         return view('configuraciones.linea_desarrollo.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Linea_Desarrollo::where('estado', 'inactivo')->get();
+        return view('configuraciones.linea_desarrollo.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Linea_Desarrollo::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([Linea_DesarrolloController::class,'index']);
+    }
 }

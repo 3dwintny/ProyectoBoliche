@@ -206,4 +206,18 @@ class EntrenadorController extends Controller
         $control->save();
         return redirect('home');
     }
+
+    public function eliminados(){
+        $eliminar = Entrenador::where('estado', 'inactivo')->get();
+        return view('entrenador.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Entrenador::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([EntrenadorController::class,'index']);
+    }
 }

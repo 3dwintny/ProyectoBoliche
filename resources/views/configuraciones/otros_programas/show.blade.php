@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Otros Programas de Atención</h1>
+          <h1 class="text-white">Otros programas de atención</h1>
         </div>
       </div>
     </div>

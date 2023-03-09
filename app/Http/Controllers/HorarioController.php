@@ -113,4 +113,18 @@ class HorarioController extends Controller
         $control = Control::where('tabla_accion_id',17)->with('usuario')->paginate(5);
         return view('configuraciones.horario.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Horario::where('estado', 'inactivo')->get();
+        return view('configuraciones.horario.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Horario::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([HorarioController::class,'index']);
+    }
 }

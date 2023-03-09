@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Tipos de Contrato</h1>
+                    <h1 class="text-white">Tipos de contrato</h1>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar Nuevo Tipo de Contrato</h2>
+                            <h2> Registrar nuevo</h2>
                         </strong>
 
                     </div>

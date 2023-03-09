@@ -117,4 +117,18 @@ class CategoriaController extends Controller
         $control = Control::where('tabla_accion_id',5)->with('usuario')->paginate(5);
         return view('configuraciones.categoria.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Categoria::where('estado', 'inactivo')->get();
+        return view('configuraciones.categoria.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Categoria::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([CategoriaController::class,'index']);
+    }
 }

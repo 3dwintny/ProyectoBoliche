@@ -116,4 +116,18 @@ class Etapa_DeportivaController extends Controller
         $control = Control::where('tabla_accion_id',15)->with('usuario')->paginate(5);
         return view('configuraciones.etapadep.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Etapa_Deportiva::where('estado', 'inactivo')->get();
+        return view('configuraciones.etapadep.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Etapa_Deportiva::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([Etapa_DeportivaController::class,'index']);
+    }
 }

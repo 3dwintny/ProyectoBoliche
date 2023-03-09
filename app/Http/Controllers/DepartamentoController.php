@@ -112,4 +112,18 @@ class DepartamentoController extends Controller
         $control = Control::where('tabla_accion_id',7)->with('usuario')->paginate(5);
         return view('configuraciones.departamento.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Departamento::where('estado', 'inactivo')->get();
+        return view('configuraciones.departamento.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Departamento::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([DepartamentoController::class,'index']);
+    }
 }

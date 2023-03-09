@@ -115,4 +115,18 @@ class NacionalidadController extends Controller
         $control = Control::where('tabla_accion_id',21)->with('usuario')->paginate(5);
         return view('configuraciones.nacionalidad.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Nacionalidad::where('estado', 'inactivo')->get();
+        return view('configuraciones.nacionalidad.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Nacionalidad::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([NacionalidadController::class,'index']);
+    }
 }

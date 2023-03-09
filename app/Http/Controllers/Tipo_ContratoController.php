@@ -116,4 +116,18 @@ class Tipo_ContratoController extends Controller
         $control = Control::where('tabla_accion_id',30)->with('usuario')->paginate(5);
         return view('configuraciones.tipos_contratos.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Tipo_Contrato::where('estado', 'inactivo')->get();
+        return view('configuraciones.tipos_contratos.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Tipo_Contrato::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([Tipo_ContratoController::class,'index']);
+    }
 }

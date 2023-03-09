@@ -219,4 +219,18 @@ class CentroController extends Controller
         $control = Control::where('tabla_accion_id',6)->with('usuario')->paginate(5);
         return view('configuraciones.Centro.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Centro::where('estado', 'inactivo')->get();
+        return view('configuraciones.Centro.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Centro::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([CentroController::class,'index']);
+    }
 }

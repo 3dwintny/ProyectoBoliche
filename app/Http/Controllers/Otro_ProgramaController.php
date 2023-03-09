@@ -116,4 +116,18 @@ class Otro_ProgramaController extends Controller
         $control = Control::where('tabla_accion_id',24)->with('usuario')->paginate(5);
         return view('configuraciones.otros_programas.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Otro_Programa::where('estado', 'inactivo')->get();
+        return view('configuraciones.otros_programas.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Otro_Programa::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([Otro_ProgramaController::class,'index']);
+    }
 }

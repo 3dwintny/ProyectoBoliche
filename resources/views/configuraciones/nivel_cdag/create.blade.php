@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar Nuevo Nivel CDAG </h2>
+                            <h2> Registrar nuevo</h2>
                         </strong>
 
                     </div>

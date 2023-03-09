@@ -15,6 +15,10 @@
 @include('configuraciones.varnav')
 <div class="align-center">
     <div class="row container mb-3">
+        <div>
+            <h1 style="text-align: right;">SEGURIDAD</h1>
+            <hr>
+        </div>
         <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">

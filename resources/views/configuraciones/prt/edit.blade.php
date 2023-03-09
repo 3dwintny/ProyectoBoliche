@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar PRT</h2>
+                            <h2>Editar</h2>
                         </strong>
 
                     </div>

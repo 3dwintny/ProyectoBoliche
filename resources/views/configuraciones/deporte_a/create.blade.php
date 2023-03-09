@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Deportes Adaptados</h1>
+                    <h1 class="text-white">Deportes adaptados</h1>
                 </div>
             </div>
         </div>

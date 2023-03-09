@@ -87,4 +87,6 @@ class AdministracionController extends Controller
         $control->save();
         return redirect()->action([AdministracionController::class,'index']);
     }
+
+    public function eliminados(){}
 }

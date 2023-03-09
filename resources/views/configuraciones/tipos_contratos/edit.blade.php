@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Tipos de Contrato</h1>
+                    <h1 class="text-white">Tipos de contrato</h1>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar Tipo de Contrato</h2>
+                            <h2>Editar</h2>
                         </strong>
 
                     </div>
@@ -36,7 +36,7 @@
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="descripcion" placeholder="Tipo de Contrato" name="descripcion" value="{{$contratos->descripcion}}" required>
-                                <label for="descripcion">Tipo de Contrato</label>
+                                <label for="descripcion">Tipo de contrato</label>
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>

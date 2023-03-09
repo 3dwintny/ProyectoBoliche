@@ -138,4 +138,18 @@ class PsicologiaController extends Controller
         $control = Control::where('tabla_accion_id',27)->with('usuario')->paginate(5);
         return view('psicologia.terapias.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Psicologia::where('estado', 'inactivo')->get();
+        return view('configuraciones.psicologia.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Psicologia::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([PsicologiaController::class,'index']);
+    }
 }

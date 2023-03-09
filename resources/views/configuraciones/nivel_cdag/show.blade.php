@@ -21,7 +21,6 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nivel</th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody class="table-hover">

@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar Nuevo Programa de Atención </h2>
+                            <h2> Registrar Nuevo</h2>
                         </strong>
 
                     </div>

@@ -216,7 +216,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('seguridad/categorias',[CategoriaController::class,'acciones'])->name('accionesCategoria');
     Route::get('seguridad/centros',[CentroController::class,'acciones'])->name('accionesCentro');
     Route::get('seguridad/departamentos',[DepartamentoController::class,'acciones'])->name('accionesDepartamento');
-    Route::get('seguridad/deporte-adaptado',[DeporteAdaptadoController::class,'acciones'])->name('accionesAdaptado');
+    Route::get('seguridad/deporte-adaptado',[Deporte_AdoptadoController::class,'acciones'])->name('accionesAdaptado');
     Route::get('seguridad/deporte',[DeporteController::class,'acciones'])->name('accionesDeporte');
     Route::get('seguridad/edg-27',[EDG27Controller::class,'acciones'])->name('accionesEDG27');
     Route::get('seguridad/edg-272',[EDG272Controller::class,'acciones'])->name('accionesEDG272');
@@ -226,7 +226,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('seguridad/etapa-deportiva',[Etapa_DeportivaController::class,'acciones'])->name('accionesEtapa');
     Route::get('seguridad/formulario',[FormularioController::class,'acciones'])->name('accionesFormulario');
     Route::get('seguridad/horarios',[HorarioController::class,'acciones'])->name('accionesHorario');
-    Route::get('seguridad/linea-de-desarrollo',[LineaDesarrolloController::class,'acciones'])->name('accionesLinea');
+    Route::get('seguridad/linea-de-desarrollo',[Linea_DesarrolloController::class,'acciones'])->name('accionesLinea');
     Route::get('seguridad/modalidad',[ModalidadController::class,'acciones'])->name('accionesModalidad');
     Route::get('seguridad/municipios',[MunicipioController::class,'acciones'])->name('accionesMunicipio');
     Route::get('seguridad/nacionalidades',[NacionalidadController::class,'acciones'])->name('accionesNacionalidad');
@@ -239,6 +239,82 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('seguridad/terapias',[TerapiaController::class,'acciones'])->name('accionesTerapia');
     Route::get('seguridad/tipos-de-contratos',[Tipo_ContratoController::class,'acciones'])->name('accionesContrato');
     Route::get('seguridad/usuarios',[UserController::class,'acciones'])->name('accionesUsuarios');
+    Route::get('restaurar', function () {return view('configuraciones.restaurar');})->name('restaurar');
+
+    Route::get('restaurar/alergias',[AlergiaController::class,'eliminados'])->name('eliminadosAlergia');
+    Route::post('restaurandoAlergias',[AlergiaController::class,'restaurar'])->name('restaurandoAlergia');
+
+    Route::get('restaurar/atletas',[AtletaController::class,'eliminados'])->name('eliminadosAtletas');
+    Route::get('restaurar/asistencia',[AsistenciaController::class,'eliminados'])->name('eliminadosAsistencia');
+    Route::get('restaurar/alumnos',[AlumnoController::class,'eliminados'])->name('eliminadosAlumno');
+
+    Route::get('restaurar/categorias',[CategoriaController::class,'eliminados'])->name('eliminadosCategoria');
+    Route::post('restaurandoCategorias',[CategoriaController::class,'restaurar'])->name('restaurandoCategoria');
+
+    Route::get('restaurar/centros',[CentroController::class,'eliminados'])->name('eliminadosCentro');
+    Route::post('restaurandoCentros',[CentroController::class,'restaurar'])->name('restaurandoCentro');
+
+    Route::get('restaurar/departamentos',[DepartamentoController::class,'eliminados'])->name('eliminadosDepartamento');
+    Route::post('restaurandoDepartamentos',[DepartamentoController::class,'restaurar'])->name('restaurandoDepartamento');
+
+    Route::get('restaurar/deporte-adaptado',[Deporte_AdoptadoController::class,'eliminados'])->name('eliminadosAdaptado');
+    Route::post('restaurandoAdaptados',[Deporte_AdoptadoController::class,'restaurar'])->name('restaurandoAdaptado');
+
+    Route::get('restaurar/deporte',[DeporteController::class,'eliminados'])->name('eliminadosDeporte');
+    Route::post('restaurandoDeportes',[DeporteController::class,'restaurar'])->name('restaurandoDeporte');
+
+    Route::get('restaurar/edg-27',[EDG27Controller::class,'eliminados'])->name('eliminadosEDG27');
+    Route::get('restaurar/edg-272',[EDG272Controller::class,'eliminados'])->name('eliminadosEDG272');
+    Route::get('restaurar/edg-31',[EDG31Controller::class,'eliminados'])->name('eliminadosEDG31');
+    Route::get('restaurar/encargados',[EncargadoController::class,'eliminados'])->name('eliminadosEncargado');
+
+    Route::get('restaurar/entrenadores',[EntrenadorController::class,'eliminados'])->name('eliminadosEntrenador');
+    Route::post('restaurandoEntrenadores',[EntrenadorController::class,'restaurar'])->name('restaurandoEntrenador');
+
+    Route::get('restaurar/etapa-deportiva',[Etapa_DeportivaController::class,'eliminados'])->name('eliminadosEtapa');
+    Route::post('restaurandoEtapasDeportivas',[Etapa_DeportivaController::class,'restaurar'])->name('restaurandoEtapaDeportiva');
+
+    Route::get('restaurar/formulario',[FormularioController::class,'eliminados'])->name('eliminadosFormulario');
+
+    Route::get('restaurar/horarios',[HorarioController::class,'eliminados'])->name('eliminadosHorario');
+    Route::post('restaurandoHorarios',[HorarioController::class,'restaurar'])->name('restaurandoHorario');
+
+    Route::get('restaurar/linea-de-desarrollo',[Linea_DesarrolloController::class,'eliminados'])->name('eliminadosLinea');
+    Route::post('restaurandoLineasDesarrollo',[Linea_DesarrolloController::class,'restaurar'])->name('restaurandoLineaDesarrollo');
+
+    Route::get('restaurar/modalidad',[ModalidadController::class,'eliminados'])->name('eliminadosModalidad');
+    Route::post('restaurandoModalidades',[ModalidadController::class,'restaurar'])->name('restaurandoModalidad');
+
+    Route::get('restaurar/municipios',[MunicipioController::class,'eliminados'])->name('eliminadosMunicipio');
+    Route::post('restaurandoMunicipios',[MunicipioController::class,'restaurar'])->name('restaurandoMunicipio');
+
+    Route::get('restaurar/nacionalidades',[NacionalidadController::class,'eliminados'])->name('eliminadosNacionalidad');
+    Route::post('restaurandoNacionalidades',[NacionalidadController::class,'restaurar'])->name('restaurandoNacionalidad');
+
+    Route::get('restaurar/niveles-cdag',[Nivel_cdagController::class,'eliminados'])->name('eliminadosCDAG');
+    Route::post('restaurandoCDAG',[Nivel_cdagController::class,'restaurar'])->name('restaurandoCDAG');
+
+    Route::get('restaurar/niveles-fadn',[Nivel_fadnController::class,'eliminados'])->name('eliminadosFADN');
+    Route::post('restaurandoFADN',[Nivel_fadnController::class,'restaurar'])->name('restaurandoFADN');
+
+    Route::get('restaurar/otros-programas-de-atencion',[Otro_ProgramaController::class,'eliminados'])->name('eliminadosOtro');
+    Route::post('restaurandoOtros',[Otro_ProgramaController::class,'restaurar'])->name('restaurandoOtro');
+
+    Route::get('restaurar/parentescos',[ParentescoController::class,'eliminados'])->name('eliminadosParentesco');
+    Route::post('restaurandoParentescos',[ParentescoController::class,'restaurar'])->name('restaurandoParentesco');
+
+    Route::get('restaurar/prt',[PRTController::class,'eliminados'])->name('eliminadosPRT');
+    Route::post('restaurandoPRT',[PRTController::class,'restaurar'])->name('restaurandoPRT');
+
+    Route::get('restaurar/psicologia',[PsicologiaController::class,'eliminados'])->name('eliminadosPsicologia');
+    Route::post('restaurandoPsicologos',[PsicologiaController::class,'restaurar'])->name('restaurandoPsicologia');
+
+    Route::get('restaurar/terapias',[TerapiaController::class,'eliminados'])->name('eliminadosTerapia');
+    
+    Route::get('restaurar/tipos-de-contratos',[Tipo_ContratoController::class,'eliminados'])->name('eliminadosContrato');
+    Route::post('restaurandoContratos',[Tipo_ContratoController::class,'restaurar'])->name('restaurandoContrato');
+
+    Route::get('restaurar/usuarios',[UserController::class,'eliminados'])->name('eliminadosUsuarios');
     });
 
 Route::resource('tipo-usuarios',Tipo_UsuarioController::class);

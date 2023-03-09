@@ -111,4 +111,18 @@ class MunicipioController extends Controller
         $control = Control::where('tabla_accion_id',20)->with('usuario')->paginate(5);
         return view('configuraciones.municipio.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Municipio::where('estado', 'inactivo')->with('departamento')->get();
+        return view('configuraciones.municipio.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Municipio::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([MunicipioController::class,'index']);
+    }
 }

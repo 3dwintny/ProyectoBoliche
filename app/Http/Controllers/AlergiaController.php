@@ -21,7 +21,7 @@ class AlergiaController extends Controller
      */
     public function index()
     {
-        $alergia = Alergia::all();
+        $alergia = Alergia::where('estado', 'activo')->get();
         return view('configuraciones.alergia.show',compact("alergia"));
     }
     /**
@@ -114,5 +114,19 @@ class AlergiaController extends Controller
     public function acciones(){
         $control = Control::where('tabla_accion_id',1)->with('usuario')->paginate(5);
         return view('configuraciones.alergia.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Alergia::where('estado', 'inactivo')->get();
+        return view('configuraciones.alergia.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Alergia::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([AlergiaController::class,'index']);
     }
 }

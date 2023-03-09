@@ -117,4 +117,18 @@ class ParentescoController extends Controller
         $control = Control::where('tabla_accion_id',25)->with('usuario')->paginate(5);
         return view('configuraciones.parentesco.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Parentesco::where('estado', 'inactivo')->get();
+        return view('configuraciones.parentesco.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Parentesco::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([ParentescoController::class,'index']);
+    }
 }

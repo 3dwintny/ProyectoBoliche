@@ -116,4 +116,18 @@ class Nivel_cdagController extends Controller
         $control = Control::where('tabla_accion_id',22)->with('usuario')->paginate(5);
         return view('configuraciones.nivel_cdag.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Nivel_cdag::where('estado', 'inactivo')->get();
+        return view('configuraciones.nivel_cdag.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Nivel_cdag::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([Nivel_cdagController::class,'index']);
+    }
 }

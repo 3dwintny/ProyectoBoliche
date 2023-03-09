@@ -116,4 +116,18 @@ class DeporteController extends Controller
         $control = Control::where('tabla_accion_id',9)->with('usuario')->paginate(5);
         return view('configuraciones.deporte.control',compact('control'));
     }
+
+    public function eliminados(){
+        $eliminar = Deporte::where('estado', 'inactivo')->get();
+        return view('configuraciones.deporte.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
+        Deporte::find($id)->update(['estado'=>'activo']);
+        return redirect()->action([DeporteController::class,'index']);
+    }
 }

@@ -224,4 +224,6 @@ class AlumnoController extends Controller
         $control = Control::where('tabla_accion_id',2)->with('usuario')->paginate(5);
         return view('configuraciones.alergia.control',compact('control'));
     }
+
+    public function eliminados(){}
 }
