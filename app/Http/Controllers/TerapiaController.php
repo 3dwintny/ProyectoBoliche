@@ -164,10 +164,42 @@ class TerapiaController extends Controller
         $obtenerTarea = $request->tarea;
         $correoAtleta = $request->obtenerCorreo;
         $obtenerFechaTarea = $request->fecha;
+        $tarea = "";
         if($obtenerTarea != ""){
             Mail::to($correoAtleta)->send(new CorreosTerapia($obtenerTarea,$obtenerFechaTarea));
+            $tarea = "pendiente";
         }
-        $terapias = new Terapia($request->all());
+        else{
+            $tarea = "sin";
+        }
+        $terapias = new Terapia([
+            'numero_terapia' => $request->numero_terapia,
+            'fecha' => $request->fecha,
+            'hora_inicio' => $request->hora_inicio,
+            'impresion_clinica' => $request->impresion_clinica,
+            'analisis_semiologico' => $request->analisis_semiologico,
+            'desarrollo' => $request->desarrollo,
+            'observaciones' => $request->observaciones,
+            'tarea' => $obtenerTarea,
+            'estado_tarea' => $tarea,
+            'conciencia_corporal' => $request->conciencia_corporal,
+            'dominio_corporal' => $request->dominio_corporal,
+            'dominio_respiracion' => $request->dominio_respiracion,
+            'dialogo_interno' => $request->dialogo_interno,
+            'atencion' => $request->atencion,
+            'concentracion' => $request->concentracion,
+            'motivacion' => $request->motivacion,
+            'confianza' => $request->confianza,
+            'activacion' => $request->activacion,
+            'relajacion' => $request->relajacion,
+            'estres' => $request->estres,
+            'ansiedad_cognitiva' => $request->ansiedad_cognitiva,
+            'ansiedad_fisica' => $request->ansiedad_fisica,
+            'miedo' => $request->miedo,
+            'frustracion' => $request->frustracion,
+            'atleta_id' => $request->atleta_id,
+            'psicologia_id' => $request->psicologia_id,
+        ]);
         $terapias->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>29]);
         $control->save();
