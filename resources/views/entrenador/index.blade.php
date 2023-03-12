@@ -35,10 +35,6 @@
             $contador = 1;
           @endphp
           @foreach ($entrenadores as $entrenador)
-          @php
-            $hashid = new Hashids\Hashids();
-            $idEntrenador = $hashid->encode($entrenador->id);
-          @endphp
           <tr>
             <td>{{$contador}}</td>
             <td>{{$entrenador->nombre1}} {{$entrenador->nombre2}} {{$entrenador->nombre3}} {{$entrenador->apellido1}} {{$entrenador->apellido2}} {{$entrenador->apellido_casada}}</td>
@@ -50,22 +46,20 @@
             <td>{{$entrenador->direccion}}</td>
             <td>{{$entrenador->deporte->nombre}}</td>
             <td>
-              <form action="{{route('entrenadores.edit',$idEntrenador)}}" method="GET">
+              <form action="{{route('entrenadores.edit',encrypt($entrenador->id))}}" method="GET">
                 <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
-                <input type="hidden" name="e" id="e" value="{{$idEntrenador}}">
               </form>
             </td>
             <td>
-              <form action="{{route('entrenadores.show',$idEntrenador)}}" action="GET">
+              <form action="{{route('entrenadores.show',encrypt($entrenador->id))}}" action="GET">
                 <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-regular fa-eye"></i></button>
-                <input type="hidden" name="e" id="e" value="{{$idEntrenador}}">
               </form>
             </td>
             <td>
-              <form action="{{route('entrenadores.destroy',$entrenador->id)}}" method="POST">
+              <form action="{{route('entrenadores.destroy',encrypt($entrenador->id))}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return eliminarEntrenador('Eliminar Entrenador')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+                <button type="submit" class="btn btn-danger" onclick="return eliminarEntrenador('Eliminar entrenador')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
               </form>
             </td>
           </tr>

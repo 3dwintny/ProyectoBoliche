@@ -9,7 +9,6 @@ use App\Models\Nacionalidad;
 use App\Models\Deporte;
 use App\Models\Entrenador;
 use Illuminate\Http\Request;
-use Hashids\Hashids;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use App\Models\Control;
@@ -31,7 +30,10 @@ class EntrenadorController extends Controller
 
     public function index()
     {
-        $entrenadores = Entrenador::where('estado','activo')->get();
+        $entrenadores = Entrenador::where('estado','activo')->get(['id','nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada',
+                        'celular','telefono_casa','cui','pasaporte','genero','fecha_nacimiento','edad','años_experiencia','correo','direccion',
+                        'foto','estado_civil','nit','fecha_registro','escolaridad','nivel_cdag_id','nivel_fadn_id','departamento_id',
+                        'nacionalidad_id','deporte_id','tipo_contrato_id']);
         return view('entrenador.index', compact('entrenadores'));
     }
 
@@ -43,12 +45,12 @@ class EntrenadorController extends Controller
     public function create()
     {
         $hoy = Carbon::now();
-        $niveles_cdag = Nivel_cdag::All();
-        $niveles_fadn = Nivel_fadn::All();
-        $departamentos = Departamento::All();
-        $nacionalidades = Nacionalidad::All();
-        $deportes = Deporte::All();
-        $tipos_contratos = Tipo_Contrato::All();
+        $niveles_cdag = Nivel_cdag::get(['id','nombre']);
+        $niveles_fadn = Nivel_fadn::get(['id','tipo']);
+        $departamentos = Departamento::get(['id','nombre']);
+        $nacionalidades = Nacionalidad::get(['id','descripcion']);
+        $deportes = Deporte::get(['id','nombre']);
+        $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
         return view('entrenador.create',compact("niveles_cdag","niveles_fadn","departamentos","nacionalidades"
         ,"deportes","tipos_contratos","hoy"));
     }
@@ -61,12 +63,39 @@ class EntrenadorController extends Controller
      */
     public function store(Request $request)
     {
-        $entrenador = new Entrenador($request->all());
-        $request->validate(
-            [
-                'cui'=>['unique:entrenador'],
-                'correo'=>['unique:entrenador']
-            ]);
+        $request->validate([
+            'cui'=>['unique:entrenador'],
+            'correo'=>['unique:entrenador']
+        ]);
+        $entrenador = new Entrenador([
+            'nombre1' => $request->nombre1,
+            'nombre2' => $request->nombre2,
+            'nombre3' => $request->nombre3,
+            'apellido1' => $request->apellido1,
+            'apellido2' => $request->apellido2,
+            'apellido_casada' => $request->apellido_casada,
+            'celular' => $request->celular,
+            'telefono_casa' => $request->telefono_casa,
+            'cui' => $request->cui,
+            'pasaporte' => $request->pasaporte,
+            'genero' => $request->genero,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'edad' => $request->edad,
+            'años_experiencia' => $request->años_experiencia,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+            'foto' => $request->foto,
+            'estado_civil' => $request->estado_civil,
+            'nit' => $request->nit,
+            'fecha_registro' => $request->fecha_registro,
+            'escolaridad' => $request->escolaridad,
+            'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
+            'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
+            'departamento_id' => decrypt($request->departamento_id),
+            'nacionalidad_id' => decrypt($request->nacionalidad_id),
+            'deporte_id' => decrypt($request->deporte_id),
+            'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
+        ]);
         if($request->hasFile('foto'))
         {
             $file = $request->file('foto');
@@ -87,13 +116,9 @@ class EntrenadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Request $request)
+    public function show($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $entrenador = Entrenador::find($id);
+        $entrenador = Entrenador::find(decrypt($id));
         $nivel_cdag = Nivel_cdag::find($entrenador->nivel_cdag_id); 
         $nivel_fadn = Nivel_fadn::find($entrenador->nivel_fadn_id); 
         $departamento = Departamento::find($entrenador->departamento_id);
@@ -108,19 +133,15 @@ class EntrenadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $entrenador = Entrenador::find($id);
-        $niveles_cdag = Nivel_cdag::All();
-        $niveles_fadn = Nivel_fadn::All();
-        $departamentos = Departamento::All();
-        $nacionalidades = Nacionalidad::All();
-        $deportes = Deporte::All();
-        $tipos_contratos = Tipo_Contrato::All();
+        $entrenador = Entrenador::find(decrypt($id));
+        $niveles_cdag = Nivel_cdag::get(['id','nombre']);
+        $niveles_fadn = Nivel_fadn::get(['id','tipo']);
+        $departamentos = Departamento::get(['id','nombre']);
+        $nacionalidades = Nacionalidad::get(['id','descripcion']);
+        $deportes = Deporte::get(['id','nombre']);
+        $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
         return view('entrenador.edit',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
     }
 
@@ -133,8 +154,7 @@ class EntrenadorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $entrenador = Entrenador::find($id);
-        $entrenador->fill($request->all());
+        $entrenador = Entrenador::find(decrypt($id));
         if($request->hasFile('foto'))
         {
             $destination = 'storage/uploads/'.$entrenador->foto;
@@ -145,8 +165,40 @@ class EntrenadorController extends Controller
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
             $file->move('storage/uploads/', $filename);
-            $entrenador->foto = $filename;
+            $fotografia = $filename;
         }
+        else{
+            $fotografia = $request->pic;
+        }
+        $entrenador->fill([
+            'nombre1' => $request->nombre1,
+            'nombre2' => $request->nombre2,
+            'nombre3' => $request->nombre3,
+            'apellido1' => $request->apellido1,
+            'apellido2' => $request->apellido2,
+            'apellido_casada' => $request->apellido_casada,
+            'celular' => $request->celular,
+            'telefono_casa' => $request->telefono_casa,
+            'cui' => $request->cui,
+            'pasaporte' => $request->pasaporte,
+            'genero' => $request->genero,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'edad' => $request->edad,
+            'años_experiencia' => $request->años_experiencia,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+            'foto' => $fotografia,
+            'estado_civil' => $request->estado_civil,
+            'nit' => $request->nit,
+            'fecha_registro' => $request->fecha_registro,
+            'escolaridad' => $request->escolaridad,
+            'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
+            'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
+            'departamento_id' => decrypt($request->departamento_id),
+            'nacionalidad_id' => decrypt($request->nacionalidad_id),
+            'deporte_id' => decrypt($request->deporte_id),
+            'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
+        ]);
         $entrenador->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
         $control->save();
@@ -161,7 +213,7 @@ class EntrenadorController extends Controller
      */
     public function destroy($id)
     {
-        Entrenador::find($id)->update(['estado' => 'inactivo']);
+        Entrenador::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>14]);
         $control->save();
         return redirect()->route('entrenadores.index')->with('message', 'Entrenador eliminado');;
@@ -176,12 +228,12 @@ class EntrenadorController extends Controller
         $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
         if(count($entrenadores)>0){
             $entrenador = Entrenador::find($entrenadores[0]->id);
-            $niveles_cdag = Nivel_cdag::All();
-            $niveles_fadn = Nivel_fadn::All();
-            $departamentos = Departamento::All();
-            $nacionalidades = Nacionalidad::All();
-            $deportes = Deporte::All();
-            $tipos_contratos = Tipo_Contrato::All();
+            $niveles_cdag = Nivel_cdag::get(['id','nombre']);
+            $niveles_fadn = Nivel_fadn::get(['id','tipo']);
+            $departamentos = Departamento::get(['id','nombre']);
+            $nacionalidades = Nacionalidad::get(['id','descripcion']);
+            $deportes = Deporte::get(['id','nombre']);
+            $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
             return view('entrenador.informacionPersonal',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
         }
         else{
@@ -192,7 +244,6 @@ class EntrenadorController extends Controller
     public function actualizar(Request $request){
         $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
         $entrenador = Entrenador::find($entrenadores[0]->id);
-        $entrenador->fill($request->all());
         if($request->hasFile('foto'))
         {
             $destination = 'storage/uploads/'.$entrenador->foto;
@@ -203,8 +254,40 @@ class EntrenadorController extends Controller
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
             $file->move('storage/uploads/', $filename);
-            $entrenador->foto = $filename;
+            $fotografia = $filename;
         }
+        else{
+            $fotografia = $request->pic;
+        }
+        $entrenador->fill([
+            'nombre1' => $request->nombre1,
+            'nombre2' => $request->nombre2,
+            'nombre3' => $request->nombre3,
+            'apellido1' => $request->apellido1,
+            'apellido2' => $request->apellido2,
+            'apellido_casada' => $request->apellido_casada,
+            'celular' => $request->celular,
+            'telefono_casa' => $request->telefono_casa,
+            'cui' => $request->cui,
+            'pasaporte' => $request->pasaporte,
+            'genero' => $request->genero,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'edad' => $request->edad,
+            'años_experiencia' => $request->años_experiencia,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+            'foto' => $fotografia,
+            'estado_civil' => $request->estado_civil,
+            'nit' => $request->nit,
+            'fecha_registro' => $request->fecha_registro,
+            'escolaridad' => $request->escolaridad,
+            'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
+            'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
+            'departamento_id' => decrypt($request->departamento_id),
+            'nacionalidad_id' => decrypt($request->nacionalidad_id),
+            'deporte_id' => decrypt($request->deporte_id),
+            'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
+        ]);
         $entrenador->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
         $control->save();
@@ -217,11 +300,7 @@ class EntrenadorController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Entrenador::find($id)->update(['estado'=>'activo']);
+        Entrenador::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([EntrenadorController::class,'index']);
     }
 }

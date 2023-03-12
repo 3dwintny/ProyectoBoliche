@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar nuevo entrenador </h2>
+                            <h2>Registrar nuevo entrenador</h2>
                         </strong>
 
                     </div>
@@ -207,7 +207,7 @@
                                         <select class="form-control text-dark" name="nivel_cdag_id" id="nivel_cdag_id" required>
                                             <option selected value=""></option>
                                             @foreach ($niveles_cdag as $item)
-                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
                                         <label for="nivel_cdag_id">Nivel CDAG</label>
@@ -218,7 +218,7 @@
                                         <select name="nivel_fadn_id" class="form-control text-dark" id="nivel_fadn_id" required>
                                             <option selected value=""></option>
                                             @foreach ($niveles_fadn as $item)
-                                                <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->tipo}}</option>
                                             @endforeach
                                         </select>
                                         <label for="nivel_fadn_id">Nivel FADN</label>
@@ -228,7 +228,7 @@
                                     <div class="form-floating">
                                         <select name="departamento_id" class="form-control text-dark" id="departamento_id" required>
                                             @foreach ($departamentos as $item)
-                                                <option value="{{$item->id}}" {{$item->nombre == "Quetzaltenango" ? 'selected' : ''}}>{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{$item->nombre == "Quetzaltenango" ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
                                         <label for="departamento_id">Departamento</label>
@@ -238,7 +238,7 @@
                                     <div class="form-floating">
                                         <select name="deporte_id" class="form-control text-dark" id="deporte_id" required>
                                             @foreach ($deportes as $item)
-                                            <option value="{{$item->id}}" {{$item->nombre == "Boliche" ? 'selected' : ''}}>{{$item->nombre}}</option>
+                                            <option value="{{encrypt($item->id)}}" {{$item->nombre == "Boliche" ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
                                         <label for="estado_civil">Estado Civil</label>
@@ -249,7 +249,7 @@
                                         <select name="tipo_contrato_id" class="form-control text-dark" id="tipo_contrato_id" required>
                                             <option selected value=""></option>
                                             @foreach ($tipos_contratos as $item)
-                                            <option value="{{$item->id}}">{{$item->descripcion}}</option>
+                                            <option value="{{encrypt($item->id)}}">{{$item->descripcion}}</option>
                                             @endforeach
                                         </select>
                                         <label for="tipo_contrato_id">Tipo de contrato</label>
@@ -260,7 +260,7 @@
                                         <select name="nacionalidad_id" class="form-control text-dark" id="nacionalidad_id" required>
                                             <option selected value=""></option>
                                                 @foreach ($nacionalidades as $item)
-                                                <option value="{{$item->id}}" {{$item->descripcion == "Guatemalteca(o)" ? 'selected' : ''}}>{{$item->descripcion}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{$item->descripcion == "Guatemalteca(o)" ? 'selected' : ''}}>{{$item->descripcion}}</option>
                                                 @endforeach
                                         </select>
                                         <label for="nacionalidad_id">Nacionalidad</label>
