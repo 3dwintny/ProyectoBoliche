@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Deportes</h1>
+          <h1 class="text-white">Atletas</h1>
         </div>
       </div>
     </div>
@@ -21,6 +21,9 @@
           <tr>
             <th scope="col">No</th>
             <th scope="col">Nombre</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Categoría</th>
           </tr>
         </thead>
         <tbody class="table-hover">
@@ -29,21 +32,20 @@
           @endphp
           @if (count($eliminar)<=0)
             <tr>
-              <td colspan="2">SIN RESULTADOS</td>
+              <td colspan="5">SIN RESULTADOS</td>
             </tr>
           @else
             @foreach ($eliminar as $item)
-              @php
-                $hashid = new Hashids\Hashids();
-                $idDeporte = $hashid->encode($item->id);
-              @endphp
               <tr>
                 <td>{{$contador}}</td>
-                <td>{{$item->nombre}}</td>
+                <td>{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}</td>
+                <td>{{$item->alumno->correo}}</td>
+                <td>{{$item->alumno->celular}}</td>
+                <td>{{$item->categoria->tipo}}</td>
                 <td>
-                  <form action="{{route('restaurandoDeporte')}}" method="POST">
+                  <form action="{{route('restaurandoAtleta')}}" method="POST">
                     @csrf
-                    <input type="hidden" value="{{$idDeporte}}" name="e" id="e">
+                    <input type="hidden" value="{{encrypt($item->id)}}" name="e" id="e">
                     <button type="submit" class="btn btn-primary">Restaurar</button>
                   </form>
                 </td>

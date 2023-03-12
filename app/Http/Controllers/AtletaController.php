@@ -359,5 +359,13 @@ class AtletaController extends Controller
         return view('Atletas.control',compact('control'));
     }
 
-    public function eliminados(){}
+    public function eliminados(){
+        $eliminar = Atleta::where('estado', 'inactivo')->with('alumno')->get();
+        return view('Atletas.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Atleta::find(decrypt($request->e))->update(['estado'=>'activo']);
+        return redirect()->action([AtletaController::class,'index']);
+    }
 }

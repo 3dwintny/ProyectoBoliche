@@ -245,6 +245,8 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::post('restaurandoAlergias',[AlergiaController::class,'restaurar'])->name('restaurandoAlergia');
 
     Route::get('restaurar/atletas',[AtletaController::class,'eliminados'])->name('eliminadosAtletas');
+    Route::post('restaurandoAtletas',[AtletaController::class,'restaurar'])->name('restaurandoAtleta');
+
     Route::get('restaurar/asistencia',[AsistenciaController::class,'eliminados'])->name('eliminadosAsistencia');
     Route::get('restaurar/alumnos',[AlumnoController::class,'eliminados'])->name('eliminadosAlumno');
 
