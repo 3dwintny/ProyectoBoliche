@@ -23,7 +23,7 @@ class FormularioController extends Controller
      */
     public function index()
     {
-        $formulario = Formulario::all();
+        $formulario = Formulario::get(['id','titulo_principal','subtitulo','titulo_ficha','declaracion']);
         return view(' configuraciones.formulario.show',compact('formulario'));
     }
 
@@ -65,13 +65,9 @@ class FormularioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $formulario = $this->f->obtenerFormularioById($id);
+        $formulario = $this->f->obtenerFormularioById(decrypt($id));
         return view('configuraciones.formulario.edit',compact('formulario'));
     }
 
@@ -84,8 +80,13 @@ class FormularioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $formulario = $this->f->obtenerFormularioById($id);
-        $formulario->fill($request->all());
+        $formulario = $this->f->obtenerFormularioById(decrypt($id));
+        $formulario->fill([
+            'titulo_principal' => $request->titulo_principal,
+            'subtitulo' => $request->subtitulo,
+            'titulo_ficha' => $request->titulo_ficha,
+            'declaracion' => $request->declaracion,
+        ]);
         $formulario->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>16]);
         $control->save();

@@ -12,11 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-<<<<<<< HEAD
-                    <h1 class="text-white">Informacion </h1>
-=======
                     <h1 class="text-white">Encabezado de formulario de inscripción</h1>
->>>>>>> eaf69b7400c01f6a788b78abbe4e34be537fb130
                 </div>
             </div>
         </div>
@@ -33,7 +29,7 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('formulario-inscripcion.update',$formulario->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('formulario-inscripcion.update',encrypt($formulario->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">

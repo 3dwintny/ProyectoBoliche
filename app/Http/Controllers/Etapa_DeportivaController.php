@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Etapa_Deportiva;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Hashids\Hashids;
 use App\Models\Control;
 
 class Etapa_DeportivaController extends Controller
@@ -21,7 +20,7 @@ class Etapa_DeportivaController extends Controller
      */
     public function index()
     {
-        $etapa = Etapa_Deportiva::where('estado','activo')->get();
+        $etapa = Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
         return view('configuraciones.etapadep.show',compact('etapa'));
     }
 
@@ -47,7 +46,7 @@ class Etapa_DeportivaController extends Controller
         $request->validate([
             'nombre'=>['unique:etapa_deportiva'],
         ]);
-        $etapa = new Etapa_Deportiva($request->all());
+        $etapa = new Etapa_Deportiva(['nombre' => $request->nombre]);
         $etapa->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>15]);
         $control->save();
@@ -72,12 +71,8 @@ class Etapa_DeportivaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id, Request $request)
-    { 
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $etapa = Etapa_Deportiva::find($id);
+    {
+        $etapa = Etapa_Deportiva::find(decrypt($id));
         return view('configuraciones.etapadep.edit',['etapa' => $etapa]);
     }
 
@@ -90,8 +85,8 @@ class Etapa_DeportivaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $etapa = Etapa_Deportiva::find($id);
-        $etapa ->fill($request->all());
+        $etapa = Etapa_Deportiva::find(decrypt($id));
+        $etapa ->fill(['nombre' => $request->nombre]);
         $etapa->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>15]);
         $control->save();
@@ -106,7 +101,7 @@ class Etapa_DeportivaController extends Controller
      */
     public function destroy($id)
     {
-        Etapa_Deportiva::find($id)->update(['estado' => 'inactivo']);
+        Etapa_Deportiva::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>15]);
         $control->save();
         return redirect()->action([Etapa_DeportivaController::class,'index']);
@@ -123,11 +118,7 @@ class Etapa_DeportivaController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Etapa_Deportiva::find($id)->update(['estado'=>'activo']);
+        Etapa_Deportiva::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([Etapa_DeportivaController::class,'index']);
     }
 }

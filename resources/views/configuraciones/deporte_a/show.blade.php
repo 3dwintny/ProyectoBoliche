@@ -29,25 +29,20 @@
             $contador = 1;
         @endphp
         @foreach ($deporte as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idDeporteAdaptado = $hashid->encode($item->id);
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('deporte-adaptado.edit',$idDeporteAdaptado)}}" method="GET">
+            <form action="{{route('deporte-adaptado.edit',encrypt($item->id))}}" method="GET">
               @csrf
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idDeporteAdaptado}}">
             </form>
           </td>
           <td>
-            <form action="{{route('deporte-adaptado.destroy',$item->id)}}" method="POST">
+            <form action="{{route('deporte-adaptado.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarDeportea('Eliminar Deporte Adaptado')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarDeportea('Eliminar deporte adaptado')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php

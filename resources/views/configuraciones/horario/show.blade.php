@@ -36,10 +36,6 @@
             $contador = 1;
         @endphp
         @foreach ($horario as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idHorario = $hashid->encode($item->id)
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{\Carbon\Carbon::parse($item->hora_inicio)->format('H:i')}}</td>
@@ -52,17 +48,16 @@
           <td>{{$item->viernes}}</td>
           <td>{{$item->sabado}}</td>
           <td>
-            <form action="{{route('horario.edit',$idHorario)}}" method="GET">
+            <form action="{{route('horario.edit',encrypt($item->id))}}" method="GET">
               @csrf
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idHorario}}">
             </form>
           </td>
           <td>
-            <form action="{{route('horario.destroy',$item->id)}}" method="POST">
+            <form action="{{route('horario.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarHorario('Eliminar Horario')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarHorario('Eliminar horario')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php

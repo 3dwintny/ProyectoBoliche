@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Psicologia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Hashids\Hashids;
 use App\Models\Control;
 
 class PsicologiaController extends Controller
@@ -48,7 +47,19 @@ class PsicologiaController extends Controller
             'correo'=>['unique:psicologia'],
             'colegiado'=>['unique:psicologia'],
         ]);
-        $psicologo = new Psicologia($request->all());
+        $psicologo = new Psicologia([
+            'nombre1' => $request->nombre1,
+            'nombre2' => $request->nombre2,
+            'nombre3' => $request->nombre3,
+            'apellido1' => $request->apellido1,
+            'apellido2' => $request->apellido2,
+            'apellido_casada' => $request->apellido_casada,
+            'colegiado' => $request->colegiado,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+            'fecha_inicio_labores' => $request->fecha_inicio_labores,
+        ]);
         $psicologo->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>27]);
         $control->save();
@@ -72,13 +83,9 @@ class PsicologiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $psicologo = $this->p->obtenerPsicologiaById($id);
+        $psicologo = $this->p->obtenerPsicologiaById(decrypt($id));
         return view('configuraciones.psicologia.edit',['psicologo' => $psicologo]);
     }
 
@@ -91,8 +98,20 @@ class PsicologiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $psicologo = Psicologia::find($id);
-        $psicologo ->fill($request->all());
+        $psicologo = Psicologia::find(decrypt($id));
+        $psicologo ->fill([
+            'nombre1' => $request->nombre1,
+            'nombre2' => $request->nombre2,
+            'nombre3' => $request->nombre3,
+            'apellido1' => $request->apellido1,
+            'apellido2' => $request->apellido2,
+            'apellido_casada' => $request->apellido_casada,
+            'colegiado' => $request->colegiado,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+            'fecha_inicio_labores' => $request->fecha_inicio_labores,
+        ]);
         $psicologo->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
         $control->save();
@@ -107,7 +126,7 @@ class PsicologiaController extends Controller
      */
     public function destroy($id)
     {
-        Psicologia::find($id)->update(['estado' => 'inactivo']);
+        Psicologia::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>27]);
         $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
@@ -145,11 +164,7 @@ class PsicologiaController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Psicologia::find($id)->update(['estado'=>'activo']);
+        Psicologia::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([PsicologiaController::class,'index']);
     }
 }

@@ -41,10 +41,6 @@
             </tr>
           @else
             @foreach ($eliminar as $item)
-              @php
-                $hashid = new Hashids\Hashids();
-                $idDeporte = $hashid->encode($item->id);
-              @endphp
               <tr>
                 <td>{{$contador}}</td>
                 <td>{{\Carbon\Carbon::parse($item->hora_inicio)->format('H:i')}}</td>
@@ -59,7 +55,7 @@
                 <td>
                   <form action="{{route('restaurandoHorario')}}" method="POST">
                     @csrf
-                    <input type="hidden" value="{{$idDeporte}}" name="e" id="e">
+                    <input type="hidden" value="{{encrypt($item->id)}}" name="e" id="e">
                     <button type="submit" class="btn btn-primary">Restaurar</button>
                   </form>
                 </td>

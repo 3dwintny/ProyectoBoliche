@@ -28,24 +28,19 @@
             $contador = 1;
         @endphp
         @foreach ($departamento as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idDepartamento = $hashid->encode($item->id);
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('departamentos.edit',$idDepartamento)}}" method="GET">
+            <form action="{{route('departamentos.edit',encrypt($item->id))}}" method="GET">
               <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idDepartamento}}">
             </form>
           </td>
           <td>
-            <form action="{{route('departamentos.destroy',$item->id)}}" method="POST">
+            <form action="{{route('departamentos.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarDepartamento('Eliminar Departamento')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarDepartamento('Eliminar departamento')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php

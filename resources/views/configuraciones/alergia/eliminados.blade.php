@@ -34,10 +34,6 @@
             </tr>
           @else
             @foreach ($eliminar as $item)
-              @php
-                $hashid = new Hashids\Hashids();
-                $idAlergia = $hashid->encode($item->id);
-              @endphp
               <tr>
                 <td>{{$contador}}</td>
                 <td>{{$item->nombre}}</td>
@@ -45,7 +41,7 @@
                 <td>
                   <form action="{{route('restaurandoAlergia')}}" method="POST">
                     @csrf
-                    <input type="hidden" value="{{$idAlergia}}" name="e" id="e">
+                    <input type="hidden" value="{{encrypt($item->id)}}" name="e" id="e">
                     <button type="submit" class="btn btn-primary">Restaurar</button>
                   </form>
                 </td>

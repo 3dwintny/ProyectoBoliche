@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
-use Hashids\Hashids;
 use Carbon\Carbon;
 use App\Models\Control;
 
@@ -22,7 +21,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categoria = Categoria::where('estado','activo')->get();
+        $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
         return view('configuraciones.categoria.show', compact("categoria"));
     }
 
@@ -48,7 +47,7 @@ class CategoriaController extends Controller
         $request->validate([
             'tipo' => ['unique:categoria']
         ]);
-        $categoria = new Categoria($request->all());
+        $categoria = new Categoria(['tipo'=>$request->tipo,'descripcion'=>$request->descripcion]);
         $categoria->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>5]);
         $control->save();
@@ -72,13 +71,9 @@ class CategoriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $categoria = $this->c->obtenerCategoriaById($id);
+        $categoria = $this->c->obtenerCategoriaById(decrypt($id));
         return view('configuraciones.categoria.edit',['categoria' => $categoria]);
     }
 
@@ -91,8 +86,8 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categoria = Categoria::find($id);
-        $categoria->fill($request->all());
+        $categoria = Categoria::find(decrypt($id));
+        $categoria->fill(['tipo'=>$request->tipo,'descripcion'=>$request->descripcion]);
         $categoria->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>5]);
         $control->save();
@@ -107,7 +102,7 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        Categoria::find($id)->update(['estado' => 'inactivo']);
+        Categoria::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>5]);
         $control->save();
         return redirect()->action([CategoriaController::class,'index']);
@@ -124,11 +119,7 @@ class CategoriaController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Categoria::find($id)->update(['estado'=>'activo']);
+        Categoria::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([CategoriaController::class,'index']);
     }
 }

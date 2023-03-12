@@ -82,9 +82,13 @@
                                     </tr>
                                     @else
                                     @foreach($atletas as $item)
+                                    @php
+                                        $hashid = new Hashids\Hashids();
+                                        $idAtleta = $hashid->encode($item->id);
+                                    @endphp
                                     <tr class="table-sm">
                                         <td>
-                                            <input type="hidden" class="text-white bg-dark" name="atleta_id[]" value="{{$item->id}}" style="width: 100%;">
+                                            <input type="hidden" class="text-white bg-dark" name="atleta_id[]" value="{{$idAtleta}}" style="width: 100%;">
                                             <input type="text" value="{{$contador}}" readonly style="width: 100%; text-align:center;">
                                         </td>
                                         <td>

@@ -29,23 +29,18 @@
             $contador = 1;
         @endphp
         @foreach ($modalidad as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idModalidad = $hashid->encode($item->id)
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td><a href="{{$item->medio_comunicacion}}">{{$item->medio_comunicacion}}</a></td>
           <td>
-            <form action="{{route('modalidad.edit',$idModalidad)}}" method="GET">
+            <form action="{{route('modalidad.edit',encrypt($item->id))}}" method="GET">
               @csrf
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idModalidad}}">
             </form>
           </td>
           <td>
-            <form action="{{route('modalidad.destroy',$item->id)}}" method="POST">
+            <form action="{{route('modalidad.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger" onclick="return eliminarModalidad('Eliminar Modalidad')"><i class="fa fa-fw fa-regular fa-trash"></i></button>

@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Municipio;
 use App\Models\Departamento;
-use Hashids\Hashids;
 use App\Models\Control;
-use Carbon\Carbon;
 
 class MunicipioController extends Controller
 {
@@ -18,7 +16,9 @@ class MunicipioController extends Controller
      */
     public function index()
     {
-        $municipio = Municipio::where('estado','activo')->with('departamento')->paginate(6);
+        $municipio = Municipio::where('estado','activo')
+        ->with('departamento')
+        ->paginate(15);
         return view('configuraciones.municipio.show',compact('municipio')); 
     }
 
@@ -29,7 +29,7 @@ class MunicipioController extends Controller
      */
     public function create()
     {
-        $departamentos = Departamento::where('estado','activo')->get();
+        $departamentos = Departamento::where('estado','activo')->get(['id','nombre']);
         return view('configuraciones.municipio.create',compact("departamentos"));
     }
 
@@ -41,7 +41,7 @@ class MunicipioController extends Controller
      */
     public function store(Request $request)
     {
-        $municipios = new Municipio($request->all());
+        $municipios = new Municipio(['nombre' => $request->nombre,'departamento_id' => $request->departamento_id]);
         $municipios->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>20]);
         $control->save();
@@ -67,12 +67,8 @@ class MunicipioController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $municipio = Municipio::find($id);
-        $departamentos = Departamento::where('estado','activo')->get();
+        $municipio = Municipio::find(decrypt($id));
+        $departamentos = Departamento::where('estado','activo')->get(['id','nombre']);
         return view('configuraciones.municipio.edit',compact('municipio','departamentos'));
     }
 
@@ -85,8 +81,8 @@ class MunicipioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $municipio = Municipio::find($id);
-        $municipio->fill($request->all());
+        $municipio = Municipio::find(decrypt($id));
+        $municipio->fill(['nombre' => $request->nombre,'departamento_id' => decrypt($request->departamento_id)]);
         $municipio->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>20]);
         $control->save();
@@ -101,7 +97,7 @@ class MunicipioController extends Controller
      */
     public function destroy($id)
     {
-        Municipio::find($id)->update(['estado' => 'inactivo']);
+        Municipio::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>20]);
         $control->save();
         return redirect()->action([MunicipioController::class,'index']);
@@ -118,11 +114,7 @@ class MunicipioController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Municipio::find($id)->update(['estado'=>'activo']);
+        Municipio::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([MunicipioController::class,'index']);
     }
 }

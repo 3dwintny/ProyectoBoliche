@@ -87,8 +87,12 @@ class EntrenadorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
+        $idEncriptado = $request->e;
+        $hashid = new Hashids();
+        $idDesencriptado = $hashid->decode($idEncriptado);
+        $id = $idDesencriptado[0];
         $entrenador = Entrenador::find($id);
         $nivel_cdag = Nivel_cdag::find($entrenador->nivel_cdag_id); 
         $nivel_fadn = Nivel_fadn::find($entrenador->nivel_fadn_id); 

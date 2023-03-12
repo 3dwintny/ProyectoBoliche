@@ -28,25 +28,20 @@
             $contador = 1;   
         @endphp
         @foreach ($programas as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idOtroPrograma = $hashid->encode($item->id)
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('otro-programa-de-atencion.edit',$idOtroPrograma)}}" method="GET">
+            <form action="{{route('otro-programa-de-atencion.edit',encrypt($item->id))}}" method="GET">
               @csrf
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idOtroPrograma}}">
             </form>
           </td>
           <td>
-            <form action="{{route('otro-programa-de-atencion.destroy',$item->id)}}" method="POST">
+            <form action="{{route('otro-programa-de-atencion.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarProgramas('Eliminar Otros Programas de Atención')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarProgramas('Eliminar otros programa de atención')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php

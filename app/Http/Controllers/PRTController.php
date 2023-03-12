@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\PRT;
 use Carbon\Carbon;
-use Hashids\Hashids;
 use App\Models\Control;
 
 class PRTController extends Controller
@@ -21,7 +20,7 @@ class PRTController extends Controller
      */
     public function index()
     {
-        $prts = PRT::where('estado','activo')->get();
+        $prts = PRT::where('estado','activo')->get(['id','nombre']);
         return view('configuraciones.prt.show', compact('prts'));
     }
 
@@ -47,7 +46,7 @@ class PRTController extends Controller
         $request->validate([
             'nombre'=>['unique:prt'],
         ]);
-        $prt = new PRT($request->all());
+        $prt = new PRT(['nombre' => $request->nombre]);
         $prt->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>26]);
         $control->save();
@@ -71,13 +70,9 @@ class PRTController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $prt = $this->p->obtenerPRTById($id);
+        $prt = $this->p->obtenerPRTById(decrypt($id));
         return view('configuraciones.prt.edit',['prt' => $prt]);
     }
 
@@ -90,8 +85,8 @@ class PRTController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $prt = PRT::find($id);
-        $prt ->fill($request->all());
+        $prt = PRT::find(decrypt($id));
+        $prt ->fill(['nombre' => $request->nombre]);
         $prt->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>26]);
         $control->save();
@@ -106,7 +101,7 @@ class PRTController extends Controller
      */
     public function destroy($id)
     {
-        PRT::find($id)->update(['estado' => 'inactivo']);
+        PRT::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>26]);
         $control->save();
         return redirect()->action([PRTController::class,'index']);
@@ -123,11 +118,7 @@ class PRTController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        PRT::find($id)->update(['estado'=>'activo']);
+        PRT::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([PRTController::class,'index']);
     }
 }

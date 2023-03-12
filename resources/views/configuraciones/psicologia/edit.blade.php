@@ -17,7 +17,7 @@
     <div class="header-body text-center  mb-2 container">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-10">
-                <form action="{{route('psicologia.update',$psicologo->id)}}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
+                <form action="{{route('psicologia.update',encrypt($psicologo->id))}}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
                     {{method_field('PUT')}}
                     <fieldset class="card-body bg-light">

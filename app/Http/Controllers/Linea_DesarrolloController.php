@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Hashids\Hashids;
 use App\Models\Linea_Desarrollo;
 use Carbon\Carbon;
 use App\Models\Control;
@@ -21,7 +20,7 @@ class Linea_DesarrolloController extends Controller
      */
     public function index()
     {
-        $lineaDesarrollo = Linea_Desarrollo::where('estado','activo')->get();
+        $lineaDesarrollo = Linea_Desarrollo::where('estado','activo')->get(['id','tipo']);
         return view('configuraciones.linea_desarrollo.show',compact('lineaDesarrollo'));
     }
 
@@ -47,7 +46,7 @@ class Linea_DesarrolloController extends Controller
         $request->validate([
             'tipo'=>['unique:linea_desarrollo'],
         ]);
-        $lineaDesarrollo = new Linea_Desarrollo($request->all());
+        $lineaDesarrollo = new Linea_Desarrollo(['tipo'=> $request->tipo]);
         $lineaDesarrollo->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>18]);
         $control->save();
@@ -71,13 +70,9 @@ class Linea_DesarrolloController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $lineaDesarrollo = $this->lD->obtenerLineaDesarrolloById($id);
+        $lineaDesarrollo = $this->lD->obtenerLineaDesarrolloById(decrypt($id));
         return view('configuraciones.linea_desarrollo.edit',['lineaDesarrollo' => $lineaDesarrollo]);
     }
 
@@ -90,8 +85,8 @@ class Linea_DesarrolloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $lineaDesarrollo = Linea_Desarrollo::find($id);
-        $lineaDesarrollo->fill($request->all());
+        $lineaDesarrollo = Linea_Desarrollo::find(decrypt($id));
+        $lineaDesarrollo->fill(['tipo' =>$request->tipo]);
         $lineaDesarrollo->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>18]);
         $control->save();
@@ -106,7 +101,7 @@ class Linea_DesarrolloController extends Controller
      */
     public function destroy($id)
     {
-        Linea_Desarrollo::find($id)->update(['estado' => 'inactivo']);
+        Linea_Desarrollo::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>18]);
         $control->save();
         return redirect()->action([Linea_DesarrolloController::class,'index']);
@@ -123,11 +118,7 @@ class Linea_DesarrolloController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Linea_Desarrollo::find($id)->update(['estado'=>'activo']);
+        Linea_Desarrollo::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
 }

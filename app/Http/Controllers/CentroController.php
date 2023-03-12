@@ -26,7 +26,8 @@ class CentroController extends Controller
      */
     public function index()
     {
-        $centro = Centro::where('estado','activo')->with('departamento')->get();
+        $centro = Centro::where('estado','activo')->with('departamento')->get(['id','nombre','direccion','fecha_registro',
+                'institucion','accesibilidad','implementacion','espacio_fisico','departamento_id']);
         return view('configuraciones.centro.show', compact('centro'));
     }
 
@@ -37,9 +38,9 @@ class CentroController extends Controller
      */
     public function create()
     {
-        $horario = Horario::all();
+        $horario = Horario::get(['id','hora_inicio','hora_fin','lunes','martes','miercoles','jueves','viernes','sabado','domingo']);
         $hoy = Carbon::now();
-        $departamento = Departamento::all();
+        $departamento = Departamento::get(['id','nombre']);
         return view('configuraciones.centro.create',compact('departamento','hoy','horario'));
     }
 
@@ -54,8 +55,16 @@ class CentroController extends Controller
         $request->validate([
             'nombre' => ['unique:centro']
         ]);
-        $horario_id = $request->horario_id;
-        $centro = new Centro($request->all());
+        $horario_id = array();
+        $horarios = $request->horario_id;
+        if($horarios!=null){
+            foreach ($horarios as $item){
+                array_push($horario_id,decrypt($item));
+            }
+        }
+        $centro = new Centro(['nombre' => $request->nombre, 'direccion' => $request->direccion, 'fecha_registro' => $request->fecha_registro,
+        'institucuion' => $request->institucion,'accesibilidad' => $request->accesibilidad,'implementacion' => $request->implementacion,
+        'espacio_fisico' => $request->espacio_fisico,'departamento_id' => decrypt($request->departamento_id)]);
         $centro->save();
         $centro = Centro::latest('id')->first();
         $centro_id = $centro->id;
@@ -93,12 +102,8 @@ class CentroController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $centro = $this->c->obtenerCentroById($id);
-        $departamento = Departamento::all();
+        $centro = $this->c->obtenerCentroById(decrypt($id));
+        $departamento = Departamento::get(['id','nombre']);
         return  view('configuraciones.centro.edit',['centro'=>$centro,'departamento'=>$departamento]);
     }
 
@@ -112,7 +117,9 @@ class CentroController extends Controller
     public function update(Request $request, $id)
     {
         $centro = Centro::find($id);
-        $centro ->fill($request->all());
+        $centro->fill(['nombre' => $request->nombre, 'direccion' => $request->direccon, 'fecha_registro' => $request->fecha_registro,
+        'institucuion' => $request->institucion,'accesibilidad' => $request->accesibilidad,'implementacion' => $request->implementacion,
+        'espacio_fisico' => $request->espacio_fisico,'departamento_id' => decrypt($request->departamento_id)]);
         $centro->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>6]);
         $control->save();
@@ -127,7 +134,7 @@ class CentroController extends Controller
      */
     public function destroy($id)
     {
-        Centro::find($id)->update(['estado' => 'inactivo']);
+        Centro::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>6]);
         $control->save();
         return redirect()->action([CentroController::class,'index']);

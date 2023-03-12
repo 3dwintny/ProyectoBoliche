@@ -29,25 +29,20 @@
             $contador = 1;
         @endphp
         @foreach ($alergia as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idAlergia = $hashid->encode($item->id);
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>{{$item->descripcion}}</td>
           <td>
-            <form action="{{route('alergia.edit',$idAlergia)}}" method="GET">
+            <form action="{{route('alergia.edit',encrypt($item->id))}}" method="GET">
               <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idAlergia}}">
             </form>
           </td>
           <td>
-            <form action="{{route('alergia.destroy',$item->id)}}" method="POST">
+            <form action="{{route('alergia.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarAlergia('Eliminar Alergia')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarAlergia('Eliminar alergia')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php

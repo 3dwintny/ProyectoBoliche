@@ -56,8 +56,9 @@
               </form>
             </td>
             <td>
-              <form action="{{route('entrenadores.show',$entrenador->id)}}" action="GET">
+              <form action="{{route('entrenadores.show',$idEntrenador)}}" action="GET">
                 <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-regular fa-eye"></i></button>
+                <input type="hidden" name="e" id="e" value="{{$idEntrenador}}">
               </form>
             </td>
             <td>

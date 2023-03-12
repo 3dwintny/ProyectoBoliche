@@ -33,17 +33,13 @@
             </tr>
           @else
             @foreach ($eliminar as $item)
-              @php
-                $hashid = new Hashids\Hashids();
-                $idFADN = $hashid->encode($item->id);
-              @endphp
               <tr>
                 <td>{{$contador}}</td>
                 <td>{{$item->tipo}}</td>
                 <td>
                   <form action="{{route('restaurandoFADN')}}" method="POST">
                     @csrf
-                    <input type="hidden" value="{{$idFADN}}" name="e" id="e">
+                    <input type="hidden" value="{{encrypt($item->id)}}" name="e" id="e">
                     <button type="submit" class="btn btn-primary">Restaurar</button>
                   </form>
                 </td>

@@ -28,25 +28,20 @@
             $contador = 1;
         @endphp
         @foreach ($niveles as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idNivelCDAG = $hashid->encode($item->id)
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('nivel-cdag.edit',$idNivelCDAG)}}" method="GET">
+            <form action="{{route('nivel-cdag.edit',encrypt($item->id))}}" method="GET">
               @csrf
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idNivelCDAG}}">
             </form>
           </td>
           <td>
-            <form action="{{route('nivel-cdag.destroy',$item->id)}}" method="POST">
+            <form action="{{route('nivel-cdag.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNivel('Eliminar Nivel CDAG')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarNivel('Eliminar nivel CDAG')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php

@@ -28,7 +28,7 @@
                             <h2>Editar departamento</h2>
                         </strong>
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('departamentos.update',$departamento->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('departamentos.update',encrypt($departamento->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">

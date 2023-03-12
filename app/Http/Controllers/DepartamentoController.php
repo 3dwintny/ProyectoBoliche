@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Departamento;
-use Hashids\Hashids;
-use Symfony\Component\ErrorHandler\Debug;
 use App\Models\Control;
-use Carbon\Carbon;
 
 class DepartamentoController extends Controller
 {
@@ -43,7 +40,7 @@ class DepartamentoController extends Controller
         $request->validate([
             'nombre'=>['unique:departamento'],
         ]);
-        $departamento = new Departamento($request->all());
+        $departamento = new Departamento(['nombre' => $request->nombre]);
         $departamento->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>7]);
         $control->save();
@@ -67,13 +64,9 @@ class DepartamentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $departamento = Departamento::find($id);
+        $departamento = Departamento::find(decrypt($id));
         return view('configuraciones.departamento.edit', compact('departamento'));
     }
 
@@ -86,8 +79,8 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $departamento = Departamento::find($id);
-        $departamento->fill($request->all());
+        $departamento = Departamento::find(decrypt($id));
+        $departamento->fill(['nombre' => $request->nombre]);
         $departamento->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>7]);
         $control->save();
@@ -102,7 +95,7 @@ class DepartamentoController extends Controller
      */
     public function destroy($id)
     {
-        Departamento::find($id)->update(['estado' => 'inactivo']);
+        Departamento::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>7]);
         $control->save();
         return redirect()->action([DepartamentoController::class,'index']);
@@ -119,11 +112,7 @@ class DepartamentoController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Departamento::find($id)->update(['estado'=>'activo']);
+        Departamento::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([DepartamentoController::class,'index']);
     }
 }

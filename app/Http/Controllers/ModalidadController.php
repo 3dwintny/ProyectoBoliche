@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Modalidad;
-use Hashids\Hashids;
 use Carbon\Carbon;
 use App\Models\Control;
 
@@ -22,7 +21,7 @@ class ModalidadController extends Controller
      */
     public function index()
     {
-        $modalidad = Modalidad::where('estado','activo')->get();
+        $modalidad = Modalidad::where('estado','activo')->get(['id','nombre','medio_comunicacion']);
         return view('configuraciones.modalidad.show',compact('modalidad'));
     }
 
@@ -48,7 +47,7 @@ class ModalidadController extends Controller
         $request->validate([
             'nombre'=>['unique:modalidad'],
         ]);
-        $modalidad = new Modalidad($request->all());
+        $modalidad = new Modalidad(['nombre' => $request->nombre,'medio_comunicacion' => $request->medio_comunicacion]);
         $modalidad->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>19]);
         $control->save();
@@ -72,13 +71,9 @@ class ModalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $modalidad = $this->m->obtenerModalidadById($id);
+        $modalidad = $this->m->obtenerModalidadById(decrypt($id));
         return view('configuraciones.modalidad.edit',['modalidad' => $modalidad]);
     }
 
@@ -91,8 +86,8 @@ class ModalidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $modalidad = Modalidad::find($id);
-        $modalidad->fill($request->all());
+        $modalidad = Modalidad::find(decrypt($id));
+        $modalidad->fill(['nombre' => $request->nombre,'medio_comunicacion' => $request->medio_comunicacion]);
         $modalidad->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>19]);
         $control->save();
@@ -107,7 +102,7 @@ class ModalidadController extends Controller
      */
     public function destroy($id)
     {
-        Modalidad::find($id)->update(['estado' => 'inactivo']);
+        Modalidad::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>19]);
         $control->save();
         return redirect()->action([ModalidadController::class,'index']);
@@ -124,11 +119,7 @@ class ModalidadController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Modalidad::find($id)->update(['estado'=>'activo']);
+        Modalidad::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([ModalidadController::class,'index']);
     }
 }

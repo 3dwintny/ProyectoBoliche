@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nivel_cdag;
 use Carbon\Carbon;
-use Hashids\Hashids;
 use App\Models\Control;
 
 class Nivel_cdagController extends Controller
@@ -21,7 +20,7 @@ class Nivel_cdagController extends Controller
      */
     public function index()
     {
-        $niveles = Nivel_cdag::where('estado','activo')->get();
+        $niveles = Nivel_cdag::where('estado','activo')->get(['id','nombre']);
         return view('configuraciones.nivel_cdag.show', compact('niveles'));
     }
 
@@ -47,7 +46,7 @@ class Nivel_cdagController extends Controller
         $request->validate([
             'nombre'=>['unique:nivel_cdag'],
         ]);
-        $nivel = new Nivel_cdag($request->all());
+        $nivel = new Nivel_cdag(['nombre' => $request->nombre]);
         $nivel->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>22]);
         $control->save();
@@ -71,13 +70,9 @@ class Nivel_cdagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $nivel = $this->n->obtenerNivelCDAGById($id);
+        $nivel = $this->n->obtenerNivelCDAGById(decrypt($id));
         return view('configuraciones.nivel_cdag.edit',['nivel' => $nivel]);
     }
 
@@ -90,8 +85,8 @@ class Nivel_cdagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nivel = Nivel_cdag::find($id);
-        $nivel ->fill($request->all());
+        $nivel = Nivel_cdag::find(decrypt($id));
+        $nivel ->fill(['nombre' => $request->nombre]);
         $nivel->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>22]);
         $control->save();
@@ -106,7 +101,7 @@ class Nivel_cdagController extends Controller
      */
     public function destroy($id)
     {
-        Nivel_cdag::find($id)->update(['estado' => 'inactivo']);
+        Nivel_cdag::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>22]);
         $control->save();
         return redirect()->action([Nivel_cdagController::class,'index']);
@@ -123,11 +118,7 @@ class Nivel_cdagController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Nivel_cdag::find($id)->update(['estado'=>'activo']);
+        Nivel_cdag::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([Nivel_cdagController::class,'index']);
     }
 }

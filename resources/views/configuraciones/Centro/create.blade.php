@@ -101,7 +101,7 @@
                                         <select class="form-control" name="departamento_id" id="departamento_id" required>
                                             <option selected disabled></option>
                                             @foreach ($departamento as $item)
-                                            <option value="{{$item->id}}" {{ $item->id == 13 ? 'selected' : ''}}>{{$item->nombre}}</option>
+                                            <option value="{{encrypt($item->id)}}" {{ $item->id == 13 ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
                                         <!-- Esto es lo que aparece como placeholder, en el fomulario -->
@@ -145,7 +145,7 @@
                                     <td>{{$item->jueves}}</td>
                                     <td>{{$item->viernes}}</td>
                                     <td>{{$item->sabado}}</td>
-                                    <td><input type="checkbox" value="{{$item->id}}" name="horario_id[]"  id="horario_id"></td>
+                                    <td><input type="checkbox" value="{{encrypt($item->id)}}" name="horario_id[]"  id="horario_id"></td>
                                     @php
                                       $contador++;
                                     @endphp

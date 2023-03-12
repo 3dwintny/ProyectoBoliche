@@ -14,6 +14,7 @@ use PDF;
 use Mail;
 use App\Mail\CorreosTerapia;
 use App\Models\Control;
+use Hashids\Hashids;
 
 class TerapiaController extends Controller
 {
@@ -215,6 +216,9 @@ class TerapiaController extends Controller
     public function show($id)
     {
         $psicologo = Psicologia::where('correo',auth()->user()->email)->get();
+        $hashids = new Hashids();
+        $idDesencriptado = $hashids->decode($id);
+        $id=$idDesencriptado[0];
         if(count($psicologo)==0)
         {
             $historial = DB::table('terapia')->where('atleta_id',$id)->where('psicologia_id',0)->paginate(5);

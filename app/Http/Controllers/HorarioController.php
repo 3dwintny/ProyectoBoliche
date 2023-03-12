@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Hashids\Hashids;
 use App\Models\Horario;
 use Carbon\Carbon;
 use App\Models\Control;
@@ -21,7 +20,7 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        $horario = Horario::where('estado','activo')->get();
+        $horario = Horario::where('estado','activo')->get(['id','hora_inicio','hora_fin','lunes','martes','miercoles','jueves','viernes','sabado','domingo']);
         return view('configuraciones.horario.show', compact('horario'));
     }
 
@@ -44,7 +43,17 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
-        $horario = new Horario($request->all());
+        $horario = new Horario([
+            'hora_inicio' => $request->hora_inicio,
+            'hora_fin' => $request->hora_fin,
+            'lunes' => $request->lunes,
+            'martes' => $request->martes,
+            'miercoles' => $request->miercoles,
+            'jueves' => $request->jueves,
+            'viernes' => $request->viernes,
+            'sabado' => $request->sabado,
+            'domingo' => $request->domingo,
+        ]);
         $horario->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>17]);
         $control->save();
@@ -68,13 +77,9 @@ class HorarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $horario = $this->h->obtenerHorarioById($id);
+        $horario = $this->h->obtenerHorarioById(decrypt($id));
         return view('configuraciones.horario.edit',['horario'=>$horario]);
     }
 
@@ -87,8 +92,17 @@ class HorarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $horario = Horario::find($id);
-        $horario->fill($request->all());
+        $horario = Horario::find(decrypt($id));
+        $horario->fill([
+            'hora_inicio' => $request->hora_inicio,
+            'hora_fin' => $request->hora_fin,
+            'lunes' => $request->lunes,
+            'martes' => $request->martes,
+            'miercoles' => $request->miercoles,
+            'jueves' => $request->jueves,
+            'viernes' => $request->viernes,
+            'sabado' => $request->sabado,
+            'domingo' => $request->domingo,]);
         $horario->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>17]);
         $control->save();
@@ -103,7 +117,7 @@ class HorarioController extends Controller
      */
     public function destroy($id)
     {
-        Horario::find($id)->update(['estado' => 'inactivo']);
+        Horario::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>17]);
         $control->save();
         return redirect()->action([HorarioController::class,'index']);
@@ -120,11 +134,7 @@ class HorarioController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Horario::find($id)->update(['estado'=>'activo']);
+        Horario::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([HorarioController::class,'index']);
     }
 }

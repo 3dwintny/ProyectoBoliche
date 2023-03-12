@@ -22,7 +22,7 @@
           <select name="filtroCategoria" class="form-control" id="filtroCategoria" onchange="this.form.submit()">
             <option value="" selected disabled>Sin filtros</option>
             @foreach($categoria as $item)
-            <option value="{{$item->id}}" {{$item->tipo == "N/A" ? 'disabled' : ''}}>{{$item->tipo}}</option>
+            <option value="{{encrypt($item->id)}}" {{$item->tipo == "N/A" ? 'disabled' : ''}}>{{$item->tipo}}</option>
             @endforeach>
           </select>
           <label for="filtroCategoria">Filtrar por categoría</label>
@@ -72,10 +72,6 @@
             </tr>
             @else
             @foreach ($atletas as $atleta)
-            @php
-            $hashid = new Hashids\Hashids();
-            $idAtleta = $hashid->encode($atleta->id);
-            @endphp
             <tr>
               <td>{{$contador}}</td>
               <td>
@@ -98,21 +94,20 @@
               <td>{{$atleta->entrenador->nombre1}} {{$atleta->entrenador->nombre2}} {{$atleta->entrenador->apellido1}} {{$atleta->entrenador->apellido2}}</td>
               <td>{{\Carbon\Carbon::parse($atleta->fecha_ingreso)->format('d-m-Y')}}</td>
               <td>
-                <form action="{{route('atletas.edit',$idAtleta)}}" method="GET" role="form" enctype="multipart/form-data">
+                <form action="{{route('atletas.edit',encrypt($atleta->id))}}" method="GET" role="form" enctype="multipart/form-data">
                   <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-edit"></i></button>
-                  <input type="hidden" name="e" id="e" value="{{$idAtleta}}">
                 </form>
               </td>
               <td>
-                <form action="{{route('atletas.show',$atleta->id)}}">
+                <form action="{{route('atletas.show',encrypt($atleta->id))}}">
                   <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-regular fa-eye"></i></button>
                 </form>
               </td>
               <td>
-                <form action="{{route('atletas.destroy',$atleta->id)}}" method="POST">
+                <form action="{{route('atletas.destroy',encrypt($atleta->id))}}" method="POST">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="btn btn-danger" onclick="return eliminarAtleta('Eliminar Atleta')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+                  <button type="submit" class="btn btn-danger" onclick="return eliminarAtleta('Eliminar atleta')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
                 </form>
               </td>
             </tr>

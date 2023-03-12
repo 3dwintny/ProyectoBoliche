@@ -28,7 +28,7 @@
                             <h2>Editar horario de entrenamiento</h2>
                         </strong>
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('horario.update',$horario->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('horario.update',encrypt($horario->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Nivel_fadn;
-use Hashids\Hashids;
 use App\Models\Control;
 
 class Nivel_fadnController extends Controller
@@ -21,7 +20,7 @@ class Nivel_fadnController extends Controller
      */
     public function index()
     {
-        $niveles = Nivel_fadn::where('estado','activo')->get();
+        $niveles = Nivel_fadn::where('estado','activo')->get(['id','tipo']);
         return view('configuraciones.nivel_fadn.show', compact('niveles'));
     }
 
@@ -47,7 +46,7 @@ class Nivel_fadnController extends Controller
         $request->validate([
             'tipo'=>['unique:nivel_fadn'],
         ]);
-        $nivel = new Nivel_fadn($request->all());
+        $nivel = new Nivel_fadn(['tipo' => $request->tipo]);
         $nivel->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>23]);
         $control->save();
@@ -71,13 +70,9 @@ class Nivel_fadnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $nivel = $this->n->obtenerNivelFADNById($id);
+        $nivel = $this->n->obtenerNivelFADNById(decrypt($id));
         return view('configuraciones.nivel_fadn.edit',['nivel' => $nivel]);
     }
 
@@ -90,8 +85,8 @@ class Nivel_fadnController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nivel = Nivel_fadn::find($id);
-        $nivel ->fill($request->all());
+        $nivel = Nivel_fadn::find(decrypt($id));
+        $nivel ->fill(['tipo' => $request->tipo]);
         $nivel->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>23]);
         $control->save();
@@ -106,7 +101,7 @@ class Nivel_fadnController extends Controller
      */
     public function destroy($id)
     {
-        Nivel_fadn::find($id)->update(['estado' => 'inactivo']);
+        Nivel_fadn::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>23]);
         $control->save();
         return redirect()->action([Nivel_fadnController::class,'index']);
@@ -123,11 +118,7 @@ class Nivel_fadnController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Nivel_fadn::find($id)->update(['estado'=>'activo']);
+        Nivel_fadn::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([Nivel_fadnController::class,'index']);
     }
 }

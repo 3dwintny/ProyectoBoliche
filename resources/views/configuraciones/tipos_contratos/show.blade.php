@@ -28,22 +28,17 @@
             $contador = 1;   
         @endphp
         @foreach ($tipos as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idTipoContrato = $hashid->encode($item->id);
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->descripcion}}</td>
           <td>
-            <form action="{{route('tipo-de-contrato.edit',$idTipoContrato)}}" method="GET">
+            <form action="{{route('tipo-de-contrato.edit',encrypt($item->id))}}" method="GET">
               @csrf
               <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idTipoContrato}}">
           </form>
           </td>
           <td>
-            <form action="{{route('tipo-de-contrato.destroy',$item->id)}}" method="POST">
+            <form action="{{route('tipo-de-contrato.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-danger" onclick="return eliminarContratos('Eliminar Tipo de Contrato')"><i class="fa fa-fw fa-regular fa-trash"></i></button>

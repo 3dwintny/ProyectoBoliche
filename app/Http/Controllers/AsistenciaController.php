@@ -122,19 +122,26 @@ class AsistenciaController extends Controller
     public function guardar(Request $request){
         $fecha = $request->fecha;
         $controlAsistencia = "false";
-        $obtenerAtleta = Asistencia::wherein('atleta_id',$request->atleta_id)->get('fecha');
+        $idEncriptado = $request->atleta_id;
+        $hashid = new Hashids();
+        $encriptados = array();
+        $idDesencriptado = array();
+        for($i = 0; $i < count($idEncriptado); $i++){
+            $temporal = $hashid->decode($idEncriptado[$i]);
+            array_push($idDesencriptado,$temporal[0]);
+        }
+        $obtenerAtleta = Asistencia::wherein('atleta_id',$idDesencriptado)->get('fecha');
         for($i=0;$i<count($obtenerAtleta);$i++){
             if($obtenerAtleta[$i]->fecha == $fecha[0]){
                 $controlAsistencia = "true";
             }
         }
         if($controlAsistencia=="false"){
-            $atleta_id = $request->atleta_id;
             $estado = $request->estado;
-            for ($i=0;$i<count($atleta_id);$i++){
+            for ($i=0;$i<count($idDesencriptado);$i++){
                 $informacion = [
                     'fecha' => $fecha[$i],
-                    'atleta_id' => $atleta_id[$i],
+                    'atleta_id' => $idDesencriptado[$i],
                     'estado' => $estado[$i],
                 ];
                 DB::table('asistencia')->insert($informacion);

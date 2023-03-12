@@ -36,19 +36,14 @@
             $contador = 1;
         @endphp
         @foreach ($formulario as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idFormulario = $hashid->encode($item->id);
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->titulo_principal}}</td>
           <td>{{$item->subtitulo}}</td>
           <td>{{$item->titulo_ficha}}</td>
           <td>
-            <form action="{{route('formulario-inscripcion.edit',$idFormulario)}}" method="GET" role="form" enctype="multipart/form-data">
+            <form action="{{route('formulario-inscripcion.edit',encrypt($item->id))}}" method="GET" role="form" enctype="multipart/form-data">
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
-              <input type="hidden" id="e" name="e" value="{{$idFormulario}}">
             </form>
           </td>
           @php

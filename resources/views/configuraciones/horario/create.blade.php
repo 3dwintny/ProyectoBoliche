@@ -126,6 +126,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <button type="submit" class="btn btn-primary">Registrar</button>
                 </form>
             </div>
         </div>

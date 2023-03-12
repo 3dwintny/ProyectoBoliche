@@ -28,7 +28,7 @@
                             <h2>Editar municipio</h2>
                         </strong>
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('municipio.update',$municipio->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('municipio.update',encrypt($municipio->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
@@ -40,7 +40,7 @@
                             <div class="form-floating mb-3">
                                 <select name="departamento_id" id="departamento_id" class="form-control" required>
                                     @foreach($departamentos as $item)
-                                        <option value="{{$item->id}}" {{$municipio->departamento_id == $item->id ? 'selected' : ''}}>{{$item->nombre}}</option>
+                                        <option value="{{encrypt($item->id)}}" {{$municipio->departamento_id == $item->id ? 'selected' : ''}}>{{$item->nombre}}</option>
                                     @endforeach 
                                 </select>
                                 <label for="departamento_id">Departamento</label>

@@ -51,11 +51,15 @@
         </tr>
         @else
           @foreach ($atleta as $item)
+          @php
+            $hashids = new Hashids\Hashids();
+            $idAtleta = $hashids->encode($item->id);
+          @endphp
           <tr>
             <td>{{$contador}}</td>
             <td>{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}</td>
             <td>
-              <a href="{{route('terapias.show',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-thin fa-list"></i></a>
+              <a href="{{route('terapias.show',$idAtleta)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-thin fa-list"></i></a>
             </td>
             @php
               $contador++;

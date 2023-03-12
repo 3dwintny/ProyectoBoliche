@@ -29,7 +29,7 @@
                         </strong>
                     </div>
                 </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('ac_estado',$alumno->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('ac_estado',encrypt($alumno->id))}}">
                     @csrf
                     <div class="form-group">
                         <div class="card">
@@ -124,7 +124,7 @@
                                             <select name="centro_id" class="form-control text-dark" id="centro_id" required>
                                                 <option selected value=""></option>
                                                 @foreach ($centro as $item)
-                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="centro">Centro de entrenamiento</label>
@@ -147,7 +147,7 @@
                                             <select name="entrenador_id" id="entrenador_id" class="form-control text-dark" required>
                                                 <option selected value=""></option>
                                                 @foreach ($entrenador as $item)
-                                                <option value="{{$item->id}}">{{$item->nombre1}} {{$item->apellido1}}</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->nombre1}} {{$item->apellido1}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="entrenador_id">Entrenador</label>
@@ -158,7 +158,7 @@
                                             <select name="categoria_id" id="categoria_id" class="form-control text-dark" required>
                                                 <option selected value=""></option>
                                                 @foreach ($categoria as $item)
-                                                <option value="{{$item->id}}">{{$item->tipo}} ({{$item->rango_edades}} años)</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->tipo}} ({{$item->rango_edades}} años)</option>
                                                 @endforeach
                                             </select>
                                             <label for="categoria_id">Categoría</label>
@@ -169,7 +169,7 @@
                                             <select name="etapa_deportiva_id" id="etapa_deportiva_id" class="form-control text-dark" required>
                                                 <option selected value=""></option>
                                                 @foreach ($etapa as $item)
-                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="etapa_deportiva_id">Etapa deportiva</label>
@@ -179,7 +179,7 @@
                                         <div class="form-floating">
                                             <select name="deporte_id" class="form-control text-dark" id="deporte_id" required>
                                                 @foreach ($deporte as $item)
-                                                <option value="{{$item->id}}" {{ $item->nombre == 'Boliche' ? 'selected' : ''}}>{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{ $item->nombre == 'Boliche' ? 'selected' : ''}}>{{$item->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="deporte_id">Deporte</label>
@@ -189,7 +189,7 @@
                                         <div class="form-floating">
                                             <select name="deporte_adaptado_id" id="deporte_adaptado_id" class="form-control text-dark">
                                                 @foreach ($deporteadaptado as $item)
-                                                <option value="{{$item->id}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             <input type="hidden" value="1" name="deporte_adaptado_id" id="deporte_adaptado_id_text">
@@ -200,7 +200,7 @@
                                         <div class="form-floating">
                                             <select name="otro_programa_id" id="otro_programa_id" class="form-control text-dark">
                                                 @foreach ($otroprograma as $item)
-                                                <option value="{{$item->id}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{ $item->nombre == 'N/A' ? 'selected' : ''}} disabled>{{$item->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             <input type="hidden" value="1" name="otro_programa_id" id="otro_programa_id_text">
@@ -212,7 +212,7 @@
                                             <select name="linea_desarrollo_id" id="linea_desarrollo_id" class="form-control text-dark" required>
                                                 <option selected value=""></option>
                                                 @foreach ($lineadesarrollo as $item)
-                                                <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->tipo}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="linea_desarrollo_id">Línea de desarrollo</label>
@@ -223,7 +223,7 @@
                                             <select name="modalidad_id" class="form-control text-dark" id="modalidad_id" required>
                                                 <option selected value=""></option>
                                                 @foreach ($modalidad as $item)
-                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="modalidad_id">Modalidad</label>
@@ -234,13 +234,13 @@
                                             <select name="prt_id" id="prt_id" class="form-control text-dark" required>
                                                 <option selected value=""></option>
                                                 @foreach ($prt as $item)
-                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}">{{$item->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="prt_id">PRT</label>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="alumno_id" id="" value="{{$alumno->id}}" readonly>
+                                    <input type="hidden" name="alumno_id" id="" value="{{encrypt($item->id)}}" readonly>
                                 </div>
                                 <div class="container">
                                     <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>

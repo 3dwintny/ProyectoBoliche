@@ -30,7 +30,7 @@
 
                     </div>
                 </div>
-                <form method="POST" role="form" enctype="multipart/form-data" action="{{route('atletas.update',$atleta->id)}}">
+                <form method="POST" role="form" enctype="multipart/form-data" action="{{route('atletas.update',encrypt($atleta->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="form-group">
@@ -149,7 +149,7 @@
                                     <div class="col-md-4 mb-2"><select name="centro_id" class="form-control text-dark" required>
                                             <option selected disabled>Centro</option>
                                             @foreach ($centro as $item)
-                                                <option value="{{$item->id}}" {{$atleta->centro_id == $item->id ? 'selected':''}}>{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{$atleta->centro_id == $item->id ? 'selected':''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
                                         <div class="col-md-2 mb-2"><input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Años" type="text" name="anios"  required value="{{$atleta->anios}}"></div>
@@ -157,25 +157,25 @@
                                     <div class="col-md-4 mb-2"><select name="entrenador_id" class="form-control text-dark" required>
                                             <option selected disabled>Entrenador</option>
                                             @foreach ($entrenador as $item)
-                                                <option value="{{$item->id}}" {{$atleta->entrenador_id == $item->id ? 'selected':''}}>{{$item->nombre1}} {{$item->apellido1}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{$atleta->entrenador_id == $item->id ? 'selected':''}}>{{$item->nombre1}} {{$item->apellido1}}</option>
                                             @endforeach
                                         </select></div>
                                     <div class="col-md-4 mb-2"><select name="categoria_id" class="form-control text-dark" required>
                                             <option selected disabled>Categoria</option>
                                             @foreach ($categoria as $item)
-                                            <option value="{{$item->id}}" {{$atleta->categoria_id == $item->id ? 'selected':''}}>{{$item->tipo}} ({{$item->rango_edades}} años)</option>
+                                            <option value="{{encrypt($item->id)}}" {{$atleta->categoria_id == $item->id ? 'selected':''}}>{{$item->tipo}} ({{$item->rango_edades}} años)</option>
                                             @endforeach
                                         </select></div>
                                     <div class="col-md-4 mb-2"><select name="etapa_deportiva_id" class="form-control text-dark" required>
                                             <option selected disabled>Etapa Deportiva</option>
                                             @foreach ($etapa as $item)
-                                            <option value="{{$item->id}}" {{$atleta->etapa_deportiva_id == $item->id ? 'selected':''}}>{{$item->nombre}}</option>
+                                            <option value="{{encrypt($item->id)}}" {{$atleta->etapa_deportiva_id == $item->id ? 'selected':''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
                                     <div class="col-md-4 mb-2">
                                         <select name="deporte_id" class="form-control text-dark" required>
                                             @foreach ($deporte as $item)
-                                                <option value="{{$item->id}}" {{$atleta->deporte_id == $item->id ? 'selected':''}}>{{$item->nombre}}</option>f
+                                                <option value="{{encrypt($item->id)}}" {{$atleta->deporte_id == $item->id ? 'selected':''}}>{{$item->nombre}}</option>f
                                             @endforeach
                                         </select></div>
                                     <div class="col-md-4 mb-2">
@@ -183,15 +183,15 @@
                                             @foreach ($deporteadaptado as $item)
                                             @if($atleta->adaptado == "Si")
                                                 @if($item->id == $atleta->deporte_adaptado_id)
-                                                    <option value="{{$item->id}}" selected>{{$item->nombre}}</option>
+                                                    <option value="{{encrypt($item->id)}}" selected>{{$item->nombre}}</option>
                                                 @else
-                                                    <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                    <option value="{{encrypt($item->id)}}">{{$item->nombre}}</option>
                                                 @endif
                                             @else
                                                 @if($item->id == 1)
-                                                    <option value="{{$item->id}}" selected disabled>{{$item->nombre}}</option>
+                                                    <option value="{{encrypt($item->id)}}" selected disabled>{{$item->nombre}}</option>
                                                 @else
-                                                    <option value="{{$item->id}}" disabled>{{$item->nombre}}</option>
+                                                    <option value="{{encrypt($item->id)}}" disabled>{{$item->nombre}}</option>
                                                 @endif
                                             @endif
                                             @endforeach
@@ -202,15 +202,15 @@
                                             @foreach ($otroprograma as $item)
                                             @if($atleta->federado == 1)
                                                 @if($item->id == $atleta->otro_programa_id)
-                                                    <option value="{{$item->id}}" selected>{{$item->nombre}}</option>
+                                                    <option value="{{encrypt($item->id)}}" selected>{{$item->nombre}}</option>
                                                 @else
-                                                    <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                                    <option value="{{encrypt($item->id)}}">{{$item->nombre}}</option>
                                                 @endif
                                             @else
                                                 @if($item->id == 1)
-                                                    <option value="{{$item->id}}" selected disabled>{{$item->nombre}}</option>
+                                                    <option value="{{encrypt($item->id)}}" selected disabled>{{$item->nombre}}</option>
                                                 @else
-                                                    <option value="{{$item->id}}" disabled>{{$item->nombre}}</option>
+                                                    <option value="{{encrypt($item->id)}}" disabled>{{$item->nombre}}</option>
                                                 @endif
                                             @endif
                                             @endforeach
@@ -220,19 +220,19 @@
                                     <div class="col-md-4 mb-2"><select name="linea_desarrollo_id" class="form-control text-dark" required>
                                             <option selected disabled>Linea de Desarrollo</option>
                                             @foreach ($lineadesarrollo as $item)
-                                                <option value="{{$item->id}}" {{$atleta->linea_desarrollo_id == $item->id ? 'selected':''}}>{{$item->tipo}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{$atleta->linea_desarrollo_id == $item->id ? 'selected':''}}>{{$item->tipo}}</option>
                                             @endforeach
                                         </select></div>
                                     <div class="col-md-4 mb-2"><select name="modalidad_id" class="form-control text-dark" required>
                                             <option selected disabled>Modalidad</option>
                                             @foreach ($modalidad as $item)
-                                            <option value="{{$item->id}}" {{$atleta->modalidad_id == $item->id ? 'selected' :''}} >{{$item->nombre}}</option>
+                                            <option value="{{encrypt($item->id)}}" {{$atleta->modalidad_id == $item->id ? 'selected' :''}} >{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
                                     <div class="col-md-4 mb-2"><select name="prt_id" class="form-control text-dark" required>
                                             <option selected disabled>PRT</option>
                                             @foreach ($prt as $item)
-                                                <option value="{{$item->id}}" {{$atleta->prt_id == $item->id ? 'selected' : ''}}>{{$item->nombre}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{$atleta->prt_id == $item->id ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
                                 </div>

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Deporte_Adoptado;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Hashids\Hashids;
 use App\Models\Control;
 
 class Deporte_AdoptadoController extends Controller
@@ -21,7 +20,7 @@ class Deporte_AdoptadoController extends Controller
      */
     public function index()
     {
-        $deporte = Deporte_Adoptado::where('estado','activo')->get();
+        $deporte = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
         return view('configuraciones.deporte_a.show',compact('deporte'));
     }
 
@@ -47,7 +46,7 @@ class Deporte_AdoptadoController extends Controller
         $request->validate([
             'nombre'=>['unique:deporte_adaptado'],
         ]);
-        $deporte = new Deporte_Adoptado($request->all());
+        $deporte = new Deporte_Adoptado(['nombre' => $request->nombre]);
         $deporte->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>8]);
         $control->save();
@@ -73,11 +72,7 @@ class Deporte_AdoptadoController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $deporte = Deporte_Adoptado::find($id);
+        $deporte = Deporte_Adoptado::find(decrypt($id));
         return view('configuraciones.deporte_a.edit',['deporte' => $deporte]);
     }
 
@@ -90,8 +85,8 @@ class Deporte_AdoptadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $deporte = Deporte_Adoptado::find($id);
-        $deporte ->fill($request->all());
+        $deporte = Deporte_Adoptado::find(decrypt($id));
+        $deporte->fill(['nombre' => $request->nombre]);
         $deporte->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>8]);
         $control->save();
@@ -106,7 +101,7 @@ class Deporte_AdoptadoController extends Controller
      */
     public function destroy($id)
     {
-        Deporte_Adoptado::find($id)->update(['estado' => 'inactivo']);
+        Deporte_Adoptado::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>8]);
         $control->save();
         return redirect()->action([Deporte_AdoptadoController::class,'index']);
@@ -123,11 +118,7 @@ class Deporte_AdoptadoController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Deporte_Adoptado::find($id)->update(['estado'=>'activo']);
+        Deporte_Adoptado::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([Deporte_AdoptadoController::class,'index']);
     }
 }

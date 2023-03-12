@@ -21,7 +21,6 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nacionalidad</th>
-          
         </tr>
       </thead>
       <tbody class="table-hover">
@@ -29,25 +28,20 @@
             $contador = 1;
         @endphp
         @foreach ($nacionalidad as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idNacionalidad = $hashid->encode($item->id)
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->descripcion}}</td>
           <td>
-            <form action="{{route('nacionalidad.edit',$idNacionalidad)}}" method="GET">
+            <form action="{{route('nacionalidad.edit',encrypt($item->id))}}" method="GET">
               @csrf
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idNacionalidad}}">
             </form>
           </td>
           <td>
-            <form action="{{route('nacionalidad.destroy',$item->id)}}" method="POST">
+            <form action="{{route('nacionalidad.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar Nacionalidad')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar nacionalidad')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php

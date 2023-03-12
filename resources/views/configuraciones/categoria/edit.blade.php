@@ -28,7 +28,7 @@
                             <h2>Editar Categoría </h2>
                         </strong>
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('categoria.update',$categoria->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('categoria.update',encrypt($categoria->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">

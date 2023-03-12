@@ -28,25 +28,20 @@
             $contador = 1;   
         @endphp
         @foreach ($niveles as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idNivelFADN = $hashid->encode($item->id)
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->tipo}}</td>
           <td>
-            <form action="{{route('nivel-fadn.edit',$idNivelFADN)}}" method="GET">
+            <form action="{{route('nivel-fadn.edit',encrypt($item->id))}}" method="GET">
               @csrf
               <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-              <input type="hidden" name="e" id="e" value="{{$idNivelFADN}}">
             </form>
           </td>
           <td>
-            <form action="{{route('nivel-fadn.destroy',$item->id)}}" method="POST">
+            <form action="{{route('nivel-fadn.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNivel('Eliminar Nivel FADN')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarNivel('Eliminar nivel FADN')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
             </form>
           </td>
           @php

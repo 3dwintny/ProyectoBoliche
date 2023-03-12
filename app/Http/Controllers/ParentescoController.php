@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\Parentesco;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Hashids\Hashids;
 use App\Models\Control;
 
 class ParentescoController extends Controller
@@ -20,7 +19,7 @@ class ParentescoController extends Controller
      */
     public function index()
     {
-        $parentescos = Parentesco::where('estado','activo')->get();
+        $parentescos = Parentesco::where('estado','activo')->get(['id','tipo']);
         return view('configuraciones.parentesco.show',compact("parentescos"));
 
     }
@@ -47,7 +46,7 @@ class ParentescoController extends Controller
         $request->validate([
             'tipo'=>['unique:parentezco'],
         ]);
-        $parentescos = new Parentesco($request->all());
+        $parentescos = new Parentesco(['tipo' => $request->tipo]);
         $parentescos->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>25]);
         $control->save();
@@ -72,13 +71,9 @@ class ParentescoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id,Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $parentesco = $this->p->obtenerParentescoById($id);
+        $parentesco = $this->p->obtenerParentescoById(decrypt($id));
         return view('configuraciones.parentesco.edit',['parentesco' => $parentesco]);
     }
 
@@ -91,8 +86,8 @@ class ParentescoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $parentesco = Parentesco::find($id);
-        $parentesco ->fill($request->all());
+        $parentesco = Parentesco::find(decrypt($id));
+        $parentesco ->fill(['tipo' => $request->tipo]);
         $parentesco->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>25]);
         $control->save();
@@ -107,7 +102,7 @@ class ParentescoController extends Controller
      */
     public function destroy($id)
     {
-        Parentesco::find($id)->update(['estado' => 'inactivo']);
+        Parentesco::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>25]);
         $control->save();
         return redirect()->action([ParentescoController::class,'index']);
@@ -124,11 +119,7 @@ class ParentescoController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Parentesco::find($id)->update(['estado'=>'activo']);
+        Parentesco::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([ParentescoController::class,'index']);
     }
 }

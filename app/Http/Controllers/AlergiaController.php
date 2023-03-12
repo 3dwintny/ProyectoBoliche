@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Alergia;
 use App\Models\Control;
-use Hashids\Hashids;
 use Carbon\Carbon;
 
 class AlergiaController extends Controller
@@ -21,7 +20,7 @@ class AlergiaController extends Controller
      */
     public function index()
     {
-        $alergia = Alergia::where('estado', 'activo')->get();
+        $alergia = Alergia::where('estado', 'activo')->get(['id','nombre','descripcion']);
         return view('configuraciones.alergia.show',compact("alergia"));
     }
     /**
@@ -70,13 +69,9 @@ class AlergiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $alergia = $this->a->obtenerAlergiaById($id);
+        $alergia = $this->a->obtenerAlergiaById(decrypt($id));
         return view('configuraciones.alergia.edit',['alergia'=>$alergia]);
     }
   
@@ -89,7 +84,7 @@ class AlergiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $alergia = Alergia::find($id);
+        $alergia = Alergia::find(decrypt($id));
         $alergia->fill($request->all());
         $alergia->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>1]);
@@ -105,7 +100,7 @@ class AlergiaController extends Controller
      */
     public function destroy($id)
     {
-        Alergia::find($id)->update(['estado'=>'inactivo']);
+        Alergia::find(decrypt($id))->update(['estado'=>'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>1]);
         $control->save();
         return redirect()->action([AlergiaController::class,'index']);
@@ -122,11 +117,7 @@ class AlergiaController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Alergia::find($id)->update(['estado'=>'activo']);
+        Alergia::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([AlergiaController::class,'index']);
     }
 }

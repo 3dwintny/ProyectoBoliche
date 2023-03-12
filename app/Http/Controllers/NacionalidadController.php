@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nacionalidad;
 use Carbon\Carbon;
-use Hashids\Hashids;
 use App\Models\Control;
 
 class NacionalidadController extends Controller
@@ -21,7 +20,7 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
-        $nacionalidad = Nacionalidad::where('estado','activo')->get();
+        $nacionalidad = Nacionalidad::where('estado','activo')->get(['id','descripcion']);
         return view('configuraciones.nacionalidad.show',compact('nacionalidad'));
     }
 
@@ -47,7 +46,7 @@ class NacionalidadController extends Controller
         $request->validate([
             'descripcion'=>['unique:nacionalidad'],
         ]);
-        $nacionalidad = new Nacionalidad($request->all());
+        $nacionalidad = new Nacionalidad(['descripcion' => $request->descripcion]);
         $nacionalidad->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>21]);
         $control->save();
@@ -72,11 +71,7 @@ class NacionalidadController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $nacionalidad = $this->n->obtenerNacionalidadesById($id);
+        $nacionalidad = $this->n->obtenerNacionalidadesById(decrypt($id));
         return view('configuraciones.nacionalidad.edit',['nacionalidad' => $nacionalidad]);
     }
 
@@ -89,8 +84,8 @@ class NacionalidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nacionalidad = Nacionalidad::find($id);
-        $nacionalidad ->fill($request->all());
+        $nacionalidad = Nacionalidad::find(decrypt($id));
+        $nacionalidad ->fill(['descripcion' => $request->descripcion]);
         $nacionalidad->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>21]);
         $control->save();
@@ -105,7 +100,7 @@ class NacionalidadController extends Controller
      */
     public function destroy($id)
     {
-        Nacionalidad::find($id)->update(['estado' => 'inactivo']);
+        Nacionalidad::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>21]);
         $control->save();
         return redirect()->action([NacionalidadController::class,'index']);
@@ -122,11 +117,7 @@ class NacionalidadController extends Controller
     }
 
     public function restaurar(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        Nacionalidad::find($id)->update(['estado'=>'activo']);
+        Nacionalidad::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([NacionalidadController::class,'index']);
     }
 }

@@ -15,7 +15,6 @@ use App\Models\Linea_Desarrollo;
 use App\Models\Deporte;
 use App\Models\Modalidad;
 use App\Models\PRT;
-use Hashids\Hashids;
 use Carbon\Carbon;
 use App\Models\Departamento;
 use App\Models\Municipio;
@@ -38,13 +37,13 @@ class AtletaController extends Controller
     {
         $buscarAtleta = $request->buscarNombre;
         $filtrarCategoria = $request->filtroCategoria;
-        $categoria = Categoria::all();
+        $categoria = Categoria::where('estado','activo')->get(['tipo','rango_edades','id']);
         if($buscarAtleta ==""){
             if($filtrarCategoria==""){
                 $atletas = Atleta::where('estado','activo')->paginate(5);
             }
             else{
-                $atletas = Atleta::where('estado','activo')->where('categoria_id',$filtrarCategoria)->paginate(5);
+                $atletas = Atleta::where('estado','activo')->where('categoria_id',decrypt($filtrarCategoria))->paginate(5);
             }
         }
         else{
@@ -66,79 +65,79 @@ class AtletaController extends Controller
                 else if($buscarAtleta==$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre3){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                else if($buscarAtleta==$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->apellido1.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->apellido1){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->apellido1){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->apellido1){
+                else if($buscarAtleta==$alumno[$i]->nombre2.' '.$alumno[$i]->apellido1){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                else if($buscarAtleta==$alumno[$i]->nombre3.' '.$alumno[$i]->apellido1){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre2.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre3.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido1){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->apellido1){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre3.' '.$alumno[$i]->apellido1){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                else if($buscarAtleta==$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3.' '.$alumno[$i]->apellido1){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre3.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->apellido1.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2){
+                else if($buscarAtleta==$alumno[$i]->apellido1.' '.$alumno[$i]->apellido2.' '.$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3.' '.$alumno[$i]->apellido1){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                else if($buscarAtleta==$alumno[$i]->apellido1.' '.$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                else if($buscarAtleta==$alumno[$i]->apellido2.' '.$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3." ".$alumno[$i]->apellido1." ".$alumno[$i]->apellido2){
+                else if($buscarAtleta==$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3.' '.$alumno[$i]->apellido1.' '.$alumno[$i]->apellido2){
                     array_push($indices,$alumno[$i]->id);
                 }
-                else if($buscarAtleta==$alumno[$i]->apellido1." ".$alumno[$i]->apellido2." ".$alumno[$i]->nombre1." ".$alumno[$i]->nombre2." ".$alumno[$i]->nombre3){
+                else if($buscarAtleta==$alumno[$i]->apellido1.' '.$alumno[$i]->apellido2.' '.$alumno[$i]->nombre1.' '.$alumno[$i]->nombre2.' '.$alumno[$i]->nombre3){
                     array_push($indices,$alumno[$i]->id);
                 }
                 else{
@@ -162,9 +161,6 @@ class AtletaController extends Controller
         $centro=Centro::all();
         $entrenador= Entrenador::All();
         $alumnos = Alumno::all();
-        //$alumnos = Alumno::all();
-        //$alumnos = Alumno::find($id);
-        //$alumno = $this->alumno->obterenrAlumno();
         $categoria = Categoria::all();
         $etapa=Etapa_Deportiva::all();
         $deporteadaptado = Deporte_Adoptado::all();
@@ -173,33 +169,25 @@ class AtletaController extends Controller
         $deporte = Deporte::all();
         $modalidad = Modalidad::all();
         $prt = PRT::all();
-        return view('atletas.create',compact("centro","entrenador","alumnos","categoria","etapa",
-                                            "deporteadaptado","otroprograma","lineadesarrollo",
-                                            "deporte","modalidad","prt","hoy"));
-        
-
-                                            /*$municipios = DB::table('municipio')
-            ->where('departamento_id', $request->departamento_id)
-            ->get();*/
-        
-     
+        return view('atletas.create',compact('centro','entrenador','alumnos','categoria','etapa',
+                                            'deporteadaptado','otroprograma','lineadesarrollo',
+                                            'deporte','modalidad','prt','hoy'));
     }
     public function creacion($id){
-        $centro=Centro::all();
-        $entrenador= Entrenador::All();
+        $centro=Centro::where('estado','activo')->get(['id','nombre']);
+        $entrenador= Entrenador::where('estado','activo')->get(['id','nombre1','apellido1']);
         $alumno = Alumno::find($id);     
-        $categoria = Categoria::all();
-        $etapa=Etapa_Deportiva::all();
-        $deporteadaptado = Deporte_Adoptado::all();
-        $otroprograma = Otro_Programa::all();
-        $lineadesarrollo = Linea_Desarrollo::all();
-        $deporte = Deporte::all();
-        $modalidad = Modalidad::all();
-        $prt = PRT::all();
+        $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
+        $etapa=Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
+        $deporteadaptado = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
+        $otroprograma = Otro_Programa::where('estado','activo')->get(['id','nombre']);
+        $lineadesarrollo = Linea_Desarrollo::where('estado','activo')->get(['id','tipo']);
+        $deporte = Deporte::where('estado','activo')->get(['id','nombre']);
+        $modalidad = Modalidad::where('estado','activo')->get(['id','nombre']);
+        $prt = PRT::where('estado','activo')->get(['id','nombre']);
         $hoy = Carbon::now();
-        return view('atletas.create',compact('alumno',"centro","entrenador","categoria","etapa",
-        "deporteadaptado","otroprograma","lineadesarrollo",
-        "deporte","modalidad","prt","hoy"));
+        return view('atletas.create',compact('alumno','centro','entrenador','categoria','etapa',
+        'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','hoy'));
     }
     
     /**
@@ -210,8 +198,43 @@ class AtletaController extends Controller
      */
     public function store(Request $request,$id)
     {
-        Alumno::find($id)->update(['estado' => 'Inscrito']); 
-        $atletas = new Atleta($request->all());
+        Alumno::find(decrypt($id))->update(['estado' => 'Inscrito']); 
+        if($request->deporte_adaptado_id==1){
+            $depAdaptado = $request->deporte_adaptado_id;
+        }
+        else{
+            $depAdaptado = decrypt($request->deporte_adaptado_id);
+        }
+
+        if($request->otro_programa_id==1){
+            $otroPrograma = $request->otro_programa_id;
+        }
+        else{
+            $otroPrograma = decrypt($request->otro_programa_id);
+        }
+        $atletas = Atleta::find($id);
+        $prt = decrypt($request->prt_id);
+        $atletas->fill([
+            'fecha_ingreso'=> $request->fecha_ingreso,
+            'adaptado'=> $request->adaptado,
+            'estado_civil' => $request->estado_civil,
+            'etnia' => $request->etnia,
+            'escolaridad' => $request->escolaridad,
+            'centro_id' => decrypt($request->centro_id),
+            'entrenador_id' => decrypt($request->entrenador_id),
+            'categoria_id' => decrypt($request->categoria_id),
+            'etapa_deportiva_id' => decrypt($request->etapa_deportiva_id),
+            'deporte_id' => decrypt($request->deporte_id),
+            'deporte_adaptado_id' => $depAdaptado,
+            'otro_programa_id' => $otroPrograma,
+            'linea_desarrollo_id' => decrypt($request->linea_desarrollo_id),
+            'modalidad_id' => decrypt($request->modalidad_id),
+            'prt_id' => $prt,
+            'anios' => $request->anios,
+            'meses' => $request->meses,
+            'federado' => $request->federado,
+            'alumno_id' => decrypt($request->alumno_id),
+        ]);
         $atletas->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>4]);
         $control->save(); 
@@ -226,7 +249,7 @@ class AtletaController extends Controller
      */
     public function show($id)
     {
-        $atleta = Atleta::find($id);
+        $atleta = Atleta::find(decrypt($id));
         $alumno = Alumno::find($atleta->alumno_id);
         $departamento = Departamento::find($alumno->departamento_residencia_id);
         $municipio = Municipio::find($alumno->municipio_residencia_id);
@@ -252,25 +275,19 @@ class AtletaController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $atleta = Atleta::find($id);
-        $centro=Centro::all();
-        $entrenador= Entrenador::All();
-        $alumno = Alumno::find($id);     
-        $categoria = Categoria::all();
-        $etapa=Etapa_Deportiva::all();
-        $deporteadaptado = Deporte_Adoptado::all();
-        $otroprograma = Otro_Programa::all();
-        $lineadesarrollo = Linea_Desarrollo::all();
-        $deporte = Deporte::all();
-        $modalidad = Modalidad::all();
-        $prt = PRT::all();
-        return view('atletas.edit',compact('alumno',"centro","entrenador","categoria","etapa",
-        "deporteadaptado","otroprograma","lineadesarrollo",
-        "deporte","modalidad","prt","atleta"));
+        $atleta = Atleta::find(decrypt($id));
+        $centro=Centro::where('estado','activo')->get(['id','nombre']);
+        $entrenador= Entrenador::where('estado','activo')->get(['id','nombre1','apellido1']);
+        $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
+        $etapa=Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
+        $deporteadaptado = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
+        $otroprograma = Otro_Programa::where('estado','activo')->get(['id','nombre']);
+        $lineadesarrollo = Linea_Desarrollo::where('estado','activo')->get(['id','tipo']);
+        $deporte = Deporte::where('estado','activo')->get(['id','nombre']);
+        $modalidad = Modalidad::where('estado','activo')->get(['id','nombre']);
+        $prt = PRT::where('estado','activo')->get(['id','nombre']);
+        return view('atletas.edit',compact('centro','entrenador','categoria','etapa',
+        'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','atleta'));
     }
 
     /**
@@ -282,8 +299,41 @@ class AtletaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $atletas = Atleta::find($id);
-        $atletas->fill($request->all());
+        if($request->deporte_adaptado_id==1){
+            $depAdaptado = $request->deporte_adaptado_id;
+        }
+        else{
+            $depAdaptado = decrypt($request->deporte_adaptado_id);
+        }
+
+        if($request->otro_programa_id==1){
+            $otroPrograma = $request->otro_programa_id;
+        }
+        else{
+            $otroPrograma = decrypt($request->otro_programa_id);
+        }
+        $atletas = Atleta::find(decrypt($id));
+        $prt = decrypt($request->prt_id);
+        $atletas->fill([
+            'fecha_ingreso'=> $request->fecha_ingreso,
+            'adaptado'=> $request->adaptado,
+            'estado_civil' => $request->estado_civil,
+            'etnia' => $request->etnia,
+            'escolaridad' => $request->escolaridad,
+            'centro_id' => decrypt($request->centro_id),
+            'entrenador_id' => decrypt($request->entrenador_id),
+            'categoria_id' => decrypt($request->categoria_id),
+            'etapa_deportiva_id' => decrypt($request->etapa_deportiva_id),
+            'deporte_id' => decrypt($request->deporte_id),
+            'deporte_adaptado_id' => $depAdaptado,
+            'otro_programa_id' => $otroPrograma,
+            'linea_desarrollo_id' => decrypt($request->linea_desarrollo_id),
+            'modalidad_id' => decrypt($request->modalidad_id),
+            'prt_id' => $prt,
+            'anios' => $request->anios,
+            'meses' => $request->meses,
+            'federado' => $request->federado
+        ]);
         $atletas->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
         $control->save();
@@ -298,7 +348,7 @@ class AtletaController extends Controller
      */
     public function destroy($id)
     {
-        Atleta::find($id)->update(['estado' => 'inactivo']);
+        Atleta::find(decrypt($id))->update(['estado' => 'inactivo']);
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>4]);
         $control->save();
         return redirect()->action([AtletaController::class,'index'])->with('message','Atleta eliminado');

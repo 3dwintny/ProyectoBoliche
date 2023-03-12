@@ -29,7 +29,7 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('otro-programa-de-atencion.update',$otro_programa->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('otro-programa-de-atencion.update',encrypt($otro_programa->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">

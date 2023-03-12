@@ -29,7 +29,7 @@
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nivel-fadn.update',$nivel->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nivel-fadn.update',encrypt($nivel->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
