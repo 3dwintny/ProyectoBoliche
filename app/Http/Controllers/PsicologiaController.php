@@ -155,7 +155,7 @@ class PsicologiaController extends Controller
 
     public function acciones(){
         $control = Control::where('tabla_accion_id',27)->with('usuario')->paginate(5);
-        return view('psicologia.terapias.control',compact('control'));
+        return view('configuraciones.psicologia.control',compact('control'));
     }
 
     public function eliminados(){

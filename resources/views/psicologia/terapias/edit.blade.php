@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Psicología</h1>
+                    <h1 class="text-white">Sesiones</h1>
                 </div>
             </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
                 <div class="card">
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('terapias.update',$terapia->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('terapias.update',encrypt($terapia->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
@@ -40,8 +40,8 @@
                         </div>
                         
                         <div class="row justify-content-center">
-                            <div class="col-md-3 mb-13"><input type="hidden" class="form-control text-center" name="atleta_id" value="{{$terapia->atleta_id}}" required></div>
-                            <div class="col-md-3 mb-4"><input type="hidden" class="form-control text-dark" name="psicologia_id" id="psicologia_id" value="{{$terapia->psicologia_id}}" required></div>
+                            <div class="col-md-3 mb-13"><input type="hidden" class="form-control text-center" name="atleta_id" value="{{encrypt($terapia->atleta_id)}}" required></div>
+                            <div class="col-md-3 mb-4"><input type="hidden" class="form-control text-dark" name="psicologia_id" id="psicologia_id" value="{{encrypt($terapia->psicologia_id)}}" required></div>
                         </div>
 
                         <div class="row justify-content-center">

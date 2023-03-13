@@ -7,14 +7,14 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Listado de terapias</h1>
+          <h1 class="text-white">Listado de sesiones</h1>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="container my-1">
-  <form action="{{route('terapias.index')}}" role="form">
+  <form action="{{route('sesiones.index')}}" role="form">
     <div class="row">
       <div class="col-md-4 mb-2">
         <div class="form-floating">
@@ -26,7 +26,7 @@
         <button type="submit" class="btn btn-primary">Buscar</button>
       </div>
       <div class="col-md-1 mb-2">
-        <button type="button" class="btn btn-light" onclick="window.location='{{route('terapias.index')}}'">Cancelar búsqueda</button>
+        <button type="button" class="btn btn-light" onclick="window.location='{{route('sesiones.index')}}'">Cancelar búsqueda</button>
       </div>
     </div>
   </form>
@@ -51,15 +51,11 @@
         </tr>
         @else
           @foreach ($atleta as $item)
-          @php
-            $hashids = new Hashids\Hashids();
-            $idAtleta = $hashids->encode($item->id);
-          @endphp
           <tr>
             <td>{{$contador}}</td>
             <td>{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}</td>
             <td>
-              <a href="{{route('terapias.show',$idAtleta)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-thin fa-list"></i></a>
+              <a href="{{route('sesiones.show',encrypt($item->id))}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-thin fa-list"></i></a>
             </td>
             @php
               $contador++;

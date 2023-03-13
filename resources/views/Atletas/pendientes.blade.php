@@ -41,7 +41,7 @@
                                 <tr>
                                     <td>{{$contador}}</td>
                                     <td>{{$item->tarea}}</td>
-                                    <td><input type="checkbox" name="id[]" value="{{$item->id}}"/></td>
+                                    <td><input type="checkbox" name="id[]" value="{{encrypt($item->id)}}"/></td>
                                 </tr>
                                     @php
                                     $contador++;

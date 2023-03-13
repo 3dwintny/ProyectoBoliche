@@ -18,8 +18,7 @@
 <form action="{{route('busquedaFecha')}}" method="GET">
   @csrf
   <input type="hidden" id="idAtleta" name="idAtleta" value="{{$guardarAtleta}}">
-  <div id="contenedor">
-    <h3></h3>
+  <div id="contenedor" class="my-2">
     <div class="centrar"><div class="input-group mb-2"></div></div>
     <div class="contenedorFlotante">
       <div class="input-group mb-2">
@@ -37,6 +36,9 @@
     <div class="espacioIzquierda"><div class="input-group mb-2"></div></div>
     <div id="botonBusqueda">
       <input type="submit" value="Buscar" class="btn btn-outline-warning">
+    </div>
+    <div>
+      <button type="button" class="btn btn-light" onclick="window.location='{{route('sesiones.show',$guardarAtleta)}}'">Cancelar búsqueda</button>
     </div>
     <div class="centrar"><div class="input-group mb-2"></div></div>
   </div>
@@ -73,9 +75,9 @@
           <td>{{$item->tarea}}</td>
           @endif
           <td>
-            <a href="{{route('terapias.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
-            <a href="{{route('detallesTerapia',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-success"><i class="fa fa-fw fa-regular fa-eye"></i></a>
-            <a href="{{route('historialPDF',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-info" target="_blank"><i class="fa fa-fw fa-regular fa-file-pdf"></i></a>
+            <a href="{{route('sesiones.edit',encrypt($item->id))}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <a href="{{route('detallesTerapia',encrypt($item->id))}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-success"><i class="fa fa-fw fa-regular fa-eye"></i></a>
+            <a href="{{route('historialPDF',encrypt($item->id))}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-info" target="_blank"><i class="fa fa-fw fa-regular fa-file-pdf"></i></a>
           </td>
         </tr>
         @endforeach

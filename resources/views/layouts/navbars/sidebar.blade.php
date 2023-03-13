@@ -181,20 +181,20 @@
                         <ul class="nav nav-sm flex-column">
                             @can('crearTerapias')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('terapias.create') }}">
-                                    {{ __('Nueva Terapia') }}
+                                <a class="nav-link" href="{{ route('sesiones.create') }}">
+                                    {{ __('Nueva sesión') }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('terapias.index') }}">
-                                    {{ __('Control de Terapias') }}
+                                <a class="nav-link" href="{{ route('sesiones.index') }}">
+                                    {{ __('Control de sesiones') }}
                                 </a>
                             </li>
                             @endcan
                             @can('ver-Psicologos')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('psicologia.create') }}">
-                                    {{ __('Registrar Piscólogo') }}
+                                    {{ __('Registrar piscólogo') }}
                                 </a>
                             </li>
                             <li class="nav-item">

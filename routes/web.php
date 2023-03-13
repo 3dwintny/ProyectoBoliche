@@ -170,10 +170,10 @@ Route::group(['middleware' => 'auth'], function () {
     //Rutas Terapia
     Route::get('tareas-pendientes',[TerapiaController::class,'tareaPendiente'])->name('tareaPendiente');
     Route::post('finalizar-tarea',[TerapiaController::class,'finalizarTarea'])->name('finalizarTarea');
-    Route::resource('terapias',TerapiaController::class);
+    Route::resource('sesiones',TerapiaController::class);
 
     //Rutas Tipo_Contrato
-    Route::get('detalles-de-terapia/{id}',[TerapiaController::class,'details'])->name('detallesTerapia');
+    Route::get('detalles-de-sesion/{id}',[TerapiaController::class,'details'])->name('detallesTerapia');
     Route::resource('tipo-de-contrato',Tipo_ContratoController::class);
 
     //Rutas Tipo_Usuario
@@ -236,7 +236,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('seguridad/parentescos',[ParentescoController::class,'acciones'])->name('accionesParentesco');
     Route::get('seguridad/prt',[PRTController::class,'acciones'])->name('accionesPRT');
     Route::get('seguridad/psicologia',[PsicologiaController::class,'acciones'])->name('accionesPsicologia');
-    Route::get('seguridad/terapias',[TerapiaController::class,'acciones'])->name('accionesTerapia');
+    Route::get('seguridad/sesiones',[TerapiaController::class,'acciones'])->name('accionesTerapia');
     Route::get('seguridad/tipos-de-contratos',[Tipo_ContratoController::class,'acciones'])->name('accionesContrato');
     Route::get('seguridad/usuarios',[UserController::class,'acciones'])->name('accionesUsuarios');
     Route::get('restaurar', function () {return view('configuraciones.restaurar');})->name('restaurar');
@@ -311,24 +311,23 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('restaurar/psicologia',[PsicologiaController::class,'eliminados'])->name('eliminadosPsicologia');
     Route::post('restaurandoPsicologos',[PsicologiaController::class,'restaurar'])->name('restaurandoPsicologia');
 
-    Route::get('restaurar/terapias',[TerapiaController::class,'eliminados'])->name('eliminadosTerapia');
+    Route::get('restaurar/sesiones',[TerapiaController::class,'eliminados'])->name('eliminadosTerapia');
     
     Route::get('restaurar/tipos-de-contratos',[Tipo_ContratoController::class,'eliminados'])->name('eliminadosContrato');
     Route::post('restaurandoContratos',[Tipo_ContratoController::class,'restaurar'])->name('restaurandoContrato');
 
     Route::get('restaurar/usuarios',[UserController::class,'eliminados'])->name('eliminadosUsuarios');
+    Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
+    Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
+    Route::resource('municipio',MunicipioController::class);
+    Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
+    Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
+    Route::get('sesiones-PDF/{id}', [TerapiaController::class, 'generarPDF'])->name('historialPDF');
+    Route::get('correos',[TerapiaController::class,'getCorreo'])->name('correos');
+    Route::get('busquedaFecha',[TerapiaController::class,'busquedaTerapia'])->name('busquedaFecha');
+    Route::post('asistenciaCategoria',[AsistenciaController::class,'filtroCategoria'])->name('asistenciaCategoria');
     });
 
-Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
-Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
-Route::resource('municipio',MunicipioController::class);
-Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
-Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
-Route::post('historiales', [TerapiaController::class, 'getHistorial'])->name('historiales');
-Route::get('terapias-PDF/{id}', [TerapiaController::class, 'generarPDF'])->name('historialPDF');
-Route::get('correos',[TerapiaController::class,'getCorreo'])->name('correos');
-Route::get('busquedaFecha',[TerapiaController::class,'busquedaTerapia'])->name('busquedaFecha');
-Route::post('asistenciaCategoria',[AsistenciaController::class,'filtroCategoria'])->name('asistenciaCategoria');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -14,7 +14,6 @@ use PDF;
 use Mail;
 use App\Mail\CorreosTerapia;
 use App\Models\Control;
-use Hashids\Hashids;
 
 class TerapiaController extends Controller
 {
@@ -145,7 +144,7 @@ class TerapiaController extends Controller
      */
     public function create()
     {
-        $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
+        $psicologos = Psicologia::where('correo',auth()->user()->email)->get(['id','nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada']);
         $atletas = Atleta::where('estado','activo')->get();
         $hoy = Carbon::now();
         $hora = Carbon::now()->toTimeString('minute');
@@ -198,8 +197,8 @@ class TerapiaController extends Controller
             'ansiedad_fisica' => $request->ansiedad_fisica,
             'miedo' => $request->miedo,
             'frustracion' => $request->frustracion,
-            'atleta_id' => $request->atleta_id,
-            'psicologia_id' => $request->psicologia_id,
+            'atleta_id' => decrypt($request->atleta_id),
+            'psicologia_id' => decrypt($request->psicologia_id),
         ]);
         $terapias->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>29]);
@@ -216,21 +215,18 @@ class TerapiaController extends Controller
     public function show($id)
     {
         $psicologo = Psicologia::where('correo',auth()->user()->email)->get();
-        $hashids = new Hashids();
-        $idDesencriptado = $hashids->decode($id);
-        $id=$idDesencriptado[0];
         if(count($psicologo)==0)
         {
-            $historial = DB::table('terapia')->where('atleta_id',$id)->where('psicologia_id',0)->paginate(5);
+            $historial = DB::table('terapia')->where('atleta_id',decrypt($id))->where('psicologia_id',0)->paginate(5);
         }
         else{
-            $historial = DB::table('terapia')->where('atleta_id',$id)->where('psicologia_id',$psicologo[0]->id)->paginate(5);
+            $historial = DB::table('terapia')->where('atleta_id',decrypt($id))->where('psicologia_id',$psicologo[0]->id)->paginate(5);
         }
         $guardarAtleta = $id;
         $inicial = "";
         $final = "";
         $atleta = DB::table('atleta')
-        ->where('id', $id)->get('alumno_id');
+        ->where('id', decrypt($id))->get('alumno_id');
         $alumno = "";
         foreach ($atleta as $item){
             $alumno = $item->alumno_id;
@@ -254,7 +250,7 @@ class TerapiaController extends Controller
      */
     public function edit($id)
     {
-        $terapia = $this->t->obtenerTerapiaById($id);
+        $terapia = $this->t->obtenerTerapiaById(decrypt($id));
         $atleta = Atleta::where('id',$terapia->atleta_id)->get();
         foreach ($atleta as $item){
             $alumno = Alumno::where('id',$item->alumno_id)->get();
@@ -273,22 +269,51 @@ class TerapiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $terapia = Terapia::find($id);
+        $terapia = Terapia::find(decrypt($id));
         $correoAtleta = $request->correo;
         $obtenerTarea = $request->tarea;
         $obtenerFechaTarea = $request->fecha;
         if($terapia->tarea!=$obtenerTarea)
         {
             if($obtenerTarea!="" || $obtenerTarea!=NULL){
-                DB::table('terapia')->where('id',$id)->update(['estado_tarea'=>'pendiente']);
+                $tarea = "pendiente";
+                //DB::table('terapia')->where('id',decrypt($id))->update(['estado_tarea'=>'pendiente']);
             }
             else{
                 $obtenerTarea = "Se ha eliminado la tarea asignada";
-                DB::table('terapia')->where('id',$id)->update(['estado_tarea'=>'sin']);
+                $tarea = "sin";
+                //DB::table('terapia')->where('id',decrypt($id))->update(['estado_tarea'=>'sin']);
             }
             Mail::to($correoAtleta)->send(new ActualizarCorreos($obtenerTarea,$obtenerFechaTarea));
         }
-        $terapia ->fill($request->all());
+        $terapia ->fill([
+            'numero_terapia' => $request->numero_terapia,
+            'fecha' => $request->fecha,
+            'hora_inicio' => $request->hora_inicio,
+            'impresion_clinica' => $request->impresion_clinica,
+            'analisis_semiologico' => $request->analisis_semiologico,
+            'desarrollo' => $request->desarrollo,
+            'observaciones' => $request->observaciones,
+            'tarea' => $request->tarea,
+            'estado_tarea' => $tarea,
+            'conciencia_corporal' => $request->conciencia_corporal,
+            'dominio_corporal' => $request->dominio_corporal,
+            'dominio_respiracion' => $request->dominio_respiracion,
+            'dialogo_interno' => $request->dialogo_interno,
+            'atencion' => $request->atencion,
+            'concentracion' => $request->concentracion,
+            'motivacion' => $request->motivacion,
+            'confianza' => $request->confianza,
+            'activacion' => $request->activacion,
+            'relajacion' => $request->relajacion,
+            'estres' => $request->estres,
+            'ansiedad_cognitiva' => $request->ansiedad_cognitiva,
+            'ansiedad_fisica' => $request->ansiedad_fisica,
+            'miedo' => $request->miedo,
+            'frustracion' => $request->frustracion,
+            'atleta_id' => decrypt($request->atleta_id),
+            'psicologia_id' => decrypt($request->psicologia_id),
+        ]);
         $terapia->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>29]);
         $control->save();
@@ -305,18 +330,19 @@ class TerapiaController extends Controller
     {
     }
 
+    //Obitene información sobre el paciente para mostrar el número de sesión
     public function getPaciente(Request $request)
     {
         $paciente = DB::table('terapia')
-        ->where('atleta_id', $request->atleta_id)->get();
-        
+        ->where('atleta_id', decrypt($request->atleta_id))->get();
         if (count($paciente)>0){
             return response()->json($paciente);
         }
     }
 
+    //Obtiene el correo electrónico del atleta para enviar la tarea asignada
     public function getCorreo(Request $request){
-        $informacionAtleta = DB::table('atleta')->where('id',$request->atleta_id)->get();
+        $informacionAtleta = DB::table('atleta')->where('id',decrypt($request->atleta_id))->get();
         foreach($informacionAtleta as $item){
             $informacionAlumno = DB::table('alumno')->where('id',$item->alumno_id)->get();
         }
@@ -326,34 +352,10 @@ class TerapiaController extends Controller
         }
     }
 
-    public function getHistorial(Request $request)
-    {
-        $guardarAtleta = $request->atleta; 
-        $historial = DB::table('terapia')
-        ->where('atleta_id', $request->atleta)->get();
-        $atleta = DB::table('atleta')
-        ->where('id', $request->atleta)->get('alumno_id');
-        $alumno = "";
-        foreach ($atleta as $item){
-            $alumno = $item->alumno_id;
-        }
-        $nombre = DB::table('alumno')
-        ->where('id',$alumno)->get();
-        $completo = "";
-        foreach ($nombre as $item){
-            $completo = $item->nombre1." ".$item->nombre2." ".$item->nombre3." ".$item->apellido1." ".$item->apellido2;
-        }
-        if (count($historial)>0){
-            return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta'));
-        }
-        else{
-            return view('psicologia.terapias.sinresultados',compact('completo'));
-        }
-    }
-
+    //Función para generar el PDF de la sesión seleccionada
     public function generarPDF($id)
     {
-        $terapia = $this->t->obtenerTerapiaById($id);
+        $terapia = $this->t->obtenerTerapiaById(decrypt($id));
         $atleta = Atleta::where('id',$terapia->atleta_id)->get();
         foreach ($atleta as $item){
             $alumno = Alumno::where('id',$item->alumno_id)->get();
@@ -363,9 +365,10 @@ class TerapiaController extends Controller
         return PDF::loadView('psicologia.terapias.pdf',['terapia' => $terapia,'alumno' => $alumno])->setPaper('8.5x11')->stream();
     }
 
+    //Función para efectuar la búsqueda de sesiones por fecha
     public function busquedaTerapia(Request $request)
     {
-        $guardarAtleta = $request->idAtleta;
+        $guardarAtleta = decrypt($request->idAtleta);
         $inicial = $request->fechaInicial;
         $final = $request->fechaFinal; 
         $historial = Terapia::where('atleta_id',$guardarAtleta)->whereBetween('fecha',[$inicial,$final])
@@ -382,16 +385,20 @@ class TerapiaController extends Controller
         foreach ($nombre as $item){
             $completo = $item->nombre1." ".$item->nombre2." ".$item->nombre3." ".$item->apellido1." ".$item->apellido2;
         }
+        $guardarAtleta = encrypt($guardarAtleta);
         return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta','inicial','final'));
     }
 
+
+    //Función que devuelve el detalle de la sesión
     public function details($id){
-        $terapia = Terapia::find($id);
+        $terapia = Terapia::find(decrypt($id));
         $atleta = Atleta::find($terapia->atleta_id);
         $paciente = Alumno::find($atleta->alumno_id);
         return view('psicologia.terapias.details', compact('terapia','paciente'));
     }
 
+    //Función  que muestra las tareas pendientes de cada atleta
     public function tareaPendiente(){
         $alumno = Alumno::where('correo',auth()->user()->email)->get();
         if(count($alumno)>0){
@@ -406,12 +413,21 @@ class TerapiaController extends Controller
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',29)->with('usuario')->paginate(5);
-        return view('configuraciones.psicologia.control',compact('control'));
+        $control = Control::where('tabla_accion_id',29)->with('usuario')->paginate(15);
+        return view('psicologia.terapias.control',compact('control'));
     }
 
+    //Función para marcar la(s) tarea(s) que el atleta ha finalizado
     public function finalizarTarea(Request $request){
-        $terapia_id = $request->id;
+        if($request->id!=null){
+            $terapia_id = array();
+            foreach($request->id as $item){
+                array_push($terapia_id,decrypt($item));
+            }
+        }
+        else{
+            $terapia_id = $request->id;
+        }
         if($terapia_id!==null){
             for ($i=0;$i<count($terapia_id);$i++){
                 $informacion = [
