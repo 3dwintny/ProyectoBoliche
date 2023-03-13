@@ -318,7 +318,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
 
     Route::get('restaurar/usuarios',[UserController::class,'eliminados'])->name('eliminadosUsuarios');
     Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
-    Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
+    
     Route::resource('municipio',MunicipioController::class);
     Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
     Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
@@ -328,7 +328,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::post('asistenciaCategoria',[AsistenciaController::class,'filtroCategoria'])->name('asistenciaCategoria');
     });
 
-
+    Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

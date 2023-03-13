@@ -28,13 +28,13 @@
                         <th scope="col">No</th>
                         <th scope="col">Hora de inicio</th>
                         <th>Hora de finalización</th>
-                        <th>Domingo</th>
                         <th>Lunes</th>
                         <th>Martes</th>
                         <th>Miércoles</th>
                         <th>Jueves</th>
                         <th>Viernes</th>
                         <th>Sábado</th>
+                        <th>Domingo</th>
                       </tr>
                     </thead>
                     <tbody class="table-hover">
@@ -46,14 +46,14 @@
                         <td>{{$contador}}</td>
                         <td>{{\Carbon\Carbon::parse($item->hora_inicio)->format('H:i')}}</td>
                         <td>{{\Carbon\Carbon::parse($item->hora_fin)->format('H:i')}}</td>
-                        <td>{{$item->domingo}}</td>
                         <td>{{$item->lunes}}</td>
                         <td>{{$item->martes}}</td>
                         <td>{{$item->miercoles}}</td>
                         <td>{{$item->jueves}}</td>
                         <td>{{$item->viernes}}</td>
                         <td>{{$item->sabado}}</td>
-                        <td><input type="checkbox" value="{{$item->id}}" name="horario_id[]"  id="horario_id"></td>
+                        <td>{{$item->domingo}}</td>
+                        <td><input type="checkbox" value="{{encrypt($item->id)}}" name="horario_id[]"  id="horario_id"></td>
                         @php
                           $contador++;
                         @endphp

@@ -116,7 +116,7 @@ class CentroController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $centro = Centro::find($id);
+        $centro = Centro::find(decrypt($id));
         $centro->fill(['nombre' => $request->nombre, 'direccion' => $request->direccon, 'fecha_registro' => $request->fecha_registro,
         'institucuion' => $request->institucion,'accesibilidad' => $request->accesibilidad,'implementacion' => $request->implementacion,
         'espacio_fisico' => $request->espacio_fisico,'departamento_id' => decrypt($request->departamento_id)]);
@@ -140,41 +140,36 @@ class CentroController extends Controller
         return redirect()->action([CentroController::class,'index']);
     }
 
-    public function mostrarHorarios($id, Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
+    //Muestra los horarios asignados a cada centro de entrenamiento
+    public function mostrarHorarios($id){
         $centro = Centro::with('horarios')
-        ->where('id', $id)
+        ->where('id', decrypt($id))
         ->get();
         foreach ($centro as $item){
             $centro = $item->nombre;
             $horario = $item->horarios;
         }
+        $idEncriptado = $id;
         return view('configuraciones.centro.horario',compact('horario','centro','idEncriptado'));
     }
 
+    //Elimina los horarios del centro de entrenamiento
     public function eliminarHorario($id, Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $idCentro = $idDesencriptado[0];
-        $horario = Horario::find($id);
-        $centro = Centro::find($idCentro);
+        $horario = Horario::find(decrypt($id));
+        $centro = Centro::find(decrypt($request->e));
         $centro->horarios()->detach($horario->id);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR HORARIO', 'tabla_accion_id'=>6]);
+        $control->save();
         return redirect()->back();
     }
 
+    //Función utilizada para ingresar nuevos horarios al centro de entrenamiento, permitiendo asignar aquellos horarios
+    //que no han sido asignados al centro de entrenamiento en cuestión
     public function agregarHorarios($id, Request $request){
         $idHorariosCentros = array();
         $idHorarios = array();
         $horarios = Horario::get('id');
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $id = $idDesencriptado[0];
-        $centros = Centro::where('id', $id)
+        $centros = Centro::where('id', decrypt($id))
         ->with('horarios')
         ->get();
         foreach($centros as $item){
@@ -198,16 +193,19 @@ class CentroController extends Controller
             }
         }
         $horarios = Horario::wherein('id',$horariosDisponibles)->get();
+        $idEncriptado = $id;
         return view('configuraciones.centro.agregar',compact('horarios','centro','idEncriptado'));
     }
 
     public function guardarHorarios(Request $request){
-        $idEncriptado = $request->e;
-        $hashid = new Hashids();
-        $idDesencriptado = $hashid->decode($idEncriptado);
-        $centro_id = $idDesencriptado[0];
-        $horario_id = $request->horario_id;
-        if($horario_id!=0){
+        $centro_id = decrypt($request->e);
+        $horario_id = array();
+        if($request->horario_id!==null){
+            foreach($request->horario_id as $item){
+                array_push($horario_id,decrypt($item));
+            }
+        }
+        if(count($horario_id)>0){
             for ($i=0;$i<count($horario_id);$i++){
                 $informacion = [
                     'horario_id' => $horario_id[$i],
@@ -215,6 +213,8 @@ class CentroController extends Controller
                 ];
                 DB::table('centro_horario')->insert($informacion);
             }
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR AGREGAR HORARIO', 'tabla_accion_id'=>6]);
+            $control->save();
             return redirect()->action([CentroController::class,'index']);
         }
         else{

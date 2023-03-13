@@ -35,10 +35,6 @@
             $contador = 1;
         @endphp
         @foreach ($centro as $item)
-        @php
-          $hashid = new Hashids\Hashids();
-          $idCentro = $hashid->encode($item->id)
-        @endphp
         <tr>
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
@@ -50,28 +46,25 @@
           <td>{{\Carbon\Carbon::parse($item->fecha_registro)->format('d-m-Y')}}</td>
           <td>{{$item->departamento->nombre}}</td>
           <td>
-            <form action="{{route('centro.edit',$idCentro)}}" method="GET">
-              <input type="hidden" id="e" name="e" value="{{$idCentro}}">
+            <form action="{{route('centro.edit',encrypt($item->id))}}" method="GET">
               <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
             </form>
           </td>
           <td>
-            <form action="{{route('listarHorarios',$idCentro)}}" method="GET">
-              <input type="hidden" id="e" name="e" value="{{$idCentro}}">
+            <form action="{{route('listarHorarios',encrypt($item->id))}}" method="GET">
               <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-calendar"></i></button>
             </form>
           </td>
           <td>
-            <form action="{{route('agregarHorarios',$idCentro)}}" method="GET">
-              <input type="hidden" id="e" name="e" value="{{$idCentro}}">
+            <form action="{{route('agregarHorarios',encrypt($item->id))}}" method="GET">
               <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-plus"></i></button>
             </form>
           </td>
           <td>
-            <form action="{{route('centro.destroy',$item->id)}}" method="POST">
+            <form action="{{route('centro.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarCentro('Eliminar Centro')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarCentro('Eliminar centro de entrenamiento')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
           </form>
           </td>
           @php
