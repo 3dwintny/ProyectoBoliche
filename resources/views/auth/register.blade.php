@@ -76,24 +76,11 @@
                                     <select class="form-control" name="roles" id="roles" required autofocus>
                                     <option selected disabled value="">Tipo de usuario</option>
                                     @foreach ($roles as $item){
-                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    <option value="{{encrypt($item->id)}}">{{$item->name}}</option>
                                             }
                                     @endforeach
                                     </select>
                                 </div>
-                            <div class="text-muted font-italic">
-                                <small>{{ __('password strength') }}: <span class="text-success font-weight-700">{{ __('strong') }}</span></small>
-                            </div>
-                            <div class="row my-4">
-                                <div class="col-12">
-                                    <div class="custom-control custom-control-alternative custom-checkbox">
-                                        <input class="custom-control-input" id="customCheckRegister" type="checkbox">
-                                        <label class="custom-control-label" for="customCheckRegister">
-                                            <span class="text-muted">{{ __('Estoy de acuerdo con las ') }} <a href="#!">{{ __('Políticas de Privacidad') }}</a></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn" style="background-color:#fba313;">{{ __('Crear Cuenta') }}</button>
                             </div>

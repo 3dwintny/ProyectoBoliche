@@ -24,7 +24,7 @@
                             </div>
                         @endif
 
-                        {!! Form::model($user, ['method' => 'PATCH','route' => ['usuarios.update', $user->id]]) !!}
+                        {!! Form::model($user, ['method' => 'PATCH','route' => ['usuarios.update', encrypt($user->id)]]) !!}
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">

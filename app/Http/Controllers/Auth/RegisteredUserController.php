@@ -68,7 +68,7 @@ class RegisteredUserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->roles,
+                        'tipo_usuario_id' => decrypt($request->roles),
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -99,7 +99,7 @@ class RegisteredUserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->roles,
+                        'tipo_usuario_id' => decrypt($request->roles),
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
@@ -129,7 +129,7 @@ class RegisteredUserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => $request->roles,
+                        'tipo_usuario_id' => decrypt($request->roles),
                     ]);
                     event(new Registered($user));
                     Auth::login($user);

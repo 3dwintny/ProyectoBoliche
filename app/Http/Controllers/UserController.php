@@ -90,7 +90,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::find(decrypt($id));
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
         return view('users.editar', compact('user', 'roles', 'userRole'));
@@ -107,7 +107,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,'.decrypt($id),
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
@@ -119,9 +119,9 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));
         }
 
-        $user = User::find($id);
+        $user = User::find(decrypt($id));
         $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        DB::table('model_has_roles')->where('model_id',decrypt($id))->delete();
 
         $user->assignRole($request->input('roles'));
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>31]);
@@ -137,7 +137,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('users')->where('id',$id)->delete();
+        DB::table('users')->where('id',decrypt($id))->delete();
         return redirect()->route('usuarios.index');
     }
 
