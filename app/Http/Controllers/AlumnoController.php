@@ -64,11 +64,7 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
-        /* return view('livewire.encargados-manager'); */
-=======
         $anio = Carbon::now()->format('Y');
->>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
         $departamentos = Departamento::all();
         $nacionalidades = Nacionalidad::all();
         $parentezcos = Parentesco::all();
@@ -211,12 +207,6 @@ class AlumnoController extends Controller
     {
         Alumno::find($id)->update(['estado' => 'Rechazado']);
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
-<<<<<<< HEAD
-
-    }
-
-}
-=======
     }
 
     public static function generarPDF()
@@ -237,4 +227,3 @@ class AlumnoController extends Controller
 
     public function eliminados(){}
 }
->>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
