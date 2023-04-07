@@ -60,7 +60,7 @@ Route::get('wel', function () {return view('welcome');})->name('wel'); */
 Route::resource('/', FrontendController::class);
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
-
+//Route::get('Inscripcion', fuction () {return view('livewire/encargados-manager');});
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
