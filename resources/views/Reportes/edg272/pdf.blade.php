@@ -173,12 +173,12 @@
     <br>
     <div id="contenedor2">
         <div id="fadn">
-            <strong>FADN:</strong>_______________________________
+            <strong>FADN:</strong> {{$deporte->nombre}}
         </div>
         <div id="depto">
-            <strong>DEPARTAMENTO:</strong>___________________________
+            <strong>DEPARTAMENTO:</strong> {{$departamento->nombre}}
             <div id="mes">
-                <strong>MES:</strong>________________________<strong>2022</strong>
+                <strong>MES:</strong> {{$mostrarMes}}<strong> {{$anio}}</strong>
             </div>
         </div>   
     </div>

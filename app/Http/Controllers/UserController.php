@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
+use App\Models\Control;
+use Carbon\Carbon;
+use App\Models\Administracion;
 
 
 class UserController extends Controller
@@ -50,14 +53,20 @@ class UserController extends Controller
             'password' => 'required | same:confirm-password',
             'roles' => 'required'
         ]);
-
+        $rol = $request->roles;
         $input = $request-> all();
         $input ['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
         
         $user->assignRole($request -> input('roles'));
-
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>31]);
+        $control->save();
+        if($rol[0] == 'Administrador'){
+            $ultimoUsuario = User::max('id');
+            $administrador = new Administracion(['estado'=>'activo','user_id'=>$ultimoUsuario]);
+            $administrador->save();
+        }
         return redirect()->route('usuarios.index');
 
     }
@@ -81,10 +90,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::find(decrypt($id));
         $roles = Role::pluck('name', 'name')->all();
         $userRole = $user->roles->pluck('name', 'name')->all();
-
         return view('users.editar', compact('user', 'roles', 'userRole'));
     }
 
@@ -99,7 +107,7 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
+            'email' => 'required|email|unique:users,email,'.decrypt($id),
             'password' => 'same:confirm-password',
             'roles' => 'required'
         ]);
@@ -111,11 +119,13 @@ class UserController extends Controller
             $input = Arr::except($input,array('password'));
         }
 
-        $user = User::find($id);
+        $user = User::find(decrypt($id));
         $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        DB::table('model_has_roles')->where('model_id',decrypt($id))->delete();
 
         $user->assignRole($request->input('roles'));
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>31]);
+        $control->save();
         return redirect()->route('usuarios.index');
     }
 
@@ -127,8 +137,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-
-        DB::table('users')->where('id',$id)->delete();
+        DB::table('users')->where('id',decrypt($id))->delete();
         return redirect()->route('usuarios.index');
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',31)->with('usuario')->paginate(5);
+        return view('users.control',compact('control'));
     }
 }

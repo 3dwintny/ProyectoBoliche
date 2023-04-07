@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use Carbon\Carbon;
+use App\Models\Control;
+
 class CategoriaController extends Controller
 {
+    protected $c;
+
+    public function __construct(Categoria $c){
+        $this->c = $c;
+    }    
     /**
      * Display a listing of the resource.
      *
@@ -13,9 +21,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::All();
-        return view('categoria.show', compact("categorias"));
-
+        $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
+        return view('configuraciones.categoria.show', compact("categoria"));
     }
 
     /**
@@ -25,7 +32,8 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        return view('categoria.create');
+        $hoy = Carbon::now();
+        return view('configuraciones.categoria.create',compact('hoy'));
     }
 
     /**
@@ -36,10 +44,14 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $categorias = new Categoria($request->all());
-        $categorias->save();
+        $request->validate([
+            'tipo' => ['unique:categoria']
+        ]);
+        $categoria = new Categoria(['tipo'=>$request->tipo,'descripcion'=>$request->descripcion]);
+        $categoria->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>5]);
+        $control->save();
         return redirect()->action([CategoriaController::class, 'index']);
-
     }
 
     /**
@@ -61,7 +73,8 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categoria = $this->c->obtenerCategoriaById(decrypt($id));
+        return view('configuraciones.categoria.edit',['categoria' => $categoria]);
     }
 
     /**
@@ -73,7 +86,12 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categoria = Categoria::find(decrypt($id));
+        $categoria->fill(['tipo'=>$request->tipo,'descripcion'=>$request->descripcion]);
+        $categoria->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>5]);
+        $control->save();
+        return redirect()->action([CategoriaController::class,'index']);
     }
 
     /**
@@ -84,6 +102,24 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Categoria::find(decrypt($id))->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>5]);
+        $control->save();
+        return redirect()->action([CategoriaController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',5)->with('usuario')->paginate(5);
+        return view('configuraciones.categoria.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Categoria::where('estado', 'inactivo')->get();
+        return view('configuraciones.categoria.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Categoria::find(decrypt($request->e))->update(['estado'=>'activo']);
+        return redirect()->action([CategoriaController::class,'index']);
     }
 }

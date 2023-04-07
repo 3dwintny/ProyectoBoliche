@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Linea_Desarrollo;
+use Carbon\Carbon;
+use App\Models\Control;
 
 class Linea_DesarrolloController extends Controller
 {
+    protected $lD;
+    public function __construct(Linea_Desarrollo $lD){
+        $this->lD = $lD;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,8 @@ class Linea_DesarrolloController extends Controller
      */
     public function index()
     {
-        //
+        $lineaDesarrollo = Linea_Desarrollo::where('estado','activo')->get(['id','tipo']);
+        return view('configuraciones.linea_desarrollo.show',compact('lineaDesarrollo'));
     }
 
     /**
@@ -23,7 +31,8 @@ class Linea_DesarrolloController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now();
+        return view('configuraciones.linea_desarrollo.create',compact('hoy'));
     }
 
     /**
@@ -34,7 +43,14 @@ class Linea_DesarrolloController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'tipo'=>['unique:linea_desarrollo'],
+        ]);
+        $lineaDesarrollo = new Linea_Desarrollo(['tipo'=> $request->tipo]);
+        $lineaDesarrollo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>18]);
+        $control->save();
+        return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
 
     /**
@@ -56,7 +72,8 @@ class Linea_DesarrolloController extends Controller
      */
     public function edit($id)
     {
-        //
+        $lineaDesarrollo = $this->lD->obtenerLineaDesarrolloById(decrypt($id));
+        return view('configuraciones.linea_desarrollo.edit',['lineaDesarrollo' => $lineaDesarrollo]);
     }
 
     /**
@@ -68,7 +85,12 @@ class Linea_DesarrolloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $lineaDesarrollo = Linea_Desarrollo::find(decrypt($id));
+        $lineaDesarrollo->fill(['tipo' =>$request->tipo]);
+        $lineaDesarrollo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>18]);
+        $control->save();
+        return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
 
     /**
@@ -79,6 +101,24 @@ class Linea_DesarrolloController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Linea_Desarrollo::find(decrypt($id))->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>18]);
+        $control->save();
+        return redirect()->action([Linea_DesarrolloController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',18)->with('usuario')->paginate(5);
+        return view('configuraciones.linea_desarrollo.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Linea_Desarrollo::where('estado', 'inactivo')->get();
+        return view('configuraciones.linea_desarrollo.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Linea_Desarrollo::find(decrypt($request->e))->update(['estado'=>'activo']);
+        return redirect()->action([Linea_DesarrolloController::class,'index']);
     }
 }

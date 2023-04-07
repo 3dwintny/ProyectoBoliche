@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tipo_Contrato;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class Tipo_ContratoController extends Controller
 {
@@ -19,7 +20,7 @@ class Tipo_ContratoController extends Controller
      */
     public function index()
     {
-        $tipos = Tipo_Contrato::all();
+        $tipos = Tipo_Contrato::where('estado','activo')->get(['id','descripcion']);
         return view('configuraciones.tipos_contratos.show', compact('tipos'));
     }
 
@@ -42,8 +43,13 @@ class Tipo_ContratoController extends Controller
      */
     public function store(Request $request)
     {
-        $contratos = new Tipo_Contrato($request->all());
+        $request->validate([
+            'descripcion'=>['unique:tipo_contrato'],
+        ]);
+        $contratos = new Tipo_Contrato(['descripcion' => $request->descripcion]);
         $contratos->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>30]);
+        $control->save();
         return redirect()->action([Tipo_ContratoController::class, 'index']);
     }
 
@@ -64,9 +70,9 @@ class Tipo_ContratoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id,Request $request)
     {
-        $contratos = $this->t->obtenerTipoContratoById($id);
+        $contratos = $this->t->obtenerTipoContratoById(decrypt($id));
         return view('configuraciones.tipos_contratos.edit',['contratos' => $contratos]);
     }
 
@@ -79,9 +85,11 @@ class Tipo_ContratoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $contratos = Tipo_Contrato::find($id);
-        $contratos ->fill($request->all());
+        $contratos = Tipo_Contrato::find(decrypt($id));
+        $contratos ->fill(['descripcion' => $request->descripcion]);
         $contratos->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>30]);
+        $control->save();
         return redirect()->action([Tipo_ContratoController::class,'index']);
     }
 
@@ -93,8 +101,24 @@ class Tipo_ContratoController extends Controller
      */
     public function destroy($id)
     {
-        $contratos = Tipo_Contrato::find($id);
-        $contratos->delete();
+        Tipo_Contrato::find(decrypt($id))->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>30]);
+        $control->save();
+        return redirect()->action([Tipo_ContratoController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',30)->with('usuario')->paginate(5);
+        return view('configuraciones.tipos_contratos.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Tipo_Contrato::where('estado', 'inactivo')->get();
+        return view('configuraciones.tipos_contratos.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Tipo_Contrato::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([Tipo_ContratoController::class,'index']);
     }
 }

@@ -23,19 +23,21 @@
     <table class="table align-items-center mb-0" >
       <thead class="container">
         <tr>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
           <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Rol</th>
-          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha</th>
           <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
           <th class="text-secondary opacity-7"></th>
         </tr>
       </thead>
       <tbody>
+      @php
+        $contador=1;
+      @endphp
       @foreach ($usuarios as $usuario)
         <tr>
         <td class="align-middle text-left text-sm">
-            <span class="">{{ $usuario->id }}</span>
+            <span class="">{{ $contador }}</span>
           </td>
           <td>
             <div class="d-flex px-2 py-1">
@@ -56,19 +58,15 @@
             @endif
             <p class="text-xs text-secondary mb-0">Federeacion de boliche</p>
           </td>
-          <td class="align-middle text-center">
-            <span class="text-secondary text-xs font-weight-normal">23/04/18</span>
-          </td>
           <td class="align-middle">
-            <a href="{{ route('usuarios.edit',$usuario->id) }}" style="background-color:#fba313;" class="btn  font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Edit user">
+            <a href="{{ route('usuarios.edit',encrypt($usuario->id)) }}" style="background-color:#fba313;" class="btn  font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Editar usuario">
               Editar
             </a>
-            {!! Form::open(['method'=> 'DELETE', 'route' => ['usuarios.destroy', $usuario->id], 'style'=>'display:inline'])!!}
-            {!! Form::submit('Eliminar', ['class' => 'btn btn-danger'])!!}
-                                            {!! Form::close() !!}
           </td>
         </tr>
-
+        @php
+          $contador++;
+        @endphp
         @endforeach
       </tbody>
     </table>

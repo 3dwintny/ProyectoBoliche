@@ -8,6 +8,11 @@ use App\Models\Atleta;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use PDF;
+use Hashids\Hashids;
+use App\Models\Categoria;
+use App\Models\Control;
+use App\Models\Entrenador;
+use App\Models\Alumno;
 
 class AsistenciaController extends Controller
 {
@@ -18,49 +23,8 @@ class AsistenciaController extends Controller
      */
     public function index()
     {
-
         //Obtiene la fecha del sistema
         $ms = Carbon::now();
-
-        //Muestra el mes en el reporte
-        switch ($ms->month){
-            case 1:
-                $mostrarMes = "Enero";
-                break;
-            case 2:
-                $mostrarMes = "Febrero";
-                break;
-            case 3:
-                $mostrarMes = "Marzo";
-                break;
-            case 4:
-                $mostrarMes = "Abril";
-                break;
-            case 5:
-                $mostrarMes = "Mayo";
-                break;
-            case 6:
-                $mostrarMes = "Junio";
-                break;
-            case 7:
-                $mostrarMes = "Julio";
-                break;
-            case 8:
-                $mostrarMes = "Agosto";
-                break;
-            case 9:
-                $mostrarMes = "Septiembre";
-                break;
-            case 10:
-                $mostrarMes = "Octubre";
-                break;
-            case 11:
-                $mostrarMes = "Noviembre";
-                break;
-            case 12:
-                $mostrarMes = "Diciembre";
-                break;
-        }
 
         //Muestra el año en el reporte
         $mostrarAnioReporte = $ms->year;
@@ -71,13 +35,10 @@ class AsistenciaController extends Controller
         ->whereYear('fecha',$ms->year)
         ->get();
 
-        //Utilizados para generar el reporte en PDF, se envía una cadena vacía ya que es utilizada solo para los PDF´s de las búsquedas
-        $m="";
-        $y="";
-
         if(count($fechaAsistencia)>0){
-            return $this->mostrarAsistencia($ms->month,$ms->year,$fechaAsistencia,$m,$y,$mostrarAnioReporte,$mostrarMes);  
+            return $this->mostrarAsistencia($ms->month,$ms->year);  
         }else{
+            $mostrarMes = $this->mesLetras($ms->month);
             return view('Reportes.RepFor30.sinresultadosactual',compact('mostrarAnioReporte','mostrarMes'));
         }
     }
@@ -89,9 +50,17 @@ class AsistenciaController extends Controller
      */
     public function create()
     {
-        $atletas = Atleta::all();
+        $entrenador = Entrenador::where('correo', auth()->user()->email)->get();
+        $categoria = Categoria::all();
+        if(count($entrenador)>0){
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',$entrenador[0]->id)->get();
+        }
+        else{
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->get();
+        }
         $hoy = Carbon::now();
-        return view('Reportes.RepFor30.crear',compact("atletas" , "hoy"));
+        $categoria_id = 0;
+        return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
     }
 
     /**
@@ -152,22 +121,38 @@ class AsistenciaController extends Controller
 
     public function guardar(Request $request){
         $fecha = $request->fecha;
-        $buscar=Asistencia::where('fecha', $fecha[0])->get();
-        if(count($buscar)==0){
-            $atleta_id = $request->atleta_id;
-            $estado = $request-> estado;
-            for ($i=0;$i<count($atleta_id);$i++){
+        $controlAsistencia = "false";
+        $idEncriptado = $request->atleta_id;
+        $hashid = new Hashids();
+        $encriptados = array();
+        $idDesencriptado = array();
+        for($i = 0; $i < count($idEncriptado); $i++){
+            $temporal = $hashid->decode($idEncriptado[$i]);
+            array_push($idDesencriptado,$temporal[0]);
+        }
+        $obtenerAtleta = Asistencia::wherein('atleta_id',$idDesencriptado)->get('fecha');
+        for($i=0;$i<count($obtenerAtleta);$i++){
+            if($obtenerAtleta[$i]->fecha == $fecha[0]){
+                $controlAsistencia = "true";
+            }
+        }
+        if($controlAsistencia=="false"){
+            $estado = $request->estado;
+            for ($i=0;$i<count($idDesencriptado);$i++){
                 $informacion = [
                     'fecha' => $fecha[$i],
-                    'atleta_id' => $atleta_id[$i],
+                    'atleta_id' => $idDesencriptado[$i],
                     'estado' => $estado[$i],
                 ];
                 DB::table('asistencia')->insert($informacion);
             }
-            return redirect()->back()->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
+
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>3]);
+            $control->save();
+            return redirect()->action([AsistenciaController::class,'create'])->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
         }
         else{
-            return redirect()->back()->with('warning', 'La asistencia del '.$fecha[0].' ya ha sido tomada');
+            return redirect()->action([AsistenciaController::class,'create'])->with('warning', 'La asistencia del '.$fecha[0].' ya ha sido tomada');
         }
     }
 
@@ -176,7 +161,127 @@ class AsistenciaController extends Controller
         //Obtiene el mes desde la solicitud de la búsqueda
         $m = $request->mes;
 
-        //Muestra el mes en el reporte
+        //Almacena el año desde la solicitud de búsqueda y lo envía a la vista para generar PDF
+        $y = $request->anio;
+
+        //Obtine data de la base de datos
+        $fechaAsistencia = Asistencia::
+        whereMonth('fecha',$m)
+        ->whereYear('fecha',$y)
+        ->get();
+
+        //Muestra el año en el reporte y lo envía a la vista para generar PDF
+        $mostrarAnioReporte = $y;
+
+        if(count($fechaAsistencia)>0){
+            return $this->mostrarAsistencia($m,$y);
+        }
+        else{
+            $mostrarMes = $this->mesLetras($m);
+            return view('Reportes.RepFor30.sinresultados',compact('mostrarAnioReporte','mostrarMes'));
+        }
+    }
+
+    public function filtroCategoria(Request $request){
+        $entrenador = Entrenador::where('correo', auth()->user()->email)->get();
+        $categoria = Categoria::all();
+        $categoria_id = $request->categorias;
+        if(count($entrenador)>0){
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',$entrenador[0]->id)->where('categoria_id',$categoria_id)->get();
+        }
+        else{
+            $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->where('categoria_id',$categoria_id)->get();
+        }
+        $hoy = Carbon::now();
+        return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
+    }
+
+    public function generarPDF(Request $request)
+    {
+        $aprobacion = $request->fechaAprobacion;
+        $obtenerMes = $request->meses;
+        $obtenerAnio = $request->anios;
+        $hoy = Carbon::now();
+        $antiguos = "false";
+        //Muestra el mes de la asistencia en el reporte
+        $mostrarMes = $this->mesLetras($obtenerMes);
+
+        //Obtiene una sola vez la fecha de la asistencia
+        $fechas= Asistencia::groupBy('fecha')->whereMonth('fecha',$obtenerMes)
+        ->whereYear('fecha',$obtenerAnio)->get('fecha');
+
+        //Obtiene información de los atletas
+        if($hoy->year==$obtenerAnio && $hoy->month==$obtenerMes){
+            $atleta = Atleta::where('estado','activo')->with('alumno')->get();
+        }
+        else{
+            $antiguos = "true";
+            $atleta = Atleta::with('alumno')->get();
+        }
+
+        //Array en el que se almacena el estado de la asistencia de cada atleta
+        $estado = array();
+
+        //Array que almacena la cantidad de días entrenados del Atleta
+        $contarDias = array();
+
+        //Array que almacena el promedio de días entrenados del Atleta
+        $promedio = array();
+
+        $mostrarAtletas = array();
+
+        //Recorre el array de atletas
+        for($i=0;$i<count($atleta);$i++){
+            //Recorre el array de la asistencia
+            for($j=0;$j<count($fechas);$j++){
+                $obtenerEstado =  DB::table('asistencia')
+                ->where('atleta_id',$atleta[$i]->id)
+                ->where('fecha',$fechas[$j]->fecha)
+                ->get('estado');
+                if(count($obtenerEstado)>0){
+                    array_push($estado,$obtenerEstado[0]->estado);
+                    array_push($mostrarAtletas,$atleta[$i]->id);
+                }
+                else{
+                    array_push($estado,"");
+                }
+            }
+        }
+        //Obtiene el estado de los atletas para calcular el promedio de días entrenados
+        //así como también la cantidad de días entrenados FUNCIONANDO PARA ENTREGA FINAL
+        foreach ($atleta as $item){
+            $diasEntrenados = Asistencia::where('atleta_id',$item->id)
+            ->whereMonth('fecha',$obtenerMes)
+            ->whereYear('fecha',$obtenerAnio)
+            ->where( function ($query)
+            {
+                $query->where('estado','X')
+                ->orWhere('estado','L')
+                ->orWhere('estado','C');
+            })->get();
+
+            if(count($diasEntrenados)>0){
+                array_push($contarDias,count($diasEntrenados));
+                array_push($promedio,round((count($diasEntrenados)/count($fechas))*100,2));
+            }
+            else{
+                array_push($contarDias,0);
+                array_push($promedio,round((count($diasEntrenados)/count($fechas))*100,2));
+            }
+        }
+        if($antiguos == "true"){
+            $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->get();
+        }
+            $control = new Control(['usuario_id' => auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>3]);
+            $control->save();
+        return PDF::setOptions(['enable_remote' => true,
+        'chroot'  => public_path('storage/uploads'),])
+        ->loadView('Reportes.RepFor30.pdf',compact('atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion'))
+        ->setPaper('8.5x14', 'landscape')
+        ->stream();
+    }
+
+    private function mesLetras($m){
         switch ($m){
             case 1:
                 $mostrarMes = "Enero";
@@ -215,75 +320,30 @@ class AsistenciaController extends Controller
                 $mostrarMes = "Diciembre";
                 break;
         }
-
-        //Almacena el año desde la solicitud de búsqueda y lo envía a la vista para generar PDF
-        $y = $request->anio;
-        $ms = "";
-
-        //Obtine data de la base de datos
-        $fechaAsistencia = Asistencia::
-        whereMonth('fecha',$m)
-        ->whereYear('fecha',$y)
-        ->get();
-
-        //Muestra el año en el reporte y lo envía a la vista para generar PDF
-        $mostrarAnioReporte = $y;
-
-        if(count($fechaAsistencia)>0){
-            return $this->mostrarAsistencia($request->mes,$request->anio,$fechaAsistencia,$m,$y,$mostrarAnioReporte,$mostrarMes);
-        }
-        else{
-            return view('Reportes.RepFor30.sinresultados',compact('mostrarAnioReporte','mostrarMes'));
-        }
+        return $mostrarMes;
     }
 
-    public function generarPDF(Request $request)
+    private function mostrarAsistencia($obtenerMes,$obtenerAnio)
     {
-        $m = $request->meses;
-        $y = $request->anios;
-        if($m!="" && $y!=""){
-            $mes = Asistencia::
-            whereMonth('fecha',$m)
-            ->whereYear('fecha',$y)
-            ->get();
-            $ads = Asistencia::whereMonth('fecha',$m)
-            ->whereYear('fecha',$y)
-            ->get()
-            ->sortBy('atleta_id');
+        $hoy = Carbon::now();
+        $antiguos = "false";
+        //Muestra el mes de la asistencia en el reporte
+        $mostrarMes = $this->mesLetras($obtenerMes);
+        //Obtiene una sola vez la fecha de la asistencia
+        $fechas= Asistencia::groupBy('fecha')->whereMonth('fecha',$obtenerMes)
+        ->whereYear('fecha',$obtenerAnio)->get('fecha');
+
+        //Obtiene información de los atletas
+        if($hoy->year==$obtenerAnio && $hoy->month==$obtenerMes){
+            $atleta = Atleta::where('estado','activo')->with('alumno')->paginate(5);
         }
         else{
-            $ms = Carbon::now();
-            $mes = Asistencia::
-            whereMonth('fecha',$ms->month)
-            ->whereYear('fecha',$ms->year)
-            ->get();
-            $ads = Asistencia::whereMonth('fecha',$ms->month)
-            ->whereYear('fecha',$ms->year)
-            ->get()
-            ->sortBy('atleta_id');
-            $m=$ms->month;
-            $y=$ms->year;
+            $antiguos = "true";
+            $atleta = Atleta::with('alumno')->get();
         }
-        $atletas = Asistencia::whereMonth('fecha',$m)
-        ->whereYear('fecha',$y)
-        ->get('atleta_id');
-        $ast = Asistencia::all('fecha');
-        //Array en el que se almacenan las fechas una sola vez
-        $fechas = array();
-
-        //Array en el que se almacenan los atletas una sola vez
-        $atleta = array();
 
         //Array en el que se almacena el estado de la asistencia de cada atleta
         $estado = array();
-
-        $atl = array();
-
-        $atls = array();
-
-        $f = array();
-
-        $fs = array();
 
         //Array que almacena la cantidad de días entrenados del Atleta
         $contarDias = array();
@@ -291,282 +351,116 @@ class AsistenciaController extends Controller
         //Array que almacena el promedio de días entrenados del Atleta
         $promedio = array();
 
-        //Array que almacena la cantidad de atletas nuevos en la asociación
-        $noRepetidos = array();
+        $mostrarAtletas = array();
 
-        //Array que almacena la cantidad de atletas que ya se encontraban en la asociación
-        $repetidos = array();
-
-        //Inserta una sola vez inofrmación de la fecha
-        for($i=0;$i<count($mes);$i++){
-            if(count($fechas)==0){
-                array_push($fechas,$mes[$i]->fecha);
-            }
-            else{
-                if(in_array($mes[$i]->fecha,$fechas,)==false){
-                    array_push($fechas,$mes[$i]->fecha);
-                }
-            }
-        }
-
-        //Inserta una sola vez información del atleta
-        for($i=0;$i<count($atletas);$i++){
-            if(count($atleta)==0){
-                array_push($atleta,$atletas[$i]);
-            }
-            else{
-                if(in_array($atletas[$i],$atleta,)==false){
-                    array_push($atleta,$atletas[$i]);
-                }
-            }
-        }
-
-        foreach(array_count_values($atl) as $item){
-            array_push($atls,$item->value);
-        }
-
-        //Ingresa el estado de asistencia de cada atleta, orndenado y listo para mostrarse en la vista
-        foreach($ads as $item){
-            array_push($estado,$item->estado);
-            array_push($atl,$item->atleta_id);
-        }
-        asort($atleta);
-        asort($fechas);
-
-        //Obtiene el patrón para verificar los atletas antiguos
-        foreach(array_count_values($atl) as $item){
-            array_push($atls,$item);
-        }
-        arsort($atls);
-        $antiguos = $atls[0];
-        for($i=0;$i<count($atls);$i++) {
-            if($atls[$i]!=$antiguos){
-                array_push($noRepetidos,$atls[$i]);
-            }
-            else{
-                array_push($repetidos,$atls[$i]);
-            }
-        }
-
-        //Variable Controladora
-        $contador=0;
-
-        //Variable controladora de alumnos que se encontraban dentro de la asociación
-        $cAntiguos = count($repetidos)*count($fechas);
-
-        //Verifica si se ha ingresado uno o varios nuevos atletas
-        if(count($atleta)*count($fechas)!=count($estado)){
-
-            //Recorre el array contenedor de los nuevos atletas
-            for($j=0;$j<count($noRepetidos);$j++){
-
-                //Ingresa cadenas vacías a aquellos días en los que el atleta no formaba
-                //parte de la asociación
-                for($i=$cAntiguos+$contador;$i<$cAntiguos+$antiguos-$noRepetidos[$j]+$contador;$i++){
-                    array_splice($estado,$i,0,"");
-                }
-                $contador=$contador+$antiguos;
-            }
-        }
-
-        foreach ($fechas as $da)
-        {
-            array_push($fs,substr($da,8,2));
-        }
-
-        foreach ($atleta as $item){
-            $dias = Asistencia::where('atleta_id',$item->atleta_id)
-            ->whereMonth('fecha',$m)
-            ->whereYear('fecha',$y)
-            ->where( function ($query)
-            {
-                $query->where('estado','X')
-                ->orWhere('estado','P')
-                ->orWhere('estado','L')
-                ->orWhere('estado','E')
-                ->orWhere('estado','C');
-            })->get();
-
-            if(count($dias)>0){
-                array_push($contarDias,count($dias));
-                array_push($promedio,round((count($dias)/count($fs))*100,2));
-            }
-            else{
-                array_push($contarDias,0);
-                array_push($promedio,round((count($dias)/count($fs))*100,2));
-            }
-        }
-        $c = $request->carta;
-        if($c=="1"){
-            return PDF::setOptions(['enable_remote' => true,
-            'chroot'  => public_path('storage/uploads'),])
-            ->loadView('Reportes.RepFor30.pdf',compact('atleta','fs','estado','contarDias','promedio'))
-            ->setPaper('8.5x11', 'landscape')
-            ->stream();
-        }
-        else{
-            return PDF::setOptions(['enable_remote' => true,
-            'chroot'  => public_path('storage/uploads'),])
-            ->loadView('Reportes.RepFor30.pdf',compact('atleta','fs','estado','contarDias','promedio'))
-            ->setPaper('8.5x14', 'landscape')
-            ->stream();
-        }
-    }
-
-    public static function mostrarAsistencia($obtenerMes,$obtenerAnio,$obtenerFecha,$m,$y,$mostrarAnioReporte,$mostrarMes)
-    {
-        $ads = Asistencia::whereMonth('fecha',$obtenerMes)
-        ->whereYear('fecha',$obtenerAnio)
-        ->get()
-        ->sortBy('atleta_id');
-
-        $estados = DB::table('asistencia')
-        -> whereMonth('fecha',$obtenerMes)
-        ->whereYear('fecha',$obtenerAnio)->orderBy('fecha')
-        ->get();
-
-        $atletas = Asistencia::whereMonth('fecha',$obtenerMes)
-        ->whereYear('fecha',$obtenerAnio)
-        ->get('atleta_id');
-        //Array en el que se almacenan las fechas una sola vez
-        $fechas = array();
-
-        //Array en el que se almacenan los atletas una sola vez
-        $atleta = array();
-
-        //Array en el que se almacena el estado de la asistencia de cada atleta
-        $estado = array();
-
-        $atl = array();
-
-        $atls = array();
-
-        //$f = array();
-
-        $fs = array();
-
-        //Array que almacena la cantidad de días entrenados del Atleta
-        $contarDias = array();
-
-        //Array que almacena el promedio de días entrenados del Atleta
-        $promedio = array();
-
-        //Array que almacena la cantidad de atletas nuevos en la asociación
-        $noRepetidos = array();
-
-        //Array que almacena la cantidad de atletas que ya se encontraban en la asociación
-        $repetidos = array();
-
-        //Inserta una sola vez inofrmación de la fecha
-        for($i=0;$i<count($obtenerFecha);$i++){
-            if(count($fechas)==0){
-                array_push($fechas,$obtenerFecha[$i]->fecha);
-            }
-            else{
-                if(in_array($obtenerFecha[$i]->fecha,$fechas,)==false){
-                    array_push($fechas,$obtenerFecha[$i]->fecha);
-                }
-            }
-        }
-
-        //Ingresa una sola vez la información del atleta
-        for($i=0;$i<count($atletas);$i++){
-            if(count($atleta)==0){
-                array_push($atleta,$atletas[$i]);
-            }
-            else{
-                if(in_array($atletas[$i],$atleta,)==false){
-                    array_push($atleta,$atletas[$i]);
-                }
-            }
-        }
-
-        foreach(array_count_values($atl) as $item){
-            array_push($atls,$item->value);
-        }
-
-        //Ingresa el estado de asistencia de cada atleta, orndenado y listo para mostrarse en la vista
-        foreach($ads as $item){
-            array_push($atl,$item->atleta_id);
-        }
-        
+        //Recorre el array de atletas
         for($i=0;$i<count($atleta);$i++){
-            for($j=0;$j<count($estados);$j++){
-                if($estados[$j]->atleta_id==$atleta[$i]->atleta_id){
-                    array_push($estado ,$estados[$j]->estado);
+            //Recorre el array de la asistencia
+            for($j=0;$j<count($fechas);$j++){
+                $obtenerEstado =  DB::table('asistencia')
+                ->where('atleta_id',$atleta[$i]->id)
+                ->where('fecha',$fechas[$j]->fecha)
+                ->get('estado');
+                if(count($obtenerEstado)>0){
+                    array_push($estado,$obtenerEstado[0]->estado);
+                    array_push($mostrarAtletas,$atleta[$i]->id);
+                }
+                else{
+                    array_push($estado,"");
                 }
             }
         }
-
-        asort($atleta);
-        asort($fechas);
-
-        //Obtiene el patrón para verificar los atletas antiguos
-        foreach(array_count_values($atl) as $item){
-            array_push($atls,$item);
-        }
-        arsort($atls);
-        $antiguos = $atls[0];
-        for($i=0;$i<count($atls);$i++) {
-            if($atls[$i]!=$antiguos){
-                array_push($noRepetidos,$atls[$i]);
-            }
-            else{
-                array_push($repetidos,$atls[$i]);
-            }
-        }
-
-        //Variable Controladora
-        $contador=0;
-
-        //Variable controladora de alumnos que se encontraban dentro de la asociación
-        $cAntiguos = count($repetidos)*count($fechas);
-
-        //Verifica si se ha ingresado uno o varios nuevos atletas
-        if(count($atleta)*count($fechas)!=count($estado)){
-
-            //Recorre el array contenedor de los nuevos atletas
-            for($j=0;$j<count($noRepetidos);$j++){
-
-                //Ingresa cadenas vacías a aquellos días en los que el atleta no formaba
-                //parte de la asociación
-                for($i=$cAntiguos+$contador;$i<$cAntiguos+$antiguos-$noRepetidos[$j]+$contador;$i++){
-                    array_splice($estado,$i,0,"");
-                }
-                $contador=$contador+$antiguos;
-            }
-        }
-
-        foreach ($fechas as $da)
-        {
-            array_push($fs,substr($da,8,2));
-        }
-
         //Obtiene el estado de los atletas para calcular el promedio de días entrenados
-        //así como también la cantidad de días entrenados
+        //así como también la cantidad de días entrenados FUNCIONANDO PARA ENTREGA FINAL
         foreach ($atleta as $item){
-            $dias = Asistencia::where('atleta_id',$item->atleta_id)
+            $totalFechas = 0;
+            $diasEntrenados = Asistencia::where('atleta_id',$item->id)
             ->whereMonth('fecha',$obtenerMes)
             ->whereYear('fecha',$obtenerAnio)
             ->where( function ($query)
             {
                 $query->where('estado','X')
-                ->orWhere('estado','P')
                 ->orWhere('estado','L')
-                ->orWhere('estado','E')
                 ->orWhere('estado','C');
             })->get();
-
-            if(count($dias)>0){
-                array_push($contarDias,count($dias));
-                array_push($promedio,round((count($dias)/count($fs))*100,2));
+            for($i=0;$i<count($mostrarAtletas);$i++){
+                if($mostrarAtletas[$i]==$item->id){
+                    $totalFechas++;
+                }
+            }
+            if(count($diasEntrenados)>0){
+                array_push($contarDias,count($diasEntrenados));
+                array_push($promedio,round((count($diasEntrenados)/$totalFechas)*100,2));
             }
             else{
                 array_push($contarDias,0);
-                array_push($promedio,round((count($dias)/count($fs))*100,2));
+                array_push($promedio,round(0*100,2));
             }
         }
-        
-        return view('Reportes.RepFor30.index',compact('atleta','fs','estado','contarDias','promedio','m','y','mostrarAnioReporte','mostrarMes'));
+        if($antiguos == "true"){
+            $atleta = Atleta::wherein('id',$mostrarAtletas)->with('alumno')->paginate(5);
+        }
+        return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes'));
+    }
+    
+    public function asistenciaIndividual(){
+        $hoy = Carbon::now();
+        $mes = $hoy->month;
+        $obtenerAnio = $hoy->year;
+        $mostrarMes = $this->mesLetras($mes);
+        $fechas= Asistencia::groupBy('fecha')->whereMonth('fecha',$mes)
+        ->whereYear('fecha',$obtenerAnio)->get('fecha');
+        $alumno = Alumno::where('correo',auth()->user()->email)->get();
+        if(count($alumno)>0){
+            $atleta = Atleta::where('alumno_id',$alumno[0]->id)->get();
+        }
+        else{
+            $atleta = Atleta::where('alumno_id',0)->get();
+        }
+        $estado = array();
+        $contarDias = array();
+        $promedio = array();
+        for($i=0;$i<count($atleta);$i++){
+            //Recorre el array de la asistencia
+            for($j=0;$j<count($fechas);$j++){
+                $obtenerEstado =  DB::table('asistencia')
+                ->where('atleta_id',$atleta[$i]->id)
+                ->where('fecha',$fechas[$j]->fecha)
+                ->get('estado');
+                if(count($obtenerEstado)>0){
+                    array_push($estado,$obtenerEstado[0]->estado);
+                }
+                else{
+                    array_push($estado,"");
+                }
+            }
+        }
+        foreach ($atleta as $item){
+            $diasEntrenados = Asistencia::where('atleta_id',$item->id)
+            ->whereMonth('fecha',$mes)
+            ->whereYear('fecha',$obtenerAnio)
+            ->where( function ($query)
+            {
+                $query->where('estado','X')
+                ->orWhere('estado','L')
+                ->orWhere('estado','C');
+            })->get();
+
+            if(count($diasEntrenados)>0){
+                array_push($contarDias,count($diasEntrenados));
+                array_push($promedio,round((count($diasEntrenados)/count($fechas))*100,2));
+            }
+            else{
+                array_push($contarDias,0);
+                array_push($promedio,round(0*100,2));
+            }
+        }
+        return view('Atletas.asistencia',compact('fechas','mostrarMes','obtenerAnio','estado','promedio','contarDias'));
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',3)->with('usuario')->paginate(5);
+        return view('Reportes.RepFor30.control',compact('control'));
     }
 }
+

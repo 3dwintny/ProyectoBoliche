@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Departamento;
-use App\Models\Nacionalidad;
 use App\Models\Alergia;
-use Illuminate\Support\Facades\DB;
+use App\Models\Control;
+use Carbon\Carbon;
 
 class AlergiaController extends Controller
 {
+    protected $a;
+    public function __construct(Alergia $a){
+        $this->a = $a;
+    }
     /** 
      * Display a listing of the resource.
      *
@@ -17,19 +20,8 @@ class AlergiaController extends Controller
      */
     public function index()
     {
-        $alergias = Alergia::all();
-        return view('alergia.show',compact("alergias"));
-
-    }
-    public function getMunicipios(Request $request)
-    {
-        $municipios = DB::table('municipio')
-            ->where('id_departamento', $request->id_departamento)
-            ->get();
-        
-        if (count($municipios) > 0) {
-            return response()->json($municipios);
-        }
+        $alergia = Alergia::where('estado', 'activo')->get(['id','nombre','descripcion']);
+        return view('configuraciones.alergia.show',compact("alergia"));
     }
     /**
      * Show the form for creating a new resource.
@@ -38,7 +30,8 @@ class AlergiaController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now();
+        return view('configuraciones.alergia.create', compact("hoy"));
     }
 
     /**
@@ -49,10 +42,14 @@ class AlergiaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => ['unique:alergia']
+        ]);
         $alergia = new Alergia($request->all());
         $alergia->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>1]);
+        $control->save();
         return redirect()->action([AlergiaController::class,'index']);
-
     }
 
     /**
@@ -74,7 +71,8 @@ class AlergiaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $alergia = $this->a->obtenerAlergiaById(decrypt($id));
+        return view('configuraciones.alergia.edit',['alergia'=>$alergia]);
     }
   
     /**
@@ -86,7 +84,12 @@ class AlergiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $alergia = Alergia::find(decrypt($id));
+        $alergia->fill($request->all());
+        $alergia->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>1]);
+        $control->save();
+        return redirect()->action([AlergiaController::class,'index']);
     }
 
     /**
@@ -97,6 +100,24 @@ class AlergiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Alergia::find(decrypt($id))->update(['estado'=>'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>1]);
+        $control->save();
+        return redirect()->action([AlergiaController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',1)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Alergia::where('estado', 'inactivo')->get();
+        return view('configuraciones.alergia.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Alergia::find(decrypt($request->e))->update(['estado'=>'activo']);
+        return redirect()->action([AlergiaController::class,'index']);
     }
 }

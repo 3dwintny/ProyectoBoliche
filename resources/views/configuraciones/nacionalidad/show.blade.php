@@ -21,7 +21,6 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nacionalidad</th>
-          
         </tr>
       </thead>
       <tbody class="table-hover">
@@ -33,12 +32,17 @@
           <td>{{$contador}}</td>
           <td>{{$item->descripcion}}</td>
           <td>
-            <form action="{{route('nacionalidades.destroy',$item->id)}}" method="POST">
-              <a href="{{route('nacionalidades.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('nacionalidad.edit',encrypt($item->id))}}" method="GET">
+              @csrf
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+            </form>
+          </td>
+          <td>
+            <form action="{{route('nacionalidad.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar Nacionalidad')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarNacionalidad('Eliminar nacionalidad')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+            </form>
           </td>
           @php
             $contador++;

@@ -25,18 +25,18 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar Otros Programas de Atención</h2>
+                            <h2>Editar</h2>
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('otros-programas.update',$otro_programa->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('otro-programa-de-atencion.update',encrypt($otro_programa->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="nombre" placeholder="Otro Programa de Atención" name="nombre" value="{{$otro_programa->nombre}}" required>
-                                <label for="nombre">Otro Programa de Atención</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Programa de Atención" name="nombre" value="{{$otro_programa->nombre}}" required>
+                                <label for="nombre">Programa de Atención</label>
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>

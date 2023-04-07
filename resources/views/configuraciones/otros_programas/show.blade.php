@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Otros Programas de Atención</h1>
+          <h1 class="text-white">Otros programas de atención</h1>
         </div>
       </div>
     </div>
@@ -32,12 +32,17 @@
           <td>{{$contador}}</td>
           <td>{{$item->nombre}}</td>
           <td>
-            <form action="{{route('otros-programas.destroy',$item->id)}}" method="POST">
-              <a href="{{route('otros-programas.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('otro-programa-de-atencion.edit',encrypt($item->id))}}" method="GET">
+              @csrf
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+            </form>
+          </td>
+          <td>
+            <form action="{{route('otro-programa-de-atencion.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarProgramas('Eliminar Otros Programas de Atención')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarProgramas('Eliminar otros programa de atención')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+            </form>
           </td>
           @php
             $contador++;

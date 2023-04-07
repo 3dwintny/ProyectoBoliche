@@ -9,6 +9,6 @@ class Etapa_Deportiva extends Model
 {
     use HasFactory;
     protected $table="etapa_deportiva";
-protected $fillable = ['id','nombre','created_at','updated_at'];
+protected $fillable = ['id','nombre','created_at','updated_at','estado'];
 
 }

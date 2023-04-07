@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Hashids\Hashids;
+use App\Models\Formulario;
+use App\Models\Control;
+use Carbon\Carbon;
 
 class FormularioController extends Controller
 {
+    protected $f;
+
+    public function __construct (Formulario $f){
+        $this->f = $f;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +23,8 @@ class FormularioController extends Controller
      */
     public function index()
     {
-        //
+        $formulario = Formulario::get(['id','titulo_principal','subtitulo','titulo_ficha','declaracion']);
+        return view(' configuraciones.formulario.show',compact('formulario'));
     }
 
     /**
@@ -56,7 +67,8 @@ class FormularioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $formulario = $this->f->obtenerFormularioById(decrypt($id));
+        return view('configuraciones.formulario.edit',compact('formulario'));
     }
 
     /**
@@ -68,7 +80,17 @@ class FormularioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $formulario = $this->f->obtenerFormularioById(decrypt($id));
+        $formulario->fill([
+            'titulo_principal' => $request->titulo_principal,
+            'subtitulo' => $request->subtitulo,
+            'titulo_ficha' => $request->titulo_ficha,
+            'declaracion' => $request->declaracion,
+        ]);
+        $formulario->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>16]);
+        $control->save();
+        return redirect()->action([FormularioController::class,'index']);
     }
 
     /**
@@ -80,5 +102,10 @@ class FormularioController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',16)->with('usuario')->paginate(5);
+        return view('configuraciones.formulario.control',compact('control'));
     }
 }

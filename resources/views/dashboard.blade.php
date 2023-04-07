@@ -3,7 +3,7 @@
 @section('content')
 @include('users.partials.header', [
 'title' => __('Hola') . ' '. auth()->user()->name,
-'description' => __('Bienvenido a la Federacion Nacional de Boliche'),
+'description' => __('Bienvenido a la Asociación de Boliche de Quetzaltenango'),
 'class' => 'col-lg-12'
 ])
 

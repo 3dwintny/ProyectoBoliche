@@ -83,7 +83,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -197,6 +197,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Importamos la libreria, que necisitamos para agregar los roles.
         Spatie\Permission\PermissionServiceProvider::class,
+        Laraveles\Spanish\SpanishServiceProvider::class,
 
     ],
 
@@ -214,6 +215,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
     'PDF' => Barryvdh\DomPDF\Facade::class,
+    'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
     ])->toArray(),
 
 ];

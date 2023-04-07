@@ -32,12 +32,17 @@
           <td>{{$contador}}</td>
           <td>{{$item->tipo}}</td>
           <td>
-            <form action="{{route('niveles-fadn.destroy',$item->id)}}" method="POST">
-              <a href="{{route('niveles-fadn.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('nivel-fadn.edit',encrypt($item->id))}}" method="GET">
+              @csrf
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+            </form>
+          </td>
+          <td>
+            <form action="{{route('nivel-fadn.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarNivel('Eliminar Nivel FADN')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-          </form>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarNivel('Eliminar nivel FADN')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+            </form>
           </td>
           @php
             $contador++;

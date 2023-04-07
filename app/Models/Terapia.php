@@ -10,7 +10,7 @@ class Terapia extends Model
     use HasFactory;
     protected $table = "terapia";
     protected $fillable =['id','numero_terapia','fecha','hora_inicio','impresion_clinica',
-    'analisis_semiologico','desarrollo','observaciones','tarea','conciencia_corporal','dominio_corporal',
+    'analisis_semiologico','desarrollo','observaciones','tarea','estado_tarea','conciencia_corporal','dominio_corporal',
     'dominio_respiracion','dialogo_interno','atencion','concentracion','motivacion','confianza',
     'activacion','relajacion','estres','ansiedad_cognitiva','ansiedad_fisica','miedo','frustracion',
     'atleta_id','psicologia_id','created_at','updated_at'];

@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Solicitudes Pendientes</h1>
+          <h1 class="text-white">Solicitudes pendientes</h1>
         </div>
       </div>
     </div>
@@ -18,25 +18,25 @@
     <table class="table table-responsive table-hover" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
+          <th scope="col">No</th>
+          <th scope="col">Nombre Completo</th>
           <th scope="col">CUI</th>
           <th scope="col">Celular</th>
-          <th scope="col">Contacto Emergencia</th>
+          <th scope="col">Contacto de Emergencia</th>
           <th scope="col">Correo</th>
           <th scope="col">Estado</th>
           <th scope="col">Fecha</th>
           <th scope="col">Direccion</th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody class="table-hover">
+        @php
+          $contador = 1;
+        @endphp
         @foreach ($alumnos as $alumno)
         <tr>
-          <td>{{ $alumno->id }}</td>
-          <td><strong>{{$alumno->nombre1}}</strong></td>
-          <td><strong>{{$alumno->apellido1}}</strong></td>
+          <td>{{ $contador }}</td>
+          <td>{{$alumno->nombre1}} {{$alumno->nombre2}} {{$alumno->nombre3}} {{$alumno->apellido1}} {{$alumno->apellido2}}</td>
           <td>{{$alumno->cui}}</td>
           <td>{{$alumno->celular}}</td>
           <td>{{$alumno->contacto_emergencia}}</td>
@@ -54,9 +54,13 @@
             </form>
           </td>
         </tr>
+        @php
+          $contador++;
+        @endphp
         @endforeach
       </tbody>
     </table>
+    {{$alumnos->links('vendor.pagination.custom')}}
   </div>
 </div>
 @include('layouts.footers.auth')

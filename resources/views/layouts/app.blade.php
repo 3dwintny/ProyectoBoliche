@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Federacion de Boliche</title>
+    <title>Asociación de Boliche de Quetzaltenango</title>
     <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 

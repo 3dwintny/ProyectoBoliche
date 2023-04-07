@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Psicologia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class PsicologiaController extends Controller
 {
@@ -19,7 +20,7 @@ class PsicologiaController extends Controller
      */
     public function index()
     {
-        $psicologo = Psicologia::all();
+        $psicologo = Psicologia::where('estado','activo')->paginate(5);
         return view('configuraciones.psicologia.show', compact('psicologo'));
     }
 
@@ -42,8 +43,26 @@ class PsicologiaController extends Controller
      */
     public function store(Request $request)
     {
-        $psicologo = new Psicologia($request->all());
+        $request->validate([
+            'correo'=>['unique:psicologia'],
+            'colegiado'=>['unique:psicologia'],
+        ]);
+        $psicologo = new Psicologia([
+            'nombre1' => $request->nombre1,
+            'nombre2' => $request->nombre2,
+            'nombre3' => $request->nombre3,
+            'apellido1' => $request->apellido1,
+            'apellido2' => $request->apellido2,
+            'apellido_casada' => $request->apellido_casada,
+            'colegiado' => $request->colegiado,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+            'fecha_inicio_labores' => $request->fecha_inicio_labores,
+        ]);
         $psicologo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>27]);
+        $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
     }
 
@@ -66,7 +85,7 @@ class PsicologiaController extends Controller
      */
     public function edit($id)
     {
-        $psicologo = $this->p->obtenerPsicologiaById($id);
+        $psicologo = $this->p->obtenerPsicologiaById(decrypt($id));
         return view('configuraciones.psicologia.edit',['psicologo' => $psicologo]);
     }
 
@@ -79,9 +98,23 @@ class PsicologiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $psicologo = Psicologia::find($id);
-        $psicologo ->fill($request->all());
+        $psicologo = Psicologia::find(decrypt($id));
+        $psicologo ->fill([
+            'nombre1' => $request->nombre1,
+            'nombre2' => $request->nombre2,
+            'nombre3' => $request->nombre3,
+            'apellido1' => $request->apellido1,
+            'apellido2' => $request->apellido2,
+            'apellido_casada' => $request->apellido_casada,
+            'colegiado' => $request->colegiado,
+            'telefono' => $request->telefono,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+            'fecha_inicio_labores' => $request->fecha_inicio_labores,
+        ]);
         $psicologo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
+        $control->save();
         return redirect()->action([PsicologiaController::class,'index']);
     }
 
@@ -93,8 +126,45 @@ class PsicologiaController extends Controller
      */
     public function destroy($id)
     {
-        $psicologo = Psicologia::find($id);
-        $psicologo->delete();
+        Psicologia::find(decrypt($id))->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>27]);
+        $control->save();
+        return redirect()->action([PsicologiaController::class,'index']);
+    }
+
+    public function modificar(){
+        $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
+        if(count($psicologos)>0){
+            $psicologo = Psicologia::find($psicologos[0]->id);
+            return view('configuraciones.psicologia.informacionPersonal',compact('psicologo'));
+        }
+        else{
+            return redirect('home');
+        }
+    }
+
+    public function actualizar(Request $request){
+        $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
+        $psicologo = Psicologia::find($psicologos[0]->id);
+        $psicologo->fill($request->all());
+        $psicologo->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
+        $control->save();
+        return redirect('home');
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',27)->with('usuario')->paginate(5);
+        return view('configuraciones.psicologia.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Psicologia::where('estado', 'inactivo')->get();
+        return view('configuraciones.psicologia.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Psicologia::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([PsicologiaController::class,'index']);
     }
 }

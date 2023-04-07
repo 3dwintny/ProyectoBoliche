@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nacionalidad;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class NacionalidadController extends Controller
 {
@@ -19,7 +20,7 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
-        $nacionalidad = Nacionalidad::all();
+        $nacionalidad = Nacionalidad::where('estado','activo')->get(['id','descripcion']);
         return view('configuraciones.nacionalidad.show',compact('nacionalidad'));
     }
 
@@ -42,8 +43,13 @@ class NacionalidadController extends Controller
      */
     public function store(Request $request)
     {
-        $nacionalidad = new Nacionalidad($request->all());
+        $request->validate([
+            'descripcion'=>['unique:nacionalidad'],
+        ]);
+        $nacionalidad = new Nacionalidad(['descripcion' => $request->descripcion]);
         $nacionalidad->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>21]);
+        $control->save();
         return redirect()->action([NacionalidadController::class, 'index']);
     }
 
@@ -63,9 +69,9 @@ class NacionalidadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        $nacionalidad = $this->n->obtenerNacionalidadesById($id);
+        $nacionalidad = $this->n->obtenerNacionalidadesById(decrypt($id));
         return view('configuraciones.nacionalidad.edit',['nacionalidad' => $nacionalidad]);
     }
 
@@ -78,9 +84,11 @@ class NacionalidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nacionalidad = Nacionalidad::find($id);
-        $nacionalidad ->fill($request->all());
+        $nacionalidad = Nacionalidad::find(decrypt($id));
+        $nacionalidad ->fill(['descripcion' => $request->descripcion]);
         $nacionalidad->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>21]);
+        $control->save();
         return redirect()->action([NacionalidadController::class,'index']);
     }
 
@@ -92,8 +100,24 @@ class NacionalidadController extends Controller
      */
     public function destroy($id)
     {
-        $nacionalidad = Nacionalidad::find($id);
-        $nacionalidad->delete();
+        Nacionalidad::find(decrypt($id))->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>21]);
+        $control->save();
+        return redirect()->action([NacionalidadController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',21)->with('usuario')->paginate(5);
+        return view('configuraciones.nacionalidad.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Nacionalidad::where('estado', 'inactivo')->get();
+        return view('configuraciones.nacionalidad.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Nacionalidad::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([NacionalidadController::class,'index']);
     }
 }

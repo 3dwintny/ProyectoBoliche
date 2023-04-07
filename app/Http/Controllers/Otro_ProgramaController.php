@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Otro_Programa;
 use Carbon\Carbon;
+use App\Models\Control;
 
 class Otro_ProgramaController extends Controller
 {
@@ -19,7 +20,7 @@ class Otro_ProgramaController extends Controller
      */
     public function index()
     {
-        $programas = Otro_Programa::all();
+        $programas = Otro_Programa::where('estado','activo')->get(['id','nombre']);
         return view('configuraciones.otros_programas.show',compact('programas'));
     }
 
@@ -42,8 +43,13 @@ class Otro_ProgramaController extends Controller
      */
     public function store(Request $request)
     {
-        $programas = new Otro_Programa($request->all());
+        $request->validate([
+            'nombre'=>['unique:otro_programa'],
+        ]);
+        $programas = new Otro_Programa(['nombre' => $request->nombre]);
         $programas->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>24]);
+        $control->save();
         return redirect()->action([Otro_ProgramaController::class, 'index']);
     }
 
@@ -66,7 +72,7 @@ class Otro_ProgramaController extends Controller
      */
     public function edit($id)
     {
-        $otro_programa = $this->o->obtenerOtroProgramaById($id);
+        $otro_programa = $this->o->obtenerOtroProgramaById(decrypt($id));
         return view('configuraciones.otros_programas.edit',['otro_programa' => $otro_programa]);
     }
 
@@ -79,9 +85,11 @@ class Otro_ProgramaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $otro_programa = Otro_Programa::find($id);
-        $otro_programa ->fill($request->all());
+        $otro_programa = Otro_Programa::find(decrypt($id));
+        $otro_programa ->fill(['nombre' => $request->nombre]);
         $otro_programa->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>24]);
+        $control->save();
         return redirect()->action([Otro_ProgramaController::class,'index']);
     }
 
@@ -93,8 +101,24 @@ class Otro_ProgramaController extends Controller
      */
     public function destroy($id)
     {
-        $otro_programa = Otro_Programa::find($id);
-        $otro_programa->delete();
+        Otro_Programa::find(decrypt($id))->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>24]);
+        $control->save();
+        return redirect()->action([Otro_ProgramaController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',24)->with('usuario')->paginate(5);
+        return view('configuraciones.otros_programas.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Otro_Programa::where('estado', 'inactivo')->get();
+        return view('configuraciones.otros_programas.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Otro_Programa::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([Otro_ProgramaController::class,'index']);
     }
 }

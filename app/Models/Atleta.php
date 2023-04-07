@@ -11,9 +11,7 @@ class Atleta extends Model
     protected $table = "atleta";
     protected $fillable = ['id','fecha_ingreso','adaptado','estado_civil','etnia','escolaridad',
     'centro_id', 'entrenador_id','alumno_id','categoria_id','etapa_deportiva_id','deporte_adaptado_id',
-    'otro_programa_id','linea_desarrollo_id','deporte_id','modalidad_id','prt_id','federado','anios','meses'
-    ,'created_at',
-    'updated_at'];
+    'otro_programa_id','linea_desarrollo_id','deporte_id','modalidad_id','prt_id','federado','anios','meses','created_at','updated_at','estado'];
 
     public function alumno(){
         return $this->belongsTo('App\Models\Alumno');
@@ -36,7 +34,7 @@ class Atleta extends Model
     }
 
     public function deporte_adaptado(){
-        return $this->belongsTo('App\Models\Deporte_Adaptado');
+        return $this->belongsTo('App\Models\Deporte_Adoptado');
     }
 
     public function otro_programa(){

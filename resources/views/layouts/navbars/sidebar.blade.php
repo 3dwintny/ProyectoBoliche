@@ -22,16 +22,24 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
                     <div class=" dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
+                        <h6 class="text-overflow m-0">{{ __('Bienvenido!') }}</h6>
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>{{ __('Mi perfil') }}</span>
+                        <i class="fa fa-key"></i>
+                        <span>{{ __('Cambiar contraseña') }}</span>
                     </a>
-                    <a href="#" class="dropdown-item">
+                    @can('configuraciones')
+                    <a href="{{route('otros')}}" class="dropdown-item">
                         <i class="ni ni-settings"></i>
                         <span>{{ __('Ajustes') }}</span>
                     </a>
+                    @endcan
+                    @can('administracion')
+                    <a href="{{route('administradores.index')}}" class="dropdown-item">
+                        <i class="fa fa-magic" aria-hidden="true"></i>
+                        <span>{{ __('Administración') }}</span>
+                    </a>
+                    @endcan
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -95,7 +103,21 @@
                             @can('listado-Atletas')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('atletas.index') }}">
-                                    {{ __('Listado de Atletas') }}
+                                    {{ __('Atletas') }}
+                                </a>
+                            </li>
+                            @endcan
+                            @can('ver-listado-tareas')
+                            <li class="nav-item">
+                                <a href="{{route('tareaPendiente')}}" class="nav-link">
+                                    {{ __('Tareas Pendientes') }}
+                                </a>
+                            </li>
+                            @endcan
+                            @can('Asistencia por atleta')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('asistenciaIndividual') }}">
+                                    {{ __('Mi asistencia') }}
                                 </a>
                             </li>
                             @endcan
@@ -106,7 +128,7 @@
                 @can('seedEntrenador')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-entrenador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
-                        <i class="ni ni-time-alarm"></i>
+                        <i class="fa fa-stopwatch"></i>
                         <span class="nav-link-text text-dark">{{ __('Entrenador') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-entrenador">
@@ -114,7 +136,7 @@
                             @can('crear-EDG-31-Asistencia')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistencias.create') }}">
-                                    {{ __('Asistencia') }}
+                                    {{ __('Registrar Asistencia') }}
                                 </a>
                             </li>
                             @endcan
@@ -128,9 +150,16 @@
                             @can('ver-Entrenadores')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.index') }}">
-                                    {{ __('Listado de Entrenadores') }}
+                                    {{ __('Entrenadores') }}
                                 </a>
                             </li>
+                            @endcan
+                            @can('entrenadorPerfil')
+                            <li>
+                                <a href="{{ route('modificar') }}" class="nav-link">
+                                    {{ __('Mi perfil') }}
+                                </a>
+                            </li>  
                             @endcan
                         </ul>
                     </div>
@@ -140,21 +169,45 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-atom text-dark"></i>
-                        <span class="nav-link-text text-dark">{{ __('Psicologia') }}</span>
+                        <span class="nav-link-text text-dark">{{ __('Psicología') }}</span>
                     </a>
                     <div class="collapse show" id="navbar-psico">
                         <ul class="nav nav-sm flex-column">
                             @can('crearTerapias')
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('terapias.create') }}">
-                                    {{ __('Terapias') }}
+                                <a class="nav-link" href="{{ route('sesiones.create') }}">
+                                    {{ __('Nueva sesión') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('sesiones.index') }}">
+                                    {{ __('Control de sesiones') }}
                                 </a>
                             </li>
                             @endcan
                             @can('ver-Psicologos')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('psicologia.create') }}">
-                                    {{ __('Registrar Piscologo') }}
+                                    {{ __('Registrar piscólogo') }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('psicologia.index') }}">
+                                    {{ __('Piscólogos') }}
+                                </a>
+                            </li>
+                            @endcan
+                            @can('psicologoPerfil')
+                            <li class="nav-item">
+                                <a href="{{ route('modificarPsicologia') }}" class="nav-link">
+                                    {{ __('Mi perfil') }}
+                                </a>
+                            </li>  
+                            @endcan
+                            @can('Ver acciones')
+                            <li class="nav-item">
+                                <a href="{{route('accionesTerapia')}}" class="nav-link">
+                                    {{ __('Seguridad') }}
                                 </a>
                             </li>
                             @endcan

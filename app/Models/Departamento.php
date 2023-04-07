@@ -9,7 +9,7 @@ class Departamento extends Model
 {
     use HasFactory;
     protected $table = "departamento";
-    protected $fillable = ['id','nombre','created_at','updated_at'];
+    protected $fillable = ['id','nombre','created_at','updated_at','estado'];
 
     public function municipios(){
         return $this->hasMany('App\Models\Municipio');

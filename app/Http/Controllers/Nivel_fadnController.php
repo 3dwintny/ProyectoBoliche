@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Nivel_fadn;
+use App\Models\Control;
 
 class Nivel_fadnController extends Controller
 {
@@ -19,7 +20,7 @@ class Nivel_fadnController extends Controller
      */
     public function index()
     {
-        $niveles = Nivel_fadn::all();
+        $niveles = Nivel_fadn::where('estado','activo')->get(['id','tipo']);
         return view('configuraciones.nivel_fadn.show', compact('niveles'));
     }
 
@@ -42,8 +43,13 @@ class Nivel_fadnController extends Controller
      */
     public function store(Request $request)
     {
-        $nivel = new Nivel_fadn($request->all());
+        $request->validate([
+            'tipo'=>['unique:nivel_fadn'],
+        ]);
+        $nivel = new Nivel_fadn(['tipo' => $request->tipo]);
         $nivel->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>23]);
+        $control->save();
         return redirect()->action([Nivel_fadnController::class, 'index']);
     }
 
@@ -66,7 +72,7 @@ class Nivel_fadnController extends Controller
      */
     public function edit($id)
     {
-        $nivel = $this->n->obtenerNivelFADNById($id);
+        $nivel = $this->n->obtenerNivelFADNById(decrypt($id));
         return view('configuraciones.nivel_fadn.edit',['nivel' => $nivel]);
     }
 
@@ -79,9 +85,11 @@ class Nivel_fadnController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nivel = Nivel_fadn::find($id);
-        $nivel ->fill($request->all());
+        $nivel = Nivel_fadn::find(decrypt($id));
+        $nivel ->fill(['tipo' => $request->tipo]);
         $nivel->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>23]);
+        $control->save();
         return redirect()->action([Nivel_fadnController::class,'index']);
     }
 
@@ -93,8 +101,24 @@ class Nivel_fadnController extends Controller
      */
     public function destroy($id)
     {
-        $nivel = Nivel_fadn::find($id);
-        $nivel->delete();
+        Nivel_fadn::find(decrypt($id))->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>23]);
+        $control->save();
+        return redirect()->action([Nivel_fadnController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',23)->with('usuario')->paginate(5);
+        return view('configuraciones.nivel_fadn.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Nivel_fadn::where('estado', 'inactivo')->get();
+        return view('configuraciones.nivel_fadn.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Nivel_fadn::find(decrypt($request->e))->update(['estado'=>'activo']);
         return redirect()->action([Nivel_fadnController::class,'index']);
     }
 }

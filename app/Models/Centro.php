@@ -11,16 +11,20 @@ class Centro extends Model
     protected $table = "centro";
 
     protected $fillable =['id','nombre','direccion','fecha_registro','institucion','accesibilidad',
-    'implementacion','espacio_fisico','id_horario','id_departamento','created_at','updated_at'];
+    'implementacion','espacio_fisico','departamento_id','created_at','updated_at','estado'];
     public function departamento(){
         return $this->belongsTo('App\Models\Departamento');
     }
 
-    public function horario(){
-        return $this->belongsTo('App\Models\Horario');
+    public function horarios(){
+        return $this->belongsToMany('App\Models\Horario');
     }
 
     public function atletas(){
         return $this->hasMany('App\Models\Atleta');
+    }
+
+    public function obtenerCentroById($id){
+        return Centro::find($id);
     }
 }

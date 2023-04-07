@@ -4,9 +4,8 @@
 <div class="header bg-gradient-white py-5 py-lg-8">
     <div class="container">
         @include('admin.slider.slider')
-            <div>
-            </div>
-        <div class="header-body text-center mt--2 mb-2">
+
+        <div class="header-body text-center mt--0 mb-2">
             <div class="row justify-content-center">
                 <div class="col-lg-5 col-md-6">
                 </div>

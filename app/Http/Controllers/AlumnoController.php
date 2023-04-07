@@ -12,6 +12,9 @@ use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use PDF;
+use Carbon\Carbon;
+use App\Models\Control;
 
 class AlumnoController extends Controller
 {
@@ -27,9 +30,13 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        $alumnos = Alumno::where('estado','Pendiente')->get();
-        return view('alumno.index', compact('alumnos'));
-        //return view('alumno.show');
+        $alumnos = Alumno::where('estado','Pendiente')->paginate(5);
+        if(count($alumnos) > 0){
+            return view('alumno.index', compact('alumnos'));
+        }
+        else{
+            return view('alumno.sinresultados');
+        }
     }
 
      /**
@@ -57,13 +64,17 @@ class AlumnoController extends Controller
      */
     public function create()
     {
+<<<<<<< HEAD
         /* return view('livewire.encargados-manager'); */
+=======
+        $anio = Carbon::now()->format('Y');
+>>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
         $departamentos = Departamento::all();
         $nacionalidades = Nacionalidad::all();
         $parentezcos = Parentesco::all();
         $formularios = Formulario::all();
         $alergia = Alergia::all();
-        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios", "alergia"));
+        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios", "alergia","anio"));
     }
 
     /**
@@ -82,10 +93,10 @@ class AlumnoController extends Controller
         $padres->apellido1p = $request->input('apellido1p');
         $padres->apellido2p = $request->input('apellido2p');
         $padres->apellido_casada = $request->input('apellido_casada');
-        $padres->direccion = $request->input('direccion');
-        $padres->celular = $request->input('celular');
-        $padres->telefono_casa = $request->input('telefono_casa');
-        $padres->correo = $request->input('correo');
+        $padres->direccionp = $request->input('direccionp');
+        $padres->celularp = $request->input('celularp');
+        $padres->telefono_casap = $request->input('telefono_casap');
+        $padres->correop = $request->input('correop');
         $padres->dpi = $request->input('dpi');
         $padres->parentezco_id = $request->input('parentezco_id');
         //$padres = new Encargado ($request->all());
@@ -112,7 +123,7 @@ class AlumnoController extends Controller
             $file = $request->file('foto');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
-            $file->move('uploads/alumnos/', $filename);
+            $file->move('storage/uploads/', $filename);
             $alumno->foto = $filename;
         }
         $alumno->fecha_fotografia= $request->input('fecha_fotografia');
@@ -142,8 +153,9 @@ class AlumnoController extends Controller
         $alumno->departamento_residencia_id = $request->input('departamento_residencia_id');
         $alumno->municipio_residencia_id= $request->input('municipio_residencia_id');
         $alumno->save();
+        return $this->generarPDF();
         //return view("Funciona");
-        return redirect()->back()->with('status','Alumno ingresado Correctamente');
+        //return redirect()->back()->with('status','Alumno ingresado Correctamente');
         /* return redirect()->action([AlumnoController::class, 'index']); */
 
 
@@ -197,9 +209,32 @@ class AlumnoController extends Controller
      */
     public function destroy($id)
     {
-        $alumno=Alumno::find($id)->update(['estado' => 'Rechazado']);
+        Alumno::find($id)->update(['estado' => 'Rechazado']);
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
+<<<<<<< HEAD
 
     }
 
 }
+=======
+    }
+
+    public static function generarPDF()
+    {
+        $encargado = Encargado::orderByDesc('id')->limit(1)->get();
+        $anio = Carbon::now()->format('Y');
+        foreach ($encargado as $item){
+            $alumno = Alumno::where('encargado_id',$item->id)->get();
+        }
+        $formularios = Formulario::all();
+        return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',2)->with('usuario')->paginate(5);
+        return view('configuraciones.alergia.control',compact('control'));
+    }
+
+    public function eliminados(){}
+}
+>>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df

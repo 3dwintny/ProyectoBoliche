@@ -3,18 +3,7 @@
 <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
     <div class="container-fluid">
         <!-- Brand -->
-        <a class="h6 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home') }}">{{ __('home') }}</a>
-        <!-- Form -->
-        <!--form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-            <div class="form-group mb-0">
-                <div class="input-group input-group-alternative">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    </div>
-                    <input class="form-control" placeholder="Search" type="text">
-                </div>
-            </div>
-        </form-->
+        <a class="h6 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home') }}">{{ __('INICIO') }}</a>
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
@@ -33,13 +22,21 @@
                         <h6 class="text-overflow m-0">{{ __('Bienvenido!') }}</h6>
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
-                        <span>{{ __('Mi perfil') }}</span>
+                        <i class="fa fa-key"></i>
+                        <span>{{ __('Cambiar contraseña') }}</span>
                     </a>
-                    <a href="#" class="dropdown-item">
+                    @can('configuraciones')
+                    <a href="{{route('otros')}}" class="dropdown-item">
                         <i class="ni ni-settings"></i>
                         <span>{{ __('Ajustes') }}</span>
                     </a>
+                    @endcan
+                    @can('administracion')
+                    <a href="{{route('administradores.index')}}" class="dropdown-item">
+                        <i class="fa fa-magic" aria-hidden="true"></i>
+                        <span>{{ __('Administración') }}</span>
+                    </a>
+                    @endcan
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('logout') }}" class="dropdown-item" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">

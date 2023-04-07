@@ -15,12 +15,12 @@
 </div>
 <div class="container">
   <div class="pt-md-2 pb-4 pt-5">
+    @include('components.flash_alerts')
       <table class="table table-responsive">
         <thead class="table-dark" style="border-radius: 5px;">
           <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
+            <th scope="col">No</th>
+            <th scope="col">Nombre Completo</th>
             <th scope="col">CUI</th>
             <th scope="col">Estado Civil</th>
             <th scope="col">Celular</th>
@@ -28,15 +28,16 @@
             <th scope="col">Edad</th>
             <th scope="col">Direccion</th>
             <th scope="col">Deporte</th>
-            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
+          @php
+            $contador = 1;
+          @endphp
           @foreach ($entrenadores as $entrenador)
           <tr>
-            <td>{{ ++$i }}</td>
-            <td>{{$entrenador->nombre1}}</td>
-            <td>{{$entrenador->apellido1}}</td>
+            <td>{{$contador}}</td>
+            <td>{{$entrenador->nombre1}} {{$entrenador->nombre2}} {{$entrenador->nombre3}} {{$entrenador->apellido1}} {{$entrenador->apellido2}} {{$entrenador->apellido_casada}}</td>
             <td>{{$entrenador->cui}}</td>
             <td>{{$entrenador->estado_civil}}</td>
             <td>{{$entrenador->celular}}</td>
@@ -45,12 +46,26 @@
             <td>{{$entrenador->direccion}}</td>
             <td>{{$entrenador->deporte->nombre}}</td>
             <td>
-              <form action="" method="POST">
-                <a class="btn btn-sm btn-info " href="{{ route('entrenadores.edit',$entrenador->id) }}"><i class="fa fa-fw fa-edit"></i>Modificar</a>
-                <a class="btn btn-sm btn-danger" href="{{ route('entrenadores.destroy',$entrenador->id)}}"><i class="fa fa-fw fa-trash"></i>Eliminar</a>
+              <form action="{{route('entrenadores.edit',encrypt($entrenador->id))}}" method="GET">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-regular fa-edit"></i></button>
+              </form>
+            </td>
+            <td>
+              <form action="{{route('entrenadores.show',encrypt($entrenador->id))}}" action="GET">
+                <button class="btn btn-success" type="submit"><i class="fa fa-fw fa-regular fa-eye"></i></button>
+              </form>
+            </td>
+            <td>
+              <form action="{{route('entrenadores.destroy',encrypt($entrenador->id))}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return eliminarEntrenador('Eliminar entrenador')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
               </form>
             </td>
           </tr>
+          @php
+            $contador++;
+          @endphp
           @endforeach
         </tbody>
       </table>
@@ -59,6 +74,11 @@
 </div>
 @include('layouts.footers.auth')
 </div>
+<script type="text/javascript">
+  function eliminarEntrenador(value){
+      action = confirm(value) ? true : event.preventDefault();
+  }
+</script>
 @endsection
 
 @push('js')

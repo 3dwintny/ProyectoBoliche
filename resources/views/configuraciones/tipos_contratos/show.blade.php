@@ -7,7 +7,7 @@
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Tipos de Contratos</h1>
+          <h1 class="text-white">Tipos de contrato</h1>
         </div>
       </div>
     </div>
@@ -32,11 +32,16 @@
           <td>{{$contador}}</td>
           <td>{{$item->descripcion}}</td>
           <td>
-            <form action="{{route('tipo-contratos.destroy',$item->id)}}" method="POST">
-              <a href="{{route('tipo-contratos.edit',$item->id)}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>
+            <form action="{{route('tipo-de-contrato.edit',encrypt($item->id))}}" method="GET">
+              @csrf
+              <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+          </form>
+          </td>
+          <td>
+            <form action="{{route('tipo-de-contrato.destroy',encrypt($item->id))}}" method="POST">
               @csrf
               @method('DELETE')
-              <button type="submit" class="btn btn-danger" onclick="return eliminarContratos('Eliminar Tipo de Contrato')" style="color:#FFFFFF; font-weight:bolder;"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger" onclick="return eliminarContratos('Eliminar Tipo de Contrato')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
           </form>
           </td>
           @php

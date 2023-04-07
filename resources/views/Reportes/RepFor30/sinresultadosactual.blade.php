@@ -16,7 +16,7 @@
 </div>
 <div class="pb-4 pt-5 pt-md-3">
     <div class="card-body">
-        <form method="POST" action="{{route('buscar')}}">
+        <form method="get" action="{{route('buscar')}}">
             @csrf
             <div class="row mb-2">
                 <div class="col-3">

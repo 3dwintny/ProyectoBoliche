@@ -25,18 +25,35 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
+<<<<<<< HEAD
                             <h2>Editar Alergia </h2>
                         </strong>
 
                     </div>
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('alergias.update',$alergia->id)}}">
+=======
+                            <h2>Editar</h2>
+                        </strong>
+
+                    </div>
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('alergia.update',encrypt($alergia->id))}}">
+>>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
+<<<<<<< HEAD
                                 <input type="text" class="form-control" id="descripcion" placeholder="Alergia" name="descripcion" value="{{$alergia->descripcion}}" required>
                                 <label for="descripcion">Alergia</label>
+=======
+                                <input type="text" class="form-control" id="nombre" placeholder="Alergia" name="nombre" value="{{$alergia->nombre}}" required>
+                                <label for="nombre">Alergia</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="descripcion" placeholder="Descripción" name="descripcion" value="{{$alergia->descripcion}}">
+                                <label for="descripcion">Descripción</label>
+>>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>

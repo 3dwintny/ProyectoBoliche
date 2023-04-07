@@ -25,11 +25,11 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar Nacionalidad </h2>
+                            <h2>Editar Nacionalidad</h2>
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nacionalidades.update',$nacionalidad->id)}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nacionalidad.update',encrypt($nacionalidad->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">

@@ -7,7 +7,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Psicologia</h1>
+                    <h1 class="text-white">Psicología</h1>
                 </div>
             </div>
         </div>
@@ -17,7 +17,7 @@
     <div class="header-body text-center  mb-2 container">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-10">
-                <form action="{{route('psicologia.update',$psicologo->id)}}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
+                <form action="{{route('psicologia.update',encrypt($psicologo->id))}}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
                     {{method_field('PUT')}}
                     <fieldset class="card-body bg-light">
@@ -27,7 +27,7 @@
                                 <div class="card-header bg-light mb-2">
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 mb-3">
-                                            <h3 class="card-title text-dark">Editar Psicologa(o)</h3>
+                                            <h3 class="card-title text-dark">Editar psicóloga(o)</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -79,7 +79,7 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" id="telefono" placeholder="Teléfono" name="telefono" value="{{$psicologo->telefono}}">
+                                                <input type="text" class="form-control" id="telefono" placeholder="Teléfono" name="telefono" value="{{$psicologo->telefono}}" pattern="[0-9]{4}[-][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
                                                 <label for="telefono">Teléfono</label>
                                             </div>
                                         </div>

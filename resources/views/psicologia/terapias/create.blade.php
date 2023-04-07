@@ -9,7 +9,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Psicologia</h1>
+                    <h1 class="text-white">Sesiones</h1>
                 </div>
             </div>
         </div>
@@ -19,12 +19,7 @@
     <div class="header-body text-center  mb-2 container">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-10">
-                <form action="{{route('historiales')}}" method="POST" enctype="multipart/form-data" role="form">
-                    @csrf
-                    <div class="col-md-2 mb-4"><input type="hidden" class="form-control text-dark" name="atleta" id="atleta"></div>
-                    <div class="col-md-4 mb-4"><input type="submit" class="btn btn-warning" value="Historial Clínico del Atleta"></div>
-                </form>
-                <form method="POST" action="{{route('terapias.store')}}" enctype="multipart/form-data" role="form">
+                <form method="POST" action="{{route('sesiones.store')}}" enctype="multipart/form-data" role="form">
                     @csrf
                     <div class="card">
                         <div class="card-header bg-light mb-2">
@@ -37,9 +32,8 @@
                         </div>
                         <div class="row justify-content-center">
                             <div class="col-md-4 mb-4"><select name="psicologia_id" class="form-control text-dark" required>
-                                    <option selected disabled>Psicologa(o)</option>
                                     @foreach($psicologos as $item)
-                                    <option value="{{$item->id}}">{{$item->nombre1}} {{$item->nombre2}} {{$item->apellido1}}
+                                    <option value="{{encrypt($item->id)}}" selected>{{$item->nombre1}} {{$item->nombre2}} {{$item->apellido1}}
                                         {{$item->apellido2}} {{$item->apellido_casada}}
                                     </option>
                                     @endforeach
@@ -47,7 +41,7 @@
                             <div class="col-md-4 mb-4"><select name="atleta_id" class="form-control text-dark" id="atleta_id" required>
                                     <option selected disabled>Atleta</option>
                                     @foreach ($atletas as $item)
-                                    <option value="{{$item->id}}">{{$item->alumno->nombre1}} {{$item->alumno->nombre2}}
+                                    <option value="{{encrypt($item->id)}}">{{$item->alumno->nombre1}} {{$item->alumno->nombre2}}
                                         {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
                                     </option>
                                     @endforeach
@@ -71,7 +65,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"> <textarea class="form-control" name="impresion_clinica" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                                <div class="accordion-body"> <textarea class="form-control" name="impresion_clinica" placeholder="Impresión Clínica" id="floatingTextarea"></textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -81,7 +75,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"><textarea class="form-control" name="analisis_semiologico" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                                <div class="accordion-body"><textarea class="form-control" name="analisis_semiologico" placeholder="Análisis Semiológico (Signos y Síntomas)" id="floatingTextarea"></textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -91,7 +85,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"><textarea class="form-control" name="desarrollo" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                                <div class="accordion-body"><textarea class="form-control" name="desarrollo" placeholder="Desarrollo" id="floatingTextarea"></textarea></div>
                                             </div>
                                         </div>
                                         <div class="accordion-item">
@@ -111,7 +105,7 @@
                                                 </button>
                                             </h2>
                                             <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-heading5" data-bs-parent="#accordionFlushExample">
-                                                <div class="accordion-body"> <textarea class="form-control" name="tarea" placeholder="Observaciones" id="floatingTextarea"></textarea></div>
+                                                <div class="accordion-body"> <textarea class="form-control" name="tarea" placeholder="Tarea" id="floatingTextarea"></textarea></div>
                                             </div>
                                         </div>
                                     </div>
@@ -340,6 +334,7 @@
                         </div>
                     </div>
             </div>
+            <input type="hidden" name="obtenerCorreo" id="obtenerCorreo">
             </form>
         </div>
     </div>
@@ -355,10 +350,24 @@
                 type: 'GET',
                 success: function (res) {
                     document.getElementById('numero_terapia').value = "1";
-                    document.getElementById('atleta').value=document.getElementById('atleta_id').value;
                     $.each(res, function (key, value) {
                         document.getElementById('numero_terapia').value=value.numero_terapia+1;
-                        document.getElementById('atleta').value=value.atleta_id;
+                    });
+                }
+            });
+        });
+    });
+
+    $(document).ready(function(){
+        $('#atleta_id').on('change', function(){
+            var atletaId = this.value;
+            $('#obtenerCorreo').html('');
+            $.ajax({
+                url: '{{ route('correos') }}?atleta_id='+atletaId,
+                type: 'GET',
+                success: function (res) {
+                    $.each(res, function (key, value) {
+                        document.getElementById('obtenerCorreo').value=value.correo;
                     });
                 }
             });

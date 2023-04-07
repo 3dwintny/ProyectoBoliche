@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deporte;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Control;
 
 class DeporteController extends Controller
 {
+    protected $n;
+    public function __construct(Deporte $n){
+        $this->n = $n;  
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    { 
+        $deporte = Deporte::where('estado','activo')->get(['id','nombre']);
+        return view('configuraciones.deporte.show',compact('deporte'));
     }
 
     /**
@@ -23,7 +31,8 @@ class DeporteController extends Controller
      */
     public function create()
     {
-        //
+        $hoy = Carbon::now();
+        return view('configuraciones.deporte.create', compact('hoy'));
     }
 
     /**
@@ -34,7 +43,14 @@ class DeporteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => ['unique:deporte'],
+        ]);
+        $deporte = new Deporte(['nombre' => $request->nombre]);
+        $deporte->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>9]);
+        $control->save();
+        return redirect()->action([DeporteController::class, 'index']);
     }
 
     /**
@@ -56,7 +72,8 @@ class DeporteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $deporte = Deporte::find(decrypt($id));
+        return view('configuraciones.deporte.edit',['deporte' => $deporte]);
     }
 
     /**
@@ -68,7 +85,12 @@ class DeporteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $deporte = Deporte::find(decrypt($id));
+        $deporte ->fill(['nombre' => $request->nombre]);
+        $deporte->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>9]);
+        $control->save();
+        return redirect()->action([DeporteController::class,'index']);
     }
 
     /**
@@ -79,6 +101,24 @@ class DeporteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Deporte::find(decrypt($id))->update(['estado' => 'inactivo']);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>9]);
+        $control->save();
+        return redirect()->action([DeporteController::class,'index']);
+    }
+
+    public function acciones(){
+        $control = Control::where('tabla_accion_id',9)->with('usuario')->paginate(5);
+        return view('configuraciones.deporte.control',compact('control'));
+    }
+
+    public function eliminados(){
+        $eliminar = Deporte::where('estado', 'inactivo')->get();
+        return view('configuraciones.deporte.eliminados',compact('eliminar'));
+    }
+
+    public function restaurar(Request $request){
+        Deporte::find(decrypt($request->e))->update(['estado'=>'activo']);
+        return redirect()->action([DeporteController::class,'index']);
     }
 }

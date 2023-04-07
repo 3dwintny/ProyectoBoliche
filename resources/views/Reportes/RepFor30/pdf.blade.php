@@ -178,7 +178,7 @@
                 Código:<strong>EDG-FOR-30.</strong>
             </div>
             <div id="interno3">
-                Fecha de aprob: 00/00/0000
+                Fecha de aprob: {{Carbon\Carbon::parse($aprobacion)->format('d/m/Y')}}
             </div>
             <div id="interno4">
                 Versión: 1.
@@ -191,7 +191,7 @@
     <br>
     <div id="contenedor2">
         <div id="hoja"><strong>Hoja No.</strong>______________ de ______</div>
-        <div id="mesAnio"><strong>Mes y año a Reportar:</strong>______________ 2020</div>
+        <div id="mesAnio"><strong>Mes y año a Reportar:</strong> {{$mostrarMes}} {{$obtenerAnio}}</div>
     </div>
     <table class="anchoFull" cellpading=0 cellspacing=0>
         <thead>
@@ -264,7 +264,7 @@
         <thead class="fondoAzul">
             <tr>
                 <th rowspan="2" class="bDerecho tamanioFuente">No.</th>
-                <th id="tamanioEncabezado" rowspan="2" class="bDerecho tamanioFuente">NOMBRE COMPLETO DEL ATLETA</th>
+                <th id="tamanioEncabezado" rowspan="2" class="bDerecho tamanioFuente">NOMBRE COMPLETO DE</th>
                 <th rowspan="2" class="bDerecho tamanioFuente">
                     <p class="rotacion">EDAD</p> 
                 </th>
@@ -276,7 +276,7 @@
                 <th rowspan="2" class="bDerecho tamanioFuente">
                     <p class="rotacion">MODALIDAD</p>
                 </th>
-                <th colspan="{{count($fs)}}" class="bDerecho tamanioFuente" id="bInferiorBlanco">Control de Asistencia</th>
+                <th colspan="{{count($fechas)}}" class="bDerecho tamanioFuente" id="bInferiorBlanco">Control de Asistencia</th>
                 <th colspan="1" rowspan="2" class="bDerecho tamanioFuente">
                     <p class="rotacion">DÍAS ENTRENADOS</p>
                 </th>
@@ -293,27 +293,27 @@
                 $s=0;
                 $c=0;
             @endphp
-                @for ($i=0;$i<count($fs);$i++)
-                <th class="fondoCeleste bDerecho">{{$fs[$i]}}</th>
+                @for ($i=0;$i<count($fechas);$i++)
+                <th class="fondoCeleste bDerecho">{{Carbon\Carbon::parse($fechas[$i]->fecha)->format('d')}}</th>
                 @endfor
             @foreach($atleta as $item)
             <tr id="{{$c}}" class="textoCentrado"><!--Filas-->
                 <td class="cuerpo tamanioFuente80">{{$contador}}</td>
                 <td class="cuerpo tamanioFuente80"><!--Columnas-->
-                    {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}} {{$item->atleta->alumno->nombre3}}
-                    {{$item->atleta->alumno->apellido1}} {{$item->atleta->alumno->apellido2}}
+                    {{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}}
+                    {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
                 </td>
-                <td class="cuerpo tamanioFuente80">{{$item->atleta->alumno->edad}}</td>
-                <td class="cuerpo tamanioFuente80">{{$item->atleta->alumno->genero}}</td>
-                <td class="cuerpo tamanioFuente80">{{$item->atleta->categoria->tipo}}</td>
-                <td class="cuerpo tamanioFuente80">{{$item->atleta->modalidad->nombre}}</td>
+                <td class="cuerpo tamanioFuente80">{{$item->alumno->edad}}</td>
+                <td class="cuerpo tamanioFuente80">{{$item->alumno->genero}}</td>
+                <td class="cuerpo tamanioFuente80">{{$item->categoria->tipo}}</td>
+                <td class="cuerpo tamanioFuente80">{{$item->modalidad->nombre}}</td>
 
-                @for($i=$s;$i<count($fs)+$s;$i++)
+                @for($i=$s;$i<count($fechas)+$s;$i++)
                 <td class="cuerpo tamanioFuente80">{{$estado[$i]}}</td>
                 @endfor
                 <td class="cuerpo tamanioFuente80">{{$contarDias[$c]}}</td>
                 <td class="cuerpo tamanioFuente80">{{$promedio[$c]}}</td>
-                <td class="cuerpo tamanioFuente80">{{$item->atleta->etapa_deportiva->nombre}}</td>
+                <td class="cuerpo tamanioFuente80">{{$item->etapa_deportiva->nombre}}</td>
                 @php
                     $contador++;
                 @endphp
@@ -321,7 +321,7 @@
 
             @php
                 $c=$c+1;
-                $s=$s+count($fs)
+                $s=$s+count($fechas)
             @endphp
             @endforeach
         </tbody>
