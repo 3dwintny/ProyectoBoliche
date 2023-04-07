@@ -41,6 +41,10 @@ class Alumno extends Model
     'updated_at',
     'departamento_residencia_id',
     'municipio_residencia_id'];
+    public function obtenerAlumno()
+    {
+        return Alumno::all();
+    }
 
     public function obtener_nombre($id)
     {

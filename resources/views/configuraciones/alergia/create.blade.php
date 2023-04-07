@@ -12,7 +12,7 @@
             <!-- Card stats -->
             <div class="row">
                 <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Nacionalidades</h1>
+                    <h1 class="text-white">Alergia</h1>
                 </div>
             </div>
         </div>
@@ -25,11 +25,11 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Registrar Nueva Nacionalidad </h2>
+                            <h2> Registrar Nueva Alergia </h2>
                         </strong>
 
                     </div>
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('nacionalidades.store')}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('Alergia.store')}}">
                     @csrf
                     <div class="form-group">
                         <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{$hoy}}" readonly>
@@ -37,8 +37,8 @@
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="descripcion" placeholder="Nacionalidad" name="descripcion" required>
-                                <label for="descripcion">Nacionalidad</label>
+                                <input type="text" class="form-control" id="descripcion" placeholder="Alergia" name="descripcion" required>
+                                <label for="descripcion">Alergia</label>
                             </div>
                             <div class="container">
                                 <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registar</button></div>

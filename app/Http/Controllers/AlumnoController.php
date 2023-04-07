@@ -57,6 +57,7 @@ class AlumnoController extends Controller
      */
     public function create()
     {
+        /* return view('livewire.encargados-manager'); */
         $departamentos = Departamento::all();
         $nacionalidades = Nacionalidad::all();
         $parentezcos = Parentesco::all();
@@ -198,7 +199,7 @@ class AlumnoController extends Controller
     {
         $alumno=Alumno::find($id)->update(['estado' => 'Rechazado']);
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
-        
+
     }
-   
+
 }

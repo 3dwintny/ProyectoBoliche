@@ -60,9 +60,9 @@
                 <strong>Departamento Residencia</strong>
                 {{ $alumno->municipio_residencia->nombre }}</div>
 
-  </div>                     
-  </div>                     
-  </div>                     
+  </div>
+  </div>
+  </div>
 @include('layouts.footers.auth')
 
 @endsection

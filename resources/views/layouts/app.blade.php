@@ -40,6 +40,12 @@
     <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
     <!-- //Agregado manualmente los estilos de css para bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    @livewireStyles
+    <link href="{{asset('argon')}}/css/multistep.css" rel="stylesheet" id="bootstrap-css">
+
+    {{-- Para formulario --}}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
 </head>
 
 <body class="{{ $class ?? '' }}">
