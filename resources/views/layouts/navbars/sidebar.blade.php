@@ -121,6 +121,13 @@
                                 </a>
                             </li>
                             @endcan
+                            @can('atletaPerfil')
+                            <li>
+                                <a href="{{ route('modificarAtleta') }}" class="nav-link">
+                                    {{ __('Mi perfil') }}
+                                </a>
+                            </li>  
+                            @endcan
                         </ul>
                     </div>
                 </li>

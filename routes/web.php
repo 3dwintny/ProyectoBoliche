@@ -96,6 +96,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Ruta Reporte EDG31
     Route::resource('edg-31',EDG31Controller::class);
     //Rutas Atletas
+    Route::get('editar-perfil-atleta',[AtletaController::class,'modificar'])->name('modificarAtleta');
+    Route::put('actualizar-informacion-atleta',[AtletaController::class,'actualizar'])->name('actualizarAtleta');
+    Route::get('reinscripcion-PDF',[AtletaController::class,'generarPDF'])->name('reinscripcionPDF');
     Route::resource('atletas',AtletaController::class);
 
     //Ruta Categorias
@@ -329,7 +332,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::post('asistenciaCategoria',[AsistenciaController::class,'filtroCategoria'])->name('asistenciaCategoria');
     });
 
-    Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
+    Route::get('municipios', [AtletaController::class, 'getMunicipios'])->name('municipios');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

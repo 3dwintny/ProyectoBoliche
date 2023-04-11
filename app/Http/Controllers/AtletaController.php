@@ -20,6 +20,13 @@ use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\Nacionalidad;
 use App\Models\Control;
+use App\Models\Alergia;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
+use App\Models\Alumnos_encargados;
+use App\Models\Encargado;
+use PDF;
+use App\Models\Formulario;
 
 class AtletaController extends Controller
 {
@@ -338,6 +345,102 @@ class AtletaController extends Controller
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
         $control->save();
         return redirect()->action([AtletaController::class,'index']);
+    }
+
+    public function getMunicipios(Request $request)
+    {
+        $municipios = DB::table('municipio')
+            ->where('departamento_id', decrypt($request->departamento_id))
+            ->get();
+
+        if (count($municipios) > 0) {
+            return response()->json($municipios);
+        }
+    }
+
+    public function modificar(){
+        $alumnos = Alumno::where('correo',auth()->user()->email)->get();
+        if(count($alumnos)>0){
+            $atleta = Alumno::find($alumnos[0]->id);
+            $departamentos = Departamento::get(['id','nombre']);
+            $nacionalidades = Nacionalidad::get(['id','descripcion']);
+            $alergias = Alergia::get(['id','nombre']);
+            $municipioNacimiento = Municipio::where('departamento_id',$atleta->departamento_id)->get();
+            $municipioResidencia = Municipio::where('departamento_id',$atleta->departamento_residencia_id)->get();
+            return view('Atletas.informacionPersonal',compact('atleta','nacionalidades','alergias','departamentos','municipioNacimiento','municipioResidencia'));
+        }
+        else{
+            return redirect('home');
+        }
+    }
+
+    public function actualizar(Request $request){
+        $alumnos = Alumno::where('correo',auth()->user()->email)->get();
+        $atleta = Alumno::find($alumnos[0]->id);
+        if($request->hasFile('foto'))
+        {
+            $destination = 'storage/uploads/'.$atleta->foto;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('foto');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('storage/uploads/', $filename);
+            $fotografia = $filename;
+        }
+        else{
+            $fotografia = $request->pic;
+        }
+        $atleta->fill([
+            'nombre1' => $request->nombre1,
+            'nombre2' => $request->nombre2,
+            'nombre3' => $request->nombre3,
+            'apellido1' => $request->apellido1,
+            'apellido2' => $request->apellido2,
+            'celular' => $request->celular,
+            'telefono_casa' => $request->telefono_casa,
+            'cui' => $request->cui,
+            'pasaporte' => $request->pasaporte,
+            'genero' => $request->genero,
+            'fecha' => $request->fecha,
+            'edad' => $request->edad,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+            'foto' => $fotografia,
+            'peso' => $request->peso,
+            'nit' => $request->nit,
+            'fecha_fotografia' => $request->fecha_fotografia,
+            'altura' => $request->altura,
+            'contacto_emergencia' => $request->contacto_emergencia,
+            'departamento_residencia_id' => decrypt($request->departamento_residencia_id),
+            'municipio_residencia_id' => decrypt($request->municipio_residencia_id),
+            'departamento_id' => decrypt($request->departamento_id),
+            'nacionalidad_id' => decrypt($request->nacionalidad_id),
+            'municipio_id' => decrypt($request->municipio_id),
+            'alergia_id' => decrypt($request->alergia_id),
+        ]);
+        $atleta->save();
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
+        $control->save(); 
+        return redirect('home');
+    }
+
+    public static function generarPDF()
+    {
+        $alumno = Alumno::where('correo',auth()->user()->email)->get();
+        $anio = Carbon::now()->format('Y');
+        $identificadores = array();
+        foreach ($alumno as $item){
+            $registro = Alumnos_encargados::where('alumno_id',$item->id)->get();
+        }
+
+        foreach ($registro as $item){
+            array_push($identificadores,$item->encargado_id);
+        }
+        $encargado = Encargado::whereIn('id',$identificadores)->get();
+        $formularios = Formulario::all();
+        return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
     }
 
     /**
