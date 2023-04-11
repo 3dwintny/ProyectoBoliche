@@ -12,6 +12,7 @@ use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Alumnos_encargados;
 use PDF;
 use Carbon\Carbon;
 use App\Models\Control;
@@ -214,7 +215,10 @@ class AlumnoController extends Controller
         $encargado = Encargado::orderByDesc('id')->limit(1)->get();
         $anio = Carbon::now()->format('Y');
         foreach ($encargado as $item){
-            $alumno = Alumno::where('encargado_id',$item->id)->get();
+            $registro = Alumnos_encargados::where('encargado_id',$item->id)->get();
+        }
+        foreach ($registro as $item){
+            $alumno = Alumno::where('id',$item->alumno_id)->get();
         }
         $formularios = Formulario::all();
         return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
