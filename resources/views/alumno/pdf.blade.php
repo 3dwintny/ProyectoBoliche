@@ -379,20 +379,20 @@
             <div class="contenedorTitulos tamanio65">EL ATLETA ES ALÉRGICO A:</div>
         </div>
         <div class="contenedorDerecho">
-                <div class="nombres tamanio70">NOMBRE DEL PADRE</div>
+                <div class="nombres tamanio70">{{$encargado[0]->nombre1p}} {{$encargado[0]->nombre2p}} {{$encargado[0]->nombre3p}} {{$encargado[0]->apellido1p}} {{$encargado[0]->apellido2p}} {{$encargado[0]->apellido_casada}}</div>
             
             <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="edad tamanio70 textoCentrado">7767-5255</div>
+            <div class="edad tamanio70 textoCentrado">{{$encargado[0]->telefono_casap}}</div>
             <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
-            <div class="cui tamanio70 textoCentrado">5545-8565</div>
+            <div class="cui tamanio70 textoCentrado">{{$encargado[0]->celularp}}</div>
             <div class="correo tamanio70">E-MAIL:</div>
-            <div class="espacioDerecho2 tamanio70">correo.encargado1@dominio.com</div>
+            <div class="espacioDerecho2 tamanio70">{{$encargado[0]->correop}}</div>
 
             <div class="contenedorTitulos tamanio70"></div>
             <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="nombres tamanio70">DIRECCIÓN DEL PRIMER ENCARGADO</div>
+            <div class="nombres tamanio70">{{$encargado[0]->direccionp}}</div>
 
             <div class="contenedorTitulos tamanio70"></div>
             <div class="nombres tamanio70">NOMBRE DE LA MADRE</div>
@@ -413,9 +413,9 @@
             <div class="contenedorTitulos tamanio70"></div>
 
             <div class="edad tamanio70"></div>
-            <div class="tamanio70 emergencia">Oscar Cáceres</div>
+            <div class="tamanio70 emergencia">María López</div>
             <div class="tamanio70 telEmergencia" style="text-align: right;">TELÉFONO:</div>
-            <div class="tamanio70 textoCentrado telefonoEmergencia">4217-6144</div>
+            <div class="tamanio70 textoCentrado telefonoEmergencia">{{$encargado[0]->celularp}}</div>
 
             <div class="contenedorTitulos tamanio70"></div>
             <div class="contenedorTitulos tamanio70"></div>
