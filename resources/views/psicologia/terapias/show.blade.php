@@ -43,7 +43,14 @@
     <div class="centrar"><div class="input-group mb-2"></div></div>
   </div>
 </form>
-
+<form action="{{route('tareaPendiente')}}" method="GET">
+  @csrf
+  <input type="hidden" id="idAtleta" name="idAtleta" value="{{$guardarAtleta}}">
+  <input type="hidden" id="nombreAtleta" name="nombreAtleta" value="{{$completo}}">
+  <div>
+    <input type="submit" value="Tareas pendientes" class="btn btn-outline-warning">
+  </div>
+</form>
 <div class="container">
 <div class="pb-5 pt-5 pt-md-2">
   <div class="">
@@ -72,7 +79,7 @@
           @if($item->estado_tarea=="pendiente")
           <td style="color:red; background-color:#fff3ef;">{{$item->tarea}}</td>
           @else
-          <td>{{$item->tarea}}</td>
+          <td style="color:rgb(0, 141, 0); background-color:#f2ffef;">{{$item->tarea}}</td>
           @endif
           <td>
             <a href="{{route('sesiones.edit',encrypt($item->id))}}" style="text-decoration: none; font-weight:bolder;" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></a>

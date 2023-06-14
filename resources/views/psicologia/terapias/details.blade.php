@@ -83,63 +83,123 @@
                                         <tbody class="tamanioFuente60 textoCentrado">
                                             <tr>
                                                 <td style="background-color: white;">Conciencia Corporal</td>
-                                                <td style="background-color: white;">{{$terapia->conciencia_corporal}}</td>
+                                                @if($terapia->conciencia_corporal==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->conciencia_corporal}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Dominio Corporal</td>
-                                                <td style="background-color: white;">{{$terapia->dominio_corporal}}</td>
+                                                @if($terapia->dominio_corporal==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->dominio_corporal}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Dominio de Respiración</td>
-                                                <td style="background-color: white;">{{$terapia->dominio_respiracion}}</td>
+                                                @if($terapia->dominio_respiracion==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->dominio_respiracion}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Diálogo Interno</td>
-                                                <td style="background-color: white;">{{$terapia->dialogo_interno}}</td>
+                                                @if($terapia->dialogo_interno==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->dialogo_interno}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Atención</td>
-                                                <td style="background-color: white;">{{$terapia->atencion}}</td>
+                                                @if($terapia->atencion==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->atencion}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Concentración</td>
-                                                <td style="background-color: white;">{{$terapia->concentracion}}</td>
+                                                @if($terapia->concentracion==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->concentracion}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Motivación</td>
-                                                <td style="background-color: white;">{{$terapia->motivacion}}</td>
+                                                @if($terapia->motivacion==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->motivacion}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Confianza</td>
-                                                <td style="background-color: white;">{{$terapia->confianza}}</td>
+                                                @if($terapia->confianza==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->confianza}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Activación</td>
-                                                <td style="background-color: white;">{{$terapia->activacion}}</td>
+                                                @if($terapia->activacion==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->activacion}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Relajación</td>
-                                                <td style="background-color: white;">{{$terapia->relajacion}}</td>
+                                                @if($terapia->relajacion==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->relajacion}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Estrés</td>
-                                                <td style="background-color: white;">{{$terapia->estres}}</td>
+                                                @if($terapia->estres==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->estres}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Ansiedad Cognitiva</td>
-                                                <td style="background-color: white;">{{$terapia->ansiedad_cognitiva}}</td>
+                                                @if($terapia->ansiedad_cognitiva==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->ansiedad_cognitiva}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Ansiedad Física</td>
-                                                <td style="background-color: white;">{{$terapia->ansiedad_fisica}}</td>
+                                                @if($terapia->ansiedad_fisica==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->ansiedad_fisica}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Miedo</td>
-                                                <td style="background-color: white;">{{$terapia->miedo}}</td>
+                                                @if($terapia->miedo==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->miedo}}</td>
+                                                @endif
                                             </tr>
                                             <tr>
                                                 <td style="background-color: white;">Frustración</td>
-                                                <td style="background-color: white;">{{$terapia->estres}}</td>
+                                                @if($terapia->frustracion==null)
+                                                    <td style="background-color: white;">-----</td>
+                                                @else
+                                                    <td style="background-color: white;">{{$terapia->frustracion}}</td>
+                                                @endif
                                             </tr>
                                         </tbody>
                                     </table>

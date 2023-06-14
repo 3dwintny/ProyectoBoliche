@@ -1,7 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
+<<<<<<< HEAD
+<div class="header bg-dark pb-4 pt-5 pt-md-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <!-- Card stats -->
+            <div class="row">
+                <div class="col-xl-6 col-lg-6">
+                    <h1 class="text-white">Tareas pendientes {{$nombre}}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+=======
 @include('layouts.headers.cards', ['texto' => 'Tareas pendientes'])
+>>>>>>> 4d897f1638c5a10a34ad75523ea2220abe64ba3e
 <div class="pb-4 pt-5 pt-md-3">
     <div class="container">
         <div class="card-body">
