@@ -2,7 +2,7 @@
 
 @section('content')
 @include('layouts.headers.cards', ['texto' => 'Entrenadores'])
-<div class="container-fluid mt--6">
+<div class="container-fluid mt--5">
     <div class="header-body text-center  mb-7">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">

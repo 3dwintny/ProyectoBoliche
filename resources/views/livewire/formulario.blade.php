@@ -519,7 +519,7 @@
 
                             <tr>
                                 <td colspan="2" class="table-danger">
-                                    <strong>Datos del encargado</strong>
+                                    <strong>Datos del preinscrito</strong>
                                 </td>
                             </tr>
 
@@ -688,11 +688,7 @@
                             @endforeach
                         </table>
                         <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(2)">Atras</button>
-<<<<<<< HEAD
-                    <button class="submit btn btn-outline-success" wire:click="submitForm" onclick="window.location='{{route('fichaPDF')}}'" type="button">Finalizar</button>
-=======
-                        <button class="submit btn btn-outline-success" wire:click="submitForm" onclick=window.location='{{ route('ficha-PDF')}' type="button">Finalizar</button>
->>>>>>> 753b9ba11ed9dedd212ee567fcd4c0c5279eb2ce
+                        <button class="submit btn btn-outline-success" wire:click="submitForm" onclick=window.location='{{ route('ficha-PDF') }}' type="button">Finalizar</button>
                     </div>
                 </div>
             </div>
