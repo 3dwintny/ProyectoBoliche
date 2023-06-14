@@ -59,7 +59,7 @@ class Formulario extends Component
 
 
     public function firstStepSubmit()
-    {   //$this->crearRelacionAlumnos();
+    {
         #Validamos la informacion minima requerida por la base de datos
         $this->validarAlumnos();
         $this->currentStep = 2;
@@ -187,7 +187,7 @@ class Formulario extends Component
         /* Extraemos el nombre de la fotografia */
         $imageName = time().'.'.$this->foto->getClientOriginalExtension();
         /* el public_uploados es lo que se modifico de filesystem para poder ingresar los datos a public */
-        $this->foto->storeAs("uploads/alumnos",$imageName,'public_uploads'); #los parametros que ingresan son (el path,nombre, disco a donde ingresa)
+        $this->foto->storeAs("storage/uploads",$imageName,'public_uploads'); #los parametros que ingresan son (el path,nombre, disco a donde ingresa)
         Alumno::create([
 
             'nombre1'=> $this->nombre1,
@@ -228,7 +228,7 @@ class Formulario extends Component
         $i = $i + 1;
         $this->i = $i;
 
-        if($i<=3){
+        if($i<=2){
         $this->primernombrep[] = '';
         $this->segundonombrep[] = '';
         $this->tercernombrep[] = '';

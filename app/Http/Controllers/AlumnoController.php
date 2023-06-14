@@ -221,6 +221,7 @@ class AlumnoController extends Controller
             $alumno = Alumno::where('id',$item->alumno_id)->get();
         }
         $formularios = Formulario::all();
+        return $alumno;
         return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
     }
 

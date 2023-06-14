@@ -23,7 +23,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
                 <div class="card">
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('terapias.update',encrypt($terapia->id))}}">
+                <form method="post" role="form" enctype="multipart/form-data" action="{{route('sesiones.update',encrypt($terapia->id))}}">
                     @csrf
                     {{method_field('PUT')}}
                     <div class="card">

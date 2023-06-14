@@ -688,7 +688,7 @@
                             @endforeach
                         </table>
                         <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(2)">Atras</button>
-                        <button class="submit btn btn-outline-success" wire:click="submitForm" type="button">Finalizar</button>
+                    <button class="submit btn btn-outline-success" wire:click="submitForm" onclick="window.location='{{route('fichaPDF')}}'" type="button">Finalizar</button>
                     </div>
                 </div>
             </div>
