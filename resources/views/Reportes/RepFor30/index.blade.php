@@ -55,7 +55,7 @@
         </div>
         
         <div class="container">
-                <form method="GET" action="{{route('asistenciasPDF')}}" enctype="multipart/form-data" role="form" target="_blank">
+                <form method="GET" action="{{route('asistenciasPDF')}}" enctype="multipart/form-data" role="form">
                     @csrf
                     <div class="row">
                         <div class="col-md-4 mb-2">
