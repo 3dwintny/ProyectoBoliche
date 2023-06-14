@@ -2,7 +2,7 @@
 
 @section('content')
 <link href="{{ asset('/css/terapias/show.css') }}" rel="stylesheet">
-<div class="header bg-dark pb-2 pt-5 pt-md-10">
+<div class="header bg-dark pb-2 pt-5 pt-md-10 mt--5">
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->

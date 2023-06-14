@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-4 pt-5 pt-md-6">
+<div class="header bg-dark pb-4 pt-5 pt-md-6 mt--5">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -13,6 +13,7 @@
         </div>
     </div>
 </div>
+
 <div class="pb-4 pt-5 pt-md-3">
     <div class="container">
         <div class="card-body">
