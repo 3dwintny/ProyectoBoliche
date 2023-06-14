@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<<<<<<< HEAD
 <div class="header bg-dark pb-4 pt-5 pt-md-6">
     <div class="container-fluid">
         <div class="header-body">
@@ -13,6 +14,9 @@
         </div>
     </div>
 </div>
+=======
+@include('layouts.headers.cards', ['texto' => 'Tareas pendientes'])
+>>>>>>> 4d897f1638c5a10a34ad75523ea2220abe64ba3e
 <div class="pb-4 pt-5 pt-md-3">
     <div class="container">
         <div class="card-body">

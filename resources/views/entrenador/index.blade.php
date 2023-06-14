@@ -1,18 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-4 pt-5 pt-md-8 responsive">
-  <div class="container-fluid">
-    <div class="header-body">
-      <!-- Card stats -->
-      <div class="row">
-        <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Entrenadores</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.headers.cards', ['texto' => 'Entrenadores'])
 <div class="container">
   <div class="pt-md-2 pb-4 pt-5">
     @include('components.flash_alerts')

@@ -5,18 +5,7 @@
 
 <script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
-<div class="header bg-dark pb-4 pt-5 pt-md-6">
-    <div class="container-fluid">
-        <div class="header-body">
-            <!-- Card stats -->
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Reporte EDG-31 </h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('layouts.headers.cards', ['texto' => 'Reporte EDG-31'])
 <div class="container">
 <form method="GET" action="{{route('edg31PDF')}}" enctype="multipart/form-data" role="form" target="_blank">
     @csrf

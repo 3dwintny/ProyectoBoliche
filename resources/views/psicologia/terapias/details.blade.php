@@ -1,17 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-2 pt-5 pt-md-6">
-    <div class="container-fluid">
-        <div class="header-body">
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Sesiones</h1>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('layouts.headers.cards', ['texto' => 'Sesiones'])
 
 <div class="container-fluid mt--3">
     <div class="header-body text-center mb-7">
