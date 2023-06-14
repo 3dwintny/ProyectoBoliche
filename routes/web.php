@@ -60,6 +60,7 @@ Route::get('wel', function () {return view('welcome');})->name('wel'); */
 Route::resource('/', FrontendController::class);
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
+Route::get('alumnos/{alumno}', [AlumnoController::class, 'show'])->name('alumnos.show');
 
 Route::get('ficha-PDF',[AlumnoController::class,'generarPDF'])->name('fichaPDF');
 //Route::get('Inscripcion', fuction () {return view('livewire/encargados-manager');});

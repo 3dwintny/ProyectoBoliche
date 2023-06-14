@@ -61,6 +61,8 @@
             <th scope="col">Entrenador</th>
             <th scope="col">Fecha Ingreso</th>
             <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody class="table-hover">
