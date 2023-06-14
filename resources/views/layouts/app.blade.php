@@ -47,6 +47,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     {{-- Instalamos Alpinesjs en nuestro proyecto para el uso de liveware --}}
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    {{-- Usando WireUI --}}
 
 </head>
 
