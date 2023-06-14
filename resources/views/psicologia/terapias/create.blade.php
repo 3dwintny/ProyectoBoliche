@@ -126,7 +126,7 @@
                                                 <td>Conciencia Corporal</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="conciencia_corporal" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="conciencia_corporal" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -136,7 +136,7 @@
                                                 <td> Dominio Corporal</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="dominio_corporal" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="dominio_corporal" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -153,7 +153,7 @@
                                                 <td>Dominio de Respiración</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="dominio_respiracion" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="dominio_respiracion" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -168,7 +168,7 @@
                                                 <td>Diálogo Interno</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="dialogo_interno" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="dialogo_interno" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -183,7 +183,7 @@
                                                 <td>Atención</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="atencion" id="inlineRadio1" value="{{$i}}" required> 
+                                                    <input class="form-check-input" type="radio" name="atencion" id="inlineRadio1" value="{{$i}}" > 
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -198,7 +198,7 @@
                                                 <td>Concentración</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="concentracion" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="concentracion" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -208,7 +208,7 @@
                                                 <td>Motivación</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="motivacion" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="motivacion" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -223,7 +223,7 @@
                                                 <td>Confianza</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="confianza" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="confianza" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -238,7 +238,7 @@
                                                 <td>Activación</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="activacion" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="activacion" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -248,7 +248,7 @@
                                                 <td>Relajación</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="relajacion" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="relajacion" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -258,7 +258,7 @@
                                                 <td>Estrés</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="estres" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="estres" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -273,7 +273,7 @@
                                                 <td>Ansiedad Cognitiva</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="ansiedad_cognitiva" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="ansiedad_cognitiva" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -288,7 +288,7 @@
                                                 <td>Ansiedad Física</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="ansiedad_fisica" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="ansiedad_fisica" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -303,7 +303,7 @@
                                                 <td>Miedo</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="miedo" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="miedo" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor
@@ -318,7 +318,7 @@
                                                 <td>Frustración</td>
                                                 <td>@for($i=1;$i<=10;$i++)
                                                     <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="frustracion" id="inlineRadio1" value="{{$i}}" required>
+                                                    <input class="form-check-input" type="radio" name="frustracion" id="inlineRadio1" value="{{$i}}" >
                                                     <label class="form-check-label" for="inlineRadio1">{{$i}}</label>
                                                     </div>
                                                     @endfor

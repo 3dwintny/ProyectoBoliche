@@ -171,8 +171,25 @@ class AlumnoController extends Controller
     public function show($id)
     {
         $alumno = Alumno::find($id);
-        $departamentos = Departamento::pluck('nombre');
-        return view('alumno.show', compact('alumno'));
+        
+
+        if (!$alumno) {
+            return response()->json(['error' => 'Alumno no encontrado'], 404);
+        }
+    
+        $datosAlumno = [
+            'nombre' => $alumno->nombre1 .' '. $alumno->nombre2 .' '. $alumno->nombre3.' '.$alumno->apellido1 .' '.$alumno->apellido2,
+            'cui' => $alumno ->cui,
+            'celular' => $alumno->celular,
+            'telefono_casa' => $alumno->telefono_casa,
+            'correo' => $alumno ->correo,
+            'fecha_nacimiento' => $alumno->fecha,
+            'foto'=>$alumno->foto,
+            'departamento'=>$alumno->departamento_residencia->nombre,
+            'municipio'=>$alumno->municipio_residencia->nombre,
+        ];
+
+        return response()->json($datosAlumno);
     }
 
     /**
