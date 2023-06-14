@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Http\Livewire\Field;
 use App\Models\Alumnos_encargados;
 
+
 class Formulario extends Component
 {
     use WithFileUploads;
@@ -75,13 +76,20 @@ class Formulario extends Component
 
     public function submitForm()
     {
-        #Metodo para guardar encargados
-        $this->guardarEncargados();
-        $this->guardarAlumno();
-        $this->crearRelacionAlumnos();
-        // $this->successMessage = 'Datos ingresados correctamente';
-        $this->clearForm();
-        $this->currentStep = 1;
+        try{
+            #Metodo para guardar encargados
+            $this->guardarEncargados();
+            $this->guardarAlumno();
+            $this->crearRelacionAlumnos();
+            //$this->successMessage = 'Datos ingresados correctamente';
+            // $this->clearForm();
+            //$this->recet();
+            $this->currentStep = 1;
+
+        }catch(\Exception $e){
+            $this-> addError('Error al ingresar datos, vuelva a intentarlo', $e->getMessage());
+        }
+
     }
 
     public function back($step)
@@ -136,11 +144,27 @@ class Formulario extends Component
     {
         $this->validateOnly($propertyCui, [
             'cui' => 'min:13 | max:13',
+            'cui' => 'numeric',
             'correo' => 'email',
+            'peso' => 'numeric',
+            'altura' => 'numeric',
+            'contacto_emergencia' => 'numeric',
+            'telefono' => 'numeric',
+            'celular' => 'numeric',
+            'nit' => 'numeric',
+            'pasaporte' => 'numeric',
         ],[
            'cui.min' => 'Ingrese el cui correcto (no menos de 13 caracteres)',
            'cui.max' => 'Ingrese el cui correcto (no mas de 13 caracteres)',
+           'cui.numeric' => 'Unicamente debe ingresar números',
            'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
+           'peso.numeric' => 'Unicamente debe ingresar números',
+           'altura.numeric' => 'Unicamente debe ingresar números',
+           'contacto_emergencia.numeric' => 'Unicamente debe ingresar números',
+           'telefono' => 'Unicamente debe ingresar números',
+           'celular' => 'Unicamente debe ingresar números',
+           'nit' => 'Unicamente debe ingresar números',
+           'Pasaporte' => 'Unicamente debe ingresar números',
         ]);
     }
     public function validarAlumnos(){
@@ -162,21 +186,14 @@ class Formulario extends Component
             'nombre1' => 'Este campo es requerido',
             'apellido1' => 'Este campo es requerido',
             'cui' => 'Este campo es requerido',
-            'cui.numeric' => 'Unicamente debe ingresar números',
             'peso' => 'Este campo es requerido',
-            'peso.numeric' => 'Unicamente debe ingresar números',
             'altura' => 'Este campo es requerido',
-            'altura.numeric' => 'Unicamente debe ingresar números',
             'direccion' => 'Este campo es requerido',
             'contacto_emergencia' => 'Este campo es requerido',
-            'contacto_emergencia.numeric' => 'Unicamente debe ingresar números',
             'correo' => 'Este campo es requerido',
             'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
             'foto' => 'Este campo es requerido',
             'fecha' => 'Este campo es requerido',
-
-
-
         ]
     );
 
@@ -220,7 +237,7 @@ class Formulario extends Component
 
         ]);
     }
-    /* ---------------------------------------------------Metodos para el registro de encargados---------------------------------------------------- */
+    /* -----------------------------------------Metodos para el registro de encargados------------------------------------------- */
 
 
     public function add($i)
@@ -277,6 +294,7 @@ class Formulario extends Component
     }
 
     private function resetInputFields(){
+
         $this->primernombrep = '';
         $this->segundonombrep = '';
         $this->tercernombrep = '';

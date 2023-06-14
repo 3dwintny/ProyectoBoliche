@@ -82,9 +82,9 @@
                                         </div>
                                         <div class="col-md-12 mb-2">
                                             <div class="form-floating">
-                                                <input class="form-control text-dark" placeholder="{{ __('CUI') }}" id="formIns" type="text"
+                                                <input class="form-control text-dark" placeholder="{{ __('CUI') }}" id="cui" type="text"
                                                 wire:model="cui">
-                                                <label for="formIns">CUI</label>
+                                                <label for="cui">CUI</label>
                                                 @error('cui') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
@@ -188,7 +188,7 @@
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
                                                 <input class="form-control text-dark" id="formIns" type="file"
-                                                wire:model="foto">
+                                                wire:model="foto" accept=".jpg, .jpeg, .png">
                                                 <label for="formIns">Fotografía:</label>
                                                 @error('foto') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
@@ -519,7 +519,7 @@
 
                             <tr>
                                 <td colspan="2" class="table-danger">
-                                    <strong>Datos del encargado</strong>
+                                    <strong>Datos del alumno</strong>
                                 </td>
                             </tr>
 
@@ -688,7 +688,7 @@
                             @endforeach
                         </table>
                         <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(2)">Atras</button>
-                        <button class="submit btn btn-outline-success" wire:click="submitForm" type="button">Finalizar</button>
+                        <button class="submit btn btn-outline-success" wire:click="submitForm" onclick=window.location='{{ route('fichaPDF') }}' type="button">Finalizar</button>
                     </div>
                 </div>
             </div>
