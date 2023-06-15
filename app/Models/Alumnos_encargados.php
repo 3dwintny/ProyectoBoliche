@@ -19,10 +19,10 @@ class Alumnos_encargados extends Model
         return Alumnos_encargados::find($id);
     }
 
-    /* public function encargado(){
-        return $this->belongsTo('App\Models\Encargado');
+    public function encargado(){
+        return $this->hasMany('App\Models\Encargado');
     }
     public function alumnos(){
         return $this->hasMany('App\Models\Alumno');
-    } */
+    }
 }

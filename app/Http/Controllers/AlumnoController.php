@@ -171,12 +171,12 @@ class AlumnoController extends Controller
     public function show($id)
     {
         $alumno = Alumno::find($id);
-        
+
 
         if (!$alumno) {
             return response()->json(['error' => 'Alumno no encontrado'], 404);
         }
-    
+
         $datosAlumno = [
             'nombre' => $alumno->nombre1 .' '. $alumno->nombre2 .' '. $alumno->nombre3.' '.$alumno->apellido1 .' '.$alumno->apellido2,
             'cui' => $alumno ->cui,
@@ -229,17 +229,23 @@ class AlumnoController extends Controller
 
     public static function generarPDF()
     {
-        $encargado = Encargado::orderByDesc('id')->limit(1)->get();
-        $anio = Carbon::now()->format('Y');
-        foreach ($encargado as $item){
-            $registro = Alumnos_encargados::where('encargado_id',$item->id)->get();
+        try{
+            $encargado = Encargado::orderByDesc('id')->limit(1)->get();
+            $anio = Carbon::now()->format('Y');
+            $alumno = null;
+            foreach ($encargado as $item){
+                $registro = Alumnos_encargados::where('encargado_id',$item->id)->get();
+            }
+            foreach ($registro as $item){
+                $alumno = Alumno::where('id',$item->alumno_id)->get();
+            }
+            $formularios = Formulario::all();
+            return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
+
+        }catch(\Exception $e){
+            $errorMessage = $e->getMessage();
+            return back()->withInput()->withErrors(['error' => $errorMessage]);
         }
-        foreach ($registro as $item){
-            $alumno = Alumno::where('id',$item->alumno_id)->get();
-        }
-        $formularios = Formulario::all();
-        return $alumno;
-        return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
     }
 
     public function acciones(){

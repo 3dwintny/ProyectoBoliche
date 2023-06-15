@@ -164,7 +164,7 @@ class AtletaController extends Controller
      */
     public function create($id)
     {
-        $hoy = Carbon::now(); 
+        $hoy = Carbon::now();
         $centro=Centro::all();
         $entrenador= Entrenador::All();
         $alumnos = Alumno::all();
@@ -183,7 +183,7 @@ class AtletaController extends Controller
     public function creacion($id){
         $centro=Centro::where('estado','activo')->get(['id','nombre']);
         $entrenador= Entrenador::where('estado','activo')->get(['id','nombre1','apellido1']);
-        $alumno = Alumno::find($id);     
+        $alumno = Alumno::find($id);
         $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
         $etapa=Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
         $deporteadaptado = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
@@ -196,7 +196,7 @@ class AtletaController extends Controller
         return view('atletas.create',compact('alumno','centro','entrenador','categoria','etapa',
         'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','hoy'));
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -205,7 +205,7 @@ class AtletaController extends Controller
      */
     public function store(Request $request,$id)
     {
-        Alumno::find(decrypt($id))->update(['estado' => 'Inscrito']); 
+        Alumno::find(decrypt($id))->update(['estado' => 'Inscrito']);
         if($request->deporte_adaptado_id==1){
             $depAdaptado = $request->deporte_adaptado_id;
         }
@@ -219,9 +219,9 @@ class AtletaController extends Controller
         else{
             $otroPrograma = decrypt($request->otro_programa_id);
         }
-        $atletas = Atleta::find($id);
+        //$atletas = Atleta::find(decrypt($id));
         $prt = decrypt($request->prt_id);
-        $atletas->fill([
+        $atletas = new Atleta([
             'fecha_ingreso'=> $request->fecha_ingreso,
             'adaptado'=> $request->adaptado,
             'estado_civil' => $request->estado_civil,
@@ -244,7 +244,7 @@ class AtletaController extends Controller
         ]);
         $atletas->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>4]);
-        $control->save(); 
+        $control->save();
         return redirect()->action([AtletaController::class, 'index']);
     }
 
@@ -322,24 +322,7 @@ class AtletaController extends Controller
         $atletas = Atleta::find(decrypt($id));
         $prt = decrypt($request->prt_id);
         $atletas->fill([
-            'fecha_ingreso'=> $request->fecha_ingreso,
-            'adaptado'=> $request->adaptado,
-            'estado_civil' => $request->estado_civil,
-            'etnia' => $request->etnia,
-            'escolaridad' => $request->escolaridad,
-            'centro_id' => decrypt($request->centro_id),
-            'entrenador_id' => decrypt($request->entrenador_id),
-            'categoria_id' => decrypt($request->categoria_id),
-            'etapa_deportiva_id' => decrypt($request->etapa_deportiva_id),
-            'deporte_id' => decrypt($request->deporte_id),
-            'deporte_adaptado_id' => $depAdaptado,
-            'otro_programa_id' => $otroPrograma,
-            'linea_desarrollo_id' => decrypt($request->linea_desarrollo_id),
-            'modalidad_id' => decrypt($request->modalidad_id),
-            'prt_id' => $prt,
-            'anios' => $request->anios,
-            'meses' => $request->meses,
-            'federado' => $request->federado
+            $request->all()
         ]);
         $atletas->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
@@ -422,7 +405,7 @@ class AtletaController extends Controller
         ]);
         $atleta->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
-        $control->save(); 
+        $control->save();
         return redirect('home');
     }
 
@@ -456,7 +439,7 @@ class AtletaController extends Controller
         $control->save();
         return redirect()->action([AtletaController::class,'index'])->with('message','Atleta eliminado');
     }
-    
+
     public function acciones(){
         $control = Control::where('tabla_accion_id',4)->with('usuario')->paginate(5);
         return view('Atletas.control',compact('control'));

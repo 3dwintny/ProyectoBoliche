@@ -404,6 +404,9 @@ class TerapiaController extends Controller
         if($request->idAtleta!=null){
             $paciente = Atleta::where('id',decrypt($request->idAtleta))->get();
         }
+        else{
+            $paciente = array();
+        }
         $nombre = "";
         if(count($alumno)>0){
             $atleta = Atleta::where('alumno_id',$alumno[0]->id)->get();

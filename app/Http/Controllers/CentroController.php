@@ -158,7 +158,7 @@ class CentroController extends Controller
         $horario = Horario::find(decrypt($id));
         $centro = Centro::find(decrypt($request->e));
         $centro->horarios()->detach($horario->id);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR HORARIO', 'tabla_accion_id'=>6]);
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR HR', 'tabla_accion_id'=>6]);
         $control->save();
         return redirect()->back();
     }
@@ -213,7 +213,7 @@ class CentroController extends Controller
                 ];
                 DB::table('centro_horario')->insert($informacion);
             }
-            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR AGREGAR HORARIO', 'tabla_accion_id'=>6]);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'AGREGAR HR', 'tabla_accion_id'=>6]);
             $control->save();
             return redirect()->action([CentroController::class,'index']);
         }

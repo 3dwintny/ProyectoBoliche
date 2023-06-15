@@ -82,9 +82,9 @@
                                         </div>
                                         <div class="col-md-12 mb-2">
                                             <div class="form-floating">
-                                                <input class="form-control text-dark" placeholder="{{ __('CUI') }}" id="formIns" type="text"
+                                                <input class="form-control text-dark" placeholder="{{ __('CUI') }}" id="cui" type="text"
                                                 wire:model="cui">
-                                                <label for="formIns">CUI</label>
+                                                <label for="cui">CUI</label>
                                                 @error('cui') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
@@ -188,7 +188,7 @@
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
                                                 <input class="form-control text-dark" id="formIns" type="file"
-                                                wire:model="foto">
+                                                wire:model="foto" accept=".jpg, .jpeg, .png">
                                                 <label for="formIns">Fotografía:</label>
                                                 @error('foto') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>

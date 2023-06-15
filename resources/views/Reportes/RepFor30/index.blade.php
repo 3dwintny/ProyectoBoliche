@@ -17,6 +17,7 @@
     <div class="pb-4 pt-5 pt-md-3">
         <div class="card-body">
             <form action="{{route('buscar')}}" role="form" method="GET">
+                @csrf
                 <div class="row">
                   <div class="col-md-4 mb-2">
                     <div class="form-floating">
@@ -55,7 +56,7 @@
         </div>
         
         <div class="container">
-                <form method="GET" action="{{route('asistenciasPDF')}}" enctype="multipart/form-data" role="form">
+                <form method="GET" action="{{route('asistenciasPDF')}}" enctype="multipart/form-data" role="form" target="_blank">
                     @csrf
                     <div class="row">
                         <div class="col-md-4 mb-2">
@@ -132,7 +133,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{$atleta->appends(['mes'=>$obtenerMes,'anio'=>$obtenerAnio])->links('vendor.pagination.custom')}}
+                    {{-- {{$atleta->appends(['mes'=>$obtenerMes,'anio'=>$obtenerAnio])->links('vendor.pagination.custom')}} --}}
                 </div>
             </div>
         </div>
