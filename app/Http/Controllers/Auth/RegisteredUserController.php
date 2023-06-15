@@ -43,7 +43,7 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        $roles = $_POST['roles'];
+        $roles = decrypt($request->roles);
         $correo = $_POST['email'];
         switch($roles){
             case 1:

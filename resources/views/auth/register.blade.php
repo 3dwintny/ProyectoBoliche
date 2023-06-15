@@ -67,20 +67,17 @@
                                     <input class="form-control" placeholder="{{ __('Confirmar Contraseña') }}" type="password" name="password_confirmation" required>
                                 </div>
                             </div>
-
-                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                                <div class="input-group input-group-alternative mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="ni ni-single-02"></i></span>
-                                    </div>
-                                    <select class="form-control" name="roles" id="roles" required autofocus>
-                                    <option selected disabled value="">Tipo de usuario</option>
-                                    @foreach ($roles as $item){
-                                    <option value="{{encrypt($item->id)}}">{{$item->name}}</option>
-                                            }
-                                    @endforeach
-                                    </select>
+                            <div class="input-group input-group-alternative mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                                 </div>
+                                <select class="form-control" name="roles" id="roles" required autofocus>
+                                <option selected disabled value="">Tipo de usuario</option>
+                                @foreach ($roles as $item)
+                                    <option value="{{encrypt($item->id)}}">{{$item->name}}</option>
+                                @endforeach
+                                </select>
+                            </div>
                             <div class="text-center">
                                 <button type="submit" class="btn" style="background-color:#fba313;">{{ __('Crear Cuenta') }}</button>
                             </div>
