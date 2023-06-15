@@ -133,7 +133,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                    {{$atleta->appends(['mes'=>$obtenerMes,'anio'=>$obtenerAnio])->links('vendor.pagination.custom')}}
+                    {{-- {{$atleta->appends(['mes'=>$obtenerMes,'anio'=>$obtenerAnio])->links('vendor.pagination.custom')}} --}}
                 </div>
             </div>
         </div>
