@@ -2,7 +2,8 @@
 
 @section('content')
 
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
@@ -70,26 +71,32 @@
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input type="tel" name="celular"  id="celular" class="form-control text-dark" aria-describedby="basic-addon2" value="{{$entrenador->celular}}" placeholder="{{ __('Celular') }}" pattern="[0-9]{4}[-][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
-                                        <label for="celular">Celular</label>
+                                      <input type="tel" name="celular" id="celular" class="form-control text-dark @error('celular') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" value="{{ $entrenador->celular }}" pattern="[0-9]{4}[ -][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                      <label for="celular">Celular</label>
+                                      @error('celular')
+                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                      @enderror
+                                    </div>
+                                </div>                                  
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-floating">
+                                      <input type="tel" name="telefono_casa" id="telefono_casa" class="form-control text-dark @error('telefono_casa') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono de casa') }}" value="{{ $entrenador->telefono_casa }}" pattern="[0-9]{4}[ -][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                      <label for="telefono_casa">Teléfono de casa</label>
+                                      @error('telefono_casa')
+                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                      @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input type="tel" name="telefono_casa"  id="telefono_casa" class="form-control text-dark" aria-describedby="basic-addon2" value="{{$entrenador->telefono_casa}}" placeholder="{{ __('Teléfono de casa') }}" pattern="[0-9]{4}[-][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
-                                        <label for="telefono_casa">Teléfono de Casa</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                    <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="text" name="cui" value="{{$entrenador->cui}}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="text" name="cui" value="{{$entrenador->cui}}" readonly>
                                         <label for="cui">CUI</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
                                         <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Pasaporte') }}" id="pasaporte" type="text" name="pasaporte" value="{{$entrenador->pasaporte}}">
-                                        <label for="celular">Pasaporte</label>
+                                        <label for="pasaporte">Pasaporte</label>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
@@ -106,7 +113,7 @@
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo') }}" id="correo" type="email" name="correo" value="{{$entrenador->correo}}">
+                                        <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo') }}" id="correo" type="email" name="correo" value="{{$entrenador->correo}}" required>
                                         <label for="correo">Correo electrónico</label>
                                     </div>
                                 </div>

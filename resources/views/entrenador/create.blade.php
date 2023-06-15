@@ -65,14 +65,20 @@
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input type="tel" name="celular"  id="celular" class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" value="{{old('celular')}}" pattern="[0-9]{4}[ -][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
-                                        <label for="celular">Celular</label>
+                                      <input type="tel" name="celular" id="celular" class="form-control text-dark @error('celular') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" value="{{ old('celular') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                      <label for="celular">Celular</label>
+                                      @error('celular')
+                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                      @enderror
                                     </div>
-                                </div>
+                                </div>                                  
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                        <input type="tel" name="telefono_casa"  id="telefono_casa" class="form-control text-dark" aria-describedby="basic-addon2" value="{{ old('telefono_casa') }}" placeholder="{{ __('Teléfono de casa') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
-                                        <label for="telefono_casa">Teléfono de Casa</label>
+                                      <input type="tel" name="telefono_casa" id="telefono_casa" class="form-control text-dark @error('telefono_casa') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono de casa') }}" value="{{ old('telefono_casa') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                      <label for="telefono_casa">Teléfono de casa</label>
+                                      @error('telefono_casa')
+                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                      @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
@@ -81,46 +87,37 @@
                                                 <input class="form-control {{ $errors->has('cui') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="text" name="cui" value="{{ old('cui') }}" required>
                                                 <label for="cui">CUI</label>
                                             </div>
-                                        
                                         @if ($errors->has('cui'))
-                                            <span class="invalid-feedback" style="display: block;" role="alert">
-                                                <strong>{{ $errors->first('cui') }}</strong>
-                                            </span>
+                                            <div class="invalid-tooltip">{{ $errors->first('cui') }}</div>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
                                         <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Pasaporte') }}" id="pasaporte" type="text" name="pasaporte" value="{{ old('pasaporte') }}">
-                                        <label for="celular">Pasaporte</label>
+                                        <label for="pasaporte">Pasaporte</label>
                                     </div>
                                 </div>
-
-
-
                                 <div class="col-md-6 mb-2">
                                     <div class="input-group mb-2">
                                         <span class="input-group-text" id="inputGroup-sizing-sm">Fecha Nacimiento</span>
-                                        <input class="form-control text-dark" type="date" name="fecha_nacimiento" id="fecha_nacimiento" required>
+                                        <input class="form-control text-dark" type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{old('fecha_nacimiento')}}" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="input-group mb-2">
                                         <span class="input-group-text" id="inputGroup-sizing-sm">Edad</span>
-                                        <input class="form-control text-dark" type="text" name="edad" aria-label="edad" id="_edad" value="" aria-describedby="basic-addon1" readonly>
+                                        <input class="form-control text-dark" type="text" name="edad" aria-label="edad" id="_edad" value="" aria-describedby="basic-addon1" value="{{old('edad')}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-group{{ $errors->has('correo') ? ' has-danger' : '' }}">
-                                            <div class="form-floating">
-                                                <input class="form-control {{ $errors->has('correo') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo') }}" id="correo" type="email" name="correo" value="{{ old('correo') }}" required>
-                                                <label for="correo">Correo Electrónico</label>
-                                            </div>
-                                        
+                                        <div class="form-floating">
+                                            <input class="form-control {{ $errors->has('correo') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo electrónico') }}" id="correo" type="email" name="correo" value="{{ old('correo') }}" required>
+                                            <label for="correo">Correo electrónico</label>
+                                        </div>
                                         @if ($errors->has('correo'))
-                                            <span class="invalid-feedback" style="display: block;" role="alert">
-                                                <strong>{{ $errors->first('correo') }}</strong>
-                                            </span>
+                                            <div class="invalid-tooltip">{{ $errors->first('correo') }}</div>
                                         @endif
                                     </div>
                                 </div>

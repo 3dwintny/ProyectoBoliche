@@ -22,7 +22,6 @@
                     <fieldset class="card-body bg-light">
                         <div class="form-group">
                             <div class="card">
-
                                 <div class="card-header bg-light mb-2">
                                     <div class="row justify-content-center">
                                         <div class="col-md-10 mb-3">
@@ -30,7 +29,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="card-body bg-light">
                                     <h2 class="mb-2">Información personal</h2>
                                     <div class="row">
@@ -76,7 +74,6 @@
                                                         <input class="form-control {{ $errors->has('colegiado') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Número de colegiado') }}" id="colegiado" type="text" name="colegiado" value="{{ old('colegiado') }}" required>
                                                         <label for="colegiado">Número de colegiado</label>
                                                     </div>
-                                        
                                                 @if ($errors->has('colegiado'))
                                                     <span class="invalid-feedback" style="display: block;" role="alert">
                                                         <strong>{{ $errors->first('colegiado') }}</strong>
@@ -85,9 +82,12 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
-                                            <div class="form-floating mb-3">
-                                                <input type="tel" name="telefono"  id="telefono" class="form-control text-dark" aria-describedby="basic-addon2" value="{{ old('telefono') }}" placeholder="{{ __('Teléfono') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
-                                                <label for="telefono">Teléfono</label>
+                                            <div class="form-floating">
+                                              <input type="tel" name="telefono" id="telefono" class="form-control text-dark @error('telefono') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono') }}" value="{{ old('telefono') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                              <label for="telefono">Teléfono</label>
+                                              @error('telefono')
+                                                <div class="invalid-tooltip">{{ $message }}</div>
+                                              @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-2">

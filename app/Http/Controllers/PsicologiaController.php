@@ -46,6 +46,7 @@ class PsicologiaController extends Controller
         $request->validate([
             'correo'=>['unique:psicologia'],
             'colegiado'=>['unique:psicologia'],
+            'telefono' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/'
         ]);
         $psicologo = new Psicologia([
             'nombre1' => $request->nombre1,
@@ -99,6 +100,9 @@ class PsicologiaController extends Controller
     public function update(Request $request, $id)
     {
         $psicologo = Psicologia::find(decrypt($id));
+        $request->validate([
+            'telefono' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/'
+        ]);
         $psicologo ->fill([
             'nombre1' => $request->nombre1,
             'nombre2' => $request->nombre2,
@@ -144,6 +148,9 @@ class PsicologiaController extends Controller
     }
 
     public function actualizar(Request $request){
+        $request->validate([
+            'telefono' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/'
+        ]);
         $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
         $psicologo = Psicologia::find($psicologos[0]->id);
         $psicologo->fill($request->all());
