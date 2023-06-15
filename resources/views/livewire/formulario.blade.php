@@ -518,7 +518,7 @@
                         <table class="table">
 
                             <tr>
-                                <td colspan="2" class="table-danger">
+                                <td colspan="2" class="table-warning">
                                     <strong>Datos del preinscrito</strong>
                                 </td>
                             </tr>
@@ -633,7 +633,7 @@
 
                             @foreach($primernombrep as $indice => $value )
                             <tr>
-                                <td colspan="2" class="table-danger">
+                                <td colspan="2" class="table-warning">
                                     <strong>Datos de encargados</strong>
                                 </td>
                             </tr>
@@ -688,7 +688,7 @@
                             @endforeach
                         </table>
                         <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(2)">Atras</button>
-                        <button class="submit btn btn-outline-success" wire:click="submitForm" onclick=window.location='{{ route('ficha-PDF') }}' type="button">Finalizar</button>
+                        <button class="submit btn btn-outline-success" wire:click="submitForm" onclick=window.location='{{ route('ficha-PDF')}' type="button">Finalizar</button>
                     </div>
                 </div>
             </div>
