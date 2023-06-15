@@ -399,17 +399,25 @@ class TerapiaController extends Controller
     }
 
     //Función  que muestra las tareas pendientes de cada atleta
-    public function tareaPendiente(){
+    public function tareaPendiente(Request $request){
         $alumno = Alumno::where('correo',auth()->user()->email)->get();
+        if($request->idAtleta!=null){
+            $paciente = Atleta::where('id',decrypt($request->idAtleta))->get();
+        }
+        $nombre = "";
         if(count($alumno)>0){
             $atleta = Atleta::where('alumno_id',$alumno[0]->id)->get();
             $tarea = Terapia::where('estado_tarea','pendiente')->where('atleta_id',$atleta[0]->id)->get();
+        }
+        else if(count($paciente)>0){
+            $tarea = Terapia::where('estado_tarea','pendiente')->where('atleta_id',$paciente[0]->id)->get();
+            $nombre = " del atleta ".$request->nombreAtleta;
         }
         else{
             $atleta = Atleta::where('alumno_id',0)->get();
             $tarea = Terapia::where('estado_tarea','pendiente')->where('atleta_id',0)->get();
         }
-        return view('Atletas.pendientes',compact('tarea'));
+        return view('Atletas.pendientes',compact('tarea','nombre'));
     }
 
     public function acciones(){

@@ -1,22 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-2 pt-5 pt-md-10">
-  <div class="container-fluid">
-    <div class="header-body">
-      <!-- Card stats -->
-      <div class="row">
-        <div class="col-xl-6 col-lg-6">
-<<<<<<< HEAD
-          <h1 class="text-white">Alergia</h1>
-=======
-          <h1 class="text-white">Alergias</h1>
->>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.headers.cards', ['texto' => 'Alergias'])
 <div class="container">
 <div class="pb-5 pt-5 pt-md-2">
   <div class="">

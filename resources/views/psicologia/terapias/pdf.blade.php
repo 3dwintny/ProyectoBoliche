@@ -170,64 +170,124 @@
             </thead>
             <tbody class="tamanioFuente60 textoCentrado">
                 <tr>
-                    <td>Conciencia Corporal</td>
-                    <td>{{$terapia->conciencia_corporal}}</td>
+                    <td style="background-color: white;">Conciencia Corporal</td>
+                    @if($terapia->conciencia_corporal==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->conciencia_corporal}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Dominio Corporal</td>
-                    <td>{{$terapia->dominio_corporal}}</td>
+                    <td style="background-color: white;">Dominio Corporal</td>
+                    @if($terapia->dominio_corporal==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->dominio_corporal}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Dominio de Respiración</td>
-                    <td>{{$terapia->dominio_respiracion}}</td>
+                    <td style="background-color: white;">Dominio de Respiración</td>
+                    @if($terapia->dominio_respiracion==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->dominio_respiracion}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Diálogo Interno</td>
-                    <td>{{$terapia->dialogo_interno}}</td>
+                    <td style="background-color: white;">Diálogo Interno</td>
+                    @if($terapia->dialogo_interno==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->dialogo_interno}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Atención</td>
-                    <td>{{$terapia->atencion}}</td>
+                    <td style="background-color: white;">Atención</td>
+                    @if($terapia->atencion==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->atencion}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Concentración</td>
-                    <td>{{$terapia->concentracion}}</td>
+                    <td style="background-color: white;">Concentración</td>
+                    @if($terapia->concentracion==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->concentracion}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Motivación</td>
-                    <td>{{$terapia->motivacion}}</td>
+                    <td style="background-color: white;">Motivación</td>
+                    @if($terapia->motivacion==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->motivacion}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Confianza</td>
-                    <td>{{$terapia->confianza}}</td>
+                    <td style="background-color: white;">Confianza</td>
+                    @if($terapia->confianza==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->confianza}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Activación</td>
-                    <td>{{$terapia->activacion}}</td>
+                    <td style="background-color: white;">Activación</td>
+                    @if($terapia->activacion==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->activacion}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Relajación</td>
-                    <td>{{$terapia->relajacion}}</td>
+                    <td style="background-color: white;">Relajación</td>
+                    @if($terapia->relajacion==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->relajacion}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Estrés</td>
-                    <td>{{$terapia->estres}}</td>
+                    <td style="background-color: white;">Estrés</td>
+                    @if($terapia->estres==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->estres}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Ansiedad Cognitiva</td>
-                    <td>{{$terapia->ansiedad_cognitiva}}</td>
+                    <td style="background-color: white;">Ansiedad Cognitiva</td>
+                    @if($terapia->ansiedad_cognitiva==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->ansiedad_cognitiva}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Ansiedad Física</td>
-                    <td>{{$terapia->ansiedad_fisica}}</td>
+                    <td style="background-color: white;">Ansiedad Física</td>
+                    @if($terapia->ansiedad_fisica==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->ansiedad_fisica}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Miedo</td>
-                    <td>{{$terapia->miedo}}</td>
+                    <td style="background-color: white;">Miedo</td>
+                    @if($terapia->miedo==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->miedo}}</td>
+                    @endif
                 </tr>
                 <tr>
-                    <td>Frustración</td>
-                    <td>{{$terapia->estres}}</td>
+                    <td style="background-color: white;">Frustración</td>
+                    @if($terapia->frustracion==null)
+                        <td style="background-color: white;">-----</td>
+                    @else
+                        <td style="background-color: white;">{{$terapia->frustracion}}</td>
+                    @endif
                 </tr>
             </tbody>
         </table>

@@ -6,22 +6,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
-<div class="header bg-dark pb-7 pt-5 pt-md-6">
-    <div class="container-fluid">
-        <div class="header-body">
-            <!-- Card stats -->
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-<<<<<<< HEAD
-                    <h1 class="text-white">Alergia</h1>
-=======
-                    <h1 class="text-white">Alergias</h1>
->>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@include('layouts.headers.cards', ['texto' => 'Alergias'])
 <div class="container-fluid mt--6">
     <div class="header-body text-center  mb-7">
         <div class="row justify-content-center">
@@ -29,32 +14,15 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-<<<<<<< HEAD
-                            <h2> Registrar Nueva Alergia </h2>
-=======
                             <h2>Registrar Nueva Alergia</h2>
->>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
                         </strong>
                     </div>
-<<<<<<< HEAD
-                <form method="post" role="form" enctype="multipart/form-data" action="{{route('Alergia.store')}}">
-                    @csrf
-                    <div class="form-group">
-                        <div>Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{$hoy}}" readonly>
-                    </div>
-                    <div class="card">
-                        <div class="card-body bg-light">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="descripcion" placeholder="Alergia" name="descripcion" required>
-                                <label for="descripcion">Alergia</label>
-=======
                 
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('alergia.store')}}">
                         @csrf
                         <div class="form-group">
                             <div>
                                 Fecha <input type="text" class=" container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{\Carbon\Carbon::parse($hoy)->format('d-m-Y')}}" readonly>
->>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
                             </div>
                         
                             <div class="card">
@@ -87,10 +55,4 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-</div>
-</div>
 @endsection
-=======
-@endsection
->>>>>>> 03e7a231be7f35737b46212c52a6ad402453e6df
