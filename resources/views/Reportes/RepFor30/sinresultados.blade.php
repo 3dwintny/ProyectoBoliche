@@ -16,7 +16,7 @@
 </div>
 <div class="pb-4 pt-5 pt-md-3">
     <div class="card-body">
-        <form method="POST" action="{{route('buscar')}}">
+        <form method="GET" action="{{route('buscar')}}">
             @csrf
             <div class="row mb-2">
                 <div class="col-3">
@@ -40,6 +40,9 @@
                 </div>
                 <div class="col-3">
                     <input class="btn btn-outline-info" type="submit" value="Buscar">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <button type="button" class="btn btn-light" onclick="window.location='{{route('asistencias.index')}}'">Cancelar búsqueda</button>
                 </div>
             </div>
         </form>
