@@ -6,7 +6,6 @@ use App\Models\User;
 use App\Models\Alumno;
 use App\Models\Entrenador;
 use App\Models\Psicologia;
-use App\Models\Tipo_Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
@@ -15,10 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Console\View\Components\Alert;
-use Illuminate\Support\Facades\DB;
-use Validator;
-use Input\Input;
 
 class RegisteredUserController extends Controller
 {
