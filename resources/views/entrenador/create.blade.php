@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                      <input type="tel" name="celular" id="celular" class="form-control text-dark @error('celular') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" value="{{ old('celular') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                      <input type="tel" name="celular" id="celular" class="form-control text-dark @error('celular') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Celular') }}" value="{{ old('celular') }}" pattern="[0-9]{4}[-][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
                                       <label for="celular">Celular</label>
                                       @error('celular')
                                         <div class="invalid-tooltip">{{ $message }}</div>
@@ -74,7 +74,7 @@
                                 </div>                                  
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
-                                      <input type="tel" name="telefono_casa" id="telefono_casa" class="form-control text-dark @error('telefono_casa') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono de casa') }}" value="{{ old('telefono_casa') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                      <input type="tel" name="telefono_casa" id="telefono_casa" class="form-control text-dark @error('telefono_casa') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono de casa') }}" value="{{ old('telefono_casa') }}" pattern="[0-9]{4}[-][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
                                       <label for="telefono_casa">Teléfono de casa</label>
                                       @error('telefono_casa')
                                         <div class="invalid-tooltip">{{ $message }}</div>

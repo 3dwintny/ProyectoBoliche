@@ -67,7 +67,7 @@ class EntrenadorController extends Controller
             'cui'=>['unique:entrenador'],
             'correo'=>['unique:entrenador'],
             'celular' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/',
-            'telefono_casa' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/'
+            'telefono_casa' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
         ]);
         $entrenador = new Entrenador([
             'nombre1' => $request->nombre1,
@@ -174,7 +174,7 @@ class EntrenadorController extends Controller
         }
         $request->validate([
             'celular' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/',
-            'telefono_casa' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/'
+            'telefono_casa' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
         ]);
         $entrenador->fill([
             'nombre1' => $request->nombre1,

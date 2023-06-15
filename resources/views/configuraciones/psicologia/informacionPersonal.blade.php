@@ -79,7 +79,7 @@
                                         </div>                                 
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                              <input type="tel" name="telefono" id="telefono" class="form-control text-dark @error('telefono') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono') }}" value="{{ old('telefono') }}" pattern="[0-9]{4}[ -][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                              <input type="tel" name="telefono" id="telefono" class="form-control text-dark @error('telefono') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono') }}" value="{{ old('telefono') }}" pattern="[0-9]{4}[-][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
                                               <label for="telefono">Teléfono</label>
                                               @error('telefono')
                                                 <div class="invalid-tooltip">{{ $message }}</div>
