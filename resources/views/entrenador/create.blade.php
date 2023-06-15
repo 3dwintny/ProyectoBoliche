@@ -82,14 +82,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <div class="form-group{{ $errors->has('cui') ? ' has-danger' : '' }}">
-                                            <div class="form-floating">
-                                                <input class="form-control {{ $errors->has('cui') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="text" name="cui" value="{{ old('cui') }}" required>
-                                                <label for="cui">CUI</label>
-                                            </div>
-                                        @if ($errors->has('cui'))
-                                            <div class="invalid-tooltip">{{ $errors->first('cui') }}</div>
-                                        @endif
+                                    <div class="form-floating">
+                                      <input type="text" name="cui" id="cui" class="form-control text-dark @error('cui') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" value="{{ old('cui') }}">
+                                      <label for="cui">CUI</label>
+                                      @error('cui')
+                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                      @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
@@ -111,14 +109,12 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">
-                                    <div class="form-group{{ $errors->has('correo') ? ' has-danger' : '' }}">
-                                        <div class="form-floating">
-                                            <input class="form-control {{ $errors->has('correo') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo electrónico') }}" id="correo" type="email" name="correo" value="{{ old('correo') }}" required>
-                                            <label for="correo">Correo electrónico</label>
-                                        </div>
-                                        @if ($errors->has('correo'))
-                                            <div class="invalid-tooltip">{{ $errors->first('correo') }}</div>
-                                        @endif
+                                    <div class="form-floating">
+                                      <input type="email" name="correo" id="correo" class="form-control text-dark @error('correo') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Correo electrónico') }}" value="{{ old('correo') }}">
+                                      <label for="correo">Correo electrónico</label>
+                                      @error('correo')
+                                        <div class="invalid-tooltip">{{ $message }}</div>
+                                      @enderror
                                     </div>
                                 </div>
                                 <div class="col-md-6 mb-2">

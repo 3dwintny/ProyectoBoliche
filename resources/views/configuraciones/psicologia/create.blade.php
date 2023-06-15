@@ -69,16 +69,12 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
-                                            <div class="form-group{{ $errors->has('colegiado') ? ' has-danger' : '' }}">
-                                                    <div class="form-floating">
-                                                        <input class="form-control {{ $errors->has('colegiado') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Número de colegiado') }}" id="colegiado" type="text" name="colegiado" value="{{ old('colegiado') }}" required>
-                                                        <label for="colegiado">Número de colegiado</label>
-                                                    </div>
-                                                @if ($errors->has('colegiado'))
-                                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                                        <strong>{{ $errors->first('colegiado') }}</strong>
-                                                    </span>
-                                                @endif
+                                            <div class="form-floating">
+                                              <input type="number" name="colegiado" id="colegiado" class="form-control text-dark @error('colegiado') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Colegiado') }}" value="{{ old('colegiado') }}">
+                                              <label for="colegiado">Colegiado</label>
+                                              @error('colegiado')
+                                                <div class="invalid-tooltip">{{ $message }}</div>
+                                              @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
@@ -91,17 +87,12 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-2">
-                                            <div class="form-group{{ $errors->has('correo') ? ' has-danger' : '' }}">
-                                                    <div class="form-floating">
-                                                        <input class="form-control {{ $errors->has('correo') ? ' is-invalid' : '' }} text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Correo electrónico') }}" id="correo" type="email" name="correo" value="{{ old('correo') }}" required>
-                                                        <label for="correo">Correo electrónico</label>
-                                                    </div>
-                                                
-                                                @if ($errors->has('correo'))
-                                                    <span class="invalid-feedback" style="display: block;" role="alert">
-                                                        <strong>{{ $errors->first('correo') }}</strong>
-                                                    </span>
-                                                @endif
+                                            <div class="form-floating">
+                                              <input type="email" name="correo" id="correo" class="form-control text-dark @error('correo') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Correo electrónico') }}" value="{{ old('correo') }}">
+                                              <label for="correo">Correo electrónico</label>
+                                              @error('correo')
+                                                <div class="invalid-tooltip">{{ $message }}</div>
+                                              @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-2">
