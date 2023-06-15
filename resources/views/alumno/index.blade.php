@@ -74,7 +74,7 @@
         <div class="col-lg-5">
             <div class="container">
               <div class="blur-shadow-image mb-3">
-                <img class="w-100 rounded-3 shadow-lg"id="imgAlumno" alt="No se econtro ninguna fotografia">
+                <img class="w-100 rounded-3 shadow-lg" id="imgAlumno" alt="No se econtro ninguna fotografia">
               </div>
             </div>
         </div>
