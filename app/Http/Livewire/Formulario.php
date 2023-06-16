@@ -45,9 +45,9 @@ class Formulario extends Component
     public $successMessage = '';
     #Variables para los alumnos
     public $nombre1, $nombre2, $nombre3, $apellido1, $apellido2,
-    $cui, $fecha, $edad, $peso, $altura, $genero, $direccion, $telefono,
+    $cui, $fecha, $edad, $peso, $altura, $genero = 1, $direccion, $telefono,
     $celular, $correo, $contacto_emergencia, $foto,$fecha_fotografia, $estado,
-    $nit, $pasaporte, $alergia_id=1, $nacionalidad=1;
+    $nit, $pasaporte, $nacionalidad=1;
 
     #variables para ingreso de encargados / formulario de encargados
     public $primernombrep = [''], $segundonombrep = [''], $tercernombrep = [''], $primerapellidop = [''],
@@ -178,9 +178,17 @@ class Formulario extends Component
             'peso' => 'required | numeric',
             'altura' => 'required | numeric',
             'direccion' => 'required',
+            'genero' => 'requerid',
             'contacto_emergencia' => 'required',
             'correo' => 'required | email',
-            'foto' => 'required | image |max:2048'
+            'foto' => 'required | image |max:2048',
+            'nacionalidad' => 'requerid',
+            'contry' => 'required',
+            'city' => 'requerid',
+            'contryr' => 'required',
+            'cityr' => 'requerid',
+
+
         ],
         [
             'nombre1' => 'Este campo es requerido',
@@ -190,6 +198,7 @@ class Formulario extends Component
             'altura' => 'Este campo es requerido',
             'direccion' => 'Este campo es requerido',
             'contacto_emergencia' => 'Este campo es requerido',
+            'correo' => 'Este campo es requerido',
             'correo' => 'Este campo es requerido',
             'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
             'foto' => 'Este campo es requerido',
@@ -228,7 +237,6 @@ class Formulario extends Component
             'estado'=> 'Pendiente',
             'nit'=> $this->nit,
             'pasaporte'=> $this->pasaporte,
-            'alergia_id'=> $this->alergia_id,
             'nacionalidad_id'=> $this->nacionalidad,
             'departamento_id'=> $this->country,
             'municipio_id'=> $this->city,
@@ -400,8 +408,7 @@ class Formulario extends Component
         #Alumnos
         $nacionalidades = Nacionalidad::all();
         $formularios = Formulario::all();
-        $alergia = Alergia::all();
 
-        return view('livewire.formulario', compact("parentezcos","nacionalidades","formularios", "alergia"));
+        return view('livewire.formulario', compact("parentezcos","nacionalidades","formularios"));
     }
 }

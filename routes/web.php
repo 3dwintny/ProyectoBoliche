@@ -12,7 +12,6 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\AtletaController;
 use App\Http\Controllers\CentroController;
 use App\Http\Controllers\EDG272Controller;
-use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\DeporteController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\TerapiaController;
@@ -86,14 +85,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Ruta administracion
     Route::resource('administradores',AdministracionController::class);
-    //Ruta alergias
-    Route::resource('alergias',AlergiaController::class);
 	//Rutas Asistencia
     Route::get('asistencia-atleta',[AsistenciaController::class, 'asistenciaIndividual'])->name('asistenciaIndividual');
     Route::get('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
     Route::resource('asistencias',AsistenciaController::class);
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
-	Route::resource('alergia',AlergiaController::class);
     //Ruta Reporte EDG31
     Route::resource('edg-31',EDG31Controller::class);
     //Rutas Atletas
@@ -214,7 +210,6 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('us', function () {return view('configuraciones.us');})->name('us');
     Route::get('otros', function () {return view('configuraciones.otros');})->name('otros');
     Route::get('seguridad', function () {return view('configuraciones.seguridad');})->name('seguridad');
-    Route::get('seguridad/alergias',[AlergiaController::class,'acciones'])->name('accionesAlergia');
     Route::get('seguridad/atletas',[AtletaController::class,'acciones'])->name('accionesAtletas');
     Route::get('seguridad/asistencia',[AsistenciaController::class,'acciones'])->name('accionesAsistencia');
     Route::get('seguridad/alumnos',[AlumnoController::class,'acciones'])->name('accionesAlumno');
@@ -246,8 +241,6 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('seguridad/usuarios',[UserController::class,'acciones'])->name('accionesUsuarios');
     Route::get('restaurar', function () {return view('configuraciones.restaurar');})->name('restaurar');
 
-    Route::get('restaurar/alergias',[AlergiaController::class,'eliminados'])->name('eliminadosAlergia');
-    Route::post('restaurandoAlergias',[AlergiaController::class,'restaurar'])->name('restaurandoAlergia');
 
     Route::get('restaurar/atletas',[AtletaController::class,'eliminados'])->name('eliminadosAtletas');
     Route::post('restaurandoAtletas',[AtletaController::class,'restaurar'])->name('restaurandoAtleta');

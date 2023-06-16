@@ -33,7 +33,6 @@ class Alumno extends Model
     'nit',
     'pasaporte',
     'encargado_id',
-    'alergia_id',
     'departamento_id',
     'municipio_id',
     'nacionalidad_id',
@@ -52,10 +51,6 @@ class Alumno extends Model
     }
     public function atletas(){
         return $this->hasMany('App\Models\Atleta');
-    }
-
-    public function alergia(){
-        return $this->belongsTo('App\Models\Alergia');
     }
 
     public function departamento(){
