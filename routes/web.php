@@ -62,7 +62,7 @@ Route::resource('/', FrontendController::class);
 Route::resource('alumnos',AlumnoController::class);
 Route::get('alumnos/{alumno}', [AlumnoController::class, 'show'])->name('alumnos.show');
 
-Route::get('ficha-PDF',[AlumnoController::class,'generarPDF'])->name('fichaPDF');
+Route::get('ficha-PDF',[AlumnoController::class,'generarPDF'])->name('ficha-PDF');
 //Route::get('Inscripcion', fuction () {return view('livewire/encargados-manager');});
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
