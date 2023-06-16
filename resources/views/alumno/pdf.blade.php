@@ -269,7 +269,7 @@
         </div>
         <div id="fotoAlumno">
             @foreach($alumno as $item)
-                <img src="storage/uploads/{{$item->foto}}" width="98%" height="98%">
+                <img src="uploads/alumnos/{{$item->foto}}" width="98%" height="98%">
             @endforeach
         </div>
     </div>
