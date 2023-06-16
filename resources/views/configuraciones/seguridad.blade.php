@@ -15,26 +15,6 @@
                         <div class="col-8">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Alergias
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-1 text-end">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('accionesAlergia') }}'">
-                                <i class="fa fa-fw fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4">
-            <div class="card bg-light">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <h5 class="font-weight-bolder mb-0">
                                     Atletas
                                 </h5>
                             </div>

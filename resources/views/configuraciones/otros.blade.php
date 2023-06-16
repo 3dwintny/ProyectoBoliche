@@ -15,32 +15,6 @@
                         <div class="col-7">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Alergias
-                                    <span class="text-success font-weight-bolder"></span>
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-2 text-center">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{route('alergia.create')}}'">
-                                <i class="fa fa-fw fa-light fa-plus"></i>
-                            </button>
-                        </div>
-                        <div class="col-2 text-center">
-                            <button type="button" class="btn btn-dark" onclick="window.location='{{ route('alergia.index') }}'">
-                                <i class="fa fa-fw fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4">
-            <div class="card bg-light">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-7">
-                            <div class="numbers">
-                                <h5 class="font-weight-bolder mb-0">
                                     Categorías
                                     <span class="text-success font-weight-bolder"></span>
                                 </h5>
