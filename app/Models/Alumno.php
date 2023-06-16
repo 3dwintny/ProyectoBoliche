@@ -31,6 +31,7 @@ class Alumno extends Model
     'fecha_fotografia',
     'estado',
     'nit',
+    'alergias',
     'pasaporte',
     'encargado_id',
     'departamento_id',

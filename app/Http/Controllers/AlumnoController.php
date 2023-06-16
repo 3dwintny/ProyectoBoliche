@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
-use App\Models\Alergia;
 use App\Models\Encargado;
 use App\Models\Formulario;
 use App\Models\Parentesco;
@@ -70,8 +69,7 @@ class AlumnoController extends Controller
         $nacionalidades = Nacionalidad::all();
         $parentezcos = Parentesco::all();
         $formularios = Formulario::all();
-        $alergia = Alergia::all();
-        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios", "alergia","anio"));
+        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios","anio"));
     }
 
     /**
@@ -143,7 +141,6 @@ class AlumnoController extends Controller
         }
         //$alumno->encargado_id = $request->input('encargado_id');
 
-        $alumno->alergia_id = $request->input('alergia_id');
         $alumno->departamento_id = $request->input('departamento_id');
         $alumno->municipio_id = $request->input('municipio_id');
         $alumno->nacionalidad_id = $request->input('nacionalidad_id');

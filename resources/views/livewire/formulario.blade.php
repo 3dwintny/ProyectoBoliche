@@ -138,11 +138,8 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <select class="form-control" placeholder="{{ __('Alergias') }}" id="formIns"  wire:model="alergia_id">
-                                                        @foreach ($alergia as $item)
-                                                        <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                                        @endforeach
-                                                </select>
+                                                <input type="text" class="form-control text-dark" id="formIns"
+                                                wire:model="alergias" name="alergias" placeholder="Alergias">
                                                 <label for="formIns">Alergia</label>
                                             </div>
                                         </div>
@@ -503,7 +500,7 @@
                                 </div>
                         @endforeach
                     </div>
-                    <input type="button" name="submit" wire:click.prevent="add({{$i}})" class="submit btn btn-outline-warning" value="+"   data-toggle="tooltip" data-original-title="Agregar Encargado"/>
+                    <input type="button" name="submit" wire:click.prevent="add({{ $i }})" class="submit btn btn-outline-warning" value="+" data-toggle="tooltip" data-original-title="Agregar Encargado" {{ $disabled ? 'disabled' : '' }}/>
                 </div>
                     </div>
                         <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(1)">Atras</button>
@@ -599,7 +596,7 @@
                             </tr>
                             <tr>
                                 <td>Alergia:</td>
-                                <td><strong>{{$alergia_id}}</strong></td>
+                                <td><strong>{{$alergias}}</strong></td>
                             </tr>
                             <tr>
                                 <td>Nacionalidad:</td>
@@ -630,62 +627,66 @@
                                 <td>Municipio de recidencia:</td>
                                 <td><strong>{{$cityr}}</strong></td>
                             </tr>
+                            @if($ex_encargados === 0)
 
-                            @foreach($primernombrep as $indice => $value )
-                            <tr>
-                                <td colspan="2" class="table-warning">
-                                    <strong>Datos de encargados</strong>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Primer nombre:</td>
-                                <td><strong>{{$primernombrep[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Segundo nombre:</td>
-                                <td><strong>{{$segundonombrep[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Tercer nombre:</td>
-                                <td><strong>{{$tercernombrep[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Primer apellido:</td>
-                                <td><strong>{{$primerapellidop[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Segundo apellido:</td>
-                                <td><strong>{{$segundoapellidop[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Apellido casada:</td>
-                                <td><strong>{{$apellidocasadap[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Dirección:</td>
-                                <td><strong>{{$direccionp[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Celular:</td>
-                                <td><strong>{{$celularp[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Telefono:</td>
-                                <td><strong>{{$telefonop[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Correo:</td>
-                                <td><strong>{{$correop[$indice]}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>DPI:</td>
-                                <td><strong>{{$dpip[$indice]}}</strong></td>
-                            </tr>
-                            {{-- <tr>
-                                <td>Parentezco:</td>
-                                <td><strong>{{$parentezcop[$indice]}}</strong></td>
-                            </tr> --}}
-                            @endforeach
+                            @else
+                                @foreach($primernombrep as $indice => $value )
+                                <tr>
+                                    <td colspan="2" class="table-warning">
+                                        <strong>Datos de encargados</strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Primer nombre:</td>
+                                    <td><strong>{{$primernombrep[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Segundo nombre:</td>
+                                    <td><strong>{{$segundonombrep[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Tercer nombre:</td>
+                                    <td><strong>{{$tercernombrep[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Primer apellido:</td>
+                                    <td><strong>{{$primerapellidop[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Segundo apellido:</td>
+                                    <td><strong>{{$segundoapellidop[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Apellido casada:</td>
+                                    <td><strong>{{$apellidocasadap[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección:</td>
+                                    <td><strong>{{$direccionp[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Celular:</td>
+                                    <td><strong>{{$celularp[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Telefono:</td>
+                                    <td><strong>{{$telefonop[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>Correo:</td>
+                                    <td><strong>{{$correop[$indice]}}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>DPI:</td>
+                                    <td><strong>{{$dpip[$indice]}}</strong></td>
+                                </tr>
+                                {{-- <tr>
+                                    <td>Parentezco:</td>
+                                    <td><strong>{{$parentezcop[$indice]}}</strong></td>
+                                </tr> --}}
+                                @endforeach
+                            @endif
+
                         </table>
                         <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(2)">Atras</button>
                         <button class="submit btn btn-outline-success" wire:click="submitForm" onclick=window.location='{{ route('ficha-PDF') }}' type="button">Finalizar</button>

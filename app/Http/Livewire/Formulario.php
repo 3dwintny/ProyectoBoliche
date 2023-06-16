@@ -3,7 +3,6 @@
 namespace App\Http\Livewire;
 
 use App\Models\Alumno;
-use App\Models\Alergia;
 use Livewire\Component;
 use App\Models\Encargado;
 use App\Models\Municipio;
@@ -17,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Livewire\Field;
 use App\Models\Alumnos_encargados;
-
+use App\Models\Parentezco;
 
 class Formulario extends Component
 {
@@ -47,7 +46,7 @@ class Formulario extends Component
     public $nombre1, $nombre2, $nombre3, $apellido1, $apellido2,
     $cui, $fecha, $edad, $peso, $altura, $genero = 1, $direccion, $telefono,
     $celular, $correo, $contacto_emergencia, $foto,$fecha_fotografia, $estado,
-    $nit, $pasaporte, $nacionalidad=1;
+    $nit, $pasaporte, $nacionalidad=1, $alergias = 'Sin alergias';
 
     #variables para ingreso de encargados / formulario de encargados
     public $primernombrep = [''], $segundonombrep = [''], $tercernombrep = [''], $primerapellidop = [''],
@@ -56,45 +55,73 @@ class Formulario extends Component
 
     public $updateMode = false;
     public $i = 1;
+    public $disabled = false;
+    #Validacion de encargados
+    public $ex_encargados = 1;
 
 
 
     public function firstStepSubmit()
     {
         #Validamos la informacion minima requerida por la base de datos
-        $this->validarAlumnos();
-        $this->currentStep = 2;
+      /*  try{
+
+       }catch(\Exception $e){
+        session()->flash('message', 'Ha ocurrido un error');
+       } */
+       $this->validarAlumnos();
+        if ($this->edad>= 18){
+            $this->currentStep = 3;
+            $this->ex_encargados= 0;
+        }else{
+            $this->currentStep = 2;
+        }
+
+
     }
 
 
     public function secondStepSubmit()
     {
-        $this->validarEncargados();
-        $this->currentStep = 3;
+        try{
+            $this->validarEncargados();
+            $this->currentStep = 3;
+        }catch(\Exception $e){
+            session()->flash('message', 'Ha ocurrido un error');
+        }
+
     }
 
 
     public function submitForm()
     {
-        try{
+        /* try{
             #Metodo para guardar encargados
-            $this->guardarEncargados();
-            $this->guardarAlumno();
-            $this->crearRelacionAlumnos();
-            //$this->successMessage = 'Datos ingresados correctamente';
-            $this->clearForm();
-            //$this->recet();
-            $this->currentStep = 1;
+
 
         }catch(\Exception $e){
-            $this-> addError('Error al ingresar datos, vuelva a intentarlo', $e->getMessage());
+            session()->flash('message', 'Ha ocurrido un error');
+        } */
+        if($this->ex_encargados === 1){
+                $this->guardarAlumno();
+                $this->crearRelacionAlumnos();
+                $this->guardarEncargados();
+        }else{
+                $this->guardarAlumno();
         }
+        $this->successMessage='Datos ingresados correctamente';
+        //$this->clearForm();
+        $this->currentStep = 1;
 
     }
 
     public function back($step)
     {
-        $this->currentStep = $step;
+        if($this->ex_encargados === 1){
+            $this->currentStep = $step;
+        }else{
+            $this->currentStep = 1;
+        }
     }
 
     public function clearForm()
@@ -178,15 +205,15 @@ class Formulario extends Component
             'peso' => 'required | numeric',
             'altura' => 'required | numeric',
             'direccion' => 'required',
-            'genero' => 'requerid',
+            'genero' => 'required',
             'contacto_emergencia' => 'required',
             'correo' => 'required | email',
             'foto' => 'required | image |max:2048',
-            'nacionalidad' => 'requerid',
-            'contry' => 'required',
-            'city' => 'requerid',
-            'contryr' => 'required',
-            'cityr' => 'requerid',
+            'nacionalidad' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'countryr' => 'required',
+            'cityr' => 'required',
 
 
         ],
@@ -203,6 +230,11 @@ class Formulario extends Component
             'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
             'foto' => 'Este campo es requerido',
             'fecha' => 'Este campo es requerido',
+            'country'=> 'Este campo es requerido',
+            'city'=> 'Este campo es requerido',
+            'countryr'=> 'Este campo es requerido',
+            'cityr'=> 'Este campo es requerido',
+
         ]
     );
 
@@ -236,6 +268,7 @@ class Formulario extends Component
             'fecha_fotografia'=> date("Y-m-d"),
             'estado'=> 'Pendiente',
             'nit'=> $this->nit,
+            'alergias'=> $this->alergias,
             'pasaporte'=> $this->pasaporte,
             'nacionalidad_id'=> $this->nacionalidad,
             'departamento_id'=> $this->country,
@@ -267,7 +300,8 @@ class Formulario extends Component
         $this->dpip[] = '';
         // $this->parentezcop = [];
         }else{
-            session()->flash('message', 'Solo puede ingresar un maximo de 3 encargados');
+            session()->flash('message', 'Solo puede ingresar un maximo de 2 encargados');
+            $this->disabled = true;
         }
     }
 
@@ -369,36 +403,38 @@ class Formulario extends Component
         /* Buscaremos crear la relacion que existe de alumnos a encargados
         como lo espesificamos arriba es que si se tiene a mas de 3 padres
         la relasion es de esa fomra */
-
        // $num_encargados = count($this->dpip);
+       try{
 
+            foreach($this->dpip as $dpien){
+                $this->oencargado = Encargado::all();
+                $this->oalumno = Alumno::all();
+                $obEncargado = $this->oencargado;
+                $obAlumno = $this->oalumno;
+                $id_alumno_encargado = new Alumnos_encargados;
 
-        foreach($this->dpip as $dpien){
-            $this->oencargado = Encargado::all();
-            $this->oalumno = Alumno::all();
-            $obEncargado = $this->oencargado;
-            $obAlumno = $this->oalumno;
-            $id_alumno_encargado = new Alumnos_encargados;
-
-            foreach($obAlumno as $alumn){
-                if($alumn->cui === $this->cui){
-                    $id_alumno_encargado->alumno_id = $alumn->id;
-                    session()->flash('message', 'Alumno');
-                }else{
-                    session()->flash('message', 'Ingreso la consulta Alumno');
+                foreach($obAlumno as $alumn){
+                    if($alumn->cui === $this->cui){
+                        $id_alumno_encargado->alumno_id = $alumn->id;
+                        session()->flash('message', 'Alumno');
+                    }else{
+                        session()->flash('message', 'Ingreso la consulta Alumno');
+                    }
                 }
-            }
-            foreach($obEncargado as $encarg){
-                if($encarg->dpi === $dpien){
-                    $id_alumno_encargado->encargado_id = $encarg->id;
-                    session()->flash('message', 'Encargado');
-                }else{
-                    session()->flash('message', 'Ingreso la consulta Encargado');
+                foreach($obEncargado as $encarg){
+                    if($encarg->dpi === $dpien){
+                        $id_alumno_encargado->encargado_id = $encarg->id;
+                        session()->flash('message', 'Encargado');
+                    }else{
+                        session()->flash('message', 'Ingreso la consulta Encargado');
+                    }
                 }
-            }
-
             $id_alumno_encargado->save();
-    }
+            }
+       }catch(\Exception $e){
+        $this-> addError('Error creando la relación', $e->getMessage());
+       }
+
 }
 
     public function render()
