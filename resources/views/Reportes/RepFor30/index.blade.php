@@ -89,7 +89,7 @@
                                 <th>Género</th>
                                 <th>Categoría</th>
                                 <th>Modalidad</th>
-                                @for ($i=0;$i<count($fechas);$i++) <th>{{Carbon\Carbon::parse($fechas[$i]->fecha)->format('d')}}</th>
+                                @for ($i=0;$i<count($fechas);$i++) <th>{{Carbon\Carbon::parse($fechas[$i])->format('d')}}</th>
                                     @endfor
                                     <th>Días Entrenados</th>
                                     <th>% de Asistencia</th>

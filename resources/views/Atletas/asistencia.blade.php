@@ -21,7 +21,7 @@
                 <table class="table">
                     <thead class="table-dark">
                         <tr>
-                            @for($i=0;$i<count($fechas);$i++) <th>{{Carbon\Carbon::parse($fechas[$i]->fecha)->format('d')}}</th> @endfor
+                            @for($i=0;$i<count($fechas);$i++) <th>{{Carbon\Carbon::parse($fechas[$i])->format('d')}}</th> @endfor
                             <th>Días Entrenados</th>
                             <th>% de Asistencia</th>
                         </tr>

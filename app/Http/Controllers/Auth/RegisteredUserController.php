@@ -39,37 +39,37 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $roles = decrypt($request->roles);
-        $correo = $_POST['email'];
+        $correo = $request->email;
         switch($roles){
             case 1:
                 $contadorC=0;
                 $contadorE=0;
                 $alumno = Alumno::where('correo',$correo)->get();
-                foreach($alumno as $a){
+                if(count($alumno)>0){
                     $contadorC++;
-                    if($a->estado=='Inscrito'){
+                    if($alumno[0]->estado=='Inscrito'){
                         $contadorE++;
                     }
                 }
+                
                 if($contadorC>0 && $contadorE>0){
                     $request->validate([
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'roles' => ['required','integer'],
+                        'roles' => ['required'],
                     ]);
 
                     $user = User::create([
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => decrypt($request->roles),
+                        'tipo_usuario_id' => $roles,
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
-                    $user->assignRole($request->input('roles'));
+                    $user->assignRole($roles);
                     return redirect(RouteServiceProvider::HOME);
-
                 }
                 else{
                     $contadorC = -1;
@@ -79,7 +79,7 @@ class RegisteredUserController extends Controller
             case 2:
                 $contadorC=0;
                 $entrenador = Entrenador::where('correo',$correo)->get();
-                foreach($entrenador as $e){
+                if(count($entrenador)>0){
                     $contadorC++;
                 }
                 if($contadorC>0){
@@ -87,7 +87,7 @@ class RegisteredUserController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'roles' => ['required','integer'],
+                        'roles' => ['required'],
                     ]);
 
                     $user = User::create([
@@ -109,7 +109,7 @@ class RegisteredUserController extends Controller
             case 3:
                 $contadorC=0;
                 $psicologo = Psicologia::where('correo',$correo)->get();
-                foreach($psicologo as $a){
+                if(count($psicologo) > 0){
                     $contadorC++;
                 }
                 if($contadorC>0){
@@ -117,7 +117,7 @@ class RegisteredUserController extends Controller
                         'name' => ['required', 'string', 'max:255'],
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-                        'roles' => ['required','integer'],
+                        'roles' => ['required'],
                     ]);
 
                     $user = User::create([
