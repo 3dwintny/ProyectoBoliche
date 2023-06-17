@@ -223,7 +223,7 @@
                                             <option value="{{encrypt($item->id)}}" {{$item->nombre == "Boliche" ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
-                                        <label for="estado_civil">Estado Civil</label>
+                                        <label for="estado_civil">FADN</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">

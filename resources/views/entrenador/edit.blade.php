@@ -222,7 +222,7 @@
                                             <option value="{{encrypt($item->id)}}" {{$item->id == $entrenador->deporte_id ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
-                                        <label for="estado_civil">Estado Civil</label>
+                                        <label for="estado_civil">FADN</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
