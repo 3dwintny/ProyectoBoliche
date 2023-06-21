@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
     Route::resource('asistencias',AsistenciaController::class);
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
+    Route::get('exportar',[AsistenciaController::class,'exportar'])->name('exportar');
     //Ruta Reporte EDG31
     Route::resource('edg-31',EDG31Controller::class);
     //Rutas Atletas

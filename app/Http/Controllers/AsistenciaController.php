@@ -13,7 +13,11 @@ use App\Models\Categoria;
 use App\Models\Control;
 use App\Models\Entrenador;
 use App\Models\Alumno;
-use Illuminate\Support\Arr;
+use App\Models\Centro;
+use App\Models\Departamento;
+use App\Models\Municipio;
+use App\Exports\AsistenciaExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AsistenciaController extends Controller
 {
@@ -47,7 +51,11 @@ class AsistenciaController extends Controller
             $obtenerMes = $datos['obtenerMes'];
             $obtenerAnio = $datos['obtenerAnio'];
             $mostrarMes = $datos['mostrarMes'];
-            return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes'));  
+            $entrenador = Entrenador::where('estado','activo')->get(['nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada']);
+            $centro_entrenamiento = Centro::where('estado','activo')->get('nombre');
+            $departamento = Departamento::where('estado','activo')->get(['id','nombre']);
+            $municipio = Municipio::where('estado','activo')->where('departamento_id',13)->get(['id','nombre','departamento_id']);
+            return view('Reportes.RepFor30.index',compact('departamento','atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes','entrenador','centro_entrenamiento','municipio'));
         }else{
             $mostrarMes = $this->mesLetras($ms->month);
             return view('Reportes.RepFor30.sinresultadosactual',compact('mostrarAnioReporte','mostrarMes'));
@@ -218,7 +226,11 @@ class AsistenciaController extends Controller
             $obtenerMes = $datos['obtenerMes'];
             $obtenerAnio = $datos['obtenerAnio'];
             $mostrarMes = $datos['mostrarMes'];
-            return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes'));
+            $entrenador = Entrenador::where('estado','activo')->get(['nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada']);
+            $centro_entrenamiento = Centro::where('estado','activo')->get('nombre');
+            $departamento = Departamento::where('estado','activo')->get(['id','nombre']);
+            $municipio = Municipio::where('estado','activo')->where('departamento_id',13)->get(['id','nombre','departamento_id']);
+            return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes','entrenador','centro_entrenamiento','departamento','municipio'));
         }
         else{
             $mostrarMes = $this->mesLetras($m);
@@ -253,12 +265,87 @@ class AsistenciaController extends Controller
         $promedio = $datos['promedio'];
         $obtenerAnio = $datos['obtenerAnio'];
         $mostrarMes = $datos['mostrarMes'];
+        $departamento = "";
+        switch(decrypt($request->departamento_id)){
+            case 1:
+                $departamento = "Alta Verapaz";
+                break;
+                case 2:
+                    $departamento = "Baja Verapaz";
+                    break;
+                case 3:
+                    $departamento = "Chimaltenango";
+                    break;
+                case 4:
+                    $departamento = "Chiquimula";
+                    break;
+                case 5:
+                    $departamento = "El Progreso";
+                    break;
+                case 6:
+                    $departamento = "Escuintla";
+                    break;
+                case 7:
+                    $departamento = "Guatemala";
+                    break;
+                case 8:
+                    $departamento = "Huehuetenango";
+                    break;
+                case 9:
+                    $departamento = "Izabal";
+                    break;
+                case 10:
+                    $departamento = "Jalapa";
+                     break;
+                case 11:
+                    $departamento = "Jutiapa";
+                    break;
+                case 12:
+                    $departamento = "Petén";
+                    break;
+                case 13:
+                    $departamento = "Quetzaltenango";
+                    break;
+                case 14:
+                    $departamento = "Quiché";
+                    break;
+                case 15:
+                    $departamento = "Retalhuleu";
+                    break;
+                case 16:
+                    $departamento = "Sacatepequéz";
+                    break;
+                case 17:
+                    $departamento = "San Marcos";
+                    break;
+                case 18:
+                    $departamento = "Santa Rosa";
+                    break;
+                case 19:
+                    $departamento = "Sololá";
+                    break;
+                case 20:
+                    $departamento = "Suchitepéquez";
+                    break;
+                case 21:
+                    $departamento = "Totonicapán";
+                    break;
+                case 22:
+                    $departamento = "Zacapa";
+                    break;
+
+        }
+        $municipio = $request->municipio_id;
+        $centro = $request->centro_entrenamiento;
+        $entrenador = $request->entrenador;
+        $dias = $request->dias;
+        $horario = $request->horario;
         $control = new Control(['usuario_id' => auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>3]);
         $control->save();
         return PDF::setOptions(['enable_remote' => true,
         'chroot'  => public_path('storage/uploads'),])
-        ->loadView('Reportes.RepFor30.pdf',compact('atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion'))
-        ->setPaper('8.5x14', 'landscape')
+        ->loadView('Reportes.RepFor30.pdf',compact('dias','horario','entrenador','centro','municipio','atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion','departamento'))
+        ->setPaper('8.5x11', 'landscape')
         ->stream();
     }
 
@@ -455,5 +542,9 @@ class AsistenciaController extends Controller
     public function acciones(){
         $control = Control::where('tabla_accion_id',3)->with('usuario')->paginate(5);
         return view('Reportes.RepFor30.control',compact('control'));
+    }
+
+    public function exportar(Request $request){
+        return Excel::download(new AsistenciaExport($request->meses,$request->anios),'asistencia.xlsx');
     }
 }

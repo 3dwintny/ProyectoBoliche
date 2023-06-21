@@ -9,7 +9,7 @@
     <style>
         #contenedor{
             width: 100%;
-            height: 7.6%;
+            height: 5.25%;
             border-bottom: 1px solid black;
             border-top: 1px solid black;
             border-left: 1px solid black;
@@ -30,7 +30,7 @@
             position: relative;
         }
         #final{
-            margin-top: 3.12%;
+            margin-top: 2.70%;
             width: 96%;
             height: 28.9%;
             float: left;
@@ -41,44 +41,39 @@
             height: 50%;
         }
         #interno1{
-            margin-left: 7%;
+            margin-left: 6.5%;
             width: 33%;
             height: 50%;
             float: left;
             position: relative;
-            font-size: 78%;
         }
         #interno2{
-            margin-left: 32.8%;
+            margin-left: 35.9%;
             width: 25%;
             height: 100%;
             float: left;
             position: relative;
-            font-size: 78%;
         }
         #interno3{
-            margin-left: 52.3%;
+            margin-left: 57.3%;
             width: 25%;
             height: 100%;
             float: left;
             position: relative;
-            font-size: 78%;
         }
         #interno4{
-            margin-left: 72%;
+            margin-left: 76%;
             width: 25%;
             height: 100%;
             float: left;
             position: relative;
-            font-size: 78%;
         }
         #interno5{
-            margin-left: 85%;
+            margin-left: 84.5%;
             width: 25%;
             height: 100%;
             float: left;
             position: relative;
-            font-size: 78%;
         }
         #contenedor2{
             width: 100%;
@@ -91,7 +86,7 @@
             position: relative;
         }
         #mesAnio{
-            margin-left: 30.5%;
+            margin-left: 33%;
             height: 100%;
             float: left;
             position: relative;
@@ -120,8 +115,17 @@
         #ancho40{
             width: 40%
         }
-        .tamanioFuente{
-            font-size:75%;
+        .tamanioFuente11{
+            font-size:68.75%;
+        }
+        .tamanioFuente10{
+            font-size:62.5%;
+        }
+        .tamanioFuente8{
+            font-size:50%;
+        }
+        .tamanioFuente7{
+            font-size:43.75%;
         }
         .fondoAzul{
             color: white;
@@ -152,102 +156,104 @@
             width: 100%;
             height: 0.9%;
         }
-        .tamanioFuente80{
-            font-size: 80%;
-        }
         </style>
 </head>
 <body>
     <div id="contenedor">
         <div id="foto">
-            <img src="storage/uploads/logo.jpeg" width="98%" height="98%">
+            <img src="storage/uploads/logo.jpeg" width="96%" height="96%">
         </div>
         <div id="inicial">
-            <div class="formulario" class="textoCentrado">
+            <div class="formulario" class="textoCentrado tamanioFuente10">
                 FORMULARIO
             </div>
-            <div class="formulario" class="textoCentrado">
+            <div class="formulario" class="textoCentrado tamanioFuente10">
                 <strong>REGISTRO DE ASISTENCIA DE ATLETAS FEDERADOS</strong>
             </div>
         </div>
-        <div id="final">
-            <div id="interno1">
+        <div id="final" >
+            <div id="interno1" class="tamanioFuente10">
                 Del Proceso: Administración del MRD.
             </div>
-            <div id="interno2">
+            <div id="interno2" class="tamanioFuente10">
                 Código:<strong>EDG-FOR-30.</strong>
             </div>
-            <div id="interno3">
+            <div id="interno3" class="tamanioFuente10">
                 Fecha de aprob: {{Carbon\Carbon::parse($aprobacion)->format('d/m/Y')}}
             </div>
-            <div id="interno4">
+            <div id="interno4" class="tamanioFuente10">
                 Versión: 1.
             </div>
-            <div id="interno5">
+            <div id="interno5" class="tamanioFuente10">
                 Página: 1 de 1.
             </div>
         </div>
     </div>
     <br>
-    <div id="contenedor2">
+    <div id="contenedor2" class="tamanioFuente11">
         <div id="hoja"><strong>Hoja No.</strong>______________ de ______</div>
         <div id="mesAnio"><strong>Mes y año a Reportar:</strong> {{$mostrarMes}} {{$obtenerAnio}}</div>
     </div>
     <table class="anchoFull" cellpading=0 cellspacing=0>
         <thead>
             <tr>
-                <th class="ancho30 fondoAzul bDerecho tamanioFuente80">DATOS DE UBICACIÓN</th>
-                <th class="ancho30 fondoAzul bDerecho tamanioFuente80">DATOS DE ENTRENAMIENTO</th>
-                <th id="ancho40" class="fondoAzul tamanioFuente80">MONITOREO Y EVALUACIÓN</th>
+                <th class="ancho30 fondoAzul bDerecho tamanioFuente11">DATOS DE UBICACIÓN</th>
+                <th class="ancho30 fondoAzul bDerecho tamanioFuente11">DATOS DE ENTRENAMIENTO</th>
+                <th id="ancho40" class="fondoAzul tamanioFuente11">MONITOREO Y EVALUACIÓN</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td class="cuerpo">
-                    <p class="margen15 tamanioFuente80">
-                        FADN: .............................................................................. <br>
-                        Depto.: ............................................................................. <br>
-                        Mun.: ................................................................................ <br>
-                        Centro de Entrenamiento: 
+                    <p class="margen15 tamanioFuente8">
+                        <span style="position: absolute; margin-left: 24.5px; margin-top: 1px;">...............................................................................................................................</span>
+                        FADN: Boliche <br>
+                        <span style="position: absolute; margin-left: 24.5px; margin-top: 2.8px;">...............................................................................................................................</span>
+                        Depto.: {{$departamento}}<br>
+                        <span style="position: absolute; margin-left: 19.5px; margin-top: 3px;">..................................................................................................................................</span>
+                        Mun.: {{$municipio}}<br>
+                        Centro de Entrenamiento: {{$centro}} 
                     </p>
                 </td>
                 <td class="cuerpo">
-                    <p class="margen15 tamanioFuente80">
-                        Entrenador: ....................................................................... <br>
-                        Horario: ............................................................................. <br>
-                        Días entren. Prog.: ............................................................ <br>
+                    <p class="margen15 tamanioFuente8">
+                        <span style="position: absolute; margin-left: 37.85px; margin-top: 3px;">.........................................................................................................................</span>
+                        Entrenador: {{$entrenador}}<br>
+                        <span style="position: absolute; margin-left: 27.5px; margin-top: 2.8px;">..............................................................................................................................</span>
+                        Horario: {{$horario}}<br>
+                        <span style="position: absolute; margin-left: 60.5px; margin-top: 3px;">.............................................................................................................</span>
+                        Días entren. Prog.: {{$dias}}<br>
                         Firma entrenador: 
                     </p>
                 </td>
                 <td class="cuerpo">
-                    <div id="espacio"></div>
                     <table cellpading=0 cellspacing=0 class="anchoFull">
                         <thead>
                             <tr>
-                                <th class="visita fondoCeleste bDerecho bInferior tamanioFuente80">PRIMERA VISITA</th>
-                                <th class="visita fondoCeleste bDerecho bInferior tamanioFuente80">PRIMERA VISITA</th>
-                                <th class="visita fondoCeleste bInferior tamanioFuente80">PRIMERA VISITA</th>
+                                <th class="visita fondoCeleste bDerecho bInferior tamanioFuente8">PRIMERA VISITA</th>
+                                <th class="visita fondoCeleste bDerecho bInferior tamanioFuente8">PRIMERA VISITA</th>
+                                <th class="visita fondoCeleste bInferior tamanioFuente8">PRIMERA VISITA</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="cuerpo2 tamanioFuente80">
-                                    Fecha: ............................<br>
-                                    Conteo: .......................... <br>
-                                    F.Metodólogo: .............. <br>
-                                    F.Entrenador: ................
+                                <td class="cuerpo2 tamanioFuente8">
+                                    Fecha: ..................................................<br>
+                                    Conteo: .................................................<br>
+                                    F.Metodólogo: ....................................<br>
+                                    F.Entrenador: ......................................
                                 </td>
-                                <td class="cuerpo2 tamanioFuente80">
-                                    Fecha: ............................<br>
-                                    Conteo: .......................... <br>
-                                    F.Metodólogo: .............. <br>
-                                    F.Entrenador: ................
+                                <td class="cuerpo2 tamanioFuente8">
+                                    Fecha: ..................................................<br>
+                                    Conteo: ................................................<br>
+                                    F.Metodólogo: .....................................<br>
+                                    F.Entrenador: ......................................
                                 </td>
-                                <td class="tamanioFuente80">
-                                    Fecha: ............................<br>
-                                    Conteo: .......................... <br>
-                                    F.Metodólogo: .............. <br>
-                                    F.Entrenador: ................
+                                <td class="tamanioFuente8">
+                                    Fecha: ..................................................<br>
+                                    Conteo: .................................................<br>
+                                    F.Metodólogo: .....................................<br>
+                                    F.Entrenador: ......................................
                                 </td>
                             </tr>
                         </tbody>
@@ -263,28 +269,28 @@
         @endphp
         <thead class="fondoAzul">
             <tr>
-                <th rowspan="2" class="bDerecho tamanioFuente">No.</th>
-                <th id="tamanioEncabezado" rowspan="2" class="bDerecho tamanioFuente">NOMBRE COMPLETO DE</th>
-                <th rowspan="2" class="bDerecho tamanioFuente">
+                <th rowspan="2" class="bDerecho tamanioFuente11">No.</th>
+                <th id="tamanioEncabezado" rowspan="2" class="bDerecho tamanioFuente10">NOMBRE COMPLETO DEL ATLETA</th>
+                <th rowspan="2" class="bDerecho tamanioFuente8">
                     <p class="rotacion">EDAD</p> 
                 </th>
-                <th rowspan="2" class="bDerecho tamanioFuente">
+                <th rowspan="2" class="bDerecho tamanioFuente8">
                     <p class="rotacion">GÉNERO</p>
                 </th>
-                <th rowspan="2" class="bDerecho tamanioFuente">
+                <th rowspan="2" class="bDerecho tamanioFuente8">
                     <p class="rotacion">CATEGORÍA</p></th>
-                <th rowspan="2" class="bDerecho tamanioFuente">
+                <th rowspan="2" class="bDerecho tamanioFuente8">
                     <p class="rotacion">MODALIDAD</p>
                 </th>
-                <th colspan="{{count($fechas)}}" class="bDerecho tamanioFuente" id="bInferiorBlanco">Control de Asistencia</th>
-                <th colspan="1" rowspan="2" class="bDerecho tamanioFuente">
+                <th colspan="{{count($fechas)}}" class="bDerecho tamanioFuente11" id="bInferiorBlanco">CONTROL DE ASISTENCIA A ENTRENAMIENTO</th>
+                <th colspan="1" rowspan="2" class="bDerecho tamanioFuente8">
                     <p class="rotacion">DÍAS ENTRENADOS</p>
                 </th>
-                <th rowspan="2" class="bDerecho tamanioFuente">
+                <th rowspan="2" class="bDerecho tamanioFuente8">
                     <p colspan="1" class="rotacion">% DE ASISTENCIA</p>
                 </th>
                 <th rowspan="2">
-                    <p colspan="1" class="rotacion tamanioFuente">ETAPA DEPORTIVA</p>
+                    <p colspan="1" class="rotacion tamanioFuente8">ETAPA DEPORTIVA</p>
                 </th>
             </tr>
         </thead>
@@ -294,25 +300,25 @@
                 $c=0;
             @endphp
                 @for ($i=0;$i<count($fechas);$i++)
-                <th class="fondoCeleste bDerecho">{{Carbon\Carbon::parse($fechas[$i]->fecha)->format('d')}}</th>
+                <th class="fondoCeleste bDerecho tamanioFuente7">{{Carbon\Carbon::parse($fechas[$i])->format('d')}}</th>
                 @endfor
             @foreach($atleta as $item)
-            <tr id="{{$c}}" class="textoCentrado"><!--Filas-->
-                <td class="cuerpo tamanioFuente80">{{$contador}}</td>
-                <td class="cuerpo tamanioFuente80"><!--Columnas-->
+            <tr id="{{$c}}" class="textoCentrado">
+                <td class="cuerpo tamanioFuente10">{{$contador}}</td>
+                <td class="cuerpo tamanioFuente10">
                     {{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}}
                     {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
                 </td>
-                <td class="cuerpo tamanioFuente80">{{$item->alumno->edad}}</td>
-                <td class="cuerpo tamanioFuente80">{{$item->alumno->genero}}</td>
-                <td class="cuerpo tamanioFuente80">{{$item->categoria->tipo}}</td>
-                <td class="cuerpo tamanioFuente80">{{$item->modalidad->nombre}}</td>
+                <td class="cuerpo tamanioFuente10">{{$item->alumno->edad}}</td>
+                <td class="cuerpo tamanioFuente10">{{$item->alumno->genero}}</td>
+                <td class="cuerpo tamanioFuente10">{{$item->categoria->tipo}}</td>
+                <td class="cuerpo tamanioFuente10">{{$item->modalidad->nombre}}</td>
 
                 @for($i=$s;$i<count($fechas)+$s;$i++)
-                <td class="cuerpo tamanioFuente80">{{$estado[$i]}}</td>
+                <td class="cuerpo tamanioFuente10">{{$estado[$i]}}</td>
                 @endfor
-                <td class="cuerpo tamanioFuente80">{{$contarDias[$c]}}</td>
-                <td class="cuerpo tamanioFuente80">{{$promedio[$c]}}</td>
+                <td class="cuerpo tamanioFuente10">{{$contarDias[$c]}}</td>
+                <td class="cuerpo tamanioFuente8">{{$promedio[$c]}}%</td>
                 <td class="cuerpo tamanioFuente80">{{$item->etapa_deportiva->nombre}}</td>
                 @php
                     $contador++;
