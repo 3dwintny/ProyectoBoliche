@@ -391,7 +391,7 @@ class AsistenciaController extends Controller
         return $mostrarMes;
     }
 
-    private function mostrarAsistencia($obtenerMes,$obtenerAnio)
+    public function mostrarAsistencia($obtenerMes,$obtenerAnio)
     {
         $mostrarMes = $this->mesLetras($obtenerMes);
         $mes = 0;
