@@ -3,10 +3,6 @@
 namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromView;
 use Illuminate\Contracts\View\View;
-use App\Models\Alumno;
-use App\Models\Atleta;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use App\Http\Controllers\AsistenciaController;
 
 class AsistenciaExport implements FromView
