@@ -110,7 +110,7 @@
                             @can('ver-listado-tareas')
                             <li class="nav-item">
                                 <a href="{{route('tareaPendiente')}}" class="nav-link">
-                                    {{ __('Tareas Pendientes') }}
+                                    {{ __('Tareas pendientes') }}
                                 </a>
                             </li>
                             @endcan
@@ -122,7 +122,7 @@
                             </li>
                             @endcan
                             @can('atletaPerfil')
-                            <li>
+                            <li class="nav-item">
                                 <a href="{{ route('modificarAtleta') }}" class="nav-link">
                                     {{ __('Mi perfil') }}
                                 </a>
@@ -143,14 +143,21 @@
                             @can('crear-EDG-31-Asistencia')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistencias.create') }}">
-                                    {{ __('Registrar Asistencia') }}
+                                    {{ __('Registrar asistencia') }}
                                 </a>
+                            </li>
+                            @endcan
+                            @can('editarAsistencia')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('editarAsistencia') }}">
+                                    {{ __('Editar asistencia') }}
+                                </a>                              
                             </li>
                             @endcan
                             @can('registrar-Entrenadores')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.create') }}">
-                                    {{ __('Registrar Entrenador') }}
+                                    {{ __('Registrar entrenador') }}
                                 </a>
                             </li>
                             @endcan
@@ -162,7 +169,7 @@
                             </li>
                             @endcan
                             @can('entrenadorPerfil')
-                            <li>
+                            <li class="nav-item">
                                 <a href="{{ route('modificar') }}" class="nav-link">
                                     {{ __('Mi perfil') }}
                                 </a>
@@ -268,4 +275,8 @@
             </ul>
         </div>
     </div>
+    <!-- Agrega esta línea antes de cerrar el body -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
 </nav>
