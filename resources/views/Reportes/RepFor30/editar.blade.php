@@ -101,7 +101,11 @@
                                     @endif
                                 </tbody>
                             </table>
-                            <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Actualizar asistencia"></div>
+                            @if(count($atletas)==0)
+                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Actualizar asistencia" disabled></div>
+                            @else
+                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Actualizar asistencia"></div>
+                            @endif
                         </div>
                     </div>
                 </div>
