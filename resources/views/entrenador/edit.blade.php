@@ -1,12 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
 @include('layouts.headers.cards', ['texto' => 'Entrenadores'])
 <div class="container-fluid mt--5">
     <div class="header-body text-center  mb-7">
@@ -15,10 +9,10 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2> Editar entrenador </h2>
+                            <h3>Editar información</h3>
                         </strong>
-
                     </div>
+                </div>
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('entrenadores.update',encrypt($entrenador->id))}}">
                     @csrf
                     {{method_field('PUT')}}

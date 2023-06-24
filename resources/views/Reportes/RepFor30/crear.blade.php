@@ -2,6 +2,14 @@
 
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<style>
+    .col-no {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
 <div class="header bg-dark pb-4 pt-5 pt-md-6 mt--5">
     <div class="container-fluid">
         <div class="header-body">
@@ -60,7 +68,7 @@
                             <table class="table table-hover">
                                 <thead class="table table-dark mt-2">
                                     <tr>
-                                        <th style="width: 3.5%; text-align:center;">No</th>
+                                        <th style="width: auto; text-align:center;">No</th>
                                         <th style="width:10%; text-align:center;">Fecha</th>
                                         <th style="width:21.7%; text-align:center;">Atleta</th>
                                         <th style="width:8%; text-align:center;"><input name="todo" id="asistencia" type="radio"> Asistencia</th>
@@ -87,42 +95,55 @@
                                         $idAtleta = $hashid->encode($item->id);
                                     @endphp
                                     <tr class="table-sm">
-                                        <td>
-                                            <input type="hidden" class="text-white bg-dark" name="atleta_id[]" value="{{$idAtleta}}" style="width: 100%;">
-                                            <input type="text" value="{{$contador}}" readonly style="width: 100%; text-align:center;">
+                                        <td class="col-xs-1 col-sm-1 col-md-1">
+                                            <input type="hidden" class="text-white bg-dark" name="atleta_id[]" value="{{$idAtleta}}" style="width: auto;">
+                                            <input type="text" value="{{$contador}}" readonly style="width: auto; text-align:center;">
                                         </td>
-                                        <td>
-                                            <input type="text" name="fecha[]" value="{{$hoy->format('Y-m-d')}}" id="fecha_registro{{$c}}" readonly style="width: 100%; text-align:center;">
+                                        <td class="col-xs-2 col-sm-2 col-md-2">
+                                            <input type="text" name="fecha[]" value="{{$hoy->format('Y-m-d')}}" id="fecha_registro{{$c}}" readonly style="width: auto; text-align:center;">
                                         </td>
-                                        <td>
-                                            <input type="text" value="{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}" readonly style="width: 100%;text-align:center;">
+                                        <td class="col-xs-4 col-sm-4 col-md-4">
+                                            @php
+                                                if($item->alumno->nombre2==null){
+                                                    $nombreCompleto = trim($item->alumno->nombre1 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
+                                                }
+                                                elseif($item->alumno->nombre3==null){
+                                                    $nombreCompleto = trim($item->alumno->nombre1 . ' '. $item->alumno->nombre2 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
+                                                }
+                                                else{
+                                                    $nombreCompleto = trim($item->alumno->nombre1 . ' ' . $item->alumno->nombre2 . ' ' . $item->alumno->nombre3 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
+                                                }
+
+                                                $longitudTexto = strlen($nombreCompleto);
+                                            @endphp
+                                            <input type="text" value="{{ $nombreCompleto }}" readonly style="width: auto; text-align: center;">
                                         </td>
-                                        <td>
+                                        <td class="col-xs-1 col-sm-1 col-md-1">
                                             <label style="margin-left: 50%;">
                                                 <input type="radio" id="estado1{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="X" required> <span></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td class="col-xs-1 col-sm-1 col-md-1">
                                             <label style="margin-left: 50%;">
                                                 <input type="radio" id="estado2{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="O" required> <span></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td class="col-xs-1 col-sm-1 col-md-1">
                                             <label style="margin-left: 50%;">
                                                 <input type="radio" id="estado3{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="P" required> <span></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td class="col-xs-1 col-sm-1 col-md-1">
                                             <label style="margin-left: 50%;">
                                                 <input type="radio" id="estado4{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="E" required> <span></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td class="col-xs-1 col-sm-1 col-md-1">
                                             <label style="margin-left: 50%;">
                                                 <input type="radio" id="estado5{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="L" required> <span></span>
                                             </label>
                                         </td>
-                                        <td>
+                                        <td class="col-xs-1 col-sm-1 col-md-1">
                                             <label style="margin-left: 50%;">
                                                 <input type="radio" id="estado6{{$contador}}" class="{{$item->id}}" name="estado[]{{$item->id}}" value="C" required> <span></span>
                                             </label>
@@ -142,6 +163,7 @@
                             @else
                                 <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar asistencia"></div>
                             @endif
+                            <br/>
                         </div>
                     </div>
                 </div>

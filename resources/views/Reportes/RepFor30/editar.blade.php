@@ -58,8 +58,19 @@
                                             @endforeach
                                             <input type="text" name="fecha[]" value="{{$hoy}}" id="fecha_registro{{$c}}" readonly style="width: 100%; text-align:center;">
                                         </td>
-                                        <td>
-                                            <input type="text" value="{{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}} {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}" readonly style="width: 100%;text-align:center;">
+                                        <td class="col-xs-4 col-sm-4 col-md-4">
+                                            @php
+                                                if($item->alumno->nombre2==null){
+                                                    $nombreCompleto = trim($item->alumno->nombre1 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
+                                                }
+                                                elseif($item->alumno->nombre3==null){
+                                                    $nombreCompleto = trim($item->alumno->nombre1 . ' '. $item->alumno->nombre2 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
+                                                }
+                                                else{
+                                                    $nombreCompleto = trim($item->alumno->nombre1 . ' ' . $item->alumno->nombre2 . ' ' . $item->alumno->nombre3 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
+                                                }
+                                            @endphp
+                                            <input type="text" value="{{ $nombreCompleto }}" readonly style="width: 100%;text-align:center;">
                                         </td>
                                         <td>
                                             <label style="margin-left: 50%;">
@@ -106,6 +117,7 @@
                             @else
                                 <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Actualizar asistencia"></div>
                             @endif
+                            <br/>
                         </div>
                     </div>
                 </div>
