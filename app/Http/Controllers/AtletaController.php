@@ -183,7 +183,7 @@ class AtletaController extends Controller
     public function creacion($id){
         $centro=Centro::where('estado','activo')->get(['id','nombre']);
         $entrenador= Entrenador::where('estado','activo')->get(['id','nombre1','apellido1']);
-        $alumno = Alumno::find($id);
+        $alumno = Alumno::find(decrypt($id));
         $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
         $etapa=Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
         $deporteadaptado = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
