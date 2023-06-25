@@ -1,4 +1,4 @@
-<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center mt--5" style="background-image: url(../argon/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+<div class="header pb-9 pt-8 pt-lg-6 pt-md-8 d-flex align-items-center mt-lg--5 mt-md--10 mt-sm--5" style="background-image: url(../argon/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
     <!-- Mask -->
     <span class="mask bg-gradient-default opacity-6"></span>
     <!-- Header container -->
