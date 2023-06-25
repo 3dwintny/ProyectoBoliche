@@ -18,6 +18,7 @@ use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Exports\AsistenciaExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 
 class AsistenciaController extends Controller
 {
@@ -39,7 +40,6 @@ class AsistenciaController extends Controller
         whereMonth('fecha',$ms->month)
         ->whereYear('fecha',$ms->year)
         ->get();
-        //return $this->mostrarAsistencia($ms->month,$ms->year);
 
         if(count($fechas)>0){
             $datos =  $this->mostrarAsistencia($ms->month,$ms->year);
@@ -78,7 +78,6 @@ class AsistenciaController extends Controller
             $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->get();
         }
         $hoy = Carbon::now();
-        $categoria_id = 0;
         return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
     }
 
@@ -143,7 +142,6 @@ class AsistenciaController extends Controller
         $controlAsistencia = "false";
         $idEncriptado = $request->atleta_id;
         $hashid = new Hashids();
-        $encriptados = array();
         $idDesencriptado = array();
         for($i = 0; $i < count($idEncriptado); $i++){
             $temporal = $hashid->decode($idEncriptado[$i]);
@@ -546,5 +544,58 @@ class AsistenciaController extends Controller
 
     public function exportar(Request $request){
         return Excel::download(new AsistenciaExport($request->meses,$request->anios),'asistencia.xlsx');
+    }
+
+    public function editarAsistencia(){
+        return view('Reportes/RepFor30/fecha');
+    }
+
+    public function modificarAsistencia(Request $request){
+        $entrenador = Entrenador::where('correo', auth()->user()->email)->get();
+        $categoria = Categoria::all();
+        $asistencia = array();
+        $idAtletas = array();
+        if(count($entrenador)>0){
+            $asistencia = DB::table('asistencia')
+            ->select('asistencia.id', 'asistencia.atleta_id', 'asistencia.fecha', 'asistencia.estado')
+            ->join('atleta', 'asistencia.atleta_id', '=', 'atleta.id')
+            ->where('fecha', $request->fecha)
+            ->where('atleta.entrenador_id', $entrenador[0]->id)
+            ->orderBy('atleta_id','asc')
+            ->get();
+            foreach($asistencia as $asis){
+                array_push($idAtletas,$asis->atleta_id);
+            }
+            $atletas = Atleta::wherein('id',$idAtletas)->get();
+        }
+        else{
+            $atletas = Atleta::where('entrenador_id',0)->get();
+        }
+        $hoy = $request->fecha;
+        $dia = Str::substr($hoy, 8, 2);
+        $mes = Str::substr($hoy, 5, 2);
+        $anio = Str::substr($hoy, 0, 4);
+        $fechaAsistencia = $dia."-".$mes."-".$anio;
+        return view('Reportes/RepFor30/editar',compact('atletas','categoria','hoy','asistencia','fechaAsistencia'));
+    }
+
+    public function actualizarAsistencia(Request $request){
+        $fecha = $request->fecha;
+        $idEncriptado = $request->asistenciaId;
+        $idDesencriptado = array();
+        for($i = 0; $i < count($idEncriptado); $i++){
+            $temporal = decrypt($idEncriptado[$i]);
+            array_push($idDesencriptado,$temporal);
+        }
+        $estado = $request->estado;
+        for ($i=0;$i<count($idDesencriptado);$i++){
+            $informacion = [
+                'estado' => $estado[$i],
+            ];
+            DB::table('asistencia')->where('id', $idDesencriptado[$i])->update($informacion);
+        }
+        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>3]);
+        $control->save();
+        return redirect()->action([AsistenciaController::class,'editarAsistencia'])->with('message', 'La asistencia del '.$fecha[0].' ha sido actualizada exitosamente');
     }
 }

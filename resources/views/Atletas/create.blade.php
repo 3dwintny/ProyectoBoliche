@@ -229,7 +229,7 @@
                                             <label for="prt_id">PRT</label>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="alumno_id" id="" value="{{encrypt($item->id)}}" readonly>
+                                    <input type="hidden" name="alumno_id" id="" value="{{encrypt($alumno->id)}}" readonly>
                                 </div>
                                 <div class="container">
                                     <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>

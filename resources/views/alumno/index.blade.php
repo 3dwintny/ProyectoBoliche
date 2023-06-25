@@ -8,14 +8,14 @@
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nombre Completo</th>
+          <th scope="col">Nombre completo</th>
           <th scope="col">CUI</th>
           <th scope="col">Celular</th>
-          <th scope="col">Contacto de Emergencia</th>
+          <th scope="col">Contacto de emergencia</th>
           <th scope="col">Correo</th>
           <th scope="col">Estado</th>
           <th scope="col">Fecha</th>
-          <th scope="col">Direccion</th>
+          <th scope="col">Dirección</th>
           <th></th>
         </tr>
       </thead>
@@ -40,7 +40,7 @@
                 <i class="fa fa-fw fa-eye"></i>Ver
               </a>
 
-              <a class="btn btn-sm btn-success" href="{{route('creacion',$alumno->id)}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
+              <a class="btn btn-sm btn-success" href="{{route('creacion',encrypt($alumno->id) )}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i>Rechazar</button>
@@ -124,8 +124,8 @@
         $('#apellidoAlumno').text(response.apellido);
         $('#cui').text(response.cui);
         $('#celular').text("Celular:  "+response.celular);
-        $('#telefono_casa').text("Telefono casa:  "+response.telefono_casa);
-        $('#correo').text("Correo electronico:  "+response.correo);
+        $('#telefono_casa').text("Teléfono casa:  "+response.telefono_casa);
+        $('#correo').text("Correo electrónico:  "+response.correo);
         $('#origen').text(response.municipio + "/" + response.departamento);
         var image = document.getElementById("imgAlumno");
         image.src = "{{ asset('uploads/alumnos/') }}" + '/' + response.foto;

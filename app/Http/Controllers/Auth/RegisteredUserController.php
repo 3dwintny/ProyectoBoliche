@@ -94,11 +94,11 @@ class RegisteredUserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => decrypt($request->roles),
+                        'tipo_usuario_id' => $roles,
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
-                    $user->assignRole($request->input('roles'));
+                    $user->assignRole($roles);
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{
@@ -124,11 +124,11 @@ class RegisteredUserController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
-                        'tipo_usuario_id' => decrypt($request->roles),
+                        'tipo_usuario_id' => $roles,
                     ]);
                     event(new Registered($user));
                     Auth::login($user);
-                    $user->assignRole($request->input('roles'));
+                    $user->assignRole($roles);
                     return redirect(RouteServiceProvider::HOME);
                 }
                 else{

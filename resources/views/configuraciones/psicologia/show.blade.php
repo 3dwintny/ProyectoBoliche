@@ -10,11 +10,11 @@
         <tr>
           <th scope="col">No</th>
           <th scope="col">Nombre Completo</th>
-          <th scope="col">Número de Colegiado</th>
+          <th scope="col">Número de colegiado</th>
           <th scope="col">Teléfono</th>
           <th scope="col">Correo</th>
           <th scope="col">Dirección</th>
-          <th scope="col">Fecha de Inicio de Labores</th>
+          <th scope="col">Fecha de inicio de labores</th>
         </tr>
       </thead>
       <tbody class="table-hover">

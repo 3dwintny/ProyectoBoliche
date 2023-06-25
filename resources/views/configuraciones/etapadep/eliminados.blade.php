@@ -6,7 +6,7 @@
     <div class="header-body">
       <!-- Card stats -->
       <div class="row">
-        <div class="col-xl-6 col-lg-6">
+        <div class="col-xl-6 col-lg-6 mt--5">
           <h1 class="text-white">Etapas deportivas</h1>
         </div>
       </div>
