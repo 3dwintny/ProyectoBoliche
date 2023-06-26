@@ -53,11 +53,11 @@
                                     <div class="col-md-4 mb-2 form-control">
                                         <label>¿Deporte adaptado?</label>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" name="adaptado" id="deporteAdaptado">
+                                            <input type="radio" name="adaptado" id="deporteAdaptado" value="Si">
                                             <label class="form-check-label" for="inlineRadio3">Si</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" name="adaptado" id="cancelarAdaptado" checked>
+                                            <input type="radio" name="adaptado" id="cancelarAdaptado" value="No" checked>
                                             <label class="form-check-label" for="inlineRadio3">No</label>
                                         </div>
                                     </div>
