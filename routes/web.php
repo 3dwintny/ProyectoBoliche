@@ -63,11 +63,11 @@ Route::get('alumnos/{alumno}', [AlumnoController::class, 'show'])->name('alumnos
 
 Route::get('ficha-PDF',[AlumnoController::class,'generarPDF'])->name('ficha-PDF');
 //Route::get('Inscripcion', fuction () {return view('livewire/encargados-manager');});
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+//Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth', 'verified'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 //Auth::routes();
-	Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+	Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth', 'verified'])->name('home');
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
