@@ -32,6 +32,7 @@ class Alumno extends Model
     'estado',
     'nit',
     'alergias',
+    'nombre_emergencia',
     'pasaporte',
     'encargado_id',
     'departamento_id',
@@ -64,6 +65,10 @@ class Alumno extends Model
 
     public function encargado(){
         return $this->belongsTo('App\Models\Encargado');
+    }
+    public function encargados()
+    {
+        return $this->belongsToMany(Encargado::class, 'alumnos_encargados', 'alumno_id', 'encargado_id');
     }
 
     public function municipio(){

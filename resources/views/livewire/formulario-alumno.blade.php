@@ -1,11 +1,8 @@
 <div>
-
-        @if(!empty($successMessage))
-        <div class="alert alert-success">
-           {{ $successMessage }}
-        </div>
-        @endif
-        <form>
+    @if ($errors->has('error'))
+    <div class="alert alert-danger">{{ $errors->first('error') }}</div>
+    @endif
+        <form enctype="multipart/form-data">
         <div class="stepwizard">
             <div class="stepwizard-row setup-panel">
                 <div class="stepwizard-step">
@@ -22,8 +19,7 @@
                 </div>
             </div>
         </div>
-        {{-- @livewireScripts --}}
-
+        {{-- Primer formulario, ingreso de información de alumnos --}}
             <div class="row setup-content {{ $currentStep != 1 ? 'displayNone' : '' }}" id="step-1">
                 <div class="col-xs-12">
                     <div class="col-md-12">
@@ -32,11 +28,8 @@
                                 <div class="card-body bg-light">
                                     <h2 class="mb-2">Información personal</h2>
                                     <div class="row">
-                                        {{-- @livewire('pruevas')
-                                        @livewireScripts --}}
                                         <!-- Esta clase es para tener el formulario Ordenado -->
                                         <div class="col-md-4 mb-2">
-                                            <!-- Para segir viendo el nombre del placeholder -->
                                             <div class="form-floating">
                                                 <input class="form-control text-dark"
                                                     aria-describedby="basic-addon2"
@@ -70,7 +63,6 @@
                                                 wire:model="apellido1" name="apellido1" placeholder="Primer Apellido">
                                                 <label for="formIns">Primer apellido</label>
                                                 @error('apellido1') <span class="text-danger error">{{ $message }}</span>@enderror
-
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
@@ -88,7 +80,6 @@
                                                 @error('cui') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
-
                                         <div class="col-md-6 mb-2">
                                             <div class="input-group mb-2">
                                                 <span class="input-group-text" id="inputGroup-sizing-sm">Fecha
@@ -151,27 +142,18 @@
                                                 @error('direccion') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-4 mb-2">
+                                        <div class="col-md-6 mb-2">
                                             <div class="form-floating">
                                                 <input class="form-control text-dark" id="formIns" type="text"
                                                 wire:model="telefono" name="telefono_casa" placeholder="Teléfono Residencial">
-                                                <label for="formIns">Teléfono Residencial</label>
+                                                <label for="formIns">Teléfono residencial</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 mb-2">
+                                        <div class="col-md-6 mb-2">
                                             <div class="form-floating">
                                                 <input class="form-control text-dark" id="formIns" type="text"
                                                 wire:model="celular" name="celular" placeholder="Celular">
                                                 <label for="formIns">Celular</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                                <input class="form-control text-dark" id="formIns" type="text"
-                                                wire:model="contacto_emergencia"
-                                                    placeholder="Contacto de Emergencia">
-                                                <label for="formIns">Contacto de Emergencia</label>
-                                                @error('contacto_emergencia') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
@@ -215,10 +197,10 @@
                                                         @endforeach
                                                 </select>
                                         </div>
-                                        <label class="col-md-12 mb-2">Lugar de Nacimiento</label>
+                                        <label class="col-md-12 mb-2">Lugar de nacimiento</label>
                                         <div class="col-md-6 mb-2">
                                             <select class="form-control"
-                                               wire:model="country" id="departamento_id">
+                                                wire:model="country" id="departamento_id">
                                                 @foreach ($contries as $departamento)
                                                 <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
                                                 @endforeach
@@ -227,17 +209,17 @@
                                         <div class="col-md-6 mb-2"><select class="form-control"
                                             wire:model="city" id="municipio_id">
                                             @if ($cities->count() == 0)
-                                             <option  disabled selected>Seleccione un departamento</option>
-                                             @endif
-                                             @foreach ($cities as $item)
+                                                <option  disabled selected>Seleccione un departamento</option>
+                                            @endif
+                                            @foreach ($cities as $item)
                                                 <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                             @endforeach
-                                         </select>
+                                            @endforeach
+                                        </select>
                                         </div>
-                                        <label class="col-md-12 mb-2">Lugar de Residencia</label>
+                                        <label class="col-md-12 mb-2">Lugar de residencia</label>
                                         <div class="col-md-6 mb-2">
                                             <select class="form-control"
-                                               wire:model="countryr" id="departamento_id">
+                                                wire:model="countryr" id="departamento_id">
                                                 @foreach ($contriesr as $departamentor)
                                                 <option value="{{$departamentor->id}}">{{$departamentor->nombre}}</option>
                                                 @endforeach
@@ -246,12 +228,31 @@
                                         <div class="col-md-6 mb-2"><select class="form-control"
                                             wire:model="cityr" id="municipio_id">
                                             @if ($citiesr->count() == 0)
-                                             <option  disabled selected>Seleccione un departamento</option>
-                                             @endif
-                                             @foreach ($citiesr as $item)
+                                                <option  disabled selected>Seleccione un departamento</option>
+                                            @endif
+                                            @foreach ($citiesr as $item)
                                                 <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                             @endforeach
-                                         </select>
+                                            @endforeach
+                                        </select>
+                                        </div>
+                                        <label class="col-md-12 mb-2">Contacto de emergencia</label>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input class="form-control text-dark" id="formIns" type="text"
+                                                wire:model="nombre_emergencia"
+                                                    placeholder="Nombre completo">
+                                                <label for="formIns">Nombre completo</label>
+                                                @error('nombre_emergencia') <span class="text-danger error">{{ $message }}</span>@enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-2">
+                                            <div class="form-floating">
+                                                <input class="form-control text-dark" id="formIns" type="text"
+                                                wire:model="contacto_emergencia"
+                                                    placeholder="Número de teléfono">
+                                                <label for="formIns">Número de teléfono</label>
+                                                @error('contacto_emergencia') <span class="text-danger error">{{ $message }}</span>@enderror
+                                            </div>
                                         </div>
                                     </div>
                                     @livewireScripts
@@ -263,139 +264,24 @@
                 </div>
             </div>
             @livewireScripts
+            {{-- Segundo formulario, ingreso de información de los encargados --}}
             <div class="row setup-content {{ $currentStep != 2 ? 'displayNone' : '' }}" id="step-2">
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         @if (session()->has('message'))
-                        <div class="alert alert-success">
+                        <div class="alert alert-danger">
                         {{ session('message') }}
                         </div>
                         @endif
                     <div class="form-group">
                         <div class="card">
-                            {{-- <div class="card-body bg-light">
-                                <h2>Información de encargado</h2>
-                                <div class="add-input">
-                                    <div class="row">
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                                <input class="form-control text-dark" id="formIns"
-                                                aria-describedby="basic-addon2"
-                                                placeholder="Primer nombre" type="text"
-                                                wire:model="primernombrep.0">
-                                                <label for="formIns">Primer nombre</label>
-                                                @error('primernombrep.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                                <input class="form-control text-dark"
-                                                placeholder="{{ __('Segundo nombre') }}" type="text"
-                                                wire:model="segundonombrep.0"value="{{ old('Segundo nombre') }}">
-                                                <label for="formIns">Segundo nombre</label>
-                                                @error('segundonombrep.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                                <input class="form-control text-dark"
-                                                placeholder="Tercer nombre" id="formIns" type="text"
-                                                wire:model="tercernombrep.0" value="{{ old('Tercer nombre') }}">
-                                                <label for="formIns">Tercer nombre</label>
-                                            @error('tercernombrep.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                                <input class="form-control text-dark" type="text"
-                                                wire:model="primerapellidop.0" id="formIns"
-                                                placeholder="Primer apellido">
-                                                <label for="formIns">Primer apellido</label>
-                                                @error('primerapellidop.0') <span class="text-danger error">{{ $message }}</span>@enderror
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                            </div>
-                                            <input class="form-control text-dark" type="text"
-                                            wire:mode="segundoapellidop.0"
-                                                placeholder="Segundo apellido">
-                                                @error('segundoapellidop.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                            </div>
-                                            <input class="form-control" type="text"
-                                            wire:model="apellidocasadap"
-                                                placeholder="Apellido de casada">
-                                                @error('apellidocasadap.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                            </div>
-                                            <input class="form-control" type="text"
-                                            wire:model="direccionp.0"
-                                                placeholder="Direccion">
-                                                @error('direccionp.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                            </div>
-                                            <input class="form-control" type="text"
-                                            wire:model="celularp.0"
-                                                placeholder="Celular">
-                                                @error('celularp.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                            </div>
-                                            <input class="form-control" type="text"
-                                            wire:model="telefonop"
-                                                placeholder="Teléfono residencial">
-                                                @error('telefonop.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                            </div>
-                                            <input class="form-control" type="text"
-                                            wire:model="correop.0"
-                                                placeholder="Correo electronico">
-                                                @error('correop.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                            <div class="form-floating">
-                                            </div>
-                                            <input class="form-control" type="text"
-                                            wire:model="dpip.0"
-                                                placeholder="DPI">
-                                                @error('dpip.0') <span class="text-danger error">{{ $message }}</span>@enderror
-                                        </div>
-                                        <div class="col-md-12 mb-2">
-                                            <select class="form-control" wire:model="parentezcop" required>
-                                                <option selected disabled>Parentesco</option>
-                                                @foreach ($parentezcos as $item)
-                                                <option value="{{$item->id}}">{{$item->tipo}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div> --}}
                             @foreach($primernombrep as $indice => $value )
                                 <div class="card-body bg-light">
                                     <div class="col-span-6 sm:col-span-6 text-center">
-                                        <button class="btn btn-danger btn-sm" wire:click.prevent="remove({{$indice}})">Quitar</button>
+                                        <button class="btn btn-danger btn-sm" wire:click.prevent="remove({{$indice}})" {{ $btnencargados ? 'disabled' : '' }}>Quitar</button>
                                     </div>
-                                    <div class="col-md-11"><h2>Información de encargado {{$indice}}</h2></div>
+                                    <div class="col-md-11"><h2>Información de encargado {{$indice+1}}</h2></div>
                                     <div class="col-md-1">
-                                        {{-- <div class="col-span-6 sm:col-span-6 text-center">
-                                            <p>Si desea agregar otro encargado presione "Agregar"</p>
-                                            <button class="btn text-white btn-info btn-sm" wire:click.prevent="add({{$i}})">Agregar</button>
-
-                                        </div> --}}
                                     </div>
                                         <div class=" add-input">
                                             <div class="row">
@@ -455,71 +341,86 @@
                                                         <label for="formIns">Apellido Casada</label>
                                                     </div>
                                                 </div>
-                                                    <div class="col-md-4 mb-2">
-                                                        <input class="form-control" type="text"
-                                                            placeholder="Direccion"
-                                                            wire:model="direccionp.{{ $indice }}">
-                                                            @error('direccionp.'.$indice) <span class="text-danger error">{{ $message }}</span>@enderror
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control" type="text" id="formIns"
+                                                        aria-describedby="basic-addon2"
+                                                        placeholder="Direccion"
+                                                        wire:model="direccionp.{{ $indice }}">
+                                                        <label for="formIns">Dirección</label>
+                                                        @error('direccionp.'.$indice) <span class="text-danger error">{{ $message }}</span>@enderror
                                                     </div>
-                                                    <div class="col-md-4 mb-2">
-                                                        <input class="form-control" type="text"
-                                                            placeholder="Celular"
-                                                            wire:model="celularp.{{ $indice }}">
-                                                            @error('celularp.'.$indice) <span class="text-danger error">{{ $message }}</span>@enderror
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control" type="text" id="formIns"
+                                                        aria-describedby="basic-addon2"
+                                                        placeholder="Celular"
+                                                        wire:model="celularp.{{ $indice }}">
+                                                        <label for="formIns">Celular</label>
+                                                        @error('celularp.'.$indice) <span class="text-danger error">{{ $message }}</span>@enderror
                                                     </div>
-                                                    <div class="col-md-4 mb-2">
-                                                        <input class="form-control" type="text"
-                                                            placeholder="Teléfono residencial"
-                                                            wire:model="telefonop.{{ $indice }}">
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control" type="text" id="formIns"
+                                                        aria-describedby="basic-addon2"
+                                                        placeholder="Teléfono residencial"
+                                                        wire:model="telefonop.{{ $indice }}">
+                                                        <label for="formIns">Teléfono residencial</label>
                                                     </div>
-                                                    <div class="col-md-4 mb-2">
-                                                        <input class="form-control" type="text"
-                                                            placeholder="Correo electronico"
-                                                            wire:model="correop.{{ $indice }}">
-                                                            @error('correop.'.$indice) <span class="text-danger error">{{ $message }}</span>@enderror
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control" type="text" id="formIns"
+                                                        aria-describedby="basic-addon2"
+                                                        placeholder="Correo electrónico"
+                                                        wire:model="correop.{{ $indice }}">
+                                                        <label for="formIns">Correo electrónico</label>
+                                                        @error('correop.'.$indice) <span class="text-danger error">{{ $message }}</span>@enderror
                                                     </div>
-                                                    <div class="col-md-4 mb-2">
-                                                        <input class="form-control" type="text"
-                                                            placeholder="DPI"
-                                                            wire:model="dpip.{{ $indice }}">
-                                                            @error('dpip.'.$indice) <span class="text-danger error">{{ $message }}</span>@enderror
+                                                </div>
+                                                <div class="col-md-4 mb-2">
+                                                    <div class="form-floating">
+                                                        <input class="form-control" type="text" id="formIns"
+                                                        aria-describedby="basic-addon2"
+                                                        placeholder="DPI"
+                                                        wire:model="dpip.{{ $indice }}">
+                                                        <label for="formIns">DPI</label>
+                                                        @error('dpip.'.$indice) <span class="text-danger error">{{ $message }}</span>@enderror
                                                     </div>
-                                                    <div class="col-md-12 mb-2">
-                                                        <select class="form-control"  wire:model="parentezcop.{{ $indice }}" required>
-                                                            <option selected disabled>Parentesco</option>
-                                                            @foreach ($parentezcos as $item)
-                                                            <option value="{{$item->id}}">{{$item->tipo}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2">
+                                                    <select class="form-control" wire:model.defer="parentezcop.{{ $indice }}" required>
+                                                        <option value="2" selected>Parentesco</option>
+                                                        @foreach ($parentezcos as $item)
+                                                            <option value="{{ $item->id }}">{{ $item->tipo }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
-
-
                                         @livewireScripts
-                                </div>
+                                    </div>
                         @endforeach
                     </div>
                     <input type="button" name="submit" wire:click.prevent="add({{ $i }})" class="submit btn btn-outline-warning" value="+" data-toggle="tooltip" data-original-title="Agregar Encargado" {{ $disabled ? 'disabled' : '' }}/>
                 </div>
                     </div>
-                        <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(1)">Atras</button>
+                        <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(1)">Regresar</button>
                         <button class="next-form btn btn-outline-primary" type="button" wire:click.prevent="secondStepSubmit">Siguiente</button>
                     </div>
             </div>
-
-
+            {{-- Tercer formulario, vista y confirmación de infirmación --}}
             <div class="row setup-content {{ $currentStep != 3 ? 'displayNone' : '' }}" id="step-3">
                 <div class="col-xs-12">
                     <div class="col-md-12">
                         <table class="table">
-
                             <tr>
                                 <td colspan="2" class="table-warning">
                                     <strong>Datos del preinscrito</strong>
                                 </td>
                             </tr>
-
                             <tr>
                                 <td>Primer nombre:</td>
                                 <td><strong>{{$nombre1}}</strong></td>
@@ -573,10 +474,6 @@
                                 <td><strong>{{$celular}}</strong></td>
                             </tr>
                             <tr>
-                                <td>Contacto de emergencia:</td>
-                                <td><strong>{{$contacto_emergencia}}</strong></td>
-                            </tr>
-                            <tr>
                                 <td>Fotografía:</td>
                                 <td>
                                 <strong>
@@ -613,7 +510,11 @@
                             </tr>
                             <tr>
                                 <td>Municipio de nacimiento:</td>
-                                <td><strong>{{$city}}</strong></td>
+                                @foreach($cities as $cts)
+                                @if($cts->id == $city)
+                                    <td><strong>{{$cts->nombre}}</strong></td>
+                                @endif
+                                @endforeach
                             </tr>
                             <tr>
                                 <td>Departanto de recidencia:</td>
@@ -625,9 +526,26 @@
                             </tr>
                             <tr>
                                 <td>Municipio de recidencia:</td>
-                                <td><strong>{{$cityr}}</strong></td>
+                                @foreach($citiesr as $cts)
+                                @if($cts->id == $cityr)
+                                    <td><strong>{{$cts->nombre}}</strong></td>
+                                @endif
+                                @endforeach
                             </tr>
-                            @if($ex_encargados === 0)
+                            <tr>
+                                <td colspan="2" class="table-warning">
+                                    <strong>Contacto de emergencia</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Nombre:</td>
+                                <td><strong>{{$nombre_emergencia}}</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Teléfono:</td>
+                                <td><strong>{{$contacto_emergencia}}</strong></td>
+                            </tr>
+                            @if($ex_encargados === false)
 
                             @else
                                 @foreach($primernombrep as $indice => $value )
@@ -680,16 +598,15 @@
                                     <td>DPI:</td>
                                     <td><strong>{{$dpip[$indice]}}</strong></td>
                                 </tr>
-                                {{-- <tr>
+                                <tr>
                                     <td>Parentezco:</td>
                                     <td><strong>{{$parentezcop[$indice]}}</strong></td>
-                                </tr> --}}
+                                </tr>
                                 @endforeach
                             @endif
-
                         </table>
-                        <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(2)">Atras</button>
-                        <button class="submit btn btn-outline-success" wire:click="submitForm" onclick=window.location='{{ route('ficha-PDF') }}' type="button">Finalizar</button>
+                        <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(2)">Regresar</button>
+                        <button class="submit btn btn-outline-success" wire:click="submitForm" {{-- onclick="window.location.href='{{ route('ficha-PDF', '') }}/'+document.getElementById('cui').value;" --}}type="button">Guardar</button>
                     </div>
                 </div>
             </div>

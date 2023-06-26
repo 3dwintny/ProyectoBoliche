@@ -288,7 +288,7 @@
                 document.getElementById('deporte_adaptado_id').options[i].disabled=true;
             }
             document.getElementById('adaptado').value="No";
-            document.getElementById('adaptadoText').value="No"; 
+            document.getElementById('adaptadoText').value="No";
             document.getElementById('deporte_adaptado_id').options[0].selected = true;
             document.getElementById('deporte_adaptado_id_text').disabled = false;
             document.getElementById('otro_programa_id_text').disabled = true;

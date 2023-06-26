@@ -20,7 +20,6 @@ use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\Nacionalidad;
 use App\Models\Control;
-use App\Models\Alergia;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Models\Alumnos_encargados;
@@ -164,26 +163,12 @@ class AtletaController extends Controller
      */
     public function create($id)
     {
-        $hoy = Carbon::now();
-        $centro=Centro::all();
-        $entrenador= Entrenador::All();
-        $alumnos = Alumno::all();
-        $categoria = Categoria::all();
-        $etapa=Etapa_Deportiva::all();
-        $deporteadaptado = Deporte_Adoptado::all();
-        $otroprograma = Otro_Programa::all();
-        $lineadesarrollo = Linea_Desarrollo::all();
-        $deporte = Deporte::all();
-        $modalidad = Modalidad::all();
-        $prt = PRT::all();
-        return view('atletas.create',compact('centro','entrenador','alumnos','categoria','etapa',
-                                            'deporteadaptado','otroprograma','lineadesarrollo',
-                                            'deporte','modalidad','prt','hoy'));
+
     }
     public function creacion($id){
         $centro=Centro::where('estado','activo')->get(['id','nombre']);
         $entrenador= Entrenador::where('estado','activo')->get(['id','nombre1','apellido1']);
-        $alumno = Alumno::find($id);
+        $alumno = Alumno::find(decrypt($id));
         $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
         $etapa=Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
         $deporteadaptado = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
@@ -347,10 +332,9 @@ class AtletaController extends Controller
             $atleta = Alumno::find($alumnos[0]->id);
             $departamentos = Departamento::get(['id','nombre']);
             $nacionalidades = Nacionalidad::get(['id','descripcion']);
-            $alergias = Alergia::get(['id','nombre']);
             $municipioNacimiento = Municipio::where('departamento_id',$atleta->departamento_id)->get();
             $municipioResidencia = Municipio::where('departamento_id',$atleta->departamento_residencia_id)->get();
-            return view('Atletas.informacionPersonal',compact('atleta','nacionalidades','alergias','departamentos','municipioNacimiento','municipioResidencia'));
+            return view('Atletas.informacionPersonal',compact('atleta','nacionalidades','departamentos','municipioNacimiento','municipioResidencia'));
         }
         else{
             return redirect('home');

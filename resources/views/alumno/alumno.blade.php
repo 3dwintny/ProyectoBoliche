@@ -28,7 +28,7 @@
                                 @endforeach
                             </div>
                             <div class="card-header text-bold ">
-                                <livewire:formulario>
+                                <livewire:formulario-alumno>
                             </div>
                         </div>
                     </div>

@@ -107,7 +107,7 @@
                                         <label for="genero">Género</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-2">
+                                {{-- <div class="col-md-6 mb-2">
                                     <div class="form-floating">
                                         <select name="alergia_id" class="form-control text-dark" id="alergia_id" required>
                                             <option selected value=""></option>
@@ -117,7 +117,7 @@
                                         </select>
                                         <label for="alergia_id">Alergia</label>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12 mb-2">
                                     <div class="form-floating">
                                         <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Dirección') }}" id="direccion" type="text" name="direccion" value="{{$atleta->direccion}}">

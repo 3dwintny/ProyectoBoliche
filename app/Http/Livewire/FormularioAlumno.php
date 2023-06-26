@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Livewire;
-
 use App\Models\Alumno;
+use App\Models\Formulario;
 use Livewire\Component;
 use App\Models\Encargado;
 use App\Models\Municipio;
@@ -10,15 +10,11 @@ use App\Models\Parentesco;
 use App\Models\Departamento;
 use App\Models\Nacionalidad;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Http\Livewire\Field;
 use App\Models\Alumnos_encargados;
-use App\Models\Parentezco;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
-class Formulario extends Component
+class FormularioAlumno extends Component
 {
     use WithFileUploads;
     /* Constructores para el ingreso de relasiones */
@@ -37,8 +33,6 @@ class Formulario extends Component
     public $contriesr = NULL;
     public $citiesr = NULL;
 
-
-
     #variables para el formulario
     public $currentStep = 1;
     public $successMessage = '';
@@ -46,7 +40,7 @@ class Formulario extends Component
     public $nombre1, $nombre2, $nombre3, $apellido1, $apellido2,
     $cui, $fecha, $edad, $peso, $altura, $genero = 1, $direccion, $telefono,
     $celular, $correo, $contacto_emergencia, $foto,$fecha_fotografia, $estado,
-    $nit, $pasaporte, $nacionalidad=1, $alergias = 'Sin alergias';
+    $nit, $pasaporte, $nacionalidad=1, $alergias = 'Sin alergias', $nombre_emergencia;
 
     #variables para ingreso de encargados / formulario de encargados
     public $primernombrep = [''], $segundonombrep = [''], $tercernombrep = [''], $primerapellidop = [''],
@@ -54,87 +48,122 @@ class Formulario extends Component
         $correop = [''],$dpip = [''], $parentezcop = [''];
 
     public $updateMode = false;
-    public $i = 1;
+    public $i = 0;
     public $disabled = false;
+    public $btnencargados = true;
     #Validacion de encargados
-    public $ex_encargados = 1;
-
-
-
+    public $ex_encargados = true;
+    #Este es el primer paso del formulario
     public function firstStepSubmit()
     {
         #Validamos la informacion minima requerida por la base de datos
-      /*  try{
-
-       }catch(\Exception $e){
-        session()->flash('message', 'Ha ocurrido un error');
-       } */
-       $this->validarAlumnos();
+        $this->validarAlumnos();
+        try{
+            #validamos si el alumno es mayor, asi saltar el paso de encargados
         if ($this->edad>= 18){
             $this->currentStep = 3;
-            $this->ex_encargados= 0;
+            $this->ex_encargados= false;
         }else{
+            $this->ex_encargados= true;
             $this->currentStep = 2;
         }
-
-
+       }catch(Throwable $e){
+        report($e);
+        session()->flash('error', 'Se produjo un error');
+       }
     }
-
-
+    #Segundo paso para el formualrio, es donde ingresamos la información del encargado si existe.
     public function secondStepSubmit()
-    {
+    {   $this->validarEncargados();
         try{
-            $this->validarEncargados();
             $this->currentStep = 3;
-        }catch(\Exception $e){
-            session()->flash('message', 'Ha ocurrido un error');
+        }catch(Throwable $e){
+            report($e);
+            return false;
         }
-
     }
-
-
+    #tercer paso, y el paso donde se guradan todos lo datos.
     public function submitForm()
     {
-        /* try{
-            #Metodo para guardar encargados
-
-
-        }catch(\Exception $e){
-            session()->flash('message', 'Ha ocurrido un error');
-        } */
-        if($this->ex_encargados === 1){
-                $this->guardarAlumno();
-                $this->crearRelacionAlumnos();
-                $this->guardarEncargados();
-        }else{
-                $this->guardarAlumno();
+        DB::beginTransaction();
+        try{
+            #Usamos metodo para guardar información del alumno
+            $this->guardarAlumno();
+            $this->clearForm();
+            #Validamos si existe un encargado, si existe se guarda la información y luego se realiza la relación
+        if ($this->ex_encargados){
+            $this->guardarEncargados();
+            $this->crearRelacionAlumnos();
+            $this->clearForm();
         }
-        $this->successMessage='Datos ingresados correctamente';
-        //$this->clearForm();
-        $this->currentStep = 1;
-
+        DB::commit();
+        }catch(Throwable $e){
+            DB::rollBack();
+            report($e);
+            return false;
+        }
     }
-
     public function back($step)
     {
-        if($this->ex_encargados === 1){
+        if($this->ex_encargados === true){
             $this->currentStep = $step;
         }else{
             $this->currentStep = 1;
         }
     }
-
     public function clearForm()
     {
-        /* $this->name = '';
-        $this->amount = '';
-        $this->description = '';
-        $this->stock = '';
-        $this->status = 1; */
+        $this->nombre1 = "";
+        $this->nombre2 = "";
+        $this->nombre3 = "";
+        $this->apellido1 = "";
+        $this->apellido2 = "";
+        $this->cui = "";
+        $this->fecha = "";
+        $this->edad = "";
+        $this->peso = "";
+        $this->altura = "";
+        $this->genero = 1;
+        $this->direccion = "";
+        $this->telefono = "";
+        $this->celular = "";
+        $this->correo = "";
+        $this->contacto_emergencia = "";
+        $this->foto = "";
+        $this->fecha_fotografia = "";
+        $this->estado = "";
+        $this->nit = "";
+        $this->pasaporte = "";
+        $this->nacionalidad = 1;
+        $this->alergias = "Sin alergias";
+        /* Variables de encargados */
+        $this->primernombrep = [''];
+        $this->segundonombrep = [''];
+        $this->tercernombrep = [''];
+        $this->primerapellidop = [''];
+        $this->segundoapellidop = [''];
+        $this->apellidocasadap = [''];
+        $this->direccionp = [''];
+        $this->celularp = [''];
+        $this->telefonop = [''];
+        $this->correop = [''];
+        $this->dpip = [''];
+        $this->parentezcop = [''];
+
+        /* Usados para los botones y agregar imputs dinamicos */
+        $this->updateMode = false;
+        $this->i = 0;
+        $this->disabled = false;
+        $this->btnencargados = true;
+        #Validacion de encargados
+        $this->ex_encargados = true;
+
+        $this->countryr = null;
+        $this->cityr = null;
+        $this->country = null;
+        $this->city = null;
     }
-
 /* --------------------------------------------------- Metodos para el registro de alumnos ---------------------------------------------------------------------- */
-
     /* Calcular Edad */
     public function updatedFecha($fechan)
     {
@@ -149,16 +178,12 @@ class Formulario extends Component
         $this->contriesr = Departamento::all();
         $this->cities = collect();
         $this->citiesr = collect();
+        // $this->parentezcop = 1;
     }
-
-
     public function updatedCountry($value)
     {
-        #$this->mn = DB::table('municipio')->where('departamento_id',$dep)->get();
         $this->cities = Municipio::where('departamento_id',$value)->get();
         $this->city  = $this->cities->first()->id ?? null;
-
-
     }
     public function updatedCountryr($valuer)
     {
@@ -166,11 +191,9 @@ class Formulario extends Component
         $this->cityr  = $this->citiesr->first()->id ?? null;;
     }
     /* Validamos la informacion minima requerida por la base de datos */
-
     public function updated($propertyCui)
     {
         $this->validateOnly($propertyCui, [
-            'cui' => 'min:13 | max:13',
             'cui' => 'numeric',
             'correo' => 'email',
             'peso' => 'numeric',
@@ -181,8 +204,6 @@ class Formulario extends Component
             'nit' => 'numeric',
             'pasaporte' => 'numeric',
         ],[
-           'cui.min' => 'Ingrese el cui correcto (no menos de 13 caracteres)',
-           'cui.max' => 'Ingrese el cui correcto (no mas de 13 caracteres)',
            'cui.numeric' => 'Unicamente debe ingresar números',
            'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
            'peso.numeric' => 'Unicamente debe ingresar números',
@@ -200,7 +221,7 @@ class Formulario extends Component
             'nombre1' => 'required',
             'apellido1' => 'required',
             'peso' => 'required',
-            'cui' => 'required',
+            'cui' => 'min:13 | max:13',
             'fecha' => 'required',
             'peso' => 'required | numeric',
             'altura' => 'required | numeric',
@@ -214,13 +235,12 @@ class Formulario extends Component
             'city' => 'required',
             'countryr' => 'required',
             'cityr' => 'required',
-
-
         ],
         [
             'nombre1' => 'Este campo es requerido',
             'apellido1' => 'Este campo es requerido',
-            'cui' => 'Este campo es requerido',
+            'cui.min' => 'Ingrese el cui correcto (no menos de 13 caracteres)',
+            'cui.max' => 'Ingrese el cui correcto (no mas de 13 caracteres)',
             'peso' => 'Este campo es requerido',
             'altura' => 'Este campo es requerido',
             'direccion' => 'Este campo es requerido',
@@ -234,7 +254,6 @@ class Formulario extends Component
             'city'=> 'Este campo es requerido',
             'countryr'=> 'Este campo es requerido',
             'cityr'=> 'Este campo es requerido',
-
         ]
     );
 
@@ -264,6 +283,7 @@ class Formulario extends Component
             'celular'=> $this->celular,
             'correo'=> $this->correo,
             'contacto_emergencia'=> $this->contacto_emergencia,
+            'nombre_emergencia'=> $this->nombre_emergencia,
             'foto' => $imageName,
             'fecha_fotografia'=> date("Y-m-d"),
             'estado'=> 'Pendiente',
@@ -275,39 +295,43 @@ class Formulario extends Component
             'municipio_id'=> $this->city,
             'departamento_residencia_id'=> $this->countryr,
             'municipio_residencia_id'=> $this->cityr,
-
         ]);
     }
     /* -----------------------------------------Metodos para el registro de encargados------------------------------------------- */
-
-
     public function add($i)
     {
-        $i = $i + 1;
-        $this->i = $i;
-
-        if($i<=2){
-        $this->primernombrep[] = '';
-        $this->segundonombrep[] = '';
-        $this->tercernombrep[] = '';
-        $this->primerapellidop[] = '';
-        $this->segundoapellidop[] = '';
-        $this->apellidocasadap[] = '';
-        $this->direccionp[] = '';
-        $this->celularp[] = '';
-        $this->telefonop[] = '';
-        $this->correop[] = '';
-        $this->dpip[] = '';
-        // $this->parentezcop = [];
-        }else{
-            session()->flash('message', 'Solo puede ingresar un maximo de 2 encargados');
-            $this->disabled = true;
+        try{
+            $this->btnencargados = false;
+            $i = $i + 1;
+            $this->i = $i;
+            if($i<2){
+            $this->primernombrep[] = '';
+            $this->segundonombrep[] = '';
+            $this->tercernombrep[] = '';
+            $this->primerapellidop[] = '';
+            $this->segundoapellidop[] = '';
+            $this->apellidocasadap[] = '';
+            $this->direccionp[] = '';
+            $this->celularp[] = '';
+            $this->telefonop[] = '';
+            $this->correop[] = '';
+            $this->dpip[] = '';
+            $this->parentezcop[] = '';
+            }else{
+                session()->flash('message', 'Solo puede ingresar un maximo de 2 encargados');
+                $this->disabled = true;
+            }
+        }catch(\Exception $e)
+        {
+            report($e);
+            session()->flash('error', 'Se produjo un error');
         }
-    }
 
+    }
     public function remove($index)
-    {   $i = $index - 1;
-        $this->i = $i;
+    {   $this->btnencargados = true;
+        $this->disabled = false;
+        $this->i = 0;
         unset($this->primernombrep[$index]);
         $this->primernombrep = array_values($this->primernombrep);
         unset($this->segundonombrep[$index]);
@@ -332,34 +356,29 @@ class Formulario extends Component
         $this->dpip = array_values($this->dpip);
         unset($this->parentezcop[$index]);
         /* $this->parentezcop = array_values($this->parentezcop); */
-
     }
-
     private function resetInputFields(){
-
-        $this->primernombrep = '';
-        $this->segundonombrep = '';
-        $this->tercernombrep = '';
-        $this->primerapellidop = '';
-        $this->segundoapellidop = '';
-        $this->apellidocasadap = '';
-        $this->direccionp = '';
-        $this->celularp = '';
-        $this->telefonop = '';
-        $this->correop = '';
-        $this->dpip = '';
-        $this->parentezcop ='';
+        $this->primernombrep = [''];
+        $this->segundonombrep = [''];
+        $this->tercernombrep = [''];
+        $this->primerapellidop = [''];
+        $this->segundoapellidop = [''];
+        $this->apellidocasadap = [''];
+        $this->direccionp = [''];
+        $this->celularp = [''];
+        $this->telefonop = [''];
+        $this->correop = [''];
+        $this->dpip = [''];
+        $this->parentezcop =[''];
     }
-
     public function validarEncargados()
     {
         $validateDate =$this->validate([
-
             'primernombrep.*' => 'required',
             'primerapellidop.*' => 'required',
             'direccionp.*' => 'required',
             'celularp.*' => 'required | numeric',
-            'dpip.*' => 'required',
+            'dpip.*' => 'required | numeric',
             'correop.*' => 'required | email',
         ],
         [
@@ -373,15 +392,38 @@ class Formulario extends Component
             'correop.*.email' => 'Debe ser una dirección de correo electrónico válida.',
             'correop.*' => 'Este campo es requerido',
         ]
-
-
         );
     }
+    /* public function updatedDPI($propertyDpip){
+
+        $this->validateOnly($propertyDpip, [
+            'dpip.*' => 'min:13 | max:13',
+            'correo' => 'email',
+            'peso' => 'numeric',
+            'altura' => 'numeric',
+            'contacto_emergencia' => 'numeric',
+            'telefono' => 'numeric',
+            'celular' => 'numeric',
+            'nit' => 'numeric',
+            'pasaporte' => 'numeric',
+        ],[
+           'dpip.*.min' => 'Ingrese el cui correcto (no menos de 13 caracteres)',
+           'dpip.*.max' => 'Ingrese el cui correcto (no mas de 13 caracteres)',
+           'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
+           'peso.numeric' => 'Unicamente debe ingresar números',
+           'altura.numeric' => 'Unicamente debe ingresar números',
+           'contacto_emergencia.numeric' => 'Unicamente debe ingresar números',
+           'telefono' => 'Unicamente debe ingresar números',
+           'celular' => 'Unicamente debe ingresar números',
+           'nit' => 'Unicamente debe ingresar números',
+           'Pasaporte' => 'Unicamente debe ingresar números',
+        ]);
+    } */
     public function guardarEncargados()
-    {
-        foreach($this->primernombrep as $indice => $nombre) {
+    {   try{
+            foreach($this->primernombrep as $indice => $nombre) {
             $modelo = new Encargado;
-            $modelo->nombre1p = $nombre;
+            $modelo->nombrep = $nombre;
             $modelo->nombre2p = $this->segundonombrep[$indice];
             $modelo->nombre3p = $this->tercernombrep[$indice];
             $modelo->apellido1p = $this->primerapellidop[$indice];
@@ -396,14 +438,16 @@ class Formulario extends Component
             $modelo->save();
         }
 
+        }catch(Throwable $e){
+            report($e);
+            return false;
+        }
     }
-
     public function crearRelacionAlumnos()
     {
         /* Buscaremos crear la relacion que existe de alumnos a encargados
-        como lo espesificamos arriba es que si se tiene a mas de 3 padres
+        como lo espesificamos arriba es que si se tiene a mas de 2 padres
         la relasion es de esa fomra */
-       // $num_encargados = count($this->dpip);
        try{
 
             foreach($this->dpip as $dpien){
@@ -435,8 +479,7 @@ class Formulario extends Component
         $this-> addError('Error creando la relación', $e->getMessage());
        }
 
-}
-
+    }
     public function render()
     {
         #Encargados
@@ -445,6 +488,6 @@ class Formulario extends Component
         $nacionalidades = Nacionalidad::all();
         $formularios = Formulario::all();
 
-        return view('livewire.formulario', compact("parentezcos","nacionalidades","formularios"));
+        return view('livewire.formulario-alumno', compact("parentezcos","nacionalidades","formularios"));
     }
 }

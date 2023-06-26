@@ -40,7 +40,7 @@
                 <i class="fa fa-fw fa-eye"></i>Ver
               </a>
 
-              <a class="btn btn-sm btn-success" href="{{route('creacion',$alumno->id)}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
+              <a class="btn btn-sm btn-success" href="{{route('creacion',encrypt($alumno->id))}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
               @csrf
               @method('DELETE')
               <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i>Rechazar</button>
@@ -131,7 +131,7 @@
         image.src = "{{ asset('uploads/alumnos/') }}" + '/' + response.foto;
         var crear = document.getElementById("aceptar")
         crear.href = "{{ route('creacion', '') }}/" + id;
-    
+
         $('#myModal').modal('show');
       },
       error: function(xhr, status, error) {

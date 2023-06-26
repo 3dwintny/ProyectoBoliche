@@ -15,13 +15,15 @@ use App\Models\Alumnos_encargados;
 use PDF;
 use Carbon\Carbon;
 use App\Models\Control;
+use Throwable;
 
 class AlumnoController extends Controller
 {
-    protected $encargado;
-    public function __construct(Encargado $encargado)
+    protected $encargado, $alumnosCons;
+    public function __construct(Encargado $encargado, Alumno $alumnos)
     {
         $this->encargado = $encargado;
+        $this->alumnosCons = $alumnos;
     }
     /**
      * Display a listing of the resource.
@@ -151,14 +153,10 @@ class AlumnoController extends Controller
         //return view("Funciona");
         //return redirect()->back()->with('status','Alumno ingresado Correctamente');
         /* return redirect()->action([AlumnoController::class, 'index']); */
-
-
-
         /*$factura = Alumno::create($request->all());
         return redirect()->route('facturas.index')
             ->with('success', 'Factura created successfully.');*/
     }
-
     /**
      * Display the specified resource.
      *
@@ -168,12 +166,9 @@ class AlumnoController extends Controller
     public function show($id)
     {
         $alumno = Alumno::find($id);
-
-
         if (!$alumno) {
             return response()->json(['error' => 'Alumno no encontrado'], 404);
         }
-
         $datosAlumno = [
             'nombre' => $alumno->nombre1 .' '. $alumno->nombre2 .' '. $alumno->nombre3.' '.$alumno->apellido1 .' '.$alumno->apellido2,
             'cui' => $alumno ->cui,
@@ -185,10 +180,8 @@ class AlumnoController extends Controller
             'departamento'=>$alumno->departamento_residencia->nombre,
             'municipio'=>$alumno->municipio_residencia->nombre,
         ];
-
         return response()->json($datosAlumno);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -199,7 +192,6 @@ class AlumnoController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -211,7 +203,6 @@ class AlumnoController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -223,25 +214,42 @@ class AlumnoController extends Controller
         Alumno::find($id)->update(['estado' => 'Rechazado']);
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
     }
-
-    public static function generarPDF()
+    public static function generarPDF($cui)
     {
-        try{
-            $encargado = Encargado::orderByDesc('id')->limit(1)->get();
+            try{
             $anio = Carbon::now()->format('Y');
-            $alumno = null;
-            foreach ($encargado as $item){
-                $registro = Alumnos_encargados::where('encargado_id',$item->id)->get();
-            }
-            foreach ($registro as $item){
-                $alumno = Alumno::where('id',$item->alumno_id)->get();
-            }
             $formularios = Formulario::all();
-            return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
+            $alumnos = Alumno::where('cui', $cui)->get();
+            $cantidadDeRelaciones = null;
+            $relalumnos = null;
+            $encargados = [];
+            $cant_rel = null;
+            foreach($alumnos as $item){
+                $cantidadDeRelaciones = Alumnos_encargados::where('alumno_id', $item->id)->count();
+                $relalumnos = Alumnos_encargados::where('alumno_id', $item->id)->get();
+            }
+            foreach ($relalumnos as $item) {
+                $resultados = Encargado::where('id', $item->encargado_id)->get();
+                foreach($resultados as $resultado) {
+                $encargados[] = $resultado->toArray();
+                }
+            }
+            if($cantidadDeRelaciones === 2){
+                $cant_rel = 2;
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+            }elseif($cantidadDeRelaciones === 1){
+                $cant_rel = 1;
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
 
-        }catch(\Exception $e){
-            $errorMessage = $e->getMessage();
-            return back()->withInput()->withErrors(['error' => $errorMessage]);
+            }else{
+                $cant_rel = 0;
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','anio','cant_rel'))->setPaper('8.5x11')->stream();
+            }
+
+        }catch(Throwable $e){
+            report($e);
+            echo "Ha ocurrido un error. Por favor, inténtalo de nuevo.";
+            return false;
         }
     }
 
