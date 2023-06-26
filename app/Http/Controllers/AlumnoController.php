@@ -50,7 +50,7 @@ class AlumnoController extends Controller
     public function getMunicipios(Request $request)
     {
         $municipios = DB::table('municipio')
-            ->where('departamento_id', $request->departamento_id)
+            ->where('departamento_id', decrypt($request->departamento_id))
             ->get();
 
         if (count($municipios) > 0) {

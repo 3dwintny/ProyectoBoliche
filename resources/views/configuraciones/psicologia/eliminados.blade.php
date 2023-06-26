@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-2 pt-5 pt-md-10">
+<div class="header bg-dark pb-2 pt-5 pt-md-10 mt--5">
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Deportes</h1>
+          <h1 class="text-white">Psicología</h1>
         </div>
       </div>
     </div>

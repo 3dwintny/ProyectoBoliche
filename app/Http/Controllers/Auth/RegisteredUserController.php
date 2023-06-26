@@ -56,6 +56,7 @@ class RegisteredUserController extends Controller
                     $avatar = $alumno[0]->foto;
                     $name = $alumno[0]->nombre1 . ' ' . $alumno[0]->apellido1;
                 }
+
                 if($contadorC>0 && $contadorE>0){
                     $request->validate([
                         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],

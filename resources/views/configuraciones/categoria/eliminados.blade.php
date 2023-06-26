@@ -3,7 +3,7 @@
 @section('content')
 @include('layouts.headers.cards', ['texto' => 'Categorias'])
 <div class="container">
-  <div class="pb-5 pt-5 pt-md-2">
+  <div class="pb-5 pt-5 pt-md-2 mt--5">
     <div class="">
       <table class="table table-responsive table-hover" style="border-radius: 5px;">
         <thead class="table-dark">

@@ -7,7 +7,7 @@
 
 <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
 @include('layouts.headers.cards', ['texto' => 'Entrenadores'])
-<div class="container-fluid mt--6">
+<div class="container-fluid mt--5">
     <div class="header-body text-center  mb-7">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
@@ -220,7 +220,7 @@
                                             <option value="{{encrypt($item->id)}}" {{$item->id == $entrenador->deporte_id ? 'selected' : ''}}>{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
-                                        <label for="estado_civil">Estado Civil</label>
+                                        <label for="estado_civil">FADN</label>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-2">

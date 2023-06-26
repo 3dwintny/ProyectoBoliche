@@ -7,7 +7,7 @@
 
 <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
 @include('layouts.headers.cards', ['texto' => 'Atleta'])
-<div class="container-fluid mt--6">
+<div class="container-fluid mt-md--5 mt-lg--5 mt-sm--5 mt-xs--5">
     <div class="header-body text-center  mb-7">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
@@ -53,11 +53,11 @@
                                     <div class="col-md-4 mb-2 form-control">
                                         <label>¿Deporte adaptado?</label>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" name="adaptado" id="deporteAdaptado">
+                                            <input type="radio" name="adaptado" id="deporteAdaptado" value="Si">
                                             <label class="form-check-label" for="inlineRadio3">Si</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input type="radio" name="adaptado" id="cancelarAdaptado" checked>
+                                            <input type="radio" name="adaptado" id="cancelarAdaptado" value="No" checked>
                                             <label class="form-check-label" for="inlineRadio3">No</label>
                                         </div>
                                     </div>
@@ -229,7 +229,7 @@
                                             <label for="prt_id">PRT</label>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="alumno_id" id="" value="{{encrypt($item->id)}}" readonly>
+                                    <input type="hidden" name="alumno_id" id="" value="{{encrypt($alumno->id)}}" readonly>
                                 </div>
                                 <div class="container">
                                     <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
