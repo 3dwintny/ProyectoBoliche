@@ -12,6 +12,7 @@ use App\Models\Nacionalidad;
 use Livewire\WithFileUploads;
 use App\Models\Alumnos_encargados;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Throwable;
 
 class FormularioAlumno extends Component
@@ -86,23 +87,29 @@ class FormularioAlumno extends Component
     public function submitForm()
     {
         DB::beginTransaction();
-        try{
-            #Usamos metodo para guardar información del alumno
+        try {
             $this->guardarAlumno();
-            $this->clearForm();
-            #Validamos si existe un encargado, si existe se guarda la información y luego se realiza la relación
-        if ($this->ex_encargados){
-            $this->guardarEncargados();
-            $this->crearRelacionAlumnos();
-            $this->clearForm();
-        }
-        DB::commit();
-        }catch(Throwable $e){
+            $alumnoGuardado = true;
+            if ($this->ex_encargados) {
+                $this->guardarEncargados();
+                $this->crearRelacionAlumnos();
+                $encargadosGuardado = true;
+            } else {
+                $encargadosGuardado = true;
+            }
+            if ($alumnoGuardado && $encargadosGuardado) {
+                DB::commit();
+                $url = route('ficha-PDF', ['cui' => $this->cui]);
+                $this->clearForm();
+                return Redirect::to($url);
+            }
+        } catch (\Exception $e) {
             DB::rollBack();
             report($e);
-            return false;
+            $this->addError('error', 'Se produjo un error al guardar los datos.');
         }
-    }
+
+            }
     public function back($step)
     {
         if($this->ex_encargados === true){
@@ -420,10 +427,10 @@ class FormularioAlumno extends Component
         ]);
     } */
     public function guardarEncargados()
-    {   try{
+    {
             foreach($this->primernombrep as $indice => $nombre) {
             $modelo = new Encargado;
-            $modelo->nombrep = $nombre;
+            $modelo->nombre1p = $nombre;
             $modelo->nombre2p = $this->segundonombrep[$indice];
             $modelo->nombre3p = $this->tercernombrep[$indice];
             $modelo->apellido1p = $this->primerapellidop[$indice];
@@ -437,18 +444,12 @@ class FormularioAlumno extends Component
             $modelo->parentezco_id = $this->parentezcop[$indice];
             $modelo->save();
         }
-
-        }catch(Throwable $e){
-            report($e);
-            return false;
-        }
     }
     public function crearRelacionAlumnos()
     {
         /* Buscaremos crear la relacion que existe de alumnos a encargados
         como lo espesificamos arriba es que si se tiene a mas de 2 padres
         la relasion es de esa fomra */
-       try{
 
             foreach($this->dpip as $dpien){
                 $this->oencargado = Encargado::all();
@@ -475,9 +476,6 @@ class FormularioAlumno extends Component
                 }
             $id_alumno_encargado->save();
             }
-       }catch(\Exception $e){
-        $this-> addError('Error creando la relación', $e->getMessage());
-       }
 
     }
     public function render()

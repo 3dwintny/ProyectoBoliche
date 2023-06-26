@@ -606,7 +606,7 @@
                             @endif
                         </table>
                         <button class="previous-form btn btn-outline-warning" type="button" wire:click="back(2)">Regresar</button>
-                        <button class="submit btn btn-outline-success" wire:click="submitForm" {{-- onclick="window.location.href='{{ route('ficha-PDF', '') }}/'+document.getElementById('cui').value;" --}}type="button">Guardar</button>
+                        <button class="submit btn btn-outline-success" wire:click="submitForm" {{-- onclick="window.location.href='{{ route('ficha-PDF', '') }}/'+document.getElementById('cui').value;"--}}type="button">Guardar</button>
                     </div>
                 </div>
             </div>
