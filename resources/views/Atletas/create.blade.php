@@ -7,7 +7,7 @@
 
 <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
 @include('layouts.headers.cards', ['texto' => 'Atleta'])
-<div class="container-fluid mt--6">
+<div class="container-fluid mt-md--5 mt-lg--5 mt-sm--5 mt-xs--5">
     <div class="header-body text-center  mb-7">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8">
