@@ -23,46 +23,6 @@ use Illuminate\Support\Str;
 class AsistenciaController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //Obtiene la fecha del sistema
-        $ms = Carbon::now();
-
-        //Muestra el año en el reporte
-        $mostrarAnioReporte = $ms->year;
-
-        //Obtiene la data de la base de datos
-        $fechas = Asistencia::
-        whereMonth('fecha',$ms->month)
-        ->whereYear('fecha',$ms->year)
-        ->get();
-
-        if(count($fechas)>0){
-            $datos =  $this->mostrarAsistencia($ms->month,$ms->year);
-            $atleta = $datos['atleta'];
-            $fechas = $datos['fechas'];
-            $estado = $datos['estado'];
-            $contarDias = $datos['contarDias'];
-            $promedio = $datos['promedio'];
-            $obtenerMes = $datos['obtenerMes'];
-            $obtenerAnio = $datos['obtenerAnio'];
-            $mostrarMes = $datos['mostrarMes'];
-            $entrenador = Entrenador::where('estado','activo')->get(['nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada']);
-            $centro_entrenamiento = Centro::where('estado','activo')->get('nombre');
-            $departamento = Departamento::where('estado','activo')->get(['id','nombre']);
-            $municipio = Municipio::where('estado','activo')->where('departamento_id',13)->get(['id','nombre','departamento_id']);
-            return view('Reportes.RepFor30.index',compact('departamento','atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes','entrenador','centro_entrenamiento','municipio'));
-        }else{
-            $mostrarMes = $this->mesLetras($ms->month);
-            return view('Reportes.RepFor30.sinresultadosactual',compact('mostrarAnioReporte','mostrarMes'));
-        }
-    }
-
-    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -389,6 +349,47 @@ class AsistenciaController extends Controller
         return $mostrarMes;
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //Obtiene la fecha del sistema
+        $ms = Carbon::now();
+
+        //Muestra el año en el reporte
+        $mostrarAnioReporte = $ms->year;
+
+        //Obtiene la data de la base de datos
+        $fechas = Asistencia::
+        whereMonth('fecha',$ms->month)
+        ->whereYear('fecha',$ms->year)
+        ->get();
+
+        if(count($fechas)>0){
+            $datos =  $this->mostrarAsistencia($ms->month,$ms->year);
+            //return $datos;
+            $atleta = $datos['atleta'];
+            $fechas = $datos['fechas'];
+            $estado = $datos['estado'];
+            $contarDias = $datos['contarDias'];
+            $promedio = $datos['promedio'];
+            $obtenerMes = $datos['obtenerMes'];
+            $obtenerAnio = $datos['obtenerAnio'];
+            $mostrarMes = $datos['mostrarMes'];
+            $entrenador = Entrenador::where('estado','activo')->get(['nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada']);
+            $centro_entrenamiento = Centro::where('estado','activo')->get('nombre');
+            $departamento = Departamento::where('estado','activo')->get(['id','nombre']);
+            $municipio = Municipio::where('estado','activo')->where('departamento_id',13)->get(['id','nombre','departamento_id']);
+            return view('Reportes.RepFor30.index',compact('departamento','atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes','entrenador','centro_entrenamiento','municipio'));
+        }else{
+            $mostrarMes = $this->mesLetras($ms->month);
+            return view('Reportes.RepFor30.sinresultadosactual',compact('mostrarAnioReporte','mostrarMes'));
+        }
+    }
+
     public function mostrarAsistencia($obtenerMes,$obtenerAnio)
     {
         $mostrarMes = $this->mesLetras($obtenerMes);
@@ -461,11 +462,15 @@ class AsistenciaController extends Controller
 
         $controlDatos=0;
         $controlAtletas = 0;
-        while(count($estado) !=count($fecha)*count($atletas)){
+
+        //return $asistenciaOrdenada;
+        while(count($estado) !=count($fecha)*count($mostrarAtletas)){
             for($i=0;$i<count($fecha);$i++){
                 if($asistenciaOrdenada[$controlDatos]->atleta_id == $mostrarAtletas[$controlAtletas] && $asistenciaOrdenada[$controlDatos]->fecha == $fecha[$i]){
                     array_push($estado,$asistenciaOrdenada[$controlDatos]->estado);
-                    $controlDatos++;
+                    if($controlDatos<count($asistenciaOrdenada)-1){
+                        $controlDatos++;
+                    }
                 }
                 else{
                     array_push($estado,"");
