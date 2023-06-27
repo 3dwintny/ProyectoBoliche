@@ -108,25 +108,31 @@
                             </li>
                             @endcan
                             @can('ver-listado-tareas')
+                            @if(auth()->user()->tipo_usuario_id==1)
                             <li class="nav-item">
                                 <a href="{{route('tareaPendiente')}}" class="nav-link">
                                     {{ __('Tareas pendientes') }}
                                 </a>
                             </li>
+                            @endif
                             @endcan
                             @can('Asistencia por atleta')
+                            @if(auth()->user()->tipo_usuario_id==1)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistenciaIndividual') }}">
                                     {{ __('Mi asistencia') }}
                                 </a>
                             </li>
+                            @endif
                             @endcan
                             @can('atletaPerfil')
+                            @if(auth()->user()->tipo_usuario_id==1)
                             <li class="nav-item">
                                 <a href="{{ route('modificarAtleta') }}" class="nav-link">
                                     {{ __('Mi perfil') }}
                                 </a>
-                            </li>  
+                            </li>
+                            @endif  
                             @endcan
                         </ul>
                     </div>
@@ -141,18 +147,22 @@
                     <div class="collapse show" id="navbar-entrenador">
                         <ul class="nav nav-sm flex-column">
                             @can('crear-EDG-31-Asistencia')
+                            @if(auth()->user()->tipo_usuario_id==2)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistencias.create') }}">
                                     {{ __('Registrar asistencia') }}
                                 </a>
                             </li>
+                            @endif
                             @endcan
                             @can('editarAsistencia')
+                            @if(auth()->user()->tipo_usuario_id==2)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('editarAsistencia') }}">
                                     {{ __('Editar asistencia') }}
                                 </a>                              
                             </li>
+                            @endif
                             @endcan
                             @can('registrar-Entrenadores')
                             <li class="nav-item">
@@ -169,11 +179,13 @@
                             </li>
                             @endcan
                             @can('entrenadorPerfil')
+                            @if(auth()->user()->tipo_usuario_id==2)
                             <li class="nav-item">
                                 <a href="{{ route('modificar') }}" class="nav-link">
                                     {{ __('Mi perfil') }}
                                 </a>
-                            </li>  
+                            </li>
+                            @endif  
                             @endcan
                         </ul>
                     </div>
@@ -188,6 +200,7 @@
                     <div class="collapse show" id="navbar-psico">
                         <ul class="nav nav-sm flex-column">
                             @can('crearTerapias')
+                            @if(auth()->user()->tipo_usuario_id==3)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('sesiones.create') }}">
                                     {{ __('Nueva sesión') }}
@@ -198,6 +211,7 @@
                                     {{ __('Control de sesiones') }}
                                 </a>
                             </li>
+                            @endif
                             @endcan
                             @can('ver-Psicologos')
                             <li class="nav-item">
@@ -212,18 +226,22 @@
                             </li>
                             @endcan
                             @can('psicologoPerfil')
-                            <li class="nav-item">
-                                <a href="{{ route('modificarPsicologia') }}" class="nav-link">
-                                    {{ __('Mi perfil') }}
-                                </a>
-                            </li>  
+                            @if(auth()->user()->tipo_usuario_id==3)
+                                <li class="nav-item">
+                                    <a href="{{ route('modificarPsicologia') }}" class="nav-link">
+                                        {{ __('Mi perfil') }}
+                                    </a>
+                                </li>
+                            @endif
                             @endcan
                             @can('Ver acciones')
+                            @if(auth()->user()->tipo_usuario_id==3)
                             <li class="nav-item">
                                 <a href="{{route('accionesTerapia')}}" class="nav-link">
                                     {{ __('Seguridad') }}
                                 </a>
                             </li>
+                            @endif
                             @endcan
                         </ul>
                     </div>
