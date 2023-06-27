@@ -2,12 +2,12 @@
 
 @section('content') 
 
-<div class="header bg-dark pb-9 pt-5 pt-md-5 mt--5">
+<div class="header bg-dark pb-5 pt-5 pt-lg-5 pt-md-5 mt-md--5 mt-lg--5 mt-xs--5">
     <div class="container-fluid">
     </div>
 </div>
 <div class="container">
-    <div class="container-fluid mt--7">
+    <div class="container-fluid mt-md--4 mt-lg--4 mt-xs--4 mt--5">
         <div class="row">
             <div class="col-xl-8 order-xl-1">
                 <div class="card shadow">

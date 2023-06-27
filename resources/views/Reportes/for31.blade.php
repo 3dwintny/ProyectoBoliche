@@ -29,7 +29,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <!--div class="body pb-8 pt-5 pt-lg-1 d-flex align-items-center" style="background-image: url(../argon/img/theme/bol.jpg); background-size: cover; background-position: center top;"!-->
-    <div class="header bg-dark pb-2 pt-2 pt-md-2">
+    <div class="header bg-dark pb-5 pt-5 pt-lg-5 pt-md-5 mt-md--5 mt-lg--5 mt-xs--15 mt--15">
         <div class="container-fluid">
             <div class="header-body">
                 <!-- Card stats -->
@@ -40,58 +40,59 @@
                     <div class="col-xl-6 col-lg-6">
                         <h4 class="text-white"> Reporte Asistencia</h4>
                     </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Atleta</th>
-                                <th>Edad</th>
-                                <th>Género</th>
-                                <th>Categoría</th>
-                                <th>Modalidad</th>
-                                @for ($i=0;$i<count($fs);$i++) <th>{{$fs[$i]}}</th>
-                                    @endfor
-                                    <th>Días Entrenados</th>
-                                    <th>% de Asistencia</th>
-                                    <th>Etapa Deportiva</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $s=0;
-                            $c=0;
-                            @endphp
-                            @foreach($atleta as $item)
-
-                            <tr id="{{$c}}">
-                                <!--Filas-->
-                                <td>
-                                    <!--Columnas-->
-                                    {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}} {{$item->atleta->alumno->nombre3}}
-                                    {{$item->atleta->alumno->apellido1}} {{$item->atleta->alumno->apellido2}}
-                                </td>
-                                <td>{{$item->atleta->alumno->edad}}</td>
-                                <td>{{$item->atleta->alumno->genero}}</td>
-                                <td>{{$item->atleta->categoria->tipo}}</td>
-                                <td>{{$item->atleta->modalidad->nombre}}</td>
-
-                                @for($i=$s;$i<count($fs)+$s;$i++) <td>{{$estado[$i]}}</td>
-                                    @endfor
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
-                            </tr>
-
-                            @php
-                            $c=$c+1;
-                            $s=$s+count($fs)
-                            @endphp
-                            @endforeach
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
     </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Atleta</th>
+                <th>Edad</th>
+                <th>Género</th>
+                <th>Categoría</th>
+                <th>Modalidad</th>
+                @for ($i=0;$i<count($fs);$i++) <th>{{$fs[$i]}}</th>
+                    @endfor
+                    <th>Días Entrenados</th>
+                    <th>% de Asistencia</th>
+                    <th>Etapa Deportiva</th>
+            </tr>
+        </thead>
+        <tbody>
+            @php
+            $s=0;
+            $c=0;
+            @endphp
+            @foreach($atleta as $item)
+
+            <tr id="{{$c}}">
+                <!--Filas-->
+                <td>
+                    <!--Columnas-->
+                    {{$item->atleta->alumno->nombre1}} {{$item->atleta->alumno->nombre2}} {{$item->atleta->alumno->nombre3}}
+                    {{$item->atleta->alumno->apellido1}} {{$item->atleta->alumno->apellido2}}
+                </td>
+                <td>{{$item->atleta->alumno->edad}}</td>
+                <td>{{$item->atleta->alumno->genero}}</td>
+                <td>{{$item->atleta->categoria->tipo}}</td>
+                <td>{{$item->atleta->modalidad->nombre}}</td>
+
+                @for($i=$s;$i<count($fs)+$s;$i++) <td>{{$estado[$i]}}</td>
+                    @endfor
+                    <td></td>
+                    <td></td>
+                    <td>{{$item->atleta->etapa_deportiva->nombre}}</td>
+            </tr>
+
+            @php
+            $c=$c+1;
+            $s=$s+count($fs)
+            @endphp
+            @endforeach
+        </tbody>
+    </table>
+
 
 
 </body>

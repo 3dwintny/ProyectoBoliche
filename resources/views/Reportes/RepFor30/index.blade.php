@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-4 pt-5 pt-md-6 mt--5">
+<div class="header bg-dark pb-5 pt-5 pt-lg-5 pt-md-5 mt-md--5 mt-lg--5 mt-xs--5 mt-10">
     <div class="container-fluid">
         <div class="header-body">
             <div class="row">
@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div class="pb-4 pt-md-3">
+<div class="pb-4 pt-md-0">
     <div class="d-flex justify-content-center">
         <div class="card rounded" style="max-width: 900px;">
           <div class="card-body">
