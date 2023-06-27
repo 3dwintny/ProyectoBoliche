@@ -79,7 +79,7 @@
                                 </select>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn" style="background-color:#fba313;">{{ __('Crear Cuenta') }}</button>
+                                <button type="submit" class="btn" style="background-color:#fba313;">{{ __('Crear cuenta') }}</button>
                             </div>
                         </form>
                     </div>

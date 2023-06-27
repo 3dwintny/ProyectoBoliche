@@ -48,7 +48,7 @@
                         <form method="POST" action="{{ route('verification.send') }}" class="nav-link d-inline">
                             @csrf
                             <button type="submit" class="btn btn-outline-warning">
-                                Reenviar enlace de verificación
+                                Enviar enlace de verificación
                             </button>
                         </form>
                     </li>
@@ -66,7 +66,7 @@
     </nav>
 
     <div class="container mt-5">
-        <div class="alert alert-success mt-1" role="alert">
+        <div class="alert alert-primary mt-1" role="alert">
             <p>¡Gracias por registrarte! Antes de comenzar, queremos asegurarnos de que puedas acceder a tu cuenta. Por favor, verifica tu correo electrónico haciendo clic en el enlace que te hemos enviado. Si aún no has recibido el correo, no te preocupes, te lo enviaremos nuevamente. ¡Esperamos que disfrutes de nuestra plataforma!</p>
         </div>
 

@@ -8,7 +8,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4> Roles
+                        <h4> Nuevo administador
                         </h4>
                     </div>
                     <div class="card-body">
@@ -52,8 +52,9 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="">Roles</label>
-                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control')) !!}
+                                    <label for="">Rol</label>
+                                    {!! Form::text('roles', 'Administrador', array('class' => 'form-control', 'readonly' => 'readonly')) !!}
+                                    {!! Form::hidden('avatar', 'federacion2.jpg', array('class' => 'form-control', 'readonly' => 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">

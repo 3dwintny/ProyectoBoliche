@@ -22,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios =User::paginate();
+        $usuarios =User::all();
         return view('users.indexs', compact('usuarios'));
     }
 
@@ -52,7 +52,7 @@ class UserController extends Controller
             'roles' => 'required'
         ]);
         $rol = $request->roles;
-        $input = $request-> all();
+        $input = $request->all();
         $input ['password'] = Hash::make($input['password']);
 
         $user = User::create($input);
@@ -66,7 +66,6 @@ class UserController extends Controller
             $administrador->save();
         }
         return redirect()->route('usuarios.index');
-
     }
 
     /**

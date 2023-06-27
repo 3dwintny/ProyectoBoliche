@@ -18,7 +18,7 @@
 <div class="card container">
   <div class="table-responsive container">
     <hr>
-  <a class="btn btn-primary, text-light" style="background-color:#13213c;" href="{{ route('usuarios.create') }}">Nuevo</a>
+  <a class="btn btn-primary, text-light" style="background-color:#13213c;" href="{{ route('usuarios.create') }}">Nuevo administrador</a>
   <hr>
     <table class="table align-items-center mb-0" >
       <thead class="container">
