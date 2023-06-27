@@ -23,7 +23,7 @@
                         <div class="card-body bg-light">
                             <h3 class="mb-2">Información personal</h3>
                             <div class="col-12 mb-2">
-                                <img src="{{ asset('storage/uploads/'.$entrenador->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
+                                <img src="{{ asset('uploads/alumnos/'.$entrenador->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
                                 <input type="hidden" name="pic" value="{{$entrenador->foto}}">
                             </div>
                             <div class="row">
@@ -71,7 +71,7 @@
                                         <div class="invalid-tooltip">{{ $message }}</div>
                                       @enderror
                                     </div>
-                                </div>                                  
+                                </div>
                                 <div class="col-md-6 mb-2">
                                     <div class="form-floating">
                                       <input type="tel" name="telefono_casa" id="telefono_casa" class="form-control text-dark @error('telefono_casa') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono de casa') }}" value="{{ $entrenador->telefono_casa }}" pattern="[0-9]{4}[-][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
@@ -154,7 +154,7 @@
                                         <label for="estado_civil">Estado Civil</label>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12 mb-2">
                                     <div class="form-floating">
                                         <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Dirección') }}" id="direccion" type="text" name="direccion" value="{{$entrenador->direccion}}">

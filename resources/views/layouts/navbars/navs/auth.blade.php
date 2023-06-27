@@ -10,7 +10,7 @@
                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                            <img alt="Image placeholder" src="{{ asset('uploads') }}/alumnos/{{ auth()->user()->avatar }}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
+                            <img alt="Image placeholder" src="{{ asset('uploads') }}/alumnos/{{ auth()->user()->avatar }}" style="width: 35px; height: 35px; object-fit: cover; border-radius: 50%;">
                         </span>
                         <div class="media-body ml-2 d-none d-lg-block">
                             <span class="mb-0 text-sm  font-weight-bold">{{ auth()->user()->name }}</span>
