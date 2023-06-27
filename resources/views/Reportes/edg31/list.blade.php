@@ -195,8 +195,18 @@
             </tr>
             <tr>
                 <td>Master/Veteranos</td>
+                @php
+                    $controlVeteranos = 1;
+                @endphp
                 @foreach($veteranos as $item)
-                <td>{{$item}}</td>
+                @if($controlVeteranos<7)
+                    <td style="background: black;">{{$item}}</td>
+                @else
+                    <td>{{$item}}</td>
+                @endif
+                @php
+                    $controlVeteranos++;
+                @endphp
                 @endforeach
                 <td>{{$fVeteranos}}</td>
                 <td>{{$mVeteranos}}</td>
