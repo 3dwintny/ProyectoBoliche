@@ -216,10 +216,10 @@ class FormularioAlumno extends Component
            'peso.numeric' => 'Unicamente debe ingresar números',
            'altura.numeric' => 'Unicamente debe ingresar números',
            'contacto_emergencia.numeric' => 'Unicamente debe ingresar números',
-           'telefono' => 'Unicamente debe ingresar números',
-           'celular' => 'Unicamente debe ingresar números',
-           'nit' => 'Unicamente debe ingresar números',
-           'Pasaporte' => 'Unicamente debe ingresar números',
+           'telefono.numeric' => 'Unicamente debe ingresar números',
+           'celular.numeric' => 'Unicamente debe ingresar números',
+           'nit.numeric' => 'Unicamente debe ingresar números',
+           'Pasaporte.numeric' => 'Unicamente debe ingresar números',
         ]);
     }
     public function validarAlumnos(){

@@ -16,7 +16,7 @@
                     aria-expanded="false">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle">
-                            <img alt="Image placeholder" src="{{ asset('argon') }}/img/brand/federacion2.jpg">
+                            <img alt="Image placeholder" src="{{ asset('uploads') }}/alumnos/{{ auth()->user()->avatar }}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 50%;">
                         </span>
                     </div>
                 </a>
@@ -132,7 +132,7 @@
                                     {{ __('Mi perfil') }}
                                 </a>
                             </li>
-                            @endif  
+                            @endif
                             @endcan
                         </ul>
                     </div>
@@ -160,7 +160,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('editarAsistencia') }}">
                                     {{ __('Editar asistencia') }}
-                                </a>                              
+                                </a>
                             </li>
                             @endif
                             @endcan
@@ -185,7 +185,7 @@
                                     {{ __('Mi perfil') }}
                                 </a>
                             </li>
-                            @endif  
+                            @endif
                             @endcan
                         </ul>
                     </div>
