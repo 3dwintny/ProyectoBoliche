@@ -23,10 +23,10 @@
     <table class="table align-items-center mb-0" >
       <thead class="container">
         <tr>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Rol</th>
-          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">No</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Usuario</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12 ps-2">Rol</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Acciones</th>
           <th class="text-secondary opacity-7"></th>
         </tr>
       </thead>
