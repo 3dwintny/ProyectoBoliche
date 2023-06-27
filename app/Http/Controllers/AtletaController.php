@@ -24,6 +24,7 @@ use App\Models\Alergia;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Models\Alumnos_encargados;
+use App\Models\User;
 use App\Models\Encargado;
 use PDF;
 use App\Models\Formulario;
@@ -375,6 +376,7 @@ class AtletaController extends Controller
 
     public function actualizar(Request $request){
         $alumnos = Alumno::where('correo',auth()->user()->email)->get();
+        $usuario = User::where('email',auth()->user()->email)->first();
         $atleta = Alumno::find($alumnos[0]->id);
         if($request->hasFile('foto'))
         {
@@ -387,6 +389,10 @@ class AtletaController extends Controller
             $filename = time().'.'.$extention;
             $file->move('uploads/alumnos/', $filename);
             $fotografia = $filename;
+            $usuario->fill([
+                'avatar' => $fotografia,
+            ]);
+            $usuario->save();
         }
         else{
             $fotografia = $request->pic;
