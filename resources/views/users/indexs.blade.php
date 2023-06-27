@@ -42,7 +42,7 @@
           <td>
             <div class="d-flex px-2 py-1">
               <div>
-                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                <img src="{{ asset('uploads') }}/alumnos/{{ $usuario->avatar}}" class="avatar avatar-sm me-3">
               </div>
               <div class="d-flex flex-column justify-content-center">
                 <h6 class="mb-0 text-xs">{{ $usuario->name }}</h6>

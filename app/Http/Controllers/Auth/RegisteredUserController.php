@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
     {
         $roles = decrypt($request->roles);
         $correo = $request->email;
-        $avatar = null;
+        $avatar = 'federacion2.jpg';
         $name = null;
         switch($roles){
             case 1:
@@ -132,6 +132,7 @@ class RegisteredUserController extends Controller
                         'email' => $request->email,
                         'password' => Hash::make($request->password),
                         'tipo_usuario_id' => $roles,
+                        'avatar' => $avatar,
                     ]);
                     event(new Registered($user));
                     Auth::login($user);

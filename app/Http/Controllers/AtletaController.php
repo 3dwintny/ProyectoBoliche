@@ -378,6 +378,7 @@ class AtletaController extends Controller
         $alumnos = Alumno::where('correo',auth()->user()->email)->get();
         $usuario = User::where('email',auth()->user()->email)->first();
         $atleta = Alumno::find($alumnos[0]->id);
+        $fecha_foto = null;
         if($request->hasFile('foto'))
         {
             $destination = 'uploads/alumnos/'.$atleta->foto;
@@ -393,9 +394,11 @@ class AtletaController extends Controller
                 'avatar' => $fotografia,
             ]);
             $usuario->save();
+            $fecha_foto = Carbon::now();
         }
         else{
             $fotografia = $request->pic;
+            $fecha_foto = $request->fecha_fotografia;
         }
         $atleta->fill([
             'nombre1' => $request->nombre1,
@@ -415,7 +418,7 @@ class AtletaController extends Controller
             'foto' => $fotografia,
             'peso' => $request->peso,
             'nit' => $request->nit,
-            'fecha_fotografia' => $request->fecha_fotografia,
+            'fecha_fotografia' => $fecha_foto,
             'altura' => $request->altura,
             'contacto_emergencia' => $request->contacto_emergencia,
             'departamento_residencia_id' => decrypt($request->departamento_residencia_id),

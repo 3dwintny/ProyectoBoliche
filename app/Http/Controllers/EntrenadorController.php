@@ -103,7 +103,7 @@ class EntrenadorController extends Controller
             $file = $request->file('foto');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
-            $file->move('storage/uploads/', $filename);
+            $file->move('uploads/alumnos/', $filename);
             $entrenador->foto = $filename;
         }
         $entrenador->save();
@@ -121,8 +121,8 @@ class EntrenadorController extends Controller
     public function show($id)
     {
         $entrenador = Entrenador::find(decrypt($id));
-        $nivel_cdag = Nivel_cdag::find($entrenador->nivel_cdag_id); 
-        $nivel_fadn = Nivel_fadn::find($entrenador->nivel_fadn_id); 
+        $nivel_cdag = Nivel_cdag::find($entrenador->nivel_cdag_id);
+        $nivel_fadn = Nivel_fadn::find($entrenador->nivel_fadn_id);
         $departamento = Departamento::find($entrenador->departamento_id);
         $nacionalidad = Nacionalidad::find($entrenador->nacionalidad_id);
         $tipo_contrato = Tipo_Contrato::find($entrenador->tipo_contrato_id);
@@ -159,14 +159,14 @@ class EntrenadorController extends Controller
         $entrenador = Entrenador::find(decrypt($id));
         if($request->hasFile('foto'))
         {
-            $destination = 'storage/uploads/'.$entrenador->foto;
+            $destination = 'uploads/alumnos/'.$entrenador->foto;
             if(File::exists($destination)){
                 File::delete($destination);
             }
             $file = $request->file('foto');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
-            $file->move('storage/uploads/', $filename);
+            $file->move('uploads/alumnos/', $filename);
             $fotografia = $filename;
         }
         else{
@@ -252,14 +252,14 @@ class EntrenadorController extends Controller
         $entrenador = Entrenador::find($entrenadores[0]->id);
         if($request->hasFile('foto'))
         {
-            $destination = 'storage/uploads/'.$entrenador->foto;
+            $destination = 'uploads/alumnos/'.$entrenador->foto;
             if(File::exists($destination)){
                 File::delete($destination);
             }
             $file = $request->file('foto');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
-            $file->move('storage/uploads/', $filename);
+            $file->move('uploads/alumnos/', $filename);
             $fotografia = $filename;
         }
         else{

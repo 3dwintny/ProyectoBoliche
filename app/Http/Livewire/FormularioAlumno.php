@@ -39,7 +39,7 @@ class FormularioAlumno extends Component
     public $successMessage = '';
     #Variables para los alumnos
     public $nombre1, $nombre2, $nombre3, $apellido1, $apellido2,
-    $cui, $fecha, $edad, $peso, $altura, $genero = 1, $direccion, $telefono,
+    $cui, $fecha, $edad, $peso, $altura, $genero = 'Femenino', $direccion, $telefono,
     $celular, $correo, $contacto_emergencia, $foto,$fecha_fotografia, $estado,
     $nit, $pasaporte, $nacionalidad=1, $alergias = 'Sin alergias', $nombre_emergencia;
 
@@ -130,7 +130,7 @@ class FormularioAlumno extends Component
         $this->edad = "";
         $this->peso = "";
         $this->altura = "";
-        $this->genero = 1;
+        $this->genero = 'Femenino';
         $this->direccion = "";
         $this->telefono = "";
         $this->celular = "";

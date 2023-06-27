@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <div class="card">
                             <div class="card-body bg-light">
-                            <div class="col-12 mb-2"><img src="{{ asset('storage/uploads/'.$entrenador->foto) }}" class="img-thumbnail" alt="50" height="50" width="50"></div>
+                            <div class="col-12 mb-2"><img src="{{ asset('uploads/alumnos/'.$entrenador->foto) }}" class="img-thumbnail" alt="50" height="50" width="50"></div>
                                 <h5 class="mb-2">Información personal</h5>
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
