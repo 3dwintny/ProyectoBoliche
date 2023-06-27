@@ -33,7 +33,7 @@
                         <div class="card-body bg-light">
                             <h3 class="mb-2">Información personal</h3>
                             <div class="col-12 mb-2">
-                                <img src="{{ asset('storage/uploads/'.$atleta->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
+                                <img src="{{ asset('uploads/alumnos/'.$atleta->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
                                 <input type="hidden" name="pic" value="{{$atleta->foto}}">
                             </div>
                             <div class="row">
@@ -107,17 +107,6 @@
                                         <label for="genero">Género</label>
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-6 mb-2">
-                                    <div class="form-floating">
-                                        <select name="alergia_id" class="form-control text-dark" id="alergia_id" required>
-                                            <option selected value=""></option>
-                                            @foreach ($alergias as $item)
-                                                <option value="{{encrypt($item->id)}}" {{$item->id == $atleta->alergia_id ? 'selected' : ''}}>{{$item->nombre}}</option>
-                                            @endforeach
-                                        </select>
-                                        <label for="alergia_id">Alergia</label>
-                                    </div>
-                                </div> --}}
                                 <div class="col-md-12 mb-2">
                                     <div class="form-floating">
                                         <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Dirección') }}" id="direccion" type="text" name="direccion" value="{{$atleta->direccion}}">
