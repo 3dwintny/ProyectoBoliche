@@ -497,7 +497,9 @@ class AsistenciaController extends Controller
                     $dias++;
                 }
             }
-            $avg = round(($diasEntrenados/$dias)*100,2);
+            if($dias>0){
+                $avg = round(($diasEntrenados/$dias)*100,2);
+            }
             array_push($contarDias,$diasEntrenados);
             array_push($promedio,$avg);
         }
