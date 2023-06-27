@@ -322,7 +322,24 @@ class AtletaController extends Controller
         $atletas = Atleta::find(decrypt($id));
         $prt = decrypt($request->prt_id);
         $atletas->fill([
-            $request->all()
+            'fecha_ingreso'=> $request->fecha_ingreso,
+            'adaptado'=> $request->seleccionarAdaptado,
+            'estado_civil' => $request->estado_civil,
+            'etnia' => $request->etnia,
+            'escolaridad' => $request->escolaridad,
+            'centro_id' => decrypt($request->centro_id),
+            'entrenador_id' => decrypt($request->entrenador_id),
+            'categoria_id' => decrypt($request->categoria_id),
+            'etapa_deportiva_id' => decrypt($request->etapa_deportiva_id),
+            'deporte_id' => decrypt($request->deporte_id),
+            'deporte_adaptado_id' => $depAdaptado,
+            'otro_programa_id' => $otroPrograma,
+            'linea_desarrollo_id' => decrypt($request->linea_desarrollo_id),
+            'modalidad_id' => decrypt($request->modalidad_id),
+            'prt_id' => $prt,
+            'anios' => $request->anios,
+            'meses' => $request->meses,
+            'federado' => $request->federado,
         ]);
         $atletas->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
@@ -400,7 +417,6 @@ class AtletaController extends Controller
             'departamento_id' => decrypt($request->departamento_id),
             'nacionalidad_id' => decrypt($request->nacionalidad_id),
             'municipio_id' => decrypt($request->municipio_id),
-            'alergia_id' => decrypt($request->alergia_id),
         ]);
         $atleta->save();
         $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);

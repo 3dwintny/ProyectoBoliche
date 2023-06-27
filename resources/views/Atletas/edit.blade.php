@@ -66,30 +66,30 @@
                                         <label>¿Deporte adaptado?</label>
                                         @if($atleta->adaptado == "Si")
                                             <div class="form-check form-check-inline">
-                                                <input type="radio" name="seleccionarAdaptado" id="deporteAdaptado" checked>
+                                                <input type="radio" name="seleccionarAdaptado" id="deporteAdaptado" value="Si" checked>
                                                 <label class="form-check-label" for="inlineRadio3">Si</label>
                                             </div>
                                             <div class="form-check form-check-inline">
-                                                <input type="radio" name="seleccionarAdaptado" id="cancelarAdaptado">
+                                                <input type="radio" name="seleccionarAdaptado" id="cancelarAdaptado" value="No">
                                                 <label class="form-check-label" for="inlineRadio3">No</label>
                                             </div>
                                         @else
                                             @if($atleta->otro_programa_id == 1)
                                                 <div class="form-check form-check-inline">
-                                                    <input type="radio" name="seleccionarAdaptado" id="deporteAdaptado">
+                                                    <input type="radio" name="seleccionarAdaptado" id="deporteAdaptado" value="Si">
                                                     <label class="form-check-label" for="inlineRadio3">Si</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input type="radio" name="seleccionarAdaptado" id="cancelarAdaptado" checked>
+                                                    <input type="radio" name="seleccionarAdaptado" id="cancelarAdaptado" value="No" checked>
                                                     <label class="form-check-label" for="inlineRadio3">No</label>
                                                 </div>
                                             @else
                                                 <div class="form-check form-check-inline">
-                                                    <input type="radio" name="seleccionarAdaptado" id="deporteAdaptado" disabled>
+                                                    <input type="radio" name="seleccionarAdaptado" id="deporteAdaptado" value="Si" disabled>
                                                     <label class="form-check-label" for="inlineRadio3">Si</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input type="radio" name="seleccionarAdaptado" id="cancelarAdaptado" disabled>
+                                                    <input type="radio" name="seleccionarAdaptado" id="cancelarAdaptado" value="No" disabled>
                                                     <label class="form-check-label" for="inlineRadio3">No</label>
                                                 </div>
                                             @endif
@@ -185,9 +185,14 @@
                                             @endif
                                             @endforeach
                                         </select>
-                                        <input type="hidden" value="1" name="deporte_adaptado_id" id="deporte_adaptado_id_text">
+                                        @if($atleta->adaptado == "Si")
+                                            <input type="hidden" value="1" name="deporte_adaptado_id" id="deporte_adaptado_id_text" disabled>
+                                        @else
+                                            <input type="hidden" value="1" name="deporte_adaptado_id" id="deporte_adaptado_id_text">
+                                        @endif
                                     </div>
-                                    <div class="col-md-4 mb-2"><select name="otro_programa_id" id="otro_programa_id" class="form-control text-dark">
+                                    <div class="col-md-4 mb-2">
+                                        <select name="otro_programa_id" id="otro_programa_id" class="form-control text-dark">
                                             @foreach ($otroprograma as $item)
                                             @if($atleta->federado == 1)
                                                 @if($item->id == $atleta->otro_programa_id)
@@ -204,21 +209,28 @@
                                             @endif
                                             @endforeach
                                         </select>
-                                        <input type="hidden" value="1" name="otro_programa_id" id="otro_programa_id_text">
+                                        @if($atleta->federado == 1)
+                                            <input type="hidden" value="1" name="otro_programa_id" id="otro_programa_id_text" disabled>
+                                        @else
+                                            <input type="hidden" value="1" name="otro_programa_id" id="otro_programa_id_text">
+                                        @endif
                                     </div>
-                                    <div class="col-md-4 mb-2"><select name="linea_desarrollo_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2">
+                                        <select name="linea_desarrollo_id" class="form-control text-dark" required>
                                             <option selected disabled>Linea de Desarrollo</option>
                                             @foreach ($lineadesarrollo as $item)
                                                 <option value="{{encrypt($item->id)}}" {{$atleta->linea_desarrollo_id == $item->id ? 'selected':''}}>{{$item->tipo}}</option>
                                             @endforeach
                                         </select></div>
-                                    <div class="col-md-4 mb-2"><select name="modalidad_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2">
+                                        <select name="modalidad_id" class="form-control text-dark" required>
                                             <option selected disabled>Modalidad</option>
                                             @foreach ($modalidad as $item)
                                             <option value="{{encrypt($item->id)}}" {{$atleta->modalidad_id == $item->id ? 'selected' :''}} >{{$item->nombre}}</option>
                                             @endforeach
                                         </select></div>
-                                    <div class="col-md-4 mb-2"><select name="prt_id" class="form-control text-dark" required>
+                                    <div class="col-md-4 mb-2">
+                                        <select name="prt_id" class="form-control text-dark" required>
                                             <option selected disabled>PRT</option>
                                             @foreach ($prt as $item)
                                                 <option value="{{encrypt($item->id)}}" {{$atleta->prt_id == $item->id ? 'selected' : ''}}>{{$item->nombre}}</option>

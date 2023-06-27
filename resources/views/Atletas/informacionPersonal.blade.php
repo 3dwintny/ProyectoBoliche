@@ -296,7 +296,7 @@
                 success: function (res) {
                     $('#municipio_id').html('<option value="">Municipio</option>');
                     $.each(res, function (key, value) {
-                        $('#municipio_id').append('<option value="' + value.id
+                        $('#municipio_id').append('<option value="' + encrypt(value.id)
                             + '">' + value.nombre + '</option>');
                     });
                 }
@@ -313,7 +313,7 @@
                 success: function (res) {
                     $('#municipio_residencia_id').html('<option value="">Municipio</option>');
                     $.each(res, function (key, value) {
-                        $('#municipio_residencia_id').append('<option value="' + value.id
+                        $('#municipio_residencia_id').append('<option value="' + encrypt(value.id)
                             + '">' + value.nombre + '</option>');
                     });
                 }
