@@ -378,14 +378,14 @@ class AtletaController extends Controller
         $atleta = Alumno::find($alumnos[0]->id);
         if($request->hasFile('foto'))
         {
-            $destination = 'storage/uploads/'.$atleta->foto;
+            $destination = 'uploads/alumnos/'.$atleta->foto;
             if(File::exists($destination)){
                 File::delete($destination);
             }
             $file = $request->file('foto');
             $extention = $file->getClientOriginalExtension();
             $filename = time().'.'.$extention;
-            $file->move('storage/uploads/', $filename);
+            $file->move('uploads/alumnos/', $filename);
             $fotografia = $filename;
         }
         else{
