@@ -20,6 +20,7 @@ use App\Models\Departamento;
 use App\Models\Municipio;
 use App\Models\Nacionalidad;
 use App\Models\Control;
+use App\Models\Alergia;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use App\Models\Alumnos_encargados;
@@ -163,7 +164,21 @@ class AtletaController extends Controller
      */
     public function create($id)
     {
-
+        $hoy = Carbon::now();
+        $centro=Centro::all();
+        $entrenador= Entrenador::All();
+        $alumnos = Alumno::all();
+        $categoria = Categoria::all();
+        $etapa=Etapa_Deportiva::all();
+        $deporteadaptado = Deporte_Adoptado::all();
+        $otroprograma = Otro_Programa::all();
+        $lineadesarrollo = Linea_Desarrollo::all();
+        $deporte = Deporte::all();
+        $modalidad = Modalidad::all();
+        $prt = PRT::all();
+        return view('atletas.create',compact('centro','entrenador','alumnos','categoria','etapa',
+                                            'deporteadaptado','otroprograma','lineadesarrollo',
+                                            'deporte','modalidad','prt','hoy'));
     }
     public function creacion($id){
         $centro=Centro::where('estado','activo')->get(['id','nombre']);
@@ -395,19 +410,34 @@ class AtletaController extends Controller
 
     public static function generarPDF()
     {
-        $alumno = Alumno::where('correo',auth()->user()->email)->get();
-        $anio = Carbon::now()->format('Y');
-        $identificadores = array();
-        foreach ($alumno as $item){
-            $registro = Alumnos_encargados::where('alumno_id',$item->id)->get();
-        }
-
-        foreach ($registro as $item){
-            array_push($identificadores,$item->encargado_id);
-        }
-        $encargado = Encargado::whereIn('id',$identificadores)->get();
         $formularios = Formulario::all();
-        return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
+        $alumnos = Alumno::where('correo',auth()->user()->email)->get();
+        $anio = Carbon::now()->format('Y');
+        $cantidadDeRelaciones = null;
+        $relalumnos = null;
+        $encargados = [];
+        $cant_rel = null;
+        foreach($alumnos as $item){
+            $cantidadDeRelaciones = Alumnos_encargados::where('alumno_id', $item->id)->count();
+            $relalumnos = Alumnos_encargados::where('alumno_id', $item->id)->get();
+        }
+        foreach ($relalumnos as $item) {
+            $resultados = Encargado::where('id', $item->encargado_id)->get();
+            foreach($resultados as $resultado) {
+            $encargados[] = $resultado->toArray();
+            }
+        }
+        if($cantidadDeRelaciones === 2){
+            $cant_rel = 2;
+            return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+        }elseif($cantidadDeRelaciones === 1){
+            $cant_rel = 1;
+            return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+
+        }else{
+            $cant_rel = 0;
+            return PDF::loadView('alumno.pdf',compact('formularios','alumnos','anio','cant_rel'))->setPaper('8.5x11')->stream();
+        }
     }
 
     /**
