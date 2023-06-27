@@ -110,14 +110,34 @@ class UserController extends Controller
         ]);
 
         $input = $request->all();
+        $rol = implode(",",$input['roles']);
         if(!empty($input['password'])){
-            $input['password'] = Hash::make($input['password']);
+            $contrasenia = Hash::make($input['password']);
         }else{
-            $input = Arr::except($input,array('password'));
+            $contrasenia = Arr::except($input,array('password'));
+        }
+        $tipo_usuario_id=null;
+        if($rol=="Administrador"){
+            $tipo_usuario_id=null;
+        }
+        else if($rol=="Atleta"){
+            $tipo_usuario_id=1;
+        }
+        else if($rol=="Entrenador"){
+            $tipo_usuario_id=2;
+        }
+        else{
+            $tipo_usuario_id=3;
         }
 
         $user = User::find(decrypt($id));
-        $user->update($input);
+        $user->fill([
+            'name'=>$input['name'],
+            'email'=>$input['email'],
+            'password'=>$contrasenia,
+            'tipo_usuario_id'=>$tipo_usuario_id,
+        ]);
+        $user->save();
         DB::table('model_has_roles')->where('model_id',decrypt($id))->delete();
 
         $user->assignRole($request->input('roles'));
