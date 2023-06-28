@@ -28,6 +28,7 @@ use App\Models\User;
 use App\Models\Encargado;
 use PDF;
 use App\Models\Formulario;
+use App\Models\Psicologia;
 
 class AtletaController extends Controller
 {
@@ -206,47 +207,71 @@ class AtletaController extends Controller
      */
     public function store(Request $request,$id)
     {
-        Alumno::find(decrypt($id))->update(['estado' => 'Inscrito']);
-        if($request->deporte_adaptado_id==1){
-            $depAdaptado = $request->deporte_adaptado_id;
+        DB::beginTransaction();
+        try{
+            if($request->deporte_adaptado_id==1){
+                $depAdaptado = $request->deporte_adaptado_id;
+            }
+            else{
+                $depAdaptado = decrypt($request->deporte_adaptado_id);
+            }
+    
+            if($request->otro_programa_id==1){
+                $otroPrograma = $request->otro_programa_id;
+            }
+            else{
+                $otroPrograma = decrypt($request->otro_programa_id);
+            }
+            $prt = decrypt($request->prt_id);
+            $atletas = new Atleta([
+                'fecha_ingreso'=> $request->fecha_ingreso,
+                'adaptado'=> $request->adaptado,
+                'estado_civil' => $request->estado_civil,
+                'etnia' => $request->etnia,
+                'escolaridad' => $request->escolaridad,
+                'centro_id' => decrypt($request->centro_id),
+                'entrenador_id' => decrypt($request->entrenador_id),
+                'categoria_id' => decrypt($request->categoria_id),
+                'etapa_deportiva_id' => decrypt($request->etapa_deportiva_id),
+                'deporte_id' => decrypt($request->deporte_id),
+                'deporte_adaptado_id' => $depAdaptado,
+                'otro_programa_id' => $otroPrograma,
+                'linea_desarrollo_id' => decrypt($request->linea_desarrollo_id),
+                'modalidad_id' => decrypt($request->modalidad_id),
+                'prt_id' => $prt,
+                'anios' => $request->anios,
+                'meses' => $request->meses,
+                'federado' => $request->federado,
+                'alumno_id' => decrypt($request->alumno_id),
+            ]);
+            $atletas->save();
+            $alumno = Alumno::find(decrypt($id));
+            $usuario = User::where('email',$alumno->correo)->first();
+            if($usuario != null){
+                $tipoUsuarioId = $usuario->tipo_usuario_id;
+                if($tipoUsuarioId!=null){
+                    switch($tipoUsuarioId){
+                        case 2:
+                            Entrenador::where('correo',$alumno->correo)->update(['estado'=>'inactivo']);
+                            break;
+                        case 3:
+                            Psicologia::where('correo',$alumno->correo)->update(['estado'=>'inactivo']);
+                            break;
+                    }
+                }
+                $usuario->update(['tipo_usuario_id'=>1]);
+            }
+            $alumno->update(['estado' => 'Inscrito']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>4]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([AtletaController::class, 'index'])->with('success','Atleta registrado exitosamente');
         }
-        else{
-            $depAdaptado = decrypt($request->deporte_adaptado_id);
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al registrar atleta');
         }
-
-        if($request->otro_programa_id==1){
-            $otroPrograma = $request->otro_programa_id;
-        }
-        else{
-            $otroPrograma = decrypt($request->otro_programa_id);
-        }
-        //$atletas = Atleta::find(decrypt($id));
-        $prt = decrypt($request->prt_id);
-        $atletas = new Atleta([
-            'fecha_ingreso'=> $request->fecha_ingreso,
-            'adaptado'=> $request->adaptado,
-            'estado_civil' => $request->estado_civil,
-            'etnia' => $request->etnia,
-            'escolaridad' => $request->escolaridad,
-            'centro_id' => decrypt($request->centro_id),
-            'entrenador_id' => decrypt($request->entrenador_id),
-            'categoria_id' => decrypt($request->categoria_id),
-            'etapa_deportiva_id' => decrypt($request->etapa_deportiva_id),
-            'deporte_id' => decrypt($request->deporte_id),
-            'deporte_adaptado_id' => $depAdaptado,
-            'otro_programa_id' => $otroPrograma,
-            'linea_desarrollo_id' => decrypt($request->linea_desarrollo_id),
-            'modalidad_id' => decrypt($request->modalidad_id),
-            'prt_id' => $prt,
-            'anios' => $request->anios,
-            'meses' => $request->meses,
-            'federado' => $request->federado,
-            'alumno_id' => decrypt($request->alumno_id),
-        ]);
-        $atletas->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>4]);
-        $control->save();
-        return redirect()->action([AtletaController::class, 'index']);
     }
 
     /**
