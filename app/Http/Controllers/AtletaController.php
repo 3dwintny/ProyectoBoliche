@@ -29,6 +29,7 @@ use App\Models\Encargado;
 use PDF;
 use App\Models\Formulario;
 use App\Models\Psicologia;
+use PhpParser\Node\Stmt\TryCatch;
 
 class AtletaController extends Controller
 {
@@ -270,7 +271,7 @@ class AtletaController extends Controller
         catch(\Exception $e){
             DB::rollBack();
             report($e);
-            $this->addError('error','Se produjo un error al registrar atleta');
+            $this->addError('error','Se produjo un error al registrar al atleta');
         }
     }
 
@@ -332,45 +333,54 @@ class AtletaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->deporte_adaptado_id==1){
-            $depAdaptado = $request->deporte_adaptado_id;
+        DB::beginTransaction();
+        try{
+            if($request->deporte_adaptado_id==1){
+                $depAdaptado = $request->deporte_adaptado_id;
+            }
+            else{
+                $depAdaptado = decrypt($request->deporte_adaptado_id);
+            }
+    
+            if($request->otro_programa_id==1){
+                $otroPrograma = $request->otro_programa_id;
+            }
+            else{
+                $otroPrograma = decrypt($request->otro_programa_id);
+            }
+            $atletas = Atleta::find(decrypt($id));
+            $prt = decrypt($request->prt_id);
+            $atletas->fill([
+                'fecha_ingreso'=> $request->fecha_ingreso,
+                'adaptado'=> $request->seleccionarAdaptado,
+                'estado_civil' => $request->estado_civil,
+                'etnia' => $request->etnia,
+                'escolaridad' => $request->escolaridad,
+                'centro_id' => decrypt($request->centro_id),
+                'entrenador_id' => decrypt($request->entrenador_id),
+                'categoria_id' => decrypt($request->categoria_id),
+                'etapa_deportiva_id' => decrypt($request->etapa_deportiva_id),
+                'deporte_id' => decrypt($request->deporte_id),
+                'deporte_adaptado_id' => $depAdaptado,
+                'otro_programa_id' => $otroPrograma,
+                'linea_desarrollo_id' => decrypt($request->linea_desarrollo_id),
+                'modalidad_id' => decrypt($request->modalidad_id),
+                'prt_id' => $prt,
+                'anios' => $request->anios,
+                'meses' => $request->meses,
+                'federado' => $request->federado,
+            ]);
+            $atletas->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([AtletaController::class,'index'])->with('success','Atleta actualizado exitosamente');
         }
-        else{
-            $depAdaptado = decrypt($request->deporte_adaptado_id);
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar al atleta');
         }
-
-        if($request->otro_programa_id==1){
-            $otroPrograma = $request->otro_programa_id;
-        }
-        else{
-            $otroPrograma = decrypt($request->otro_programa_id);
-        }
-        $atletas = Atleta::find(decrypt($id));
-        $prt = decrypt($request->prt_id);
-        $atletas->fill([
-            'fecha_ingreso'=> $request->fecha_ingreso,
-            'adaptado'=> $request->seleccionarAdaptado,
-            'estado_civil' => $request->estado_civil,
-            'etnia' => $request->etnia,
-            'escolaridad' => $request->escolaridad,
-            'centro_id' => decrypt($request->centro_id),
-            'entrenador_id' => decrypt($request->entrenador_id),
-            'categoria_id' => decrypt($request->categoria_id),
-            'etapa_deportiva_id' => decrypt($request->etapa_deportiva_id),
-            'deporte_id' => decrypt($request->deporte_id),
-            'deporte_adaptado_id' => $depAdaptado,
-            'otro_programa_id' => $otroPrograma,
-            'linea_desarrollo_id' => decrypt($request->linea_desarrollo_id),
-            'modalidad_id' => decrypt($request->modalidad_id),
-            'prt_id' => $prt,
-            'anios' => $request->anios,
-            'meses' => $request->meses,
-            'federado' => $request->federado,
-        ]);
-        $atletas->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
-        $control->save();
-        return redirect()->action([AtletaController::class,'index']);
     }
 
     public function getMunicipios(Request $request)
@@ -400,62 +410,71 @@ class AtletaController extends Controller
     }
 
     public function actualizar(Request $request){
-        $alumnos = Alumno::where('correo',auth()->user()->email)->get();
-        $usuario = User::where('email',auth()->user()->email)->first();
-        $atleta = Alumno::find($alumnos[0]->id);
-        $fecha_foto = null;
-        if($request->hasFile('foto'))
-        {
-            $destination = 'uploads/alumnos/'.$atleta->foto;
-            if(File::exists($destination)){
-                File::delete($destination);
+        DB::beginTransaction();
+        try{
+            $alumnos = Alumno::where('correo',auth()->user()->email)->get();
+            $usuario = User::where('email',auth()->user()->email)->first();
+            $atleta = Alumno::find($alumnos[0]->id);
+            $fecha_foto = null;
+            if($request->hasFile('foto'))
+            {
+                $destination = 'uploads/alumnos/'.$atleta->foto;
+                if(File::exists($destination)){
+                    File::delete($destination);
+                }
+                $file = $request->file('foto');
+                $extention = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extention;
+                $file->move('uploads/alumnos/', $filename);
+                $fotografia = $filename;
+                $usuario->fill([
+                    'avatar' => $fotografia,
+                ]);
+                $usuario->save();
+                $fecha_foto = Carbon::now();
             }
-            $file = $request->file('foto');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extention;
-            $file->move('uploads/alumnos/', $filename);
-            $fotografia = $filename;
-            $usuario->fill([
-                'avatar' => $fotografia,
+            else{
+                $fotografia = $request->pic;
+                $fecha_foto = $request->fecha_fotografia;
+            }
+            $atleta->fill([
+                'nombre1' => $request->nombre1,
+                'nombre2' => $request->nombre2,
+                'nombre3' => $request->nombre3,
+                'apellido1' => $request->apellido1,
+                'apellido2' => $request->apellido2,
+                'celular' => $request->celular,
+                'telefono_casa' => $request->telefono_casa,
+                'cui' => $request->cui,
+                'pasaporte' => $request->pasaporte,
+                'genero' => $request->genero,
+                'fecha' => $request->fecha,
+                'edad' => $request->edad,
+                'correo' => $request->correo,
+                'direccion' => $request->direccion,
+                'foto' => $fotografia,
+                'peso' => $request->peso,
+                'nit' => $request->nit,
+                'fecha_fotografia' => $fecha_foto,
+                'altura' => $request->altura,
+                'contacto_emergencia' => $request->contacto_emergencia,
+                'departamento_residencia_id' => decrypt($request->departamento_residencia_id),
+                'municipio_residencia_id' => decrypt($request->municipio_residencia_id),
+                'departamento_id' => decrypt($request->departamento_id),
+                'nacionalidad_id' => decrypt($request->nacionalidad_id),
+                'municipio_id' => decrypt($request->municipio_id),
             ]);
-            $usuario->save();
-            $fecha_foto = Carbon::now();
+            $atleta->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
+            $control->save();
+            DB::commit();
+            return redirect('home');
         }
-        else{
-            $fotografia = $request->pic;
-            $fecha_foto = $request->fecha_fotografia;
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar la información');
         }
-        $atleta->fill([
-            'nombre1' => $request->nombre1,
-            'nombre2' => $request->nombre2,
-            'nombre3' => $request->nombre3,
-            'apellido1' => $request->apellido1,
-            'apellido2' => $request->apellido2,
-            'celular' => $request->celular,
-            'telefono_casa' => $request->telefono_casa,
-            'cui' => $request->cui,
-            'pasaporte' => $request->pasaporte,
-            'genero' => $request->genero,
-            'fecha' => $request->fecha,
-            'edad' => $request->edad,
-            'correo' => $request->correo,
-            'direccion' => $request->direccion,
-            'foto' => $fotografia,
-            'peso' => $request->peso,
-            'nit' => $request->nit,
-            'fecha_fotografia' => $fecha_foto,
-            'altura' => $request->altura,
-            'contacto_emergencia' => $request->contacto_emergencia,
-            'departamento_residencia_id' => decrypt($request->departamento_residencia_id),
-            'municipio_residencia_id' => decrypt($request->municipio_residencia_id),
-            'departamento_id' => decrypt($request->departamento_id),
-            'nacionalidad_id' => decrypt($request->nacionalidad_id),
-            'municipio_id' => decrypt($request->municipio_id),
-        ]);
-        $atleta->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
-        $control->save();
-        return redirect('home');
     }
 
     public static function generarPDF()
