@@ -193,7 +193,7 @@ class PsicologiaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>27]);
             $control->save();
             DB::commit();
-            return redirect()->action([PsicologiaController::class,'index'])->with('success','Administrador eliminado exitosamente');
+            return redirect()->action([PsicologiaController::class,'index'])->with('success','Psicólogo eliminado exitosamente');
         }
         catch(\Exception $e){
             DB::rollback();
@@ -270,7 +270,7 @@ class PsicologiaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>27]);
             $control->save();
             DB::commit();
-            return redirect()->action([PsicologiaController::class,'index'])->with('success','Administrador restaurado exitosamente');
+            return redirect()->action([PsicologiaController::class,'index'])->with('success','Psicólogo restaurado exitosamente');
         }
         catch(\Exception $e){
             DB::rollBack();
