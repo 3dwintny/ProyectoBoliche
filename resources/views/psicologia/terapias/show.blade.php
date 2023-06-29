@@ -14,6 +14,12 @@
   </div>
 </div>
 <div class="container">
+  @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ session('error') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
   <form action="{{route('busquedaFecha')}}" method="GET" class="mt-3">
     @csrf
     <input type="hidden" id="idAtleta" name="idAtleta" value="{{$guardarAtleta}}">

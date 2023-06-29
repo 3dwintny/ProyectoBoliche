@@ -10,6 +10,12 @@
     @csrf
     <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
 </form>
+@if(session('error'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <div class="card">
     <div class="col-xl-12 col-lg-12 ">
         <div class="pb-4 pt-5 pt-md-1">

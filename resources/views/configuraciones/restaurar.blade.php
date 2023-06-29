@@ -3,6 +3,12 @@
 @include('layouts.headers.cards', ['texto' => 'Preferencias'])
 @include('configuraciones.varnav')
 <div class="align-center">
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="row container mb-3">
         <div>
             <h1 style="text-align: right;">RESTAURAR</h1>

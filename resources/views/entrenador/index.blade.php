@@ -5,6 +5,19 @@
 <div class="container">
   <div class="pt-md-2 pb-4 pt-5">
     @include('components.flash_alerts')
+    @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>  
+      </div>
+    @endif
+
+    @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
       <table class="table table-responsive">
         <thead class="table-dark" style="border-radius: 5px;">
           <tr>

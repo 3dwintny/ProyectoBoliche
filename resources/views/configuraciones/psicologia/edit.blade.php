@@ -17,6 +17,12 @@
     <div class="header-body text-center  mb-2 container">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-10">
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <form action="{{route('psicologia.update',encrypt($psicologo->id))}}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
                     {{method_field('PUT')}}

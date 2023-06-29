@@ -17,6 +17,12 @@
 
 <div class="card-body pb-4 pt-5 pt-md-3">
     <div class="container">
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <form method="POST" action="{{route('actualizarAsistencia')}}" enctype="multipart/form-data" role="form">
             @csrf
             <div class="row">

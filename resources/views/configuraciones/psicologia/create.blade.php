@@ -12,6 +12,12 @@
                             <h2>Registrar nueva(o)</h2>
                         </strong>
                     </div>
+                    @if(session('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <form action="{{ route('psicologia.store') }}" id="register_form" method="POST" role="form" enctype="multipart/form-data">
                         @csrf
                         <fieldset class="card-body bg-light">

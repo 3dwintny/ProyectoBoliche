@@ -15,6 +15,19 @@
 </div>
 <div class="container">
   <div class="pb-5 pt-5 pt-md-2">
+  @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      {{ session('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
+  @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      {{ session('error') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
     <div class="">
       <form method="post" role="form" enctype="multipart/form-data" action="{{route('guardarHorarios')}}">
         <input type="hidden" name="e" id="e" value="{{$idEncriptado}}">

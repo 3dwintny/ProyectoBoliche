@@ -14,6 +14,12 @@
                     </div>
                 </div>
                     <div class="form-group">
+                        @if(session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
                         <div class="card">
                             <div class="card-body bg-light">
                             <div class="col-12 mb-2"><img src="{{ asset('uploads/alumnos/'.$entrenador->foto) }}" class="img-thumbnail" alt="50" height="50" width="50"></div>
