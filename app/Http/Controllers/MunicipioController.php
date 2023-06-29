@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Municipio;
 use App\Models\Departamento;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class MunicipioController extends Controller
 {
@@ -16,10 +17,16 @@ class MunicipioController extends Controller
      */
     public function index()
     {
-        $municipio = Municipio::where('estado','activo')
-        ->with('departamento')
-        ->paginate(15);
-        return view('configuraciones.municipio.show',compact('municipio')); 
+        try{
+            $municipio = Municipio::where('estado','activo')
+            ->with('departamento')
+            ->paginate(15);
+            return view('configuraciones.municipio.show',compact('municipio')); 
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -29,8 +36,14 @@ class MunicipioController extends Controller
      */
     public function create()
     {
-        $departamentos = Departamento::where('estado','activo')->get(['id','nombre']);
-        return view('configuraciones.municipio.create',compact("departamentos"));
+        try{
+            $departamentos = Departamento::where('estado','activo')->get(['id','nombre']);
+            return view('configuraciones.municipio.create',compact("departamentos"));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -41,11 +54,17 @@ class MunicipioController extends Controller
      */
     public function store(Request $request)
     {
-        $municipios = new Municipio(['nombre' => $request->nombre,'departamento_id' => $request->departamento_id]);
-        $municipios->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>20]);
-        $control->save();
-        return redirect()->action([MunicipioController::class,'index']);
+        try{
+            $municipios = new Municipio(['nombre' => $request->nombre,'departamento_id' => $request->departamento_id]);
+            $municipios->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>20]);
+            $control->save();
+            return redirect()->action([MunicipioController::class,'index'])->with('success','Municipio registrado exitosamente');
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al registrar el municipio');
+        }
     }
 
     /**
@@ -67,9 +86,15 @@ class MunicipioController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $municipio = Municipio::find(decrypt($id));
-        $departamentos = Departamento::where('estado','activo')->get(['id','nombre']);
-        return view('configuraciones.municipio.edit',compact('municipio','departamentos'));
+        try{
+            $municipio = Municipio::find(decrypt($id));
+            $departamentos = Departamento::where('estado','activo')->get(['id','nombre']);
+            return view('configuraciones.municipio.edit',compact('municipio','departamentos'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -81,12 +106,21 @@ class MunicipioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $municipio = Municipio::find(decrypt($id));
-        $municipio->fill(['nombre' => $request->nombre,'departamento_id' => decrypt($request->departamento_id)]);
-        $municipio->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>20]);
-        $control->save();
-        return redirect()->action([MunicipioController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $municipio = Municipio::find(decrypt($id));
+            $municipio->fill(['nombre' => $request->nombre,'departamento_id' => decrypt($request->departamento_id)]);
+            $municipio->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>20]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([MunicipioController::class,'index'])->with('success','Municipio actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar al municipio');
+        }
     }
 
     /**
@@ -97,24 +131,56 @@ class MunicipioController extends Controller
      */
     public function destroy($id)
     {
-        Municipio::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>20]);
-        $control->save();
-        return redirect()->action([MunicipioController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Municipio::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>20]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([MunicipioController::class,'index'])->with('success','Municipio eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar al municipio');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',20)->with('usuario')->paginate(5);
-        return view('configuraciones.municipio.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',20)->with('usuario')->paginate(5);
+            return view('configuraciones.municipio.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Municipio::where('estado', 'inactivo')->with('departamento')->get();
-        return view('configuraciones.municipio.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Municipio::where('estado', 'inactivo')->with('departamento')->get();
+            return view('configuraciones.municipio.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Municipio::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([MunicipioController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Municipio::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>20]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([MunicipioController::class,'index']);
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar AL municipio')->with('success','Municipio restaurado exitosamente');
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Encargado;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class EncargadoController extends Controller
 {
@@ -85,7 +86,13 @@ class EncargadoController extends Controller
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',11)->with('usuario')->paginate(5);
-        return view('configuraciones.alergia.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',11)->with('usuario')->paginate(5);
+            return view('configuraciones.alergia.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 }

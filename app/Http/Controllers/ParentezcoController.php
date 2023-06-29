@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Parentezco;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ParentezcoController extends Controller
 {
@@ -13,6 +14,13 @@ class ParentezcoController extends Controller
      */
     public function index()
     {
+        try{
+
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar la categoría');
+        }
         $parentezcos = Parentezco::all();
         return view('parentezco.show',compact("parentezcos"));
 
@@ -25,6 +33,13 @@ class ParentezcoController extends Controller
      */
     public function create()
     {
+        try{
+
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar la categoría');
+        }
         return view('parentezco.create');
     }
 
@@ -36,10 +51,16 @@ class ParentezcoController extends Controller
      */
     public function store(Request $request)
     {
+        try{
+
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar la categoría');
+        }
         $parentezcos = new Parentezco($request->all());
         $parentezcos->save();
         return redirect()->action([ParentezcoController::class,'index']);
-
     }
 
     /**

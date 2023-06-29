@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Hashids\Hashids;
 use App\Models\Formulario;
 use App\Models\Control;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class FormularioController extends Controller
 {
@@ -23,8 +22,14 @@ class FormularioController extends Controller
      */
     public function index()
     {
-        $formulario = Formulario::get(['id','titulo_principal','subtitulo','titulo_ficha','declaracion']);
-        return view(' configuraciones.formulario.show',compact('formulario'));
+        try{
+            $formulario = Formulario::get(['id','titulo_principal','subtitulo','titulo_ficha','declaracion']);
+            return view(' configuraciones.formulario.show',compact('formulario'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -67,8 +72,14 @@ class FormularioController extends Controller
      */
     public function edit($id)
     {
-        $formulario = $this->f->obtenerFormularioById(decrypt($id));
-        return view('configuraciones.formulario.edit',compact('formulario'));
+        try{
+            $formulario = $this->f->obtenerFormularioById(decrypt($id));
+            return view('configuraciones.formulario.edit',compact('formulario'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -80,17 +91,23 @@ class FormularioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $formulario = $this->f->obtenerFormularioById(decrypt($id));
-        $formulario->fill([
-            'titulo_principal' => $request->titulo_principal,
-            'subtitulo' => $request->subtitulo,
-            'titulo_ficha' => $request->titulo_ficha,
-            'declaracion' => $request->declaracion,
-        ]);
-        $formulario->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>16]);
-        $control->save();
-        return redirect()->action([FormularioController::class,'index']);
+        try{
+            $formulario = $this->f->obtenerFormularioById(decrypt($id));
+            $formulario->fill([
+                'titulo_principal' => $request->titulo_principal,
+                'subtitulo' => $request->subtitulo,
+                'titulo_ficha' => $request->titulo_ficha,
+                'declaracion' => $request->declaracion,
+            ]);
+            $formulario->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>16]);
+            $control->save();
+            return redirect()->action([FormularioController::class,'index'])->with('success','Formulario actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar la información del formulario');
+        }
     }
 
     /**
@@ -105,7 +122,13 @@ class FormularioController extends Controller
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',16)->with('usuario')->paginate(5);
-        return view('configuraciones.formulario.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',16)->with('usuario')->paginate(5);
+            return view('configuraciones.formulario.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 }

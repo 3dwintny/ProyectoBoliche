@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Otro_Programa;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class Otro_ProgramaController extends Controller
 {
@@ -20,8 +21,14 @@ class Otro_ProgramaController extends Controller
      */
     public function index()
     {
-        $programas = Otro_Programa::where('estado','activo')->get(['id','nombre']);
-        return view('configuraciones.otros_programas.show',compact('programas'));
+        try{
+            $programas = Otro_Programa::where('estado','activo')->get(['id','nombre']);
+            return view('configuraciones.otros_programas.show',compact('programas'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +38,14 @@ class Otro_ProgramaController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now()->toDateString();
-        return view('configuraciones.otros_programas.create', compact('hoy'));
+        try{
+            $hoy = Carbon::now()->toDateString();
+            return view('configuraciones.otros_programas.create', compact('hoy'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +56,23 @@ class Otro_ProgramaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre'=>['unique:otro_programa'],
-        ]);
-        $programas = new Otro_Programa(['nombre' => $request->nombre]);
-        $programas->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>24]);
-        $control->save();
-        return redirect()->action([Otro_ProgramaController::class, 'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'nombre'=>['unique:otro_programa'],
+            ]);
+            $programas = new Otro_Programa(['nombre' => $request->nombre]);
+            $programas->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>24]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Otro_ProgramaController::class, 'index'])->with('success','Programa de atención registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al registrar el programa de atención');
+        }
     }
 
     /**
@@ -72,8 +94,14 @@ class Otro_ProgramaController extends Controller
      */
     public function edit($id)
     {
-        $otro_programa = $this->o->obtenerOtroProgramaById(decrypt($id));
-        return view('configuraciones.otros_programas.edit',['otro_programa' => $otro_programa]);
+        try{
+            $otro_programa = $this->o->obtenerOtroProgramaById(decrypt($id));
+            return view('configuraciones.otros_programas.edit',['otro_programa' => $otro_programa]);
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -85,12 +113,21 @@ class Otro_ProgramaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $otro_programa = Otro_Programa::find(decrypt($id));
-        $otro_programa ->fill(['nombre' => $request->nombre]);
-        $otro_programa->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>24]);
-        $control->save();
-        return redirect()->action([Otro_ProgramaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $otro_programa = Otro_Programa::find(decrypt($id));
+            $otro_programa ->fill(['nombre' => $request->nombre]);
+            $otro_programa->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>24]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Otro_ProgramaController::class,'index'])->with('success','Programa de atención actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar el programa de atención');
+        }
     }
 
     /**
@@ -101,24 +138,56 @@ class Otro_ProgramaController extends Controller
      */
     public function destroy($id)
     {
-        Otro_Programa::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>24]);
-        $control->save();
-        return redirect()->action([Otro_ProgramaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Otro_Programa::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>24]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Otro_ProgramaController::class,'index'])->with('success','Programa de atención eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar el programa de atención');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',24)->with('usuario')->paginate(5);
-        return view('configuraciones.otros_programas.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',24)->with('usuario')->paginate(5);
+            return view('configuraciones.otros_programas.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Otro_Programa::where('estado', 'inactivo')->get();
-        return view('configuraciones.otros_programas.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Otro_Programa::where('estado', 'inactivo')->get();
+            return view('configuraciones.otros_programas.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Otro_Programa::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([Otro_ProgramaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Otro_Programa::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>24]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Otro_ProgramaController::class,'index'])->with('success','Programa de atención restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar el programa de atención');
+        }
     }
 }

@@ -6,6 +6,11 @@ use App\Models\Psicologia;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Control;
+use App\Models\User;
+use App\Models\Alumno;
+use App\Models\Atleta;
+use App\Models\Entrenador;
+use Illuminate\Support\Facades\DB;
 
 class PsicologiaController extends Controller
 {
@@ -20,8 +25,14 @@ class PsicologiaController extends Controller
      */
     public function index()
     {
-        $psicologo = Psicologia::where('estado','activo')->paginate(5);
-        return view('configuraciones.psicologia.show', compact('psicologo'));
+        try{
+            $psicologo = Psicologia::where('estado','activo')->paginate(5);
+            return view('configuraciones.psicologia.show', compact('psicologo'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +42,14 @@ class PsicologiaController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now();
-        return view('configuraciones.psicologia.create',compact('hoy'));
+        try{
+            $hoy = Carbon::now();
+            return view('configuraciones.psicologia.create',compact('hoy'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,28 +60,53 @@ class PsicologiaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'correo'=>['unique:psicologia'],
-            'colegiado'=>['unique:psicologia'],
-            'telefono' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
-        ]);
-        $psicologo = new Psicologia([
-            'nombre1' => $request->nombre1,
-            'nombre2' => $request->nombre2,
-            'nombre3' => $request->nombre3,
-            'apellido1' => $request->apellido1,
-            'apellido2' => $request->apellido2,
-            'apellido_casada' => $request->apellido_casada,
-            'colegiado' => $request->colegiado,
-            'telefono' => $request->telefono,
-            'correo' => $request->correo,
-            'direccion' => $request->direccion,
-            'fecha_inicio_labores' => $request->fecha_inicio_labores,
-        ]);
-        $psicologo->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>27]);
-        $control->save();
-        return redirect()->action([PsicologiaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'correo'=>['unique:psicologia'],
+                'colegiado'=>['unique:psicologia'],
+                'telefono' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
+            ]);
+            $psicologo = new Psicologia([
+                'nombre1' => $request->nombre1,
+                'nombre2' => $request->nombre2,
+                'nombre3' => $request->nombre3,
+                'apellido1' => $request->apellido1,
+                'apellido2' => $request->apellido2,
+                'apellido_casada' => $request->apellido_casada,
+                'colegiado' => $request->colegiado,
+                'telefono' => $request->telefono,
+                'correo' => $request->correo,
+                'direccion' => $request->direccion,
+                'fecha_inicio_labores' => $request->fecha_inicio_labores,
+            ]);
+            $usuario = User::where('email',$request->correo)->first();
+            if($usuario != null){
+                $tipoUsuarioId = $usuario->tipo_usuario_id;
+                if($tipoUsuarioId!=null){
+                    switch($tipoUsuarioId){
+                        case 1:
+                            $alumno = Alumno::where('correo',$request->correo)->first();
+                            Atleta::where('id',$alumno->atleta_id)->update(['estado'=>'inactivo']);
+                            break;
+                        case 2:
+                            Entrenador::where('correo',$request->correo)->update(['estado'=>'inactivo']);
+                            break;
+                    }
+                }
+                $usuario->update(['tipo_usuario_id'=>1]);
+            }
+            $psicologo->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>27]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([PsicologiaController::class,'index'])->with('success','Psicólogo registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al registrar la información del psicólogo');
+        }
     }
 
     /**
@@ -86,8 +128,14 @@ class PsicologiaController extends Controller
      */
     public function edit($id)
     {
-        $psicologo = $this->p->obtenerPsicologiaById(decrypt($id));
-        return view('configuraciones.psicologia.edit',['psicologo' => $psicologo]);
+        try{
+            $psicologo = $this->p->obtenerPsicologiaById(decrypt($id));
+            return view('configuraciones.psicologia.edit',['psicologo' => $psicologo]);
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -99,27 +147,36 @@ class PsicologiaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $psicologo = Psicologia::find(decrypt($id));
-        $request->validate([
-            'telefono' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
-        ]);
-        $psicologo ->fill([
-            'nombre1' => $request->nombre1,
-            'nombre2' => $request->nombre2,
-            'nombre3' => $request->nombre3,
-            'apellido1' => $request->apellido1,
-            'apellido2' => $request->apellido2,
-            'apellido_casada' => $request->apellido_casada,
-            'colegiado' => $request->colegiado,
-            'telefono' => $request->telefono,
-            'correo' => $request->correo,
-            'direccion' => $request->direccion,
-            'fecha_inicio_labores' => $request->fecha_inicio_labores,
-        ]);
-        $psicologo->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
-        $control->save();
-        return redirect()->action([PsicologiaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $psicologo = Psicologia::find(decrypt($id));
+            $request->validate([
+                'telefono' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
+            ]);
+            $psicologo ->fill([
+                'nombre1' => $request->nombre1,
+                'nombre2' => $request->nombre2,
+                'nombre3' => $request->nombre3,
+                'apellido1' => $request->apellido1,
+                'apellido2' => $request->apellido2,
+                'apellido_casada' => $request->apellido_casada,
+                'colegiado' => $request->colegiado,
+                'telefono' => $request->telefono,
+                'correo' => $request->correo,
+                'direccion' => $request->direccion,
+                'fecha_inicio_labores' => $request->fecha_inicio_labores,
+            ]);
+            $psicologo->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([PsicologiaController::class,'index'])->with('success','Información del psicólogo actualizada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar la información del psicólogo');
+        }
     }
 
     /**
@@ -130,48 +187,95 @@ class PsicologiaController extends Controller
      */
     public function destroy($id)
     {
-        Psicologia::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>27]);
-        $control->save();
-        return redirect()->action([PsicologiaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Psicologia::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>27]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([PsicologiaController::class,'index'])->with('success','Administrador eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar al psicólogo');
+        }
     }
 
     public function modificar(){
-        $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
-        if(count($psicologos)>0){
-            $psicologo = Psicologia::find($psicologos[0]->id);
-            return view('configuraciones.psicologia.informacionPersonal',compact('psicologo'));
+        try{
+            $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
+            if(count($psicologos)>0){
+                $psicologo = Psicologia::find($psicologos[0]->id);
+                return view('configuraciones.psicologia.informacionPersonal',compact('psicologo'));
+            }
+            else{
+                return redirect('home');
+            }
         }
-        else{
-            return redirect('home');
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
         }
     }
 
     public function actualizar(Request $request){
-        $request->validate([
-            'telefono' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
-        ]);
-        $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
-        $psicologo = Psicologia::find($psicologos[0]->id);
-        $psicologo->fill($request->all());
-        $psicologo->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
-        $control->save();
-        return redirect('home');
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'telefono' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
+            ]);
+            $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
+            $psicologo = Psicologia::find($psicologos[0]->id);
+            $psicologo->fill($request->all());
+            $psicologo->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
+            $control->save();
+            DB::commit();
+            return redirect('modificarPsicologia')->with('success','Información actualizada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar la información');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',27)->with('usuario')->paginate(5);
-        return view('configuraciones.psicologia.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',27)->with('usuario')->paginate(5);
+            return view('configuraciones.psicologia.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Psicologia::where('estado', 'inactivo')->get();
-        return view('configuraciones.psicologia.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Psicologia::where('estado', 'inactivo')->get();
+            return view('configuraciones.psicologia.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Psicologia::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([PsicologiaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Psicologia::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>27]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([PsicologiaController::class,'index'])->with('success','Administrador restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar al psicólogo');
+        }
     }
 }

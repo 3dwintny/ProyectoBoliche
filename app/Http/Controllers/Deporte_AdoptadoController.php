@@ -6,6 +6,7 @@ use App\Models\Deporte_Adoptado;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class Deporte_AdoptadoController extends Controller
 {
@@ -20,8 +21,14 @@ class Deporte_AdoptadoController extends Controller
      */
     public function index()
     {
-        $deporte = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
-        return view('configuraciones.deporte_a.show',compact('deporte'));
+        try{
+            $deporte = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
+            return view('configuraciones.deporte_a.show',compact('deporte'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +38,14 @@ class Deporte_AdoptadoController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now();
-        return view('configuraciones.deporte_a.create', compact('hoy'));
+        try{
+            $hoy = Carbon::now();
+            return view('configuraciones.deporte_a.create', compact('hoy'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +56,23 @@ class Deporte_AdoptadoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre'=>['unique:deporte_adaptado'],
-        ]);
-        $deporte = new Deporte_Adoptado(['nombre' => $request->nombre]);
-        $deporte->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>8]);
-        $control->save();
-        return redirect()->action([Deporte_AdoptadoController::class, 'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'nombre'=>['unique:deporte_adaptado'],
+            ]);
+            $deporte = new Deporte_Adoptado(['nombre' => $request->nombre]);
+            $deporte->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>8]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Deporte_AdoptadoController::class, 'index'])->with('success','Deporte adaptado registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al registrar el deporte adaptado');
+        }
     }
 
     /**
@@ -72,8 +94,14 @@ class Deporte_AdoptadoController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $deporte = Deporte_Adoptado::find(decrypt($id));
-        return view('configuraciones.deporte_a.edit',['deporte' => $deporte]);
+        try{
+            $deporte = Deporte_Adoptado::find(decrypt($id));
+            return view('configuraciones.deporte_a.edit',['deporte' => $deporte]);
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -85,12 +113,21 @@ class Deporte_AdoptadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $deporte = Deporte_Adoptado::find(decrypt($id));
-        $deporte->fill(['nombre' => $request->nombre]);
-        $deporte->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>8]);
-        $control->save();
-        return redirect()->action([Deporte_AdoptadoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $deporte = Deporte_Adoptado::find(decrypt($id));
+            $deporte->fill(['nombre' => $request->nombre]);
+            $deporte->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>8]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Deporte_AdoptadoController::class,'index'])->with('success','Deporte adaptado actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar el deporte adaptado');
+        }
     }
 
     /**
@@ -101,24 +138,56 @@ class Deporte_AdoptadoController extends Controller
      */
     public function destroy($id)
     {
-        Deporte_Adoptado::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>8]);
-        $control->save();
-        return redirect()->action([Deporte_AdoptadoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Deporte_Adoptado::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>8]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Deporte_AdoptadoController::class,'index'])->with('success','Deporte adaptado eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',8)->with('usuario')->paginate(5);
-        return view('configuraciones.deporte_a.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',8)->with('usuario')->paginate(5);
+            return view('configuraciones.deporte_a.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Deporte_Adoptado::where('estado', 'inactivo')->get();
-        return view('configuraciones.deporte_a.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Deporte_Adoptado::where('estado', 'inactivo')->get();
+            return view('configuraciones.deporte_a.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Deporte_Adoptado::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([Deporte_AdoptadoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Deporte_Adoptado::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>8]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Deporte_AdoptadoController::class,'index'])->with('success','Deporte adaptado restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar el deporte adaptado');
+        }
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Linea_Desarrollo;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class Linea_DesarrolloController extends Controller
 {
@@ -20,6 +21,13 @@ class Linea_DesarrolloController extends Controller
      */
     public function index()
     {
+        try{
+
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
         $lineaDesarrollo = Linea_Desarrollo::where('estado','activo')->get(['id','tipo']);
         return view('configuraciones.linea_desarrollo.show',compact('lineaDesarrollo'));
     }
@@ -31,8 +39,14 @@ class Linea_DesarrolloController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now();
-        return view('configuraciones.linea_desarrollo.create',compact('hoy'));
+        try{
+            $hoy = Carbon::now();
+            return view('configuraciones.linea_desarrollo.create',compact('hoy'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +57,23 @@ class Linea_DesarrolloController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'tipo'=>['unique:linea_desarrollo'],
-        ]);
-        $lineaDesarrollo = new Linea_Desarrollo(['tipo'=> $request->tipo]);
-        $lineaDesarrollo->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>18]);
-        $control->save();
-        return redirect()->action([Linea_DesarrolloController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'tipo'=>['unique:linea_desarrollo'],
+            ]);
+            $lineaDesarrollo = new Linea_Desarrollo(['tipo'=> $request->tipo]);
+            $lineaDesarrollo->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>18]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Linea_DesarrolloController::class,'index'])->with('success','Línea de desarrollo registrada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al registrar la línea de desarrollo');
+        }
     }
 
     /**
@@ -72,8 +95,14 @@ class Linea_DesarrolloController extends Controller
      */
     public function edit($id)
     {
-        $lineaDesarrollo = $this->lD->obtenerLineaDesarrolloById(decrypt($id));
-        return view('configuraciones.linea_desarrollo.edit',['lineaDesarrollo' => $lineaDesarrollo]);
+        try{
+            $lineaDesarrollo = $this->lD->obtenerLineaDesarrolloById(decrypt($id));
+            return view('configuraciones.linea_desarrollo.edit',['lineaDesarrollo' => $lineaDesarrollo]);
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -85,12 +114,21 @@ class Linea_DesarrolloController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $lineaDesarrollo = Linea_Desarrollo::find(decrypt($id));
-        $lineaDesarrollo->fill(['tipo' =>$request->tipo]);
-        $lineaDesarrollo->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>18]);
-        $control->save();
-        return redirect()->action([Linea_DesarrolloController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $lineaDesarrollo = Linea_Desarrollo::find(decrypt($id));
+            $lineaDesarrollo->fill(['tipo' =>$request->tipo]);
+            $lineaDesarrollo->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>18]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Linea_DesarrolloController::class,'index'])->with('success','Línea de desarrollo actualizada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar la línea de desarrollo');
+        }
     }
 
     /**
@@ -101,24 +139,56 @@ class Linea_DesarrolloController extends Controller
      */
     public function destroy($id)
     {
-        Linea_Desarrollo::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>18]);
-        $control->save();
-        return redirect()->action([Linea_DesarrolloController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Linea_Desarrollo::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>18]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Linea_DesarrolloController::class,'index'])->with('success','Línea de desarrollo eliminada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar la línea de desarrollo');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',18)->with('usuario')->paginate(5);
-        return view('configuraciones.linea_desarrollo.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',18)->with('usuario')->paginate(5);
+            return view('configuraciones.linea_desarrollo.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Linea_Desarrollo::where('estado', 'inactivo')->get();
-        return view('configuraciones.linea_desarrollo.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Linea_Desarrollo::where('estado', 'inactivo')->get();
+            return view('configuraciones.linea_desarrollo.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Linea_Desarrollo::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([Linea_DesarrolloController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Linea_Desarrollo::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>18]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Linea_DesarrolloController::class,'index'])->with('success','Línea de desarrollo restaurada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar la línea de desarrollo');
+        }
     }
 }

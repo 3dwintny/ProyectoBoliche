@@ -9,6 +9,7 @@ use App\Models\Departamento;
 use App\Models\Deporte;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class EDG272Controller extends Controller
 {
@@ -19,12 +20,18 @@ class EDG272Controller extends Controller
      */
     public function index()
     {
-        $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
-        if(count($atletas)>0){
-            return view('Reportes.edg272.show',compact('atletas'));
+        try{
+            $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
+            if(count($atletas)>0){
+                return view('Reportes.edg272.show',compact('atletas'));
+            }
+            else{
+                return view('Reportes.edg272.sinresultados');
+            }
         }
-        else{
-            return view('Reportes.edg272.sinresultados');
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -96,63 +103,75 @@ class EDG272Controller extends Controller
 
     public function generarPDF()
     {
-        $fecha = Carbon::now();
-        $mes = Carbon::parse($fecha)->format('m');
-        $anio = Carbon::parse($fecha)->format('Y');
-        $mostrarMes = "";
-        switch ($mes){
-            case 1:
-                $mostrarMes = "Enero";
-                break;
-            case 2:
-                $mostrarMes = "Febrero";
-                break;
-            case 3:
-                $mostrarMes = "Marzo";
-                break;
-            case 4:
-                $mostrarMes = "Abril";
-                break;
-            case 5:
-                $mostrarMes = "Mayo";
-                break;
-            case 6:
-                $mostrarMes = "Junio";
-                break;
-            case 7:
-                $mostrarMes = "Julio";
-                break;
-            case 8:
-                $mostrarMes = "Agosto";
-                break;
-            case 9:
-                $mostrarMes = "Septiembre";
-                break;
-            case 10:
-                $mostrarMes = "Octubre";
-                break;
-            case 11:
-                $mostrarMes = "Noviembre";
-                break;
-            case 12:
-                $mostrarMes = "Diciembre";
-                break;
+        try{
+            $fecha = Carbon::now();
+            $mes = Carbon::parse($fecha)->format('m');
+            $anio = Carbon::parse($fecha)->format('Y');
+            $mostrarMes = "";
+            switch ($mes){
+                case 1:
+                    $mostrarMes = "Enero";
+                    break;
+                case 2:
+                    $mostrarMes = "Febrero";
+                    break;
+                case 3:
+                    $mostrarMes = "Marzo";
+                    break;
+                case 4:
+                    $mostrarMes = "Abril";
+                    break;
+                case 5:
+                    $mostrarMes = "Mayo";
+                    break;
+                case 6:
+                    $mostrarMes = "Junio";
+                    break;
+                case 7:
+                    $mostrarMes = "Julio";
+                    break;
+                case 8:
+                    $mostrarMes = "Agosto";
+                    break;
+                case 9:
+                    $mostrarMes = "Septiembre";
+                    break;
+                case 10:
+                    $mostrarMes = "Octubre";
+                    break;
+                case 11:
+                    $mostrarMes = "Noviembre";
+                    break;
+                case 12:
+                    $mostrarMes = "Diciembre";
+                    break;
+            }
+            $deporte = Deporte::find(1);
+            $departamento = Departamento::find(13);
+            $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
+            if(count($atletas)>0){
+                $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>11]);
+                $control->save();
+                return PDF::loadView('Reportes.edg272.pdf',compact('atletas','mostrarMes','anio','deporte','departamento'))->setPaper('8.5x11')->stream();
+            }
+            else{
+                return view('Reportes.edg272.sinresultados');
+            }
         }
-        $deporte = Deporte::find(1);
-        $departamento = Departamento::find(13);
-        $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
-        if(count($atletas)>0){
-            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>11]);
-            $control->save();
-            return PDF::loadView('Reportes.edg272.pdf',compact('atletas','mostrarMes','anio','deporte','departamento'))->setPaper('8.5x11')->stream();
-        }
-        else{
-            return view('Reportes.edg272.sinresultados');
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la so');
         }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',11)->with('usuario')->paginate(5);
-        return view('Reportes.edg272.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',11)->with('usuario')->paginate(5);
+            return view('Reportes.edg272.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 }

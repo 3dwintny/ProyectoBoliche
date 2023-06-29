@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Departamento;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class DepartamentoController extends Controller
 {
@@ -15,8 +16,14 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        $departamento = Departamento::where('estado','activo')->paginate(6);
-        return view('configuraciones.departamento.show',compact('departamento')); 
+        try{
+            $departamento = Departamento::where('estado','activo')->paginate(6);
+            return view('configuraciones.departamento.show',compact('departamento')); 
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -26,7 +33,13 @@ class DepartamentoController extends Controller
      */
     public function create()
     {
-        return view('configuraciones.departamento.create');
+        try{
+            return view('configuraciones.departamento.create');
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -37,14 +50,23 @@ class DepartamentoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre'=>['unique:departamento'],
-        ]);
-        $departamento = new Departamento(['nombre' => $request->nombre]);
-        $departamento->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>7]);
-        $control->save();
-        return redirect()->action([DepartamentoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'nombre'=>['unique:departamento'],
+            ]);
+            $departamento = new Departamento(['nombre' => $request->nombre]);
+            $departamento->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>7]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([DepartamentoController::class,'index'])->with('success','Departamento registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al registrar el departamento');
+        }
     }
 
     /**
@@ -66,8 +88,14 @@ class DepartamentoController extends Controller
      */
     public function edit($id)
     {
-        $departamento = Departamento::find(decrypt($id));
-        return view('configuraciones.departamento.edit', compact('departamento'));
+        try{
+            $departamento = Departamento::find(decrypt($id));
+            return view('configuraciones.departamento.edit', compact('departamento'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -79,12 +107,21 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $departamento = Departamento::find(decrypt($id));
-        $departamento->fill(['nombre' => $request->nombre]);
-        $departamento->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>7]);
-        $control->save();
-        return redirect()->action([DepartamentoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $departamento = Departamento::find(decrypt($id));
+            $departamento->fill(['nombre' => $request->nombre]);
+            $departamento->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>7]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([DepartamentoController::class,'index'])->with('success','Departamento actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar el departamento');
+        }
     }
 
     /**
@@ -95,24 +132,56 @@ class DepartamentoController extends Controller
      */
     public function destroy($id)
     {
-        Departamento::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>7]);
-        $control->save();
-        return redirect()->action([DepartamentoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Departamento::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>7]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([DepartamentoController::class,'index'])->with('success','Departamento eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar el departamento');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',7)->with('usuario')->paginate(5);
-        return view('configuraciones.departamento.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',7)->with('usuario')->paginate(5);
+            return view('configuraciones.departamento.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Departamento::where('estado', 'inactivo')->get();
-        return view('configuraciones.departamento.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Departamento::where('estado', 'inactivo')->get();
+            return view('configuraciones.departamento.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Departamento::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([DepartamentoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Departamento::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>7]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([DepartamentoController::class,'index'])->with('success','Departamento restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar el departamento');
+        }
     }
 }

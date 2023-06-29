@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\PRT;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class PRTController extends Controller
 {
@@ -20,8 +21,14 @@ class PRTController extends Controller
      */
     public function index()
     {
-        $prts = PRT::where('estado','activo')->get(['id','nombre']);
-        return view('configuraciones.prt.show', compact('prts'));
+        try{
+            $prts = PRT::where('estado','activo')->get(['id','nombre']);
+            return view('configuraciones.prt.show', compact('prts'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +38,14 @@ class PRTController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now()->toDateString();
-        return view('configuraciones.prt.create', compact('hoy'));
+        try{
+            $hoy = Carbon::now()->toDateString();
+            return view('configuraciones.prt.create', compact('hoy'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +56,22 @@ class PRTController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre'=>['unique:prt'],
-        ]);
-        $prt = new PRT(['nombre' => $request->nombre]);
-        $prt->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>26]);
-        $control->save();
-        return redirect()->action([PRTController::class, 'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'nombre'=>['unique:prt'],
+            ]);
+            $prt = new PRT(['nombre' => $request->nombre]);
+            $prt->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>26]);
+            $control->save();
+            DB::commit();            return redirect()->action([PRTController::class, 'index'])->with('success','PRT registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al resgistrar el PRT');
+        }
     }
 
     /**
@@ -72,8 +93,14 @@ class PRTController extends Controller
      */
     public function edit($id)
     {
-        $prt = $this->p->obtenerPRTById(decrypt($id));
-        return view('configuraciones.prt.edit',['prt' => $prt]);
+        try{
+            $prt = $this->p->obtenerPRTById(decrypt($id));
+            return view('configuraciones.prt.edit',['prt' => $prt]);
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -85,12 +112,21 @@ class PRTController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $prt = PRT::find(decrypt($id));
-        $prt ->fill(['nombre' => $request->nombre]);
-        $prt->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>26]);
-        $control->save();
-        return redirect()->action([PRTController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $prt = PRT::find(decrypt($id));
+            $prt ->fill(['nombre' => $request->nombre]);
+            $prt->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>26]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([PRTController::class,'index'])->with('success','PRT actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar el PRT');
+        }
     }
 
     /**
@@ -101,24 +137,56 @@ class PRTController extends Controller
      */
     public function destroy($id)
     {
-        PRT::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>26]);
-        $control->save();
-        return redirect()->action([PRTController::class,'index']);
+        DB::beginTransaction();
+        try{
+            PRT::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>26]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([PRTController::class,'index'])->with('success','PRT eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar el PRT');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',26)->with('usuario')->paginate(5);
-        return view('configuraciones.prt.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',26)->with('usuario')->paginate(5);
+            return view('configuraciones.prt.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = PRT::where('estado', 'inactivo')->get();
-        return view('configuraciones.prt.eliminados',compact('eliminar'));
+        try{
+            $eliminar = PRT::where('estado', 'inactivo')->get();
+            return view('configuraciones.prt.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        PRT::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([PRTController::class,'index']);
+        DB::beginTransaction();
+        try{
+            PRT::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>26]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([PRTController::class,'index'])->with('success','PRT registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar el PRT');
+        }
     }
 }

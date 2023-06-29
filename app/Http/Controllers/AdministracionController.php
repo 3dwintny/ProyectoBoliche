@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Administracion;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class AdministracionController extends Controller
 {
@@ -15,8 +16,14 @@ class AdministracionController extends Controller
      */
     public function index()
     {
-        $administracion = Administracion::where('estado', 'activo')->with('user')->get();
-        return view('administracion.index',compact('administracion'));
+        try{
+            $administracion = Administracion::where('estado', 'activo')->with('user')->get();
+            return view('administracion.index',compact('administracion'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -82,10 +89,19 @@ class AdministracionController extends Controller
      */
     public function destroy($id)
     {
-        Administracion::find($id)->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>31]);
-        $control->save();
-        return redirect()->action([AdministracionController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Administracion::find($id)->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>31]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([AdministracionController::class,'index'])->with('success','Administrador eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar al administrador');
+        }
     }
 
     public function eliminados(){}

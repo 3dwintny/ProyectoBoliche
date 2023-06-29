@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Alumno;
 use App\Models\Nivel_cdag;
 use App\Models\Nivel_fadn;
 use App\Models\Tipo_Contrato;
@@ -12,6 +14,10 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 use App\Models\Control;
+use App\Models\User;
+use App\Models\Psicologia;
+use App\Models\Atleta;
+use Illuminate\Support\Facades\DB;
 
 class EntrenadorController extends Controller
 {
@@ -30,11 +36,17 @@ class EntrenadorController extends Controller
 
     public function index()
     {
-        $entrenadores = Entrenador::where('estado','activo')->get(['id','nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada',
+        try{
+            $entrenadores = Entrenador::where('estado','activo')->get(['id','nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada',
                         'celular','telefono_casa','cui','pasaporte','genero','fecha_nacimiento','edad','años_experiencia','correo','direccion',
                         'foto','estado_civil','nit','fecha_registro','escolaridad','nivel_cdag_id','nivel_fadn_id','departamento_id',
                         'nacionalidad_id','deporte_id','tipo_contrato_id']);
-        return view('entrenador.index', compact('entrenadores'));
+            return view('entrenador.index', compact('entrenadores'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -44,15 +56,22 @@ class EntrenadorController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now();
-        $niveles_cdag = Nivel_cdag::get(['id','nombre']);
-        $niveles_fadn = Nivel_fadn::get(['id','tipo']);
-        $departamentos = Departamento::get(['id','nombre']);
-        $nacionalidades = Nacionalidad::get(['id','descripcion']);
-        $deportes = Deporte::get(['id','nombre']);
-        $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
-        return view('entrenador.create',compact("niveles_cdag","niveles_fadn","departamentos","nacionalidades"
-        ,"deportes","tipos_contratos","hoy"));
+        try{
+            $hoy = Carbon::now();
+            $niveles_cdag = Nivel_cdag::get(['id','nombre']);
+            $niveles_fadn = Nivel_fadn::get(['id','tipo']);
+            $departamentos = Departamento::get(['id','nombre']);
+            $nacionalidades = Nacionalidad::get(['id','descripcion']);
+            $deportes = Deporte::get(['id','nombre']);
+            $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
+            return view('entrenador.create',compact("niveles_cdag","niveles_fadn","departamentos","nacionalidades"
+            ,"deportes","tipos_contratos","hoy"));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
+        
     }
 
     /**
@@ -63,53 +82,78 @@ class EntrenadorController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'cui'=>['unique:entrenador'],
-            'correo'=>['unique:entrenador'],
-            'celular' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/',
-            'telefono_casa' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
-        ]);
-        $entrenador = new Entrenador([
-            'nombre1' => $request->nombre1,
-            'nombre2' => $request->nombre2,
-            'nombre3' => $request->nombre3,
-            'apellido1' => $request->apellido1,
-            'apellido2' => $request->apellido2,
-            'apellido_casada' => $request->apellido_casada,
-            'celular' => $request->celular,
-            'telefono_casa' => $request->telefono_casa,
-            'cui' => $request->cui,
-            'pasaporte' => $request->pasaporte,
-            'genero' => $request->genero,
-            'fecha_nacimiento' => $request->fecha_nacimiento,
-            'edad' => $request->edad,
-            'años_experiencia' => $request->años_experiencia,
-            'correo' => $request->correo,
-            'direccion' => $request->direccion,
-            'foto' => $request->foto,
-            'estado_civil' => $request->estado_civil,
-            'nit' => $request->nit,
-            'fecha_registro' => $request->fecha_registro,
-            'escolaridad' => $request->escolaridad,
-            'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
-            'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
-            'departamento_id' => decrypt($request->departamento_id),
-            'nacionalidad_id' => decrypt($request->nacionalidad_id),
-            'deporte_id' => decrypt($request->deporte_id),
-            'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
-        ]);
-        if($request->hasFile('foto'))
-        {
-            $file = $request->file('foto');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extention;
-            $file->move('uploads/alumnos/', $filename);
-            $entrenador->foto = $filename;
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'cui'=>['unique:entrenador'],
+                'correo'=>['unique:entrenador'],
+                'celular' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/',
+                'telefono_casa' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
+            ]);
+            $entrenador = new Entrenador([
+                'nombre1' => $request->nombre1,
+                'nombre2' => $request->nombre2,
+                'nombre3' => $request->nombre3,
+                'apellido1' => $request->apellido1,
+                'apellido2' => $request->apellido2,
+                'apellido_casada' => $request->apellido_casada,
+                'celular' => $request->celular,
+                'telefono_casa' => $request->telefono_casa,
+                'cui' => $request->cui,
+                'pasaporte' => $request->pasaporte,
+                'genero' => $request->genero,
+                'fecha_nacimiento' => $request->fecha_nacimiento,
+                'edad' => $request->edad,
+                'años_experiencia' => $request->años_experiencia,
+                'correo' => $request->correo,
+                'direccion' => $request->direccion,
+                'foto' => $request->foto,
+                'estado_civil' => $request->estado_civil,
+                'nit' => $request->nit,
+                'fecha_registro' => $request->fecha_registro,
+                'escolaridad' => $request->escolaridad,
+                'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
+                'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
+                'departamento_id' => decrypt($request->departamento_id),
+                'nacionalidad_id' => decrypt($request->nacionalidad_id),
+                'deporte_id' => decrypt($request->deporte_id),
+                'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
+            ]);
+            if($request->hasFile('foto'))
+            {
+                $file = $request->file('foto');
+                $extention = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extention;
+                $file->move('uploads/alumnos/', $filename);
+                $entrenador->foto = $filename;
+            }
+            $usuario = User::where('email',$request->correo)->first();
+            if($usuario != null){
+                $tipoUsuarioId = $usuario->tipo_usuario_id;
+                if($tipoUsuarioId!=null){
+                    switch($tipoUsuarioId){
+                        case 1:
+                            $alumno = Alumno::where('correo',$request->correo)->first();
+                            Atleta::where('id',$alumno->atleta_id)->update(['estado'=>'inactivo']);
+                            break;
+                        case 3:
+                            Psicologia::where('correo',$request->correo)->update(['estado'=>'inactivo']);
+                            break;
+                    }
+                }
+                $usuario->update(['tipo_usuario_id'=>1]);
+            }
+            $entrenador->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>14]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([EntrenadorController::class, 'index'])->with('success','Entrenador registrado exitosamente');
         }
-        $entrenador->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>14]);
-        $control->save();
-        return redirect()->action([EntrenadorController::class, 'index']);
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al registrar al entrenador');
+        }
     }
 
     /**
@@ -120,13 +164,19 @@ class EntrenadorController extends Controller
      */
     public function show($id)
     {
-        $entrenador = Entrenador::find(decrypt($id));
-        $nivel_cdag = Nivel_cdag::find($entrenador->nivel_cdag_id);
-        $nivel_fadn = Nivel_fadn::find($entrenador->nivel_fadn_id);
-        $departamento = Departamento::find($entrenador->departamento_id);
-        $nacionalidad = Nacionalidad::find($entrenador->nacionalidad_id);
-        $tipo_contrato = Tipo_Contrato::find($entrenador->tipo_contrato_id);
-        return view('entrenador.show', compact('entrenador','nivel_cdag','nivel_fadn','departamento','nacionalidad','tipo_contrato'));
+        try{
+            $entrenador = Entrenador::find(decrypt($id));
+            $nivel_cdag = Nivel_cdag::find($entrenador->nivel_cdag_id);
+            $nivel_fadn = Nivel_fadn::find($entrenador->nivel_fadn_id);
+            $departamento = Departamento::find($entrenador->departamento_id);
+            $nacionalidad = Nacionalidad::find($entrenador->nacionalidad_id);
+            $tipo_contrato = Tipo_Contrato::find($entrenador->tipo_contrato_id);
+            return view('entrenador.show', compact('entrenador','nivel_cdag','nivel_fadn','departamento','nacionalidad','tipo_contrato'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -137,14 +187,20 @@ class EntrenadorController extends Controller
      */
     public function edit($id)
     {
-        $entrenador = Entrenador::find(decrypt($id));
-        $niveles_cdag = Nivel_cdag::get(['id','nombre']);
-        $niveles_fadn = Nivel_fadn::get(['id','tipo']);
-        $departamentos = Departamento::get(['id','nombre']);
-        $nacionalidades = Nacionalidad::get(['id','descripcion']);
-        $deportes = Deporte::get(['id','nombre']);
-        $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
-        return view('entrenador.edit',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
+        try{
+            $entrenador = Entrenador::find(decrypt($id));
+            $niveles_cdag = Nivel_cdag::get(['id','nombre']);
+            $niveles_fadn = Nivel_fadn::get(['id','tipo']);
+            $departamentos = Departamento::get(['id','nombre']);
+            $nacionalidades = Nacionalidad::get(['id','descripcion']);
+            $deportes = Deporte::get(['id','nombre']);
+            $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
+            return view('entrenador.edit',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -156,59 +212,68 @@ class EntrenadorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $entrenador = Entrenador::find(decrypt($id));
-        if($request->hasFile('foto'))
-        {
-            $destination = 'uploads/alumnos/'.$entrenador->foto;
-            if(File::exists($destination)){
-                File::delete($destination);
+        DB::beginTransaction();
+        try{
+            $entrenador = Entrenador::find(decrypt($id));
+            if($request->hasFile('foto'))
+            {
+                $destination = 'uploads/alumnos/'.$entrenador->foto;
+                if(File::exists($destination)){
+                    File::delete($destination);
+                }
+                $file = $request->file('foto');
+                $extention = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extention;
+                $file->move('uploads/alumnos/', $filename);
+                $fotografia = $filename;
             }
-            $file = $request->file('foto');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extention;
-            $file->move('uploads/alumnos/', $filename);
-            $fotografia = $filename;
+            else{
+                $fotografia = $request->pic;
+            }
+            $request->validate([
+                'celular' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/',
+                'telefono_casa' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
+            ]);
+            $entrenador->fill([
+                'nombre1' => $request->nombre1,
+                'nombre2' => $request->nombre2,
+                'nombre3' => $request->nombre3,
+                'apellido1' => $request->apellido1,
+                'apellido2' => $request->apellido2,
+                'apellido_casada' => $request->apellido_casada,
+                'celular' => $request->celular,
+                'telefono_casa' => $request->telefono_casa,
+                'cui' => $request->cui,
+                'pasaporte' => $request->pasaporte,
+                'genero' => $request->genero,
+                'fecha_nacimiento' => $request->fecha_nacimiento,
+                'edad' => $request->edad,
+                'años_experiencia' => $request->años_experiencia,
+                'correo' => $request->correo,
+                'direccion' => $request->direccion,
+                'foto' => $fotografia,
+                'estado_civil' => $request->estado_civil,
+                'nit' => $request->nit,
+                'fecha_registro' => $request->fecha_registro,
+                'escolaridad' => $request->escolaridad,
+                'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
+                'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
+                'departamento_id' => decrypt($request->departamento_id),
+                'nacionalidad_id' => decrypt($request->nacionalidad_id),
+                'deporte_id' => decrypt($request->deporte_id),
+                'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
+            ]);
+            $entrenador->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([EntrenadorController::class,'index'])->with('success','Información del entrenador actualizada exitosamente');
         }
-        else{
-            $fotografia = $request->pic;
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar la información del entrenador entrenador');
         }
-        $request->validate([
-            'celular' => 'nullable|regex:/[0-9]{4}[ -][0-9]{4}/',
-            'telefono_casa' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
-        ]);
-        $entrenador->fill([
-            'nombre1' => $request->nombre1,
-            'nombre2' => $request->nombre2,
-            'nombre3' => $request->nombre3,
-            'apellido1' => $request->apellido1,
-            'apellido2' => $request->apellido2,
-            'apellido_casada' => $request->apellido_casada,
-            'celular' => $request->celular,
-            'telefono_casa' => $request->telefono_casa,
-            'cui' => $request->cui,
-            'pasaporte' => $request->pasaporte,
-            'genero' => $request->genero,
-            'fecha_nacimiento' => $request->fecha_nacimiento,
-            'edad' => $request->edad,
-            'años_experiencia' => $request->años_experiencia,
-            'correo' => $request->correo,
-            'direccion' => $request->direccion,
-            'foto' => $fotografia,
-            'estado_civil' => $request->estado_civil,
-            'nit' => $request->nit,
-            'fecha_registro' => $request->fecha_registro,
-            'escolaridad' => $request->escolaridad,
-            'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
-            'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
-            'departamento_id' => decrypt($request->departamento_id),
-            'nacionalidad_id' => decrypt($request->nacionalidad_id),
-            'deporte_id' => decrypt($request->deporte_id),
-            'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
-        ]);
-        $entrenador->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
-        $control->save();
-        return redirect()->action([EntrenadorController::class,'index']);
     }
 
     /**
@@ -219,94 +284,141 @@ class EntrenadorController extends Controller
      */
     public function destroy($id)
     {
-        Entrenador::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>14]);
-        $control->save();
-        return redirect()->route('entrenadores.index')->with('message', 'Entrenador eliminado');;
+        DB::beginTransaction();
+        try{
+            Entrenador::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>14]);
+            $control->save();
+            DB::commit();
+            return redirect()->route('entrenadores.index')->with('message', 'Entrenador eliminado')->with('success','Entrenador eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar al entrenador');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',14)->with('usuario')->paginate(5);
-        return view('entrenador.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',14)->with('usuario')->paginate(5);
+            return view('entrenador.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function modificar(){
-        $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
-        if(count($entrenadores)>0){
-            $entrenador = Entrenador::find($entrenadores[0]->id);
-            $niveles_cdag = Nivel_cdag::get(['id','nombre']);
-            $niveles_fadn = Nivel_fadn::get(['id','tipo']);
-            $departamentos = Departamento::get(['id','nombre']);
-            $nacionalidades = Nacionalidad::get(['id','descripcion']);
-            $deportes = Deporte::get(['id','nombre']);
-            $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
-            return view('entrenador.informacionPersonal',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
+        try{
+            $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
+            if(count($entrenadores)>0){
+                $entrenador = Entrenador::find($entrenadores[0]->id);
+                $niveles_cdag = Nivel_cdag::get(['id','nombre']);
+                $niveles_fadn = Nivel_fadn::get(['id','tipo']);
+                $departamentos = Departamento::get(['id','nombre']);
+                $nacionalidades = Nacionalidad::get(['id','descripcion']);
+                $deportes = Deporte::get(['id','nombre']);
+                $tipos_contratos = Tipo_Contrato::get(['id','descripcion']);
+                return view('entrenador.informacionPersonal',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
+            }
+            else{
+                return redirect('home');
+            }
         }
-        else{
-            return redirect('home');
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
         }
     }
 
     public function actualizar(Request $request){
-        $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
-        $entrenador = Entrenador::find($entrenadores[0]->id);
-        if($request->hasFile('foto'))
-        {
-            $destination = 'uploads/alumnos/'.$entrenador->foto;
-            if(File::exists($destination)){
-                File::delete($destination);
+        DB::beginTransaction();
+        try{
+            $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
+            $entrenador = Entrenador::find($entrenadores[0]->id);
+            if($request->hasFile('foto'))
+            {
+                $destination = 'uploads/alumnos/'.$entrenador->foto;
+                if(File::exists($destination)){
+                    File::delete($destination);
+                }
+                $file = $request->file('foto');
+                $extention = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extention;
+                $file->move('uploads/alumnos/', $filename);
+                $fotografia = $filename;
             }
-            $file = $request->file('foto');
-            $extention = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extention;
-            $file->move('uploads/alumnos/', $filename);
-            $fotografia = $filename;
+            else{
+                $fotografia = $request->pic;
+            }
+            $entrenador->fill([
+                'nombre1' => $request->nombre1,
+                'nombre2' => $request->nombre2,
+                'nombre3' => $request->nombre3,
+                'apellido1' => $request->apellido1,
+                'apellido2' => $request->apellido2,
+                'apellido_casada' => $request->apellido_casada,
+                'celular' => $request->celular,
+                'telefono_casa' => $request->telefono_casa,
+                'cui' => $request->cui,
+                'pasaporte' => $request->pasaporte,
+                'genero' => $request->genero,
+                'fecha_nacimiento' => $request->fecha_nacimiento,
+                'edad' => $request->edad,
+                'años_experiencia' => $request->años_experiencia,
+                'correo' => $request->correo,
+                'direccion' => $request->direccion,
+                'foto' => $fotografia,
+                'estado_civil' => $request->estado_civil,
+                'nit' => $request->nit,
+                'fecha_registro' => $request->fecha_registro,
+                'escolaridad' => $request->escolaridad,
+                'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
+                'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
+                'departamento_id' => decrypt($request->departamento_id),
+                'nacionalidad_id' => decrypt($request->nacionalidad_id),
+                'deporte_id' => decrypt($request->deporte_id),
+                'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
+            ]);
+            $entrenador->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
+            $control->save();
+            DB::commit();
+            return redirect('modificar')->with('success','Información actualizada exitosamente');
         }
-        else{
-            $fotografia = $request->pic;
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar la información');
         }
-        $entrenador->fill([
-            'nombre1' => $request->nombre1,
-            'nombre2' => $request->nombre2,
-            'nombre3' => $request->nombre3,
-            'apellido1' => $request->apellido1,
-            'apellido2' => $request->apellido2,
-            'apellido_casada' => $request->apellido_casada,
-            'celular' => $request->celular,
-            'telefono_casa' => $request->telefono_casa,
-            'cui' => $request->cui,
-            'pasaporte' => $request->pasaporte,
-            'genero' => $request->genero,
-            'fecha_nacimiento' => $request->fecha_nacimiento,
-            'edad' => $request->edad,
-            'años_experiencia' => $request->años_experiencia,
-            'correo' => $request->correo,
-            'direccion' => $request->direccion,
-            'foto' => $fotografia,
-            'estado_civil' => $request->estado_civil,
-            'nit' => $request->nit,
-            'fecha_registro' => $request->fecha_registro,
-            'escolaridad' => $request->escolaridad,
-            'nivel_cdag_id' => decrypt($request->nivel_cdag_id),
-            'nivel_fadn_id' => decrypt($request->nivel_fadn_id),
-            'departamento_id' => decrypt($request->departamento_id),
-            'nacionalidad_id' => decrypt($request->nacionalidad_id),
-            'deporte_id' => decrypt($request->deporte_id),
-            'tipo_contrato_id' => decrypt($request->tipo_contrato_id),
-        ]);
-        $entrenador->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
-        $control->save();
-        return redirect('home');
     }
 
     public function eliminados(){
-        $eliminar = Entrenador::where('estado', 'inactivo')->get();
-        return view('entrenador.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Entrenador::where('estado', 'inactivo')->get();
+            return view('entrenador.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Entrenador::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([EntrenadorController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Entrenador::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([EntrenadorController::class,'index'])->with('success','Entrenador eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar al entrenador');
+        }
     }
 }
