@@ -22,14 +22,13 @@ class Linea_DesarrolloController extends Controller
     public function index()
     {
         try{
-
+            $lineaDesarrollo = Linea_Desarrollo::where('estado','activo')->get(['id','tipo']);
+            return view('configuraciones.linea_desarrollo.show',compact('lineaDesarrollo'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
-        $lineaDesarrollo = Linea_Desarrollo::where('estado','activo')->get(['id','tipo']);
-        return view('configuraciones.linea_desarrollo.show',compact('lineaDesarrollo'));
+        
     }
 
     /**
@@ -44,8 +43,7 @@ class Linea_DesarrolloController extends Controller
             return view('configuraciones.linea_desarrollo.create',compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -71,8 +69,7 @@ class Linea_DesarrolloController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar la línea de desarrollo');
+            return back()->with('error', 'Se produjo un error al registrar la línea de desarrollo');
         }
     }
 
@@ -100,8 +97,7 @@ class Linea_DesarrolloController extends Controller
             return view('configuraciones.linea_desarrollo.edit',['lineaDesarrollo' => $lineaDesarrollo]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -126,8 +122,7 @@ class Linea_DesarrolloController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la línea de desarrollo');
+            return back()->with('error', 'Se produjo un error al actualizar la información de la línea de desarrollo');
         }
     }
 
@@ -149,8 +144,7 @@ class Linea_DesarrolloController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar la línea de desarrollo');
+            return back()->with('error', 'Se produjo un error al eliminar la línea de desarrollo');
         }
     }
 
@@ -160,8 +154,7 @@ class Linea_DesarrolloController extends Controller
             return view('configuraciones.linea_desarrollo.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -171,8 +164,7 @@ class Linea_DesarrolloController extends Controller
             return view('configuraciones.linea_desarrollo.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -187,8 +179,7 @@ class Linea_DesarrolloController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar la línea de desarrollo');
+            return back()->with('error', 'Se produjo un error al restaurar la línea de desarrollo');
         }
     }
 }

@@ -26,8 +26,7 @@ class Otro_ProgramaController extends Controller
             return view('configuraciones.otros_programas.show',compact('programas'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -43,8 +42,7 @@ class Otro_ProgramaController extends Controller
             return view('configuraciones.otros_programas.create', compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -70,8 +68,7 @@ class Otro_ProgramaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el programa de atención');
+            return back()->with('error', 'Se produjo un error al registrar al programa de atención');
         }
     }
 
@@ -99,8 +96,7 @@ class Otro_ProgramaController extends Controller
             return view('configuraciones.otros_programas.edit',['otro_programa' => $otro_programa]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -125,8 +121,7 @@ class Otro_ProgramaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar el programa de atención');
+            return back()->with('error', 'Se produjo un error al actualizar la información del programa de atención');
         }
     }
 
@@ -148,8 +143,7 @@ class Otro_ProgramaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar el programa de atención');
+            return back()->with('error', 'Se produjo un error al eliminar al programa de atención');
         }
     }
 
@@ -159,8 +153,7 @@ class Otro_ProgramaController extends Controller
             return view('configuraciones.otros_programas.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -170,8 +163,7 @@ class Otro_ProgramaController extends Controller
             return view('configuraciones.otros_programas.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -186,8 +178,7 @@ class Otro_ProgramaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar el programa de atención');
+            return back()->with('error', 'Se produjo un error al restaurar al programa de atención');
         }
     }
 }

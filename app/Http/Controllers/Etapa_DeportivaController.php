@@ -26,8 +26,7 @@ class Etapa_DeportivaController extends Controller
             return view('configuraciones.etapadep.show',compact('etapa'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -43,8 +42,7 @@ class Etapa_DeportivaController extends Controller
             return view('configuraciones.etapadep.create', compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -70,8 +68,7 @@ class Etapa_DeportivaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar la etapa deportiva');
+            return back()->with('error', 'Se produjo un error al registrar a la etapa deportiva');
         }
     }
 
@@ -99,8 +96,7 @@ class Etapa_DeportivaController extends Controller
             return view('configuraciones.etapadep.edit',['etapa' => $etapa]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -125,8 +121,7 @@ class Etapa_DeportivaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la etapa deportiva');
+            return back()->with('error', 'Se produjo un error al actualizar la información de la etapa deportiva');
         }
     }
 
@@ -144,12 +139,11 @@ class Etapa_DeportivaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>15]);
             $control->save();
             DB::commit();
-            return redirect()->action([Etapa_DeportivaController::class,'index']);
+            return redirect()->action([Etapa_DeportivaController::class,'index'])->with('success','Etapa deportiva eliminada exitosamente');
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar la etapata deportiva')->with('success','Etapa deportiva eliminada exitosamente');
+            return back()->with('error', 'Se produjo un error al eliminar a la etapa deportiva');
         }
     }
 
@@ -159,8 +153,7 @@ class Etapa_DeportivaController extends Controller
             return view('configuraciones.etapadep.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -170,8 +163,7 @@ class Etapa_DeportivaController extends Controller
             return view('configuraciones.etapadep.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -186,8 +178,7 @@ class Etapa_DeportivaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al restautar la etapa deportiva');
+            return back()->with('error', 'Se produjo un error al restaurar a la etapa deportiva');
         }
     }
 }

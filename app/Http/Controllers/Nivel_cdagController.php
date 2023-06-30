@@ -26,8 +26,7 @@ class Nivel_cdagController extends Controller
             return view('configuraciones.nivel_cdag.show', compact('niveles'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -43,8 +42,7 @@ class Nivel_cdagController extends Controller
             return view('configuraciones.nivel_cdag.create', compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -70,8 +68,7 @@ class Nivel_cdagController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el nivel CDAG');
+            return back()->with('error', 'Se produjo un error al registrar el nivel CDAG');
         }
     }
 
@@ -99,8 +96,7 @@ class Nivel_cdagController extends Controller
             return view('configuraciones.nivel_cdag.edit',['nivel' => $nivel]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -125,8 +121,7 @@ class Nivel_cdagController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar el nivel CDAG');
+            return back()->with('error', 'Se produjo un error al actualizar la información del nivel CDAG');
         }
     }
 
@@ -148,8 +143,7 @@ class Nivel_cdagController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al eliminar el nivel CDAG');
         }
     }
 
@@ -159,8 +153,7 @@ class Nivel_cdagController extends Controller
             return view('configuraciones.nivel_cdag.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -170,8 +163,7 @@ class Nivel_cdagController extends Controller
             return view('configuraciones.nivel_cdag.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -186,8 +178,7 @@ class Nivel_cdagController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar el nivel CDAG');
+            return back()->with('error', 'Se produjo un error al restaurar al nivel CDAG');
         }
     }
 }

@@ -26,8 +26,7 @@ class Deporte_AdoptadoController extends Controller
             return view('configuraciones.deporte_a.show',compact('deporte'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -43,8 +42,7 @@ class Deporte_AdoptadoController extends Controller
             return view('configuraciones.deporte_a.create', compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -70,8 +68,7 @@ class Deporte_AdoptadoController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el deporte adaptado');
+            return back()->with('error', 'Se produjo un error al registrar al deporte adaptado');
         }
     }
 
@@ -99,8 +96,7 @@ class Deporte_AdoptadoController extends Controller
             return view('configuraciones.deporte_a.edit',['deporte' => $deporte]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -125,8 +121,7 @@ class Deporte_AdoptadoController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar el deporte adaptado');
+            return back()->with('error', 'Se produjo un error al actualizar la información del deporte adaptado');
         }
     }
 
@@ -148,8 +143,7 @@ class Deporte_AdoptadoController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al eliminar al deporte adaptado');
         }
     }
 
@@ -159,8 +153,7 @@ class Deporte_AdoptadoController extends Controller
             return view('configuraciones.deporte_a.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -170,8 +163,7 @@ class Deporte_AdoptadoController extends Controller
             return view('configuraciones.deporte_a.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -186,8 +178,7 @@ class Deporte_AdoptadoController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar el deporte adaptado');
+            return back()->with('error', 'Se produjo un error al restaurar al deporte adaptado');
         }
     }
 }

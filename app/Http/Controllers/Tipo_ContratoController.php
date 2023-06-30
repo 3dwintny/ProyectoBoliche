@@ -26,8 +26,7 @@ class Tipo_ContratoController extends Controller
             return view('configuraciones.tipos_contratos.show', compact('tipos'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -43,8 +42,7 @@ class Tipo_ContratoController extends Controller
             return view('configuraciones.tipos_contratos.create', compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -70,8 +68,7 @@ class Tipo_ContratoController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el tipo de contrato');
+            return back()->with('error', 'Se produjo un error al registrar al tipo de contrato');
         }
     }
 
@@ -99,8 +96,7 @@ class Tipo_ContratoController extends Controller
             return view('configuraciones.tipos_contratos.edit',['contratos' => $contratos]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -125,8 +121,7 @@ class Tipo_ContratoController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar el tipo de contrato');
+            return back()->with('error', 'Se produjo un error al actualizar la información del tipo de contrato');
         }
     }
 
@@ -148,8 +143,7 @@ class Tipo_ContratoController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar el tipo de contrato');
+            return back()->with('error', 'Se produjo un error al eliminar al tipo de contrato');
         }
     }
 
@@ -159,8 +153,7 @@ class Tipo_ContratoController extends Controller
             return view('configuraciones.tipos_contratos.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -170,8 +163,7 @@ class Tipo_ContratoController extends Controller
             return view('configuraciones.tipos_contratos.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -186,8 +178,7 @@ class Tipo_ContratoController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar el tipo de contrato');
+            return back()->with('error', 'Se produjo un error al restaurar al tipo de contrato');
         }
     }
 }

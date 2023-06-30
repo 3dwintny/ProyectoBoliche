@@ -32,8 +32,7 @@ class CentroController extends Controller
             return view('configuraciones.centro.show', compact('centro'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -51,8 +50,7 @@ class CentroController extends Controller
             return view('configuraciones.centro.create',compact('departamento','hoy','horario'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -99,8 +97,7 @@ class CentroController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el centro');
+            return back()->with('error', 'Se produjo un error al registrar al centro de entrenamiento');
         }
     }
 
@@ -129,8 +126,7 @@ class CentroController extends Controller
             return  view('configuraciones.centro.edit',['centro'=>$centro,'departamento'=>$departamento]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -157,8 +153,7 @@ class CentroController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al actualizar la información del centro de entrenamiento');
         }
     }
 
@@ -176,12 +171,11 @@ class CentroController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>6]);
             $control->save();
             DB::commit();
-            return redirect()->action([CentroController::class,'index'])->with('success','Centro eliminado exitosamente');
+            return redirect()->action([CentroController::class,'index'])->with('success','Centro de entrenamiento eliminado exitosamente');
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar el centro');
+            return back()->with('error', 'Se produjo un error al eliminar al centro de entrenamiento');
         }
     }
 
@@ -199,8 +193,7 @@ class CentroController extends Controller
             return view('configuraciones.centro.horario',compact('horario','centro','idEncriptado'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -218,8 +211,7 @@ class CentroController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar el horario del centro');
+            return back()->with('error', 'Se produjo un error al eliminar los horarios del centro de entrenamiento');
         }
     }
 
@@ -258,8 +250,7 @@ class CentroController extends Controller
             return view('configuraciones.centro.agregar',compact('horarios','centro','idEncriptado'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -292,8 +283,7 @@ class CentroController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar los horarios al centro');
+            return back()->with('error', 'Se produjo un error al registrar los horarios del centro de entrenamiento');
         }
     }
 
@@ -303,8 +293,7 @@ class CentroController extends Controller
             return view('configuraciones.Centro.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -314,8 +303,7 @@ class CentroController extends Controller
             return view('configuraciones.Centro.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -330,12 +318,11 @@ class CentroController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>6]);
             $control->save();
             DB::commit();
-            return redirect()->action([CentroController::class,'index'])->with('success','Centro restaurado exitosamente');
+            return redirect()->action([CentroController::class,'index'])->with('success','Centro de entrenamiento restaurado exitosamente');
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar el centro');
+            return back()->with('error', 'Se produjo un error al restaurar al centro de entrenamiento');
         }
     }
 }

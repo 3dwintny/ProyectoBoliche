@@ -44,8 +44,7 @@ class UserController extends Controller
             return view('users.crear', compact('roles'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -84,8 +83,7 @@ class UserController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar al usuario');
+            return back()->with('error', 'Se produjo un error al registrar al usuario');
         }
     }
 
@@ -115,8 +113,7 @@ class UserController extends Controller
             return view('users.editar', compact('user', 'roles', 'userRole'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -140,13 +137,12 @@ class UserController extends Controller
     
             $input = $request->all();
             $rol = implode(",",$input['roles']);
+            $contrasenia = null;
             if(!empty($input['password'])){
                 $contrasenia = Hash::make($input['password']);
-            }else{
-                $contrasenia = Arr::except($input,array('password'));
             }
             $tipo_usuario_id=null;
-            if($rol=="Usuario"){
+            if($rol=="Administrador"){
                 $tipo_usuario_id=null;
             }
             else if($rol=="Atleta"){
@@ -160,12 +156,21 @@ class UserController extends Controller
             }
     
             $user = User::find(decrypt($id));
-            $user->fill([
-                'name'=>$input['name'],
-                'email'=>$input['email'],
-                'password'=>$contrasenia,
-                'tipo_usuario_id'=>$tipo_usuario_id,
-            ]);
+            if($contrasenia==null){
+                $user->fill([
+                    'name'=>$input['name'],
+                    'email'=>$input['email'],
+                    'tipo_usuario_id'=>$tipo_usuario_id,
+                ]);
+            }
+            else{
+                $user->fill([
+                    'name'=>$input['name'],
+                    'email'=>$input['email'],
+                    'password'=>$contrasenia,
+                    'tipo_usuario_id'=>$tipo_usuario_id,
+                ]);
+            }
             $user->save();
             DB::table('model_has_roles')->where('model_id',decrypt($id))->delete();
     
@@ -177,8 +182,7 @@ class UserController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la información del usuario');
+            return back()->with('error', 'Se produjo un error al actualizar la información del usuario');
         }
     }
 
@@ -195,8 +199,7 @@ class UserController extends Controller
             return redirect()->route('usuarios.index')->with('success','Usuario eliminado exitosamente');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar al usuario');
+            return back()->with('error', 'Se produjo un error al eliminar al usuario');
         }
     }
 
@@ -206,8 +209,7 @@ class UserController extends Controller
             return view('users.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 }

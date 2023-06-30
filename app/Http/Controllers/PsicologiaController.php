@@ -30,8 +30,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.show', compact('psicologo'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -47,8 +46,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.create',compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -94,7 +92,9 @@ class PsicologiaController extends Controller
                             break;
                     }
                 }
-                $usuario->update(['tipo_usuario_id'=>1]);
+                DB::table('model_has_roles')->where('model_id',$usuario->id)->delete();
+                $usuario->update(['tipo_usuario_id'=>3]);
+                $usuario->assignRole('Psicólogo');
             }
             $psicologo->save();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>27]);
@@ -104,8 +104,7 @@ class PsicologiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar la información del psicólogo');
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -133,8 +132,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.edit',['psicologo' => $psicologo]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -193,7 +191,7 @@ class PsicologiaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>27]);
             $control->save();
             DB::commit();
-            return redirect()->action([PsicologiaController::class,'index'])->with('success','Administrador eliminado exitosamente');
+            return redirect()->action([PsicologiaController::class,'index'])->with('success','Psicólogo eliminado exitosamente');
         }
         catch(\Exception $e){
             DB::rollback();
@@ -214,8 +212,7 @@ class PsicologiaController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -247,8 +244,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -258,8 +254,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -270,7 +265,7 @@ class PsicologiaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>27]);
             $control->save();
             DB::commit();
-            return redirect()->action([PsicologiaController::class,'index'])->with('success','Administrador restaurado exitosamente');
+            return redirect()->action([PsicologiaController::class,'index'])->with('success','Psicólogo restaurado exitosamente');
         }
         catch(\Exception $e){
             DB::rollBack();

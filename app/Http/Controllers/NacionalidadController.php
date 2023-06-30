@@ -26,8 +26,7 @@ class NacionalidadController extends Controller
             return view('configuraciones.nacionalidad.show',compact('nacionalidad'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -43,8 +42,7 @@ class NacionalidadController extends Controller
             return view('configuraciones.nacionalidad.create', compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -58,6 +56,9 @@ class NacionalidadController extends Controller
     {
         DB::beginTransaction();
         try{
+            $request->validate([
+            'descripcion'=>['unique:nacionalidad'],
+            ]);
             $nacionalidad = new Nacionalidad(['descripcion' => $request->descripcion]);
             $nacionalidad->save();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>21]);
@@ -67,12 +68,9 @@ class NacionalidadController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar la nacionalidad');
+            return back()->with('error', 'Se produjo un error al registrar la nacionalidad');
         }
-        $request->validate([
-            'descripcion'=>['unique:nacionalidad'],
-        ]);
+        
     }
 
     /**
@@ -98,8 +96,7 @@ class NacionalidadController extends Controller
             return view('configuraciones.nacionalidad.edit',['nacionalidad' => $nacionalidad]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -124,8 +121,7 @@ class NacionalidadController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la nacionalidad');
+            return back()->with('error', 'Se produjo un error al actualizar la información de la nacionalidad');
         }
     }
 
@@ -147,8 +143,7 @@ class NacionalidadController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar la nacionalidad');
+            return back()->with('error', 'Se produjo un error al eliminar la nacionalidad');
         }
     }
 
@@ -158,8 +153,7 @@ class NacionalidadController extends Controller
             return view('configuraciones.nacionalidad.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -169,8 +163,7 @@ class NacionalidadController extends Controller
             return view('configuraciones.nacionalidad.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -185,8 +178,7 @@ class NacionalidadController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar la nacionalidad');
+            return back()->with('error', 'Se produjo un error al restaurar la nacionalidad');
         }
     }
 }

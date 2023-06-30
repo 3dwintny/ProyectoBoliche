@@ -24,8 +24,7 @@ class MunicipioController extends Controller
             return view('configuraciones.municipio.show',compact('municipio')); 
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -41,8 +40,7 @@ class MunicipioController extends Controller
             return view('configuraciones.municipio.create',compact("departamentos"));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -54,16 +52,18 @@ class MunicipioController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try{
             $municipios = new Municipio(['nombre' => $request->nombre,'departamento_id' => $request->departamento_id]);
             $municipios->save();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>20]);
             $control->save();
+            DB::commit();
             return redirect()->action([MunicipioController::class,'index'])->with('success','Municipio registrado exitosamente');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el municipio');
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al registrar al municipio');
         }
     }
 
@@ -92,8 +92,7 @@ class MunicipioController extends Controller
             return view('configuraciones.municipio.edit',compact('municipio','departamentos'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -118,8 +117,7 @@ class MunicipioController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar al municipio');
+            return back()->with('error', 'Se produjo un error al actualizar la información del municipio');
         }
     }
 
@@ -141,8 +139,7 @@ class MunicipioController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar al municipio');
+            return back()->with('error', 'Se produjo un error al eliminar al municipio');
         }
     }
 
@@ -152,8 +149,7 @@ class MunicipioController extends Controller
             return view('configuraciones.municipio.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -163,8 +159,7 @@ class MunicipioController extends Controller
             return view('configuraciones.municipio.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -175,12 +170,11 @@ class MunicipioController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>20]);
             $control->save();
             DB::commit();
-            return redirect()->action([MunicipioController::class,'index']);
+            return redirect()->action([MunicipioController::class,'index'])->with('success','Municipio restaurado exitosamente');
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar AL municipio')->with('success','Municipio restaurado exitosamente');
+            return back()->with('error', 'Se produjo un error al restaurar al municipio');
         }
     }
 }
