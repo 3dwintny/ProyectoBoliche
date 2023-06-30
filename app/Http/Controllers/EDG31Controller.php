@@ -1366,8 +1366,7 @@ class EDG31Controller extends Controller
             "totalFemeninosAdaptados","totalMasculinosAdaptados","totalAdaptados"));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -2831,8 +2830,7 @@ class EDG31Controller extends Controller
             "totalFemeninosAdaptados","totalMasculinosAdaptados","totalAdaptados","entrega","anio","mostrarMes","federacion","departamento"))->setPaper('8.5x11')->stream();
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -2842,8 +2840,7 @@ class EDG31Controller extends Controller
             return view('Reportes.edg31.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 }

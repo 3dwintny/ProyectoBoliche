@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Formulario;
 use App\Models\Control;
-use Illuminate\Support\Facades\DB;
 
 class FormularioController extends Controller
 {
@@ -27,8 +26,7 @@ class FormularioController extends Controller
             return view(' configuraciones.formulario.show',compact('formulario'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -77,8 +75,7 @@ class FormularioController extends Controller
             return view('configuraciones.formulario.edit',compact('formulario'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -105,8 +102,7 @@ class FormularioController extends Controller
             return redirect()->action([FormularioController::class,'index'])->with('success','Formulario actualizado exitosamente');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la información del formulario');
+            return back()->with('error', 'Se produjo un error al actualizar la información del formulario');
         }
     }
 
@@ -127,8 +123,7 @@ class FormularioController extends Controller
             return view('configuraciones.formulario.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 }

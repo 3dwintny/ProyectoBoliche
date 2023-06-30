@@ -26,8 +26,7 @@ class PRTController extends Controller
             return view('configuraciones.prt.show', compact('prts'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -43,8 +42,7 @@ class PRTController extends Controller
             return view('configuraciones.prt.create', compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -69,8 +67,7 @@ class PRTController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al resgistrar el PRT');
+            return back()->with('error', 'Se produjo un error al registrar al PRT');
         }
     }
 
@@ -98,8 +95,7 @@ class PRTController extends Controller
             return view('configuraciones.prt.edit',['prt' => $prt]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -124,8 +120,7 @@ class PRTController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar el PRT');
+            return back()->with('error', 'Se produjo un error al actualizar al PRT');
         }
     }
 
@@ -147,8 +142,7 @@ class PRTController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar el PRT');
+            return back()->with('error', 'Se produjo un error al eliminar al PRT');
         }
     }
 
@@ -158,8 +152,7 @@ class PRTController extends Controller
             return view('configuraciones.prt.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -169,8 +162,7 @@ class PRTController extends Controller
             return view('configuraciones.prt.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -181,12 +173,11 @@ class PRTController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>26]);
             $control->save();
             DB::commit();
-            return redirect()->action([PRTController::class,'index'])->with('success','PRT registrado exitosamente');
+            return redirect()->action([PRTController::class,'index'])->with('success','PRT restaurado exitosamente');
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar el PRT');
+            return back()->with('error', 'Se produjo un error al restaurar al PRT');
         }
     }
 }

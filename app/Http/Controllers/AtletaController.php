@@ -270,7 +270,9 @@ class AtletaController extends Controller
                             break;
                     }
                 }
+                DB::table('model_has_roles')->where('model_id',$usuario->id)->delete();
                 $usuario->update(['tipo_usuario_id'=>1]);
+                $usuario->assignRole('Atleta');
             }
             $alumno->update(['estado' => 'Inscrito']);
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>4]);
@@ -280,8 +282,7 @@ class AtletaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar al atleta');
+            return back()->with('error', 'Se produjo un error al registrar al atleta');
         }
     }
 
@@ -312,8 +313,7 @@ class AtletaController extends Controller
             'etapa_deportiva','linea_desarrollo','prt','modalidad','centro','entrenador'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -341,8 +341,7 @@ class AtletaController extends Controller
             'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','atleta'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -400,8 +399,7 @@ class AtletaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar al atleta');
+            return back()->with('error', 'Se produjo un error al actualizar la información del atleta');
         }
     }
 
@@ -417,8 +415,7 @@ class AtletaController extends Controller
         }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -438,8 +435,7 @@ class AtletaController extends Controller
             }  
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -506,8 +502,7 @@ class AtletaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la información');
+            return back()->with('error', 'Se produjo un error al actualizar la información');
         }
     }
 
@@ -544,7 +539,7 @@ class AtletaController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -566,8 +561,7 @@ class AtletaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar al atleta');
+            return back()->with('error', 'Se produjo un error al eliminar al atleta');
         }
     }
 
@@ -577,8 +571,7 @@ class AtletaController extends Controller
             return view('Atletas.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -588,8 +581,7 @@ class AtletaController extends Controller
             return view('Atletas.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -604,8 +596,7 @@ class AtletaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar al atleta');
+            return back()->with('error', 'Se produjo un error al restaurar al atleta');
         }
     }
 }

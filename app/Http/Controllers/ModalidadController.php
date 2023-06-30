@@ -27,8 +27,7 @@ class ModalidadController extends Controller
             return view('configuraciones.modalidad.show',compact('modalidad'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -44,8 +43,7 @@ class ModalidadController extends Controller
             return view('configuraciones.modalidad.create',compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -71,8 +69,7 @@ class ModalidadController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar la modalidad');
+            return back()->with('error', 'Se produjo un error al registrar la modalidad');
         }
     }
 
@@ -100,8 +97,7 @@ class ModalidadController extends Controller
             return view('configuraciones.modalidad.edit',['modalidad' => $modalidad]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -126,8 +122,7 @@ class ModalidadController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la modalidad');
+            return back()->with('error', 'Se produjo un error al actualizar la información de la modalidad');
         }
     }
 
@@ -149,8 +144,7 @@ class ModalidadController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar la modalidad');
+            return back()->with('error', 'Se produjo un error al eliminar la modalidad');
         }
     }
 
@@ -160,8 +154,7 @@ class ModalidadController extends Controller
             return view('configuraciones.modalidad.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -171,8 +164,7 @@ class ModalidadController extends Controller
             return view('configuraciones.modalidad.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -187,8 +179,7 @@ class ModalidadController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar la modaliad');
+            return back()->with('error', 'Se produjo un error al restaurar la modalidad');
         }
     }
 }

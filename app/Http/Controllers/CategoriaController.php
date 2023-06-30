@@ -27,8 +27,7 @@ class CategoriaController extends Controller
             return view('configuraciones.categoria.show', compact("categoria"));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -44,8 +43,7 @@ class CategoriaController extends Controller
             return view('configuraciones.categoria.create',compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -71,8 +69,7 @@ class CategoriaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar la categoría');
+            return back()->with('error', 'Se produjo un error al registrar la categoría');
         }
     }
 
@@ -100,8 +97,7 @@ class CategoriaController extends Controller
             return view('configuraciones.categoria.edit',['categoria' => $categoria]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -126,8 +122,7 @@ class CategoriaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la categoría');
+            return back()->with('error', 'Se produjo un error al actualizar la categoría');
         }
     }
 
@@ -149,8 +144,7 @@ class CategoriaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar la categoría');
+            return back()->with('error', 'Se produjo un error al eliminar la categoría');
         }
     }
 
@@ -160,8 +154,7 @@ class CategoriaController extends Controller
             return view('configuraciones.categoria.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -171,8 +164,7 @@ class CategoriaController extends Controller
             return view('configuraciones.categoria.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -187,8 +179,7 @@ class CategoriaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar la categoría');
+            return back()->with('error', 'Se produjo un error al restaurar la categoría');
         }
     }
 }

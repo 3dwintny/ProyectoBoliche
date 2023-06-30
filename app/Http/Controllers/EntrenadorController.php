@@ -44,8 +44,7 @@ class EntrenadorController extends Controller
             return view('entrenador.index', compact('entrenadores'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -68,8 +67,7 @@ class EntrenadorController extends Controller
             ,"deportes","tipos_contratos","hoy"));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
         
     }
@@ -141,7 +139,9 @@ class EntrenadorController extends Controller
                             break;
                     }
                 }
-                $usuario->update(['tipo_usuario_id'=>1]);
+                DB::table('model_has_roles')->where('model_id',$usuario->id)->delete();
+                $usuario->update(['tipo_usuario_id'=>2]);
+                $usuario->assignRole('Entrenador');
             }
             $entrenador->save();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>14]);
@@ -150,9 +150,8 @@ class EntrenadorController extends Controller
             return redirect()->action([EntrenadorController::class, 'index'])->with('success','Entrenador registrado exitosamente');
         }
         catch(\Exception $e){
-            DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar al entrenador');
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al registrar al entrenador');
         }
     }
 
@@ -174,8 +173,7 @@ class EntrenadorController extends Controller
             return view('entrenador.show', compact('entrenador','nivel_cdag','nivel_fadn','departamento','nacionalidad','tipo_contrato'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -198,8 +196,7 @@ class EntrenadorController extends Controller
             return view('entrenador.edit',compact('entrenador','niveles_cdag','niveles_fadn','departamentos','tipos_contratos','deportes','nacionalidades'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -270,9 +267,8 @@ class EntrenadorController extends Controller
             return redirect()->action([EntrenadorController::class,'index'])->with('success','Información del entrenador actualizada exitosamente');
         }
         catch(\Exception $e){
-            DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la información del entrenador entrenador');
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al actualizar la información del entrenador');
         }
     }
 
@@ -294,8 +290,7 @@ class EntrenadorController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar al entrenador');
+            return back()->with('error', 'Se produjo un error al eliminar al entrenador');
         }
     }
 
@@ -305,8 +300,7 @@ class EntrenadorController extends Controller
             return view('entrenador.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -328,8 +322,7 @@ class EntrenadorController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -389,9 +382,8 @@ class EntrenadorController extends Controller
             return redirect('modificar')->with('success','Información actualizada exitosamente');
         }
         catch(\Exception $e){
-            DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la información');
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al actualizar la información');
         }
     }
 
@@ -401,8 +393,7 @@ class EntrenadorController extends Controller
             return view('entrenador.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -416,9 +407,8 @@ class EntrenadorController extends Controller
             return redirect()->action([EntrenadorController::class,'index'])->with('success','Entrenador eliminado exitosamente');
         }
         catch(\Exception $e){
-            DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar al entrenador');
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al restaurar al entrenador');
         }
     }
 }

@@ -25,8 +25,7 @@ class ParentescoController extends Controller
             return view('configuraciones.parentesco.show',compact("parentescos"));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -42,8 +41,7 @@ class ParentescoController extends Controller
             return view('configuraciones.parentesco.create',compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -69,8 +67,7 @@ class ParentescoController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el parentesco');
+            return back()->with('error', 'Se produjo un error al registrar al parentesco');
         }
     }
 
@@ -98,8 +95,7 @@ class ParentescoController extends Controller
             return view('configuraciones.parentesco.edit',['parentesco' => $parentesco]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -124,8 +120,7 @@ class ParentescoController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar el parentesco');
+            return back()->with('error', 'Se produjo un error al actualizar la información del parentesco');
         }
     }
 
@@ -147,8 +142,7 @@ class ParentescoController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar el parentesco');
+            return back()->with('error', 'Se produjo un error al eliminar al parentesco');
         }
     }
 
@@ -158,8 +152,7 @@ class ParentescoController extends Controller
             return view('configuraciones.parentesco.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -169,21 +162,22 @@ class ParentescoController extends Controller
             return view('configuraciones.parentesco.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
     public function restaurar(Request $request){
+        DB::beginTransaction();
         try{
             Parentesco::find(decrypt($request->e))->update(['estado'=>'activo']);
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>25]);
             $control->save();
+            DB::commit();
             return redirect()->action([ParentescoController::class,'index'])->with('success','Parentesco restaurado exitosamente');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar el parentesco');
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al restaurar al parentesco');
         }
     }
 }

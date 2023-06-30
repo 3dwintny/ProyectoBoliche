@@ -42,8 +42,7 @@ class AsistenciaController extends Controller
             return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -143,8 +142,7 @@ class AsistenciaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al tomar la asistencia');
+            return back()->with('error', 'Se produjo un error al tomar la asistencia');
         }
     }
 
@@ -212,8 +210,7 @@ class AsistenciaController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -232,8 +229,7 @@ class AsistenciaController extends Controller
             return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -334,8 +330,7 @@ class AsistenciaController extends Controller
             ->stream();
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -423,8 +418,7 @@ class AsistenciaController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -564,8 +558,7 @@ class AsistenciaController extends Controller
             return $datos;
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
     
@@ -589,8 +582,7 @@ class AsistenciaController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -600,8 +592,7 @@ class AsistenciaController extends Controller
             return view('Reportes.RepFor30.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -610,8 +601,7 @@ class AsistenciaController extends Controller
             return Excel::download(new AsistenciaExport($request->meses,$request->anios),'asistencia.xlsx');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -620,8 +610,7 @@ class AsistenciaController extends Controller
             return view('Reportes/RepFor30/fecha');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -655,8 +644,7 @@ class AsistenciaController extends Controller
             return view('Reportes/RepFor30/editar',compact('atletas','categoria','hoy','asistencia','fechaAsistencia'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -684,8 +672,9 @@ class AsistenciaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
+            return back()->with('error', 'Se produjo un error al actualizar la información de la asistencia');
             report($e);
-            $this->addError('error','Se produjo un error al actualizar la asistencia');
+            $this->addError('error','Se produjo un error al ');
         }
     }
 }

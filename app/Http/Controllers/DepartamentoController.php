@@ -21,8 +21,7 @@ class DepartamentoController extends Controller
             return view('configuraciones.departamento.show',compact('departamento')); 
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -37,8 +36,7 @@ class DepartamentoController extends Controller
             return view('configuraciones.departamento.create');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -64,8 +62,7 @@ class DepartamentoController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el departamento');
+            return back()->with('error', 'Se produjo un error al registrar al departamento');
         }
     }
 
@@ -93,8 +90,7 @@ class DepartamentoController extends Controller
             return view('configuraciones.departamento.edit', compact('departamento'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -119,8 +115,7 @@ class DepartamentoController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar el departamento');
+            return back()->with('error', 'Se produjo un error al actualizar la información del departamento');
         }
     }
 
@@ -142,8 +137,7 @@ class DepartamentoController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar el departamento');
+            return back()->with('error', 'Se produjo un error al eliminar al departamento');
         }
     }
 
@@ -153,8 +147,7 @@ class DepartamentoController extends Controller
             return view('configuraciones.departamento.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -164,8 +157,7 @@ class DepartamentoController extends Controller
             return view('configuraciones.departamento.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -180,8 +172,7 @@ class DepartamentoController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar el departamento');
+            return back()->with('error', 'Se produjo un error al restaurar al departamento');
         }
     }
 }

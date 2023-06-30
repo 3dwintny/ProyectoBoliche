@@ -28,8 +28,7 @@ class RolController extends Controller
             return view('roles.index', compact('roles'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
     /**
@@ -44,8 +43,7 @@ class RolController extends Controller
             return view('roles.crear', compact('permission'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -67,8 +65,7 @@ class RolController extends Controller
             return redirect()->route('roles.index')->with('success','Rol registrado exitosamente');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -100,8 +97,7 @@ class RolController extends Controller
             return view('roles.editar', compact('role', 'permission', 'rolePermissions'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -125,8 +121,7 @@ class RolController extends Controller
             return redirect()->route('roles.index')->with('success','Rol actualizado exitosamente');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar el rol');
+            return back()->with('error', 'Se produjo un error al actualizar la información del rol');
         }
     }
 
@@ -143,8 +138,7 @@ class RolController extends Controller
             return redirect()->route('roles.index')->with('success','Rol eliminado exitosamente');
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar al rol');
+            return back()->with('error', 'Se produjo un error al eliminar al rol');
         }
     }
 }

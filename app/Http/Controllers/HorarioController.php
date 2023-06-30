@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Horario;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class HorarioController extends Controller
 {
@@ -20,8 +21,13 @@ class HorarioController extends Controller
      */
     public function index()
     {
-        $horario = Horario::where('estado','activo')->get(['id','hora_inicio','hora_fin','lunes','martes','miercoles','jueves','viernes','sabado','domingo']);
-        return view('configuraciones.horario.show', compact('horario'));
+        try{
+            $horario = Horario::where('estado','activo')->get(['id','hora_inicio','hora_fin','lunes','martes','miercoles','jueves','viernes','sabado','domingo']);
+            return view('configuraciones.horario.show', compact('horario'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +37,13 @@ class HorarioController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now();
-        return view('configuraciones.horario.create',compact('hoy'));
+        try{
+            $hoy = Carbon::now();
+            return view('configuraciones.horario.create',compact('hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,7 +54,9 @@ class HorarioController extends Controller
      */
     public function store(Request $request)
     {
-        $horario = new Horario([
+        DB::beginTransaction();
+        try{
+            $horario = new Horario([
             'hora_inicio' => $request->hora_inicio,
             'hora_fin' => $request->hora_fin,
             'lunes' => $request->lunes,
@@ -53,11 +66,18 @@ class HorarioController extends Controller
             'viernes' => $request->viernes,
             'sabado' => $request->sabado,
             'domingo' => $request->domingo,
-        ]);
-        $horario->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>17]);
-        $control->save();
-        return redirect()->back();
+            ]);
+            $horario->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>17]);
+            $control->save();
+            DB::commit();
+            return redirect()->back()->with('success','Horario de entrenamiento registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al registrar el horario de entrenamiento');
+        }
+        
     }
 
     /**
@@ -79,8 +99,14 @@ class HorarioController extends Controller
      */
     public function edit($id)
     {
-        $horario = $this->h->obtenerHorarioById(decrypt($id));
-        return view('configuraciones.horario.edit',['horario'=>$horario]);
+        try{
+            $horario = $this->h->obtenerHorarioById(decrypt($id));
+            return view('configuraciones.horario.edit',['horario'=>$horario]);
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+        
     }
 
     /**
@@ -92,21 +118,29 @@ class HorarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $horario = Horario::find(decrypt($id));
-        $horario->fill([
-            'hora_inicio' => $request->hora_inicio,
-            'hora_fin' => $request->hora_fin,
-            'lunes' => $request->lunes,
-            'martes' => $request->martes,
-            'miercoles' => $request->miercoles,
-            'jueves' => $request->jueves,
-            'viernes' => $request->viernes,
-            'sabado' => $request->sabado,
-            'domingo' => $request->domingo,]);
-        $horario->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>17]);
-        $control->save();
-        return redirect()->action([HorarioController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $horario = Horario::find(decrypt($id));
+            $horario->fill([
+                'hora_inicio' => $request->hora_inicio,
+                'hora_fin' => $request->hora_fin,
+                'lunes' => $request->lunes,
+                'martes' => $request->martes,
+                'miercoles' => $request->miercoles,
+                'jueves' => $request->jueves,
+                'viernes' => $request->viernes,
+                'sabado' => $request->sabado,
+                'domingo' => $request->domingo,]);
+            $horario->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>17]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([HorarioController::class,'index']);}
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al actualizar la información del horario');
+        }
+        
     }
 
     /**
@@ -117,24 +151,56 @@ class HorarioController extends Controller
      */
     public function destroy($id)
     {
-        Horario::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>17]);
-        $control->save();
-        return redirect()->action([HorarioController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Horario::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>17]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([HorarioController::class,'index']);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al eliminar al horario');
+        }
+        
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',17)->with('usuario')->paginate(5);
-        return view('configuraciones.horario.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',17)->with('usuario')->paginate(5);
+            return view('configuraciones.horario.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+        
     }
 
     public function eliminados(){
-        $eliminar = Horario::where('estado', 'inactivo')->get();
-        return view('configuraciones.horario.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Horario::where('estado', 'inactivo')->get();
+            return view('configuraciones.horario.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+        
     }
 
     public function restaurar(Request $request){
-        Horario::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([HorarioController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Horario::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>17]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([HorarioController::class,'index']);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al restaurar al horario');
+        }
+        
     }
 }

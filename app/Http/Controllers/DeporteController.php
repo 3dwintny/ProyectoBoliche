@@ -26,8 +26,7 @@ class DeporteController extends Controller
             return view('configuraciones.deporte.show',compact('deporte'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         } 
     }
 
@@ -43,8 +42,7 @@ class DeporteController extends Controller
             return view('configuraciones.deporte.create', compact('hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -58,6 +56,9 @@ class DeporteController extends Controller
     {
         DB::beginTransaction();
         try{
+            $request->validate([
+                'nombre' => ['unique:deporte'],
+            ]);
             $deporte = new Deporte(['nombre' => $request->nombre]);
             $deporte->save();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>9]);
@@ -67,12 +68,8 @@ class DeporteController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar el deporte');
+            return back()->with('error', 'Se produjo un error al registrar al deporte');
         }
-        $request->validate([
-            'nombre' => ['unique:deporte'],
-        ]);
     }
 
     /**
@@ -126,7 +123,7 @@ class DeporteController extends Controller
         catch(\Exception $e){
             DB::rollback();
             report($e);
-            $this->addError('error','Se produjo un error al actualizar el deporte');
+            $this->addError('error','Se produjo un error al actualizar la información del deporte');
         }
     }
 
@@ -149,7 +146,7 @@ class DeporteController extends Controller
         catch(\Exception $e){
             DB::rollback();
             report($e);
-            $this->addError('error','Se produjo un error al eliminar el deporte');
+            $this->addError('error','Se produjo un error al eliminar al deporte');
         }
     }
 
@@ -187,7 +184,7 @@ class DeporteController extends Controller
         catch(\Exception $e){
             DB::rollBack();
             report($e);
-            $this->addError('error','Se produjo un error al restaurar el deporte');
+            $this->addError('error','Se produjo un error al restaurar al deporte');
         }
     }
 }

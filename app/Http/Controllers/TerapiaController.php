@@ -138,8 +138,7 @@ class TerapiaController extends Controller
             return view('psicologia.terapias.list',compact('atleta','buscarAtleta'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -160,8 +159,7 @@ class TerapiaController extends Controller
             return view('psicologia.terapias.create',compact('psicologos','atletas','hoy','hora'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -222,8 +220,7 @@ class TerapiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al registrar la sesión');
+            return back()->with('error', 'Se produjo un error al registrar la sesión');
         }
     }
 
@@ -264,8 +261,7 @@ class TerapiaController extends Controller
             return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta','inicial','final'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -288,8 +284,7 @@ class TerapiaController extends Controller
             return view('psicologia.terapias.edit',['terapia' => $terapia,'alumno' => $alumno]);
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -357,8 +352,7 @@ class TerapiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la sesión');
+            return back()->with('error', 'Se produjo un error al actualizar la información de la sesión');
         }
     }
 
@@ -383,8 +377,7 @@ class TerapiaController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al obtener al paciente');
+            return back()->with('error', 'Se produjo un error al obtener al paciente');
         }
     }
 
@@ -401,8 +394,7 @@ class TerapiaController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al obtener el correo del paciente');
+            return back()->with('error', 'Se produjo un error al obtener el correo del paciente');
         }
     }
 
@@ -420,8 +412,7 @@ class TerapiaController extends Controller
             return PDF::loadView('psicologia.terapias.pdf',['terapia' => $terapia,'alumno' => $alumno])->setPaper('8.5x11')->stream();
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -450,8 +441,7 @@ class TerapiaController extends Controller
             return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta','inicial','final'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -465,8 +455,7 @@ class TerapiaController extends Controller
             return view('psicologia.terapias.details', compact('terapia','paciente'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -496,8 +485,7 @@ class TerapiaController extends Controller
             return view('Atletas.pendientes',compact('tarea','nombre'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -507,8 +495,7 @@ class TerapiaController extends Controller
             return view('psicologia.terapias.control',compact('control'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -538,8 +525,7 @@ class TerapiaController extends Controller
             }
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al marcar la tarea como finalizada');
+            return back()->with('error', 'Se produjo un error al marcar la tarea como finalizada');
         }
     }
 }

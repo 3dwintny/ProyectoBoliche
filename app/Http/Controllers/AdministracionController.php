@@ -21,8 +21,7 @@ class AdministracionController extends Controller
             return view('administracion.index',compact('administracion'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -99,8 +98,7 @@ class AdministracionController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar al administrador');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
