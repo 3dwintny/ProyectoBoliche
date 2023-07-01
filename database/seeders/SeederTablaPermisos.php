@@ -62,6 +62,7 @@ class SeederTablaPermisos extends Seeder
             'asignar-Tareas',
             'Ver acciones',
             'psicologoPerfil',
+            'editarCodigoCorreo',
             //Funcionalidades del sedevar
             'SeedAtletas',
             'seedEntrenador',

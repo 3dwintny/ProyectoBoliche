@@ -171,6 +171,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('actualizar-informacion-psicologia',[PsicologiaController::class,'actualizar'])->name('actualizarPsicologia');
     Route::resource('psicologia',PsicologiaController::class);
     Route::post('actualizarCodigoCorreo',[PsicologiaController::class,'actualizarCodigoCorreo'])->name('actualizarCodigoCorreo');
+    Route::get('editar-codigo-correo',[PsicologiaController::class,'editarCodigoCorreo'])->name('editarCodigoCorreo');
 
     //Rutas Terapia
     Route::get('tareas-pendientes',[TerapiaController::class,'tareaPendiente'])->name('tareaPendiente');

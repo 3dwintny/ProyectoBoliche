@@ -231,6 +231,14 @@
                             </li>
                             @endif
                             @endcan
+                            @can('editarCodigoCorreo')
+                            @if(auth()->user()->tipo_usuario_id==3)
+                            <li class="nav-item">
+                                <a href="{{route('editarCodigoCorreo')}}" class="nav-link">
+                                {{__('Editar código de correo')}}</a>
+                            </li>
+                            @endif
+                            @endcan
                         </ul>
                     </div>
                 </li>

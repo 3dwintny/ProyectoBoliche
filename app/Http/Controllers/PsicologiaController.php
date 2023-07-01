@@ -272,6 +272,9 @@ class PsicologiaController extends Controller
 
     public function editarCodigoCorreo(){
         try{
+            $psicologo = Psicologia::where('correo',auth()->user()->email)->first();
+            $codigo = $psicologo->codigo_correo;
+            return view('configuraciones.psicologia.editarCodigoCorreo',compact('codigo'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
