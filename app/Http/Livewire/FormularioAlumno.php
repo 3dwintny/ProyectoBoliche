@@ -54,6 +54,10 @@ class FormularioAlumno extends Component
     public $btnencargados = true;
     #Validacion de encargados
     public $ex_encargados = true;
+    #validacion de datos
+    protected $rules = [
+        'campo' => 'required|unique:tabla,campo',
+    ];
     #Este es el primer paso del formulario
     public function firstStepSubmit()
     {
@@ -91,8 +95,7 @@ class FormularioAlumno extends Component
             $this->guardarAlumno();
             $alumnoGuardado = true;
             if ($this->ex_encargados) {
-                $this->guardarEncargados();
-                $this->crearRelacionAlumnos();
+                $this->guardarEncargados($this->dpip);
                 $encargadosGuardado = true;
             } else {
                 $encargadosGuardado = true;
@@ -201,7 +204,10 @@ class FormularioAlumno extends Component
     public function updated($propertyCui)
     {
         $this->validateOnly($propertyCui, [
-            'cui' => 'numeric',
+            'cui' => 'min:13 | max:13',
+            'dpip.*' => 'min:13 | max:13',
+            'celularp.*' => 'numeric',
+            'telefonop.*' => 'numeric',
             'correo' => 'email',
             'peso' => 'numeric',
             'altura' => 'numeric',
@@ -211,7 +217,6 @@ class FormularioAlumno extends Component
             'nit' => 'numeric',
             'pasaporte' => 'numeric',
         ],[
-           'cui.numeric' => 'Unicamente debe ingresar números',
            'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
            'peso.numeric' => 'Unicamente debe ingresar números',
            'altura.numeric' => 'Unicamente debe ingresar números',
@@ -220,6 +225,12 @@ class FormularioAlumno extends Component
            'celular.numeric' => 'Unicamente debe ingresar números',
            'nit.numeric' => 'Unicamente debe ingresar números',
            'Pasaporte.numeric' => 'Unicamente debe ingresar números',
+           'cui.min' => 'Ingrese el cui correcto (no menos de 13 caracteres)',
+           'cui.max' => 'Ingrese el cui correcto (no mas de 13 caracteres)',
+           'dpip.*.min' => 'Ingrese el cui correcto (no menos de 13 caracteres)',
+           'dpip.*.max' => 'Ingrese el cui correcto (no mas de 13 caracteres)',
+           'celularp.*.numeric' => 'Unicamente debe ingresar números',
+           'telefono.*.numeric' => 'Unicamente debe ingresar números',
         ]);
     }
     public function validarAlumnos(){
@@ -228,7 +239,7 @@ class FormularioAlumno extends Component
             'nombre1' => 'required',
             'apellido1' => 'required',
             'peso' => 'required',
-            'cui' => 'min:13 | max:13',
+            'cui' => 'numeric',
             'fecha' => 'required',
             'peso' => 'required | numeric',
             'altura' => 'required | numeric',
@@ -246,8 +257,6 @@ class FormularioAlumno extends Component
         [
             'nombre1' => 'Este campo es requerido',
             'apellido1' => 'Este campo es requerido',
-            'cui.min' => 'Ingrese el cui correcto (no menos de 13 caracteres)',
-            'cui.max' => 'Ingrese el cui correcto (no mas de 13 caracteres)',
             'peso' => 'Este campo es requerido',
             'altura' => 'Este campo es requerido',
             'direccion' => 'Este campo es requerido',
@@ -261,6 +270,7 @@ class FormularioAlumno extends Component
             'city'=> 'Este campo es requerido',
             'countryr'=> 'Este campo es requerido',
             'cityr'=> 'Este campo es requerido',
+            'cui.numeric' => 'Unicamente debe ingresar números',
         ]
     );
 
@@ -401,48 +411,29 @@ class FormularioAlumno extends Component
         ]
         );
     }
-    /* public function updatedDPI($propertyDpip){
-
-        $this->validateOnly($propertyDpip, [
-            'dpip.*' => 'min:13 | max:13',
-            'correo' => 'email',
-            'peso' => 'numeric',
-            'altura' => 'numeric',
-            'contacto_emergencia' => 'numeric',
-            'telefono' => 'numeric',
-            'celular' => 'numeric',
-            'nit' => 'numeric',
-            'pasaporte' => 'numeric',
-        ],[
-           'dpip.*.min' => 'Ingrese el cui correcto (no menos de 13 caracteres)',
-           'dpip.*.max' => 'Ingrese el cui correcto (no mas de 13 caracteres)',
-           'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
-           'peso.numeric' => 'Unicamente debe ingresar números',
-           'altura.numeric' => 'Unicamente debe ingresar números',
-           'contacto_emergencia.numeric' => 'Unicamente debe ingresar números',
-           'telefono' => 'Unicamente debe ingresar números',
-           'celular' => 'Unicamente debe ingresar números',
-           'nit' => 'Unicamente debe ingresar números',
-           'Pasaporte' => 'Unicamente debe ingresar números',
-        ]);
-    } */
-    public function guardarEncargados()
+    public function guardarEncargados($dpien)
     {
-            foreach($this->primernombrep as $indice => $nombre) {
-            $modelo = new Encargado;
-            $modelo->nombre1p = $nombre;
-            $modelo->nombre2p = $this->segundonombrep[$indice];
-            $modelo->nombre3p = $this->tercernombrep[$indice];
-            $modelo->apellido1p = $this->primerapellidop[$indice];
-            $modelo->apellido2p = $this->segundoapellidop[$indice];
-            $modelo->apellido_casada = $this->apellidocasadap[$indice];
-            $modelo->direccionp = $this->direccionp[$indice];
-            $modelo->celularp = $this->celularp[$indice];
-            $modelo->telefono_casap = $this->telefonop[$indice];
-            $modelo->correop = $this->correop[$indice];
-            $modelo->dpi = $this->dpip[$indice];
-            $modelo->parentezco_id = $this->parentezcop[$indice];
-            $modelo->save();
+            $encargados = Encargado::where('dpi', $dpien)->count();
+            if($encargados >= 1){
+                $this->crearRelacionAlumnos();
+            }else{
+                foreach($this->primernombrep as $indice => $nombre) {
+                    $modelo = new Encargado;
+                    $modelo->nombre1p = $nombre;
+                    $modelo->nombre2p = $this->segundonombrep[$indice];
+                    $modelo->nombre3p = $this->tercernombrep[$indice];
+                    $modelo->apellido1p = $this->primerapellidop[$indice];
+                    $modelo->apellido2p = $this->segundoapellidop[$indice];
+                    $modelo->apellido_casada = $this->apellidocasadap[$indice];
+                    $modelo->direccionp = $this->direccionp[$indice];
+                    $modelo->celularp = $this->celularp[$indice];
+                    $modelo->telefono_casap = $this->telefonop[$indice];
+                    $modelo->correop = $this->correop[$indice];
+                    $modelo->dpi = $this->dpip[$indice];
+                    $modelo->parentezco_id = $this->parentezcop[$indice];
+                    $modelo->save();
+            }
+                $this->crearRelacionAlumnos();
         }
     }
     public function crearRelacionAlumnos()
