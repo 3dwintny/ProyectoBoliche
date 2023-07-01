@@ -14,6 +14,7 @@ use PDF;
 use Mail;
 use App\Mail\CorreosTerapia;
 use App\Models\Control;
+use Illuminate\Support\Facades\Auth;
 
 class TerapiaController extends Controller
 {
@@ -178,7 +179,11 @@ class TerapiaController extends Controller
             $obtenerFechaTarea = $request->fecha;
             $tarea = "";
             if($obtenerTarea != ""){
-                Mail::to($correoAtleta)->send(new CorreosTerapia($obtenerTarea,$obtenerFechaTarea));
+                config(['mail.mailers.smtp.username' => auth()->user()->email]);
+                $psicologia = Psicologia::where('correo',auth()->user()->email)->first();
+                $codigoCorreo = $psicologia->codigo_correo;
+                config(['mail.mailers.smtp.password' => $codigoCorreo]);
+                Mail::to($correoAtleta)->send(new CorreosTerapia($obtenerTarea,$obtenerFechaTarea,auth()->user()->email));
                 $tarea = "pendiente";
             }
             else{
@@ -314,6 +319,10 @@ class TerapiaController extends Controller
                     $tarea = "sin";
                     //DB::table('terapia')->where('id',decrypt($id))->update(['estado_tarea'=>'sin']);
                 }
+                config(['mail.mailers.smtp.username' => auth()->user()->email]);
+                $psicologia = Psicologia::where('correo',auth()->user()->email)->first();
+                $codigoCorreo = $psicologia->codigo_correo;
+                config(['mail.mailers.smtp.password' => $codigoCorreo]);
                 Mail::to($correoAtleta)->send(new ActualizarCorreos($obtenerTarea,$obtenerFechaTarea));
             }
             $terapia ->fill([
@@ -352,7 +361,7 @@ class TerapiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información de la sesión');
+            return back()->with('error', 'Se produjo un error al actualizar la sesión');
         }
     }
 

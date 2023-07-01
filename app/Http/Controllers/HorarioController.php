@@ -135,10 +135,11 @@ class HorarioController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>17]);
             $control->save();
             DB::commit();
-            return redirect()->action([HorarioController::class,'index']);}
+            return redirect()->action([HorarioController::class,'index'])->with('success','Horario de entrenamiento actualizado exitosamente');
+        }
         catch(\Exception $e){
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información del horario');
+            return back()->with('error', 'Se produjo un error al actualizar la información del horario de entrenamiento');
         }
         
     }
@@ -157,11 +158,11 @@ class HorarioController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>17]);
             $control->save();
             DB::commit();
-            return redirect()->action([HorarioController::class,'index']);
+            return redirect()->action([HorarioController::class,'index'])->with('success','Horario de entrenamiento eliminado exitosamente');
         }
         catch(\Exception $e){
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al eliminar al horario');
+            return back()->with('error', 'Se produjo un error al eliminar al horario de entrenamiento');
         }
         
     }
@@ -195,11 +196,11 @@ class HorarioController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>17]);
             $control->save();
             DB::commit();
-            return redirect()->action([HorarioController::class,'index']);
+            return redirect()->action([HorarioController::class,'index'])->with('success','Horario de entrenamiento restaurado exitosamente');
         }
         catch(\Exception $e){
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al restaurar al horario');
+            return back()->with('error', 'Se produjo un error al restaurar al horario de entrenamiento');
         }
         
     }

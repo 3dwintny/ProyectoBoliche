@@ -404,7 +404,7 @@ class EntrenadorController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
             $control->save();
             DB::commit();
-            return redirect()->action([EntrenadorController::class,'index'])->with('success','Entrenador eliminado exitosamente');
+            return redirect()->action([EntrenadorController::class,'index'])->with('success','Entrenador restaurado exitosamente');
         }
         catch(\Exception $e){
             DB::rollBack();

@@ -176,9 +176,9 @@ class DeporteController extends Controller
         DB::beginTransaction();
         try{
             Deporte::find(decrypt($request->e))->update(['estado'=>'activo']);
-            DB::commit();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>9]);
             $control->save();
+            DB::commit();
             return redirect()->action([DeporteController::class,'index'])->with('success','Deporte restaurado exitosamente');
         }
         catch(\Exception $e){
