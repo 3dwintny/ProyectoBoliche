@@ -158,8 +158,7 @@ class AtletaController extends Controller
             return view('Atletas.index', compact('atletas','buscarAtleta','categoria','filtrarCategoria'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -205,8 +204,7 @@ class AtletaController extends Controller
             'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','hoy'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 

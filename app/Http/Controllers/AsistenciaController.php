@@ -673,8 +673,6 @@ class AsistenciaController extends Controller
         catch(\Exception $e){
             DB::rollBack();
             return back()->with('error', 'Se produjo un error al actualizar la información de la asistencia');
-            report($e);
-            $this->addError('error','Se produjo un error al ');
         }
     }
 }

@@ -27,8 +27,7 @@ class UserController extends Controller
             return view('users.indexs', compact('usuarios'));
         }
         catch(\Exception $e){
-            report($e);
-            $this->addError('error','Se produjo un error al procesar la solicitud');
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 

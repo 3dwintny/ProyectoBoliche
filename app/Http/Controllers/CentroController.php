@@ -93,7 +93,7 @@ class CentroController extends Controller
                 }
             }
             DB::commit();
-            return redirect()->action([CentroController::class,'index'])->with('success','Centro registrado exitosamente');
+            return redirect()->action([CentroController::class,'index'])->with('success','Centro de entrenamiento registrado exitosamente');
         }
         catch(\Exception $e){
             DB::rollback();
@@ -149,7 +149,7 @@ class CentroController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>6]);
             $control->save();
             DB::commit();
-            return redirect()->action([CentroController::class,'index'])->with('success','Centro actualizado exitosamente');
+            return redirect()->action([CentroController::class,'index'])->with('success','Información del centro de entrenamiento actualizada exitosamente');
         }
         catch(\Exception $e){
             DB::rollback();

@@ -30,7 +30,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.show', compact('psicologo'));
         }
         catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -46,7 +46,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.create',compact('hoy'));
         }
         catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -104,7 +104,7 @@ class PsicologiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'Se produjo un error al registrar al psicólogo');
         }
     }
 
@@ -132,7 +132,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.edit',['psicologo' => $psicologo]);
         }
         catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -172,8 +172,7 @@ class PsicologiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la información del psicólogo');
+            return back()->with('error', 'Se produjo un error al actualizar la información del psicólogo');
         }
     }
 
@@ -195,8 +194,7 @@ class PsicologiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al eliminar al psicólogo');
+            return back()->with('error', 'Se produjo un error al eliminar al psicólogo');
         }
     }
 
@@ -212,7 +210,7 @@ class PsicologiaController extends Controller
             }
         }
         catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -233,8 +231,7 @@ class PsicologiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la información');
+            return back()->with('error', 'Se produjo un error al actualizar la información');
         }
     }
 
@@ -244,7 +241,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.control',compact('control'));
         }
         catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -254,7 +251,7 @@ class PsicologiaController extends Controller
             return view('configuraciones.psicologia.eliminados',compact('eliminar'));
         }
         catch(\Exception $e){
-            return back()->with('error', $e->getMessage());
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 
@@ -269,8 +266,28 @@ class PsicologiaController extends Controller
         }
         catch(\Exception $e){
             DB::rollBack();
-            report($e);
-            $this->addError('error','Se produjo un error al restaurar al psicólogo');
+            return back()->with('error', 'Se produjo un error al restaurar al psicólogo');
+        }
+    }
+
+    public function editarCodigoCorreo(){
+        try{
+            $psicologo = Psicologia::where('correo',auth()->user()->email)->first();
+            $codigo = $psicologo->codigo_correo;
+            return view('configuraciones.psicologia.editarCodigoCorreo',compact('codigo'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function actualizarCodigoCorreo(Request $request){
+        try{
+            Psicologia::where('correo',auth()->user()->email)->update(['codigo_correo'=>$request->codigo_correo]);
+            return redirect('home');             
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al actualizar el código del correo');
         }
     }
 }

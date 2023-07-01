@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PRTController;
 use App\Http\Controllers\RolController;
@@ -171,6 +170,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('editar-perfil-psicologia',[PsicologiaController::class,'modificar'])->name('modificarPsicologia');
     Route::put('actualizar-informacion-psicologia',[PsicologiaController::class,'actualizar'])->name('actualizarPsicologia');
     Route::resource('psicologia',PsicologiaController::class);
+    Route::post('actualizarCodigoCorreo',[PsicologiaController::class,'actualizarCodigoCorreo'])->name('actualizarCodigoCorreo');
+    Route::get('editar-codigo-correo',[PsicologiaController::class,'editarCodigoCorreo'])->name('editarCodigoCorreo');
 
     //Rutas Terapia
     Route::get('tareas-pendientes',[TerapiaController::class,'tareaPendiente'])->name('tareaPendiente');
