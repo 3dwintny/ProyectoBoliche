@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-9 pt-5 pt-md-5 mt--5">
+<div class="header bg-dark pb-5 pt-5 pt-md-5">
     <div class="container-fluid">
         <div class="header-body">
-            <!-- Card stats -->
             <div class="row">
-                <div class="col-xl-6 col-lg-6">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
                     <h1 class="text-white">Psicología</h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="container-fluid mt--8">
+
+<div class="container-fluid pt-2">
     <div class="header-body text-center  mb-2 container">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-10">

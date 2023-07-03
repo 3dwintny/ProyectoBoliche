@@ -2,7 +2,7 @@
 
 @section('content')
 <link href="{{ asset('/css/terapias/show.css') }}" rel="stylesheet">
-<div class="header bg-dark pb-2 pt-5 pt-md-10 mt--5">
+<div class="header bg-dark pb-2 pt-5 pt-md-10">
   <div class="container-fluid">
     <div class="header-body">
       <div class="row">
@@ -20,25 +20,32 @@
       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
   @endif
-  <form action="{{route('busquedaFecha')}}" method="GET" class="mt-3">
-    @csrf
-    <input type="hidden" id="idAtleta" name="idAtleta" value="{{$guardarAtleta}}">
-    <div class="row align-items-center">
-      <div class="col-md-4 mb-3">
-        <label for="fechaInicial" class="form-label">Fecha Inicial</label>
-        <input type="date" class="form-control" name="fechaInicial" id="fechaInicial">
+  <div class="container my-1">
+    <form action="{{route('busquedaFecha')}}" method="GET" role="form">
+      @csrf
+      <input type="hidden" id="idAtleta" name="idAtleta" value="{{$guardarAtleta}}">
+      <div class="row justify-content-center">
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 mb-2">
+          <div class="form-floating">
+              <input class="form-control text-dark" aria-describedby="basic-addon2" id="fechaInicial" type="date" name="fechaInicial" required>
+              <label for="fechaInicial">Fecha inicial</label>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-4 mb-2">
+          <div class="form-floating">
+              <input class="form-control text-dark" aria-describedby="basic-addon2" id="fechaFinal" type="date" name="fechaFinal" required>
+              <label for="fechaFinal">Fecha final</label>
+          </div>
+        </div>
+        <div class="col-xl-1 col-lg-2 col-md-2 col-sm-2 mb-2">
+          <button type="submit" class="btn btn-primary">Buscar</button>
+        </div>
+        <div class="col-xl-1 col-lg-2 col-md-2 col-sm-2 mb-2">
+          <a href="{{route('sesiones.show',$guardarAtleta)}}" class="btn btn-light">Cancelar</a>
+        </div>
       </div>
-      <div class="col-md-4 mb-3">
-        <label for="fechaFinal" class="form-label">Fecha Final</label>
-        <input type="date" class="form-control" name="fechaFinal" id="fechaFinal">
-      </div>
-      <div class="col-md-4 d-flex align-items-end">
-        <button type="submit" class="btn btn-outline-warning me-2">Buscar</button>
-        <a href="{{route('sesiones.show',$guardarAtleta)}}" class="btn btn-light">Cancelar búsqueda</a>
-      </div>
-    </div>
-  </form>
-  <br>
+    </form>
+  </div>
   <form action="{{route('tareaPendiente')}}" method="GET">
     @csrf
     <input type="hidden" id="idAtleta" name="idAtleta" value="{{$guardarAtleta}}">
@@ -47,7 +54,7 @@
       <input type="submit" value="Tareas pendientes" class="btn btn-outline-info">
     </div>
   </form>
-  <div class="pb-5 pt-5 pt-md-2">
+  <div class="pt-xl-2 pt-lg-2 pt-md-2 pt-sm-2">
     <div class="table-responsive">
       <table class="table table-hover" style="border-radius: 5px;">
         <thead class="table-dark">
