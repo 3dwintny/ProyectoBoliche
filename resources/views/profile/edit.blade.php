@@ -1,12 +1,21 @@
 @extends('layouts.app', ['title' => __('User Profile')])
 
 @section('content') 
-
-@include('layouts.headers.cards', ['texto' => 'Perfil'])
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                    <h1 class="text-white">Perfil</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="container-fluid">
-    <div class="container-fluid mt-md--4 mt-lg--4 mt-xs--4 mt--5">
-        <div class="row">
-            <div class="col-xl-8 order-xl-1">
+    <div class="container-fluid pt-2">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-8">
                 <div class="card shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
@@ -63,7 +72,6 @@
                 </div>
             </div>
         </div>
-        
         @include('layouts.footers.auth')
     </div>
 </div>
