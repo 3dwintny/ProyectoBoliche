@@ -1,28 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.headers.cards', ['texto' => 'Psicologia'])
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
+  <div class="container-fluid">
+      <div class="header-body">
+          <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+                  <h1 class="text-white">Psicología</h1>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
 <div class="container">
-<div class="pb-5 pt-5 pt-md-2">
-  @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ session('success') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  @endif
+  <div class="pt-2">
+    @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
 
-  @if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-      {{ session('error') }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-  @endif
-  <div class="">
+    @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
     <table class="table table-responsive table-hover" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
           <th scope="col">No</th>
-          <th scope="col">Nombre Completo</th>
+          <th scope="col">Nombre completo</th>
           <th scope="col">Número de colegiado</th>
           <th scope="col">Teléfono</th>
           <th scope="col">Correo</th>
@@ -66,7 +75,7 @@
     {{$psicologo->links('vendor.pagination.custom')}}
   </div>
 </div>
-</div>
+
 <script>
   function eliminarPsicologia(value){
       action = confirm(value) ? true : event.preventDefault();
