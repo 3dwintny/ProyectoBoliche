@@ -15,6 +15,12 @@
 <div class="container-fluid pt-2">
     <div class="header-body text-center mb-7">
         <div class="row justify-content-center">
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="col-xl-9 col-lg-11 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
                     <div class="card-header text-bold ">
@@ -23,12 +29,6 @@
                         </strong>
                     </div>
                 </div>
-                @if(session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('ac_estado',encrypt($alumno->id))}}">
                     @csrf
                     <div class="form-group">
