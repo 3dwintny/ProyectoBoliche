@@ -24,8 +24,8 @@ class RolController extends Controller
     public function index()
     {
         try{
-            $roles = Role::paginate();
-            return view('roles.index', compact('roles'));
+            $roles = Role::all();
+            return view('configuraciones.us', compact('roles'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');

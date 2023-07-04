@@ -1,13 +1,24 @@
 @extends('layouts.app')
 @section('content')
-
-@include('layouts.headers.cards', ['texto' => 'Roles'])
-    <div class="card-body">
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+                    <h1 class="text-white">Roles</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card-body">
+    <div class="container pt-2">
         @can('crear-rol')
-        <a class="btn btn-warning" href="{{ route('roles.create')  }}">Nuevo</a>
+            <a class="btn btn-warning" href="{{ route('roles.create')  }}">Nuevo</a>
         @endcan
-        <div class="container">
-        <table class="table table-light mt-2">
+    </div>
+    <div class="container">
+        <table class="table table-responsive mt-2">
             <thead class="table table-dark mt-2">
                 <th style="color:#fff ;">Rol</th>
                 <th style="color:#fff ;">Acciones</th>
@@ -31,7 +42,6 @@
                 @endforeach
             </tbody>
         </table>
-        </div>
     </div>
 </div>
 @endsection
