@@ -1,9 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-@include('layouts.headers.cards', ['texto' => 'Solicitudes pendientes'])
-<div class="pb-5 pt-5 pt-md-2">
-  <div class="col-xl-12 col-lg-12">
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
+  <div class="container-fluid">
+      <div class="header-body">
+          <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-10 col-sm-10">
+                  <h1 class="text-white">Solicitudes pendientes</h1>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="pt-2">
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+    @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          {{ session('error') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
     <table class="table table-responsive table-hover" style="border-radius: 5px;">
       <thead class="table-dark">
         <tr>
@@ -96,18 +112,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default btn-danger" data-bs-dismiss="modal">Cerrar</button>
-        <a class="btn btn-default btn-success" id="aceptar" href="{{route('creacion',$alumno->id)}}">Aceptar</a>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-<!-- Resto de tu código -->
-
 @endsection
 
 @push('js')
@@ -128,8 +136,6 @@
         $('#origen').text(response.municipio + "/" + response.departamento);
         var image = document.getElementById("imgAlumno");
         image.src = "{{ asset('uploads/alumnos/') }}" + '/' + response.foto;
-        var crear = document.getElementById("aceptar")
-        crear.href = "{{ route('creacion', '') }}/" + id;
 
         $('#myModal').modal('show');
       },
@@ -148,5 +154,4 @@
 
   });
 </script>
-
 @endpush
