@@ -47,8 +47,14 @@
                             <div class="card-block aling-end">
                                 <h5 class="text-center">Roles</h5>
                                 @php
-                                use Spatie\Permission\Models\Role;
-                                $cant_roles = Role::count();
+                                    use Spatie\Permission\Models\Role;
+                                    $cant_roles = Role::count();
+                                    try{
+                                        $roles = Role::all();
+                                    }
+                                    catch(\Exception $e){
+                                        return back()->with('error', 'Se produjo un error al procesar la solicitud');
+                                    }
                                 @endphp
                                 <h2 class="text-center"><i class="fa fa-user-lock f-left"></i><span>{{$cant_roles}}</span>
                                 </h2>

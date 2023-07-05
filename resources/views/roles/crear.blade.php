@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <label for="" class="font-weight-bold">Nombre del Rol</label>
+                        <label for="" class="font-weight-bold">Nombre del rol</label>
                         {!! Form::text('name', null, array('class' => 'form-control')) !!}
                     </div>
                 </div>
