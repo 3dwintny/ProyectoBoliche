@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
-@include('layouts.headers.cards', ['texto' => 'Preferencias'])
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+                    <h1 class="text-white">Usuarios</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @include('configuraciones.varnav')
 <div class="align-center">
     @if(session('error'))
@@ -14,7 +24,7 @@
             <h1 style="text-align: right;">OTROS</h1>
             <hr>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -40,14 +50,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-7">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Centros de Entrenamiento
+                                    Centros de entrenamiento
                                     <span class="text-success font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -66,7 +76,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -92,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -118,14 +128,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-7">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Deportes Adaptados
+                                    Deportes adaptados
                                     <span class="text-success font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -144,14 +154,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-7">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Etapas Deportivas
+                                    Etapas deportivas
                                     <span class="text-success font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -170,14 +180,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-7">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Formulario de Inscripción
+                                    Formulario de inscripción
                                     <span class="text-success font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -191,7 +201,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -217,14 +227,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-7">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Líneas de Desarrollo
+                                    Líneas de desarrollo
                                     <span class="text-success font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -243,7 +253,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -269,7 +279,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -295,7 +305,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -321,7 +331,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -347,7 +357,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -373,14 +383,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-7">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Otros Programas de Atención
+                                    Otros programas de atención
                                     <span class="text-success font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -399,7 +409,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -425,7 +435,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
@@ -451,14 +461,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-4 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
+        <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 mb-xl-0 mb-4 my-1">
             <div class="card bg-light">
                 <div class="card-body p-3">
                     <div class="row">
                         <div class="col-7">
                             <div class="numbers">
                                 <h5 class="font-weight-bolder mb-0">
-                                    Tipos de Contrato
+                                    Tipos de contrato
                                     <span class="text-success font-weight-bolder"></span>
                                 </h5>
                             </div>
@@ -477,5 +487,6 @@
                 </div>
             </div>
         </div>
+    </div>
 </div>
 @endsection

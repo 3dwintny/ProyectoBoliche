@@ -13,7 +13,7 @@
         </div>
     </div>
 </div>
-
+@include('configuraciones.varnav')
 <div class="card container-fluid mt-2">
     <div class="card-header">
         <h4> Crear nuevo usuario
