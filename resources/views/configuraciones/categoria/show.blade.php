@@ -34,7 +34,7 @@
             <tr>
               <th scope="col">No</th>
               <th scope="col">Categoría</th>
-              <th>Rango de Edades</th>
+              <th>Rango de edades</th>
             </tr>
           </thead>
           <tbody class="table-hover">
