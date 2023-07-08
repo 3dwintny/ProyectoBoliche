@@ -40,6 +40,11 @@
             @php
                 $contador = 1;
             @endphp
+            @if (count($departamento)<=0)
+            <tr>
+              <td colspan="2" style="font-weight: bolder; font-size:100%;">SIN RESULTADOS</td>
+            </tr>
+          @else
             @foreach ($departamento as $item)
             <tr>
               <td>{{$contador}}</td>
@@ -61,6 +66,7 @@
               @endphp
             </tr>
             @endforeach
+          @endif
           </tbody>
         </table>
       </div>

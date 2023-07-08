@@ -28,7 +28,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       @endif
-      <div class="col-xl-6 col-lg-6 col-md-10 col-sm-8">
+      <div class="col-xl-12 col-lg-6 col-md-10 col-sm-8">
         <table class="table table-responsive table-hover" style="border-radius: 5px;">
           <thead class="table-dark">
             <tr>
@@ -41,28 +41,34 @@
             @php
                 $contador = 1;
             @endphp
-            @foreach ($categoria as $item)
-            <tr>
-              <td>{{$contador}}</td>
-              <td>{{$item->tipo}}</td>
-              <td>{{$item->rango_edades}}</td>
-              <td>
-                <form action="{{route('categoria.edit',encrypt($item->id))}}" method="GET">
-                  <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
-                </form>
-              </td>
-              <td>
-                <form action="{{route('categoria.destroy',encrypt($item->id))}}" method="POST">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger" onclick="return eliminarCategoria('Eliminar categoría')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-                </form>
-              </td>
-              @php
-                $contador++;
-              @endphp
-            </tr>
-            @endforeach
+            @if (count($categoria)<=0)
+              <tr>
+                <td colspan="3" style="font-weight: bolder; font-size:100%;">SIN RESULTADOS</td>
+              </tr>
+            @else
+              @foreach ($categoria as $item)
+              <tr>
+                <td>{{$contador}}</td>
+                <td>{{$item->tipo}}</td>
+                <td>{{$item->rango_edades}}</td>
+                <td>
+                  <form action="{{route('categoria.edit',encrypt($item->id))}}" method="GET">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+                  </form>
+                </td>
+                <td>
+                  <form action="{{route('categoria.destroy',encrypt($item->id))}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" onclick="return eliminarCategoria('Eliminar categoría')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+                  </form>
+                </td>
+                @php
+                  $contador++;
+                @endphp
+              </tr>
+              @endforeach
+            @endif
           </tbody>
         </table>
       </div>

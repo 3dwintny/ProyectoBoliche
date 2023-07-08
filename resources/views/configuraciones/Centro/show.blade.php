@@ -34,57 +34,63 @@
           <tr>
             <th scope="col">No</th>
             <th scope="col">Nombre</th>
-            <th>Dirección</th>
-            <th>Accesibilidad</th>
-            <th>Institución</th>
-            <th>Implementación</th>
-            <th>Espacio Físico</th>
-            <th>Fecha de Registro</th>
-            <th>Departamento</th>
+            <th scope="col">Dirección</th>
+            <th scope="col">Accesibilidad</th>
+            <th scope="col">Institución</th>
+            <th scope="col">Implementación</th>
+            <th scope="col">Espacio Físico</th>
+            <th scope="col">Fecha de Registro</th>
+            <th scope="col">Departamento</th>
           </tr>
         </thead>
         <tbody class="table-hover">
           @php
               $contador = 1;
           @endphp
-          @foreach ($centro as $item)
-          <tr>
-            <td>{{$contador}}</td>
-            <td>{{$item->nombre}}</td>
-            <td>{{$item->direccion}}</td>
-            <td>{{$item->accesibilidad}}</td>
-            <td>{{$item->institucion}}</td>
-            <td>{{$item->implementacion}}</td>
-            <td>{{$item->espacio_fisico}}</td>
-            <td>{{\Carbon\Carbon::parse($item->fecha_registro)->format('d-m-Y')}}</td>
-            <td>{{$item->departamento->nombre}}</td>
-            <td>
-              <form action="{{route('centro.edit',encrypt($item->id))}}" method="GET">
-                <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+          @if (count($centro)<=0)
+            <tr>
+              <td colspan="9" style="font-weight: bolder; font-size:100%;">SIN RESULTADOS</td>
+            </tr>
+          @else
+            @foreach ($centro as $item)
+            <tr>
+              <td>{{$contador}}</td>
+              <td>{{$item->nombre}}</td>
+              <td>{{$item->direccion}}</td>
+              <td>{{$item->accesibilidad}}</td>
+              <td>{{$item->institucion}}</td>
+              <td>{{$item->implementacion}}</td>
+              <td>{{$item->espacio_fisico}}</td>
+              <td>{{\Carbon\Carbon::parse($item->fecha_registro)->format('d-m-Y')}}</td>
+              <td>{{$item->departamento->nombre}}</td>
+              <td>
+                <form action="{{route('centro.edit',encrypt($item->id))}}" method="GET">
+                  <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-regular fa-pen"></i></button>
+                </form>
+              </td>
+              <td>
+                <form action="{{route('listarHorarios',encrypt($item->id))}}" method="GET">
+                  <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-calendar"></i></button>
+                </form>
+              </td>
+              <td>
+                <form action="{{route('agregarHorarios',encrypt($item->id))}}" method="GET">
+                  <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-plus"></i></button>
+                </form>
+              </td>
+              <td>
+                <form action="{{route('centro.destroy',encrypt($item->id))}}" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger" onclick="return eliminarCentro('Eliminar centro de entrenamiento')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
               </form>
-            </td>
-            <td>
-              <form action="{{route('listarHorarios',encrypt($item->id))}}" method="GET">
-                <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-calendar"></i></button>
-              </form>
-            </td>
-            <td>
-              <form action="{{route('agregarHorarios',encrypt($item->id))}}" method="GET">
-                <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-plus"></i></button>
-              </form>
-            </td>
-            <td>
-              <form action="{{route('centro.destroy',encrypt($item->id))}}" method="POST">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return eliminarCentro('Eliminar centro de entrenamiento')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-            </form>
-            </td>
-            @php
-              $contador++;
-            @endphp
-          </tr>
-          @endforeach
+              </td>
+              @php
+                $contador++;
+              @endphp
+            </tr>
+            @endforeach
+          @endif
         </tbody>
         </table>
       </div>

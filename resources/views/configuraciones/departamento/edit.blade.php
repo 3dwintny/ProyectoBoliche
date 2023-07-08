@@ -21,11 +21,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <div class="col-xl-6 col-lg-7 col-md-12 col-sm-10">
+            <div class="col-xl-6 col-lg-6 col-md-10 col-sm-8">
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar departamento</h2>
+                            <h2>Editar</h2>
                         </strong>
                     </div>
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('departamentos.update',encrypt($departamento->id))}}">
@@ -40,6 +40,8 @@
                                 <div class="container">
                                     <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Actualizar</button></div>
                                 </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

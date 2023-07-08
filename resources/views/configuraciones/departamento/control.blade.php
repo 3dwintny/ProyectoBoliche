@@ -21,7 +21,7 @@
       </div>
     @endif
     <div class="row justify-content-center">
-      <div class="col-xl-12 col-lg-6 col-md-10 col-sm-8">
+      <div class="col-xl-6 col-lg-6 col-md-10 col-sm-8">
         <table class="table table-responsive table-hover" style="border-radius: 5px;">
           <thead class="table-dark">
             <tr>
@@ -37,7 +37,7 @@
             @endphp
             @if (count($control)<=0)
               <tr>
-                <td colspan="4">SIN RESULTADOS</td>
+                <td colspan="4" style="font-weight: bolder; font-size:100%;">SIN RESULTADOS</td>
               </tr>
             @else
               @foreach ($control as $item)

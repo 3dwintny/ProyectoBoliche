@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Registrar nuevo centro de entrenamiento</h2>
+                            <h2>Nuevo</h2>
                         </strong>
                     </div>
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('centro.store')}}">
@@ -139,10 +139,12 @@
                                   </tr>
                                   @endforeach
                                 </tbody>
-                              </table>
+                            </table>
                             <div class="container">
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                             </div>
+                        </div>
+                    </div>
                 </form>
                 <label>Agregar horario</label>
                 <form method="post" role="form" enctype="multipart/form-data" action="{{route('horario.store')}}">
@@ -180,12 +182,11 @@
                             <div class="container">
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                             </div>
+                        </div>
+                    </div>
                 </form>
-
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 @endsection

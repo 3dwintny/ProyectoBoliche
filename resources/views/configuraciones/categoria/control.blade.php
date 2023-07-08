@@ -23,36 +23,36 @@
       @endif
       <div class="col-xl-6 col-lg-6 col-md-10 col-sm-8">
         <table class="table table-responsive table-hover" style="border-radius: 5px;">
-        <thead class="table-dark">
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col">Usuario</th>
-            <th scope="col">Acción</th>
-            <th scope="col">Fecha y hora</th>
-          </tr>
-        </thead>
-        <tbody class="table-hover">
-          @php
-              $contador = 1;
-          @endphp
-          @if (count($control)<=0)
+          <thead class="table-dark">
             <tr>
-              <td colspan="4">SIN RESULTADOS</td>
+              <th scope="col">No</th>
+              <th scope="col">Usuario</th>
+              <th scope="col">Acción</th>
+              <th scope="col">Fecha y hora</th>
             </tr>
-          @else
-            @foreach ($control as $item)
+          </thead>
+          <tbody class="table-hover">
+            @php
+                $contador = 1;
+            @endphp
+            @if (count($control)<=0)
               <tr>
-                <td>{{$contador}}</td>
-                <td>{{$item->usuario->name}}</td>
-                <td>{{$item->Descripcion}}</td>
-                <td>{{Carbon\Carbon::parse($item->created_at)->format('d-m-Y')}} {{Carbon\Carbon::parse($item->created_at)->format('H:i:s')}}</td>
-                @php
-                  $contador++;
-                @endphp
+                <td colspan="4" style="font-weight: bolder; font-size:100%;">SIN RESULTADOS</td>
               </tr>
-            @endforeach
-          @endif
-        </tbody>
+            @else
+              @foreach ($control as $item)
+                <tr>
+                  <td>{{$contador}}</td>
+                  <td>{{$item->usuario->name}}</td>
+                  <td>{{$item->Descripcion}}</td>
+                  <td>{{Carbon\Carbon::parse($item->created_at)->format('d-m-Y')}} {{Carbon\Carbon::parse($item->created_at)->format('H:i:s')}}</td>
+                  @php
+                    $contador++;
+                  @endphp
+                </tr>
+              @endforeach
+            @endif
+          </tbody>
         </table>
       </div>
       {{$control->links('vendor.pagination.custom')}}

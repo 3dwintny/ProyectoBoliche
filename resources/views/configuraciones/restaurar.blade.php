@@ -292,26 +292,6 @@
                             <div class="col-8">
                                 <div class="numbers">
                                     <h6 class="font-weight-bolder mb-0">
-                                        Formulario
-                                    </h6>
-                                </div>
-                            </div>
-                            <div class="col-1 text-end">
-                                <button type="button" class="btn btn-dark" onclick="window.location='{{ route('eliminadosFormulario') }}'">
-                                    <i class="fa fa-fw fa-eye"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-xl-0 mb-4 my-1">
-                <div class="card bg-light">
-                    <div class="card-body p-3">
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="numbers">
-                                    <h6 class="font-weight-bolder mb-0">
                                         Horarios
                                     </h6>
                                 </div>

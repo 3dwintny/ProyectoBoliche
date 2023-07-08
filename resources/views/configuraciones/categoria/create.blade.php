@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Registrar nueva categoría</h2>
+                            <h2>Nueva</h2>
                         </strong>
                     </div>
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('categoria.store')}}">
@@ -54,6 +54,8 @@
                                 <div class="container">
                                     <div class="col-md-4 mb-10 center"><button type="submit" class="btn btn-outline-primary">Registrar</button></div>
                                 </div>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
