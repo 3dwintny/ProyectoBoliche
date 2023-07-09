@@ -164,7 +164,7 @@ class EDG27Controller extends Controller
     public function acciones(){
         try{
             $control = Control::where('tabla_accion_id',10)->with('usuario')->paginate(5);
-            return view('configuraciones.alergia.control',compact('control'));
+            return view('Reportes.edg27.control',compact('control'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
