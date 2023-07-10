@@ -387,18 +387,48 @@ class AsistenciaController extends Controller
             //Obtiene la fecha del sistema
             $ms = Carbon::now();
 
-            //Muestra el año en el reporte
-            $mostrarAnioReporte = $ms->year;
+            //Obtiene el mes desde la solicitud de la búsqueda
+            $m = $ms->month;
+            $numeroDia = $ms->day;
+            if($numeroDia>=1 && $numeroDia<=15){
+                $m--;
+            }
 
-            //Obtiene la data de la base de datos
-            $fechas = Asistencia::
-            whereMonth('fecha',$ms->month)
-            ->whereYear('fecha',$ms->year)
-            ->get();
+            //Almacena el año desde la solicitud de búsqueda y lo envía a la vista para generar PDF
+            $y = $ms->year;
 
+            $mes = 0;
+            $anio = 0;
+            if($m==12){
+                $mes = 1;
+                $anio = $y+1;
+            }
+            else{
+                $mes = $m+1;
+                $anio = $y;
+            }
+            //Obtiene una sola vez la fecha de la asistencia
+            $fechas= array();
+
+            $fechasInicio= Asistencia::groupBy('fecha')->whereMonth('fecha',$m)
+            ->whereYear('fecha',$y)->get('fecha');
+
+            for($i=0;$i<count($fechasInicio);$i++){
+                if(date("d",strtotime($fechasInicio[$i]->fecha))>=16 &&  date("d",strtotime($fechasInicio[$i]->fecha))<=31){
+                    array_push($fechas,$fechasInicio[$i]);
+                }
+            }
+
+            $fechasFin= Asistencia::groupBy('fecha')->whereMonth('fecha',$mes)
+            ->whereYear('fecha',$anio)->get('fecha');
+
+            for($i=0;$i<count($fechasFin);$i++){
+                if(date("d",strtotime($fechasFin[$i]->fecha))>=1 &&  date("d",strtotime($fechasFin[$i]->fecha))<=15){
+                    array_push($fechas,$fechasFin[$i]);
+                }
+            }
             if(count($fechas)>0){
-                $datos =  $this->mostrarAsistencia($ms->month,$ms->year);
-                //return $datos;
+                $datos =  $this->mostrarAsistencia($m,$anio);
                 $atleta = $datos['atleta'];
                 $fechas = $datos['fechas'];
                 $estado = $datos['estado'];
@@ -413,8 +443,8 @@ class AsistenciaController extends Controller
                 $municipio = Municipio::where('estado','activo')->where('departamento_id',13)->get(['id','nombre','departamento_id']);
                 return view('Reportes.RepFor30.index',compact('departamento','atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes','entrenador','centro_entrenamiento','municipio'));
             }else{
-                $mostrarMes = $this->mesLetras($ms->month);
-                return view('Reportes.RepFor30.sinresultadosactual',compact('mostrarAnioReporte','mostrarMes'));
+                $mostrarMes = $this->mesLetras($m);
+                return view('Reportes.RepFor30.sinresultadosactual',compact('anio','mostrarMes'));
             }
         }
         catch(\Exception $e){
@@ -496,7 +526,6 @@ class AsistenciaController extends Controller
             $controlDatos=0;
             $controlAtletas = 0;
 
-            //return $asistenciaOrdenada;
             while(count($estado) !=count($fecha)*count($mostrarAtletas)){
                 for($i=0;$i<count($fecha);$i++){
                     if($asistenciaOrdenada[$controlDatos]->atleta_id == $mostrarAtletas[$controlAtletas] && $asistenciaOrdenada[$controlDatos]->fecha == $fecha[$i]){
@@ -567,6 +596,10 @@ class AsistenciaController extends Controller
             $hoy = Carbon::now();
             $mes = $hoy->month;
             $obtenerAnio = $hoy->year;
+            $numeroDia = $hoy->day;
+            if($numeroDia>=1 && $numeroDia<=15){
+                $mes--;
+            }
             $datos =  $this->mostrarAsistencia($mes,$obtenerAnio);
             $fechas = $datos['fechas'];
             $estado = $datos['estado'];
