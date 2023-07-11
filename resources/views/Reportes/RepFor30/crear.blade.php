@@ -10,12 +10,11 @@
     }
 </style>
 
-<div class="header bg-dark pb-4 pt-5 pt-md-6 mt--5">
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
     <div class="container-fluid">
         <div class="header-body">
-            <!-- Card stats -->
             <div class="row">
-                <div class="col-xl-6 col-lg-6">
+                <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
                     <h1 class="text-white">Toma de asistencia</h1>
                 </div>
             </div>
@@ -23,46 +22,44 @@
     </div>
 </div>
 
-<div class="card-body pb-4 pt-5 pt-md-3">
+<div class="container-fluid pt-2">
     @include('components.flash_alerts')
-    <div class="container">
-        <form action="{{route('asistenciaCategoria')}}" method="POST" enctype="multipart/form-data" role="form">
+    <div class="header-body text-center">
+        <div class="justify-content-center">
+            <form action="{{route('asistenciaCategoria')}}" method="POST" enctype="multipart/form-data" role="form">
             @csrf
-            <div class="row">
-                <div class="col-md-3 mb-2">
-                    <!-- Para segir viendo el nombre del placeholder -->
-                    <div class="form-floating">
-                        <input type="date" class="form-control" id="fecha">
-                        <!-- Esto es lo que aparece como placeholder, en el fomulario -->
-                        <label for="fecha">Modificar fecha de asistencia</label>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 mb-2">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="fecha">
+                            <label for="fecha">Modificar fecha de asistencia</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-2">
+                        <div class="form-floating">
+                            <select id="categorias" class="form-control" name="categorias" onchange="this.form.submit()">
+                                <option value="" selected disabled>Sin filtros</option>
+                                @foreach($categoria as $item)
+                                <option value="{{$item->id}}" {{$item->tipo == "N/A" ? 'disabled' : ''}}>{{$item->tipo}}</option>
+                                @endforeach
+                            </select>
+                            <label for="categorias">Filtrar por categoría</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2">
+                        <button type="button" class="btn btn-light" onclick="window.location='{{ route('asistencias.create') }}'">Eliminar filtro</button>
                     </div>
                 </div>
-                <div class="col-md-3 mb-2">
-                    <!-- Para segir viendo el nombre del placeholder -->
-                    <div class="form-floating">
-                        <select id="categorias" class="form-control" name="categorias" onchange="this.form.submit()">
-                            <option value="" selected disabled>Sin filtros</option>
-                            @foreach($categoria as $item)
-                            <option value="{{$item->id}}" {{$item->tipo == "N/A" ? 'disabled' : ''}}>{{$item->tipo}}</option>
-                            @endforeach
-                        </select>
-                        <!-- Esto es lo que aparece como placeholder, en el fomulario -->
-                        <label for="categorias">Filtrar por categoría</label>
-                    </div>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-light" onclick="window.location='{{ route('asistencias.create') }}'">Eliminar filtro</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-    
-    
-    <div class="container">
-        <form method="POST" action="{{route('asis')}}" enctype="multipart/form-data" role="form">
+</div>
+<div class="container-fluid pt-2">
+    <div class="header-body text-center mb-7">
+        <div class="row justify-content-center">
+            <form method="POST" action="{{route('asis')}}" enctype="multipart/form-data" role="form">
             @csrf
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                     <div class="form-group">
                         <div class="table-responsive">
                             <table class="table table-hover">
@@ -159,16 +156,16 @@
                                 </tbody>
                             </table>
                             @if(count($atletas)==0)
-                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar asistencia" disabled></div>
+                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Aceptar" disabled></div>
                             @else
-                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Registrar asistencia"></div>
+                                <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Aceptar"></div>
                             @endif
                             <br/>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 <script type="text/javascript">
