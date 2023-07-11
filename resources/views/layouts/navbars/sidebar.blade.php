@@ -137,7 +137,7 @@
                             @can('crear-EDG-31-Asistencia')
                             @if(auth()->user()->tipo_usuario_id==2)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('asistencias.create') }}">
+                                <a class="nav-link" href="{{ route('asistencia.create') }}">
                                     {{ __('Registrar asistencia') }}
                                 </a>
                             </li>
@@ -281,7 +281,7 @@
                 @endcan
                 @can('ver-EDG-31-Asistencia')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('asistencias.index') }}">
+                    <a class="nav-link" href="{{ route('asistencia.index') }}">
                         <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
                     </a>
                 </li>

@@ -87,7 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
 	//Rutas Asistencia
     Route::get('asistencia-atleta',[AsistenciaController::class, 'asistenciaIndividual'])->name('asistenciaIndividual');
     Route::get('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
-    Route::resource('asistencias',AsistenciaController::class);
+    Route::resource('asistencia',AsistenciaController::class);
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
     Route::post('actualizarAsistencia',[AsistenciaController::class,'actualizarAsistencia'])->name('actualizarAsistencia');
     Route::get('exportar',[AsistenciaController::class,'exportar'])->name('exportar');

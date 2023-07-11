@@ -32,6 +32,7 @@ class AsistenciaController extends Controller
         try{
             $entrenador = Entrenador::where('correo', auth()->user()->email)->get();
             $categoria = Categoria::all();
+            $categoria_id=0;
             if(count($entrenador)>0){
                 $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',$entrenador[0]->id)->get();
             }
@@ -39,7 +40,7 @@ class AsistenciaController extends Controller
                 $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->get();
             }
             $hoy = Carbon::now();
-            return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
+            return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria","categoria_id"));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
@@ -226,7 +227,7 @@ class AsistenciaController extends Controller
                 $atletas = Atleta::where('estado', 'activo')->where('entrenador_id',0)->where('categoria_id',$categoria_id)->get();
             }
             $hoy = Carbon::now();
-            return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria"));
+            return view('Reportes.RepFor30.crear',compact("atletas","hoy","categoria","categoria_id"));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
