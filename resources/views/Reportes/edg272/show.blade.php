@@ -5,22 +5,35 @@
  
 <script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
-@include('layouts.headers.cards', ['texto' => 'Reporte EDG-27.2'])
-<form method="GET" action="{{route('edg272PDF')}}" role="form" enctype="multipart/form-data" target="_blank">
-    @csrf
-    <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
-</form>
-@if(session('error'))
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    {{ session('error') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+                    <h1 class="text-white">Reporte EDG-27.2</h1>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-@endif
-<div class="card">
-    <div class="col-xl-12 col-lg-12 ">
-        <div class="pb-4 pt-5 pt-md-1">
-            <div class="card-body">
-                <table class="table table-responsive table-bordered border-light" style="align-content: center;">
+
+<div class="container pt-2">
+    <div class="header-body text-center mb-7">
+        <div class="col-xl-6 col-lg-4 col-md-1 col-sm-1">
+            <form method="GET" action="{{route('edg272PDF')}}" role="form" enctype="multipart/form-data" target="_blank">
+                @csrf
+                <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+            </form>
+        </div>
+        <div class="row justify-content-center">
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            <div class="col-xl-7 col-lg-9 col-md-12 col-sm-12">
+                <table class="table table-responsive" style="align-content: center;">
                     @php
                         $contador = 1;   
                     @endphp
@@ -42,7 +55,7 @@
                                 {{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}}
                                 {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
                             </td>
-                            <td>{{$item->alumno->fecha}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->alumno->fecha)->format("d-m-Y")}}</td>
                             <td>{{$item->alumno->edad}}</td>
                             <td>{{$item->alumno->genero}}</td>
                             <td>{{$item->categoria->tipo}}</td>
@@ -57,5 +70,4 @@
         </div>
     </div>
 </div>
-
 @endsection
