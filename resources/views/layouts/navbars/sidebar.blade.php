@@ -265,10 +265,10 @@
                     </a>
                 </li>
                 @endcan
-                @can('ver-EDG-27')
+                @can('ver-EDG-31-Asistencia')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('edg-27.index') }}">
-                        <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR27
+                    <a class="nav-link" href="{{ route('asistencia.index') }}">
+                        <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
                     </a>
                 </li>
                 @endcan
@@ -279,10 +279,10 @@
                     </a>
                 </li>
                 @endcan
-                @can('ver-EDG-31-Asistencia')
+                @can('ver-EDG-27')
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('asistencia.index') }}">
-                        <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
+                    <a class="nav-link" href="{{ route('edg-27.index') }}">
+                        <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR27
                     </a>
                 </li>
                 @endcan

@@ -1,0 +1,186 @@
+#contenedor{
+    width: 100%;
+    height: 5.7%;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+#foto{
+    width: 4%;
+    height: 100%;
+    border-right: 1px solid black;
+    float: left;
+    position: relative;
+}
+#inicial{
+    width: 96%;
+    height: 70%;
+    border-bottom: 1px solid black;
+    float: left;
+    position: relative;
+}
+#final{
+    margin-top: 2.88%;
+    width: 96%;
+    height: 28.9%;
+    float: left;
+    position: relative;
+}
+.formulario{
+    width: 100%;
+    height: 50%;
+}
+#interno1{
+    margin-top: 0.65%;
+    margin-left: 18%;
+    width: 33%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#interno2{
+    margin-top: 0.65%;
+    margin-left: 45.5%;
+    width: 20%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#interno3{
+    margin-top: 0.65%;
+    margin-left: 63.75%;
+    width: 10%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#interno4{
+    margin-top: 0.65%;
+    margin-left: 73.5%;
+    width: 12.5%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#contenedor2{
+    margin-top: 1.6%;
+    width: 100%;
+    height: 1.7%;
+}
+#fadn{
+    width: 40%;
+    height: 100%;
+    float: left;
+    position: relative;
+    margin-left: 2.25%;
+}
+#depto{
+    width: 33%;
+    height: 100%;
+    float: left;
+    position: relative;
+    margin-left: 2%;
+}
+#mes{
+    width: 20%;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+#contenedor3{
+    width: 90%;
+    margin-top: 1%;
+}
+.fondo{
+    border-top: 2px solid white;
+    background-color: #00B0F0; 
+    color:white;
+    font-family: Century;
+}
+.fondoBajo{
+    background-color: #00B0F0; 
+    color:white;
+    font-family: Century;
+}
+#tituloTabla{
+    background-color: #002060; 
+    color:white;
+    font-family: Century;
+    border-top: 1px solid #002060;  
+    border-collapse: collapse;
+}
+.cuerpo{
+    border: 1px solid black; 
+    border-collapse: collapse;
+}
+#espacio1{
+    height: 1.3%;
+    width: 100%;
+}
+#espacio2{
+    height: 0.5%;
+    width: 100%;
+}
+.textoCentrado{
+    text-align: center;
+}
+.bordeDerechoGruesoBlanco{
+    border-right: 2px solid white;
+    border-collapse: collapse;
+}
+.bordeInferiorGruesoBlanco{
+    border-bottom: 2px solid white;
+    border-collapse: collapse;
+}
+.anchoFull{
+    width: 100%;
+}
+.tamanioFuente10{
+    font-size: 62.5%;
+}
+.tamanioFuente11{
+    font-size: 68.75%;
+}
+.tamanioFuente8{
+    font-size: 50%;
+}
+.tamanioFuente9{
+    font-size: 56.25%;
+}
+.tamanioFuente105{
+    font-size: 65.625%;
+}
+.tamanioFuente14{
+    font-size: 87.5%;
+}
+#edad{
+    text-align:right;
+    width: 6%;
+}
+#contenedorPrincipal{
+    margin-left: 10%;
+    margin-right: 8%;
+    width: 86%;
+}
+#margen1{
+    margin-left: 1%;
+}
+#ancho4{
+    width: 4%;
+}
+.ancho115{
+    width: 11.5%;
+}
+#ancho105{
+    width: 10.5%;
+}
+#ancho10{
+    width: 10%;
+}
+#ancho11{
+    width: 11%;
+}
+.ancho7{
+    width: 7%;
+}

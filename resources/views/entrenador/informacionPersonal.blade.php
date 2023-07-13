@@ -15,26 +15,26 @@
 <div class="container-fluid pt-2">
     <div class="header-body text-center mb-7">
         <div class="row justify-content-center">
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
             <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar información</h2>
+                            <h2>Editar</h2>
                         </strong>
                     </div>
-                    @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-
-                    @if(session('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {{ session('error') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
                     @can('entrenadorPerfil')
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('actualizar')}}">
                         @csrf
