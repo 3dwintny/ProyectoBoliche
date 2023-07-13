@@ -150,7 +150,7 @@ class EDG27Controller extends Controller
             if(count($atletas)>0){
                 $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>10]);
                 $control->save();
-                return PDF::loadView('Reportes.edg27.pdf',compact('atletas','mostrarMes','anio','federacion','departamento'))->setPaper('8.5x11')->stream();
+                return PDF::loadView('Reportes.edg27.pdf',compact('atletas','mostrarMes','anio','federacion','departamento'))->setPaper('8.5x11', 'landscape')->stream();
             }
             else{
                 return view('Reportes.edg27.sinresultados');
