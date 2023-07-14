@@ -9,7 +9,7 @@ use App\Models\Departamento;
 use App\Models\Deporte;
 use Carbon\Carbon;
 use App\Models\Control;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AsistenciaController;
 
 class EDG272Controller extends Controller
 {
@@ -106,52 +106,22 @@ class EDG272Controller extends Controller
             $fecha = Carbon::now();
             $mes = Carbon::parse($fecha)->format('m');
             $anio = Carbon::parse($fecha)->format('Y');
-            $mostrarMes = "";
-            switch ($mes){
-                case 1:
-                    $mostrarMes = "Enero";
-                    break;
-                case 2:
-                    $mostrarMes = "Febrero";
-                    break;
-                case 3:
-                    $mostrarMes = "Marzo";
-                    break;
-                case 4:
-                    $mostrarMes = "Abril";
-                    break;
-                case 5:
-                    $mostrarMes = "Mayo";
-                    break;
-                case 6:
-                    $mostrarMes = "Junio";
-                    break;
-                case 7:
-                    $mostrarMes = "Julio";
-                    break;
-                case 8:
-                    $mostrarMes = "Agosto";
-                    break;
-                case 9:
-                    $mostrarMes = "Septiembre";
-                    break;
-                case 10:
-                    $mostrarMes = "Octubre";
-                    break;
-                case 11:
-                    $mostrarMes = "Noviembre";
-                    break;
-                case 12:
-                    $mostrarMes = "Diciembre";
-                    break;
-            }
+            $meses = new AsistenciaController();
+            $mostrarMes = $meses->mesLetras($mes);
             $deporte = Deporte::find(1);
             $departamento = Departamento::find(13);
             $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
             if(count($atletas)>0){
+                $fechasNacimiento = array();
+                $fechaCompleta = "";
+                foreach($atletas as $atleta){
+                    $fechaNacimiento = Carbon::parse($atleta->alumno->fecha);
+                    $fechaCompleta = $fechaNacimiento->day . "/" . strtolower($meses->mesLetras($fechaNacimiento->month)) . "/" . $fechaNacimiento->year;
+                    array_push($fechasNacimiento,$fechaCompleta);
+                }
                 $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>11]);
                 $control->save();
-                return PDF::loadView('Reportes.edg272.pdf',compact('atletas','mostrarMes','anio','deporte','departamento'))->setPaper('8.5x11')->stream();
+                return PDF::loadView('Reportes.edg272.pdf',compact('atletas','mostrarMes','anio','deporte','departamento','fechasNacimiento'))->setPaper('8.5x11')->stream();
             }
             else{
                 return view('Reportes.edg272.sinresultados');

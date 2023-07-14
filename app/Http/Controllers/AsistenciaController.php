@@ -335,7 +335,7 @@ class AsistenciaController extends Controller
         }
     }
 
-    private function mesLetras($m){
+    public function mesLetras($m){
         switch ($m){
             case 1:
                 $mostrarMes = "Enero";

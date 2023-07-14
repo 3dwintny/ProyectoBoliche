@@ -38,15 +38,15 @@
         </div>
         <div id="contenedor2">
             <div id="fadn">
-                <span style="position: absolute; margin-left: 33.25%; margin-top: 0.02%;">______________________</span>
+                <span id="lineaFADN">______________________</span>
                 <strong class="tamanioFuente8">FEDERACIÓN/ASOCIACIÓN:</strong><label class="tamanioFuente11"> {{$federacion->nombre}}</label>
             </div>
             <div id="depto">
-                <span style="position: absolute; margin-left: 29.75%; margin-top: 0.02%;">______________________</span>
+                <span id="lineaDepartamento">______________________</span>
                 <strong class="tamanioFuente9">DEPARTAMENTO:</strong><label class="tamanioFuente11"> {{$departamento->nombre}}</label>
             </div>
             <div id="mes">
-                <span style="position: absolute; margin-left: 32.5%; margin-top: 2.75%;" class="tamanioFuente11">{{$mostrarMes}}</span>
+                <span id="mostrarMes" class="tamanioFuente11">{{$mostrarMes}}</span>
                 <strong class="tamanioFuente105">MES:</strong>_____________<strong class="tamanioFuente14"> {{$anio}}</strong>
             </div>   
         </div>
