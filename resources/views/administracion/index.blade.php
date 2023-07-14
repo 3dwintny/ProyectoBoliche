@@ -2,18 +2,7 @@
 
 @section('content')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<div class="header bg-dark pb-2 pt-5 pt-md-10">
-  <div class="container-fluid">
-    <div class="header-body">
-      <!-- Card stats -->
-      <div class="row">
-        <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Administradores del sistema</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.headers.cards', ['texto' => 'Administradores del sistema'])
 <div class="container">
   <div class="pb-5 pt-5 pt-md-2">
     @include('components.flash_alerts')

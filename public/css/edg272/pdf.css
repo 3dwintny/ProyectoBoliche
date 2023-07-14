@@ -1,0 +1,174 @@
+#contenedor{
+    width: 100%;
+    height: 4.25%;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+#foto{
+    width: 4%;
+    height: 100%;
+    border-right: 1px solid black;
+    float: left;
+    position: relative;
+}
+#inicial{
+    width: 96%;
+    height: 60%;
+    border-bottom: 1px solid black;
+    float: left;
+    position: relative;
+}
+#final{
+    margin-top: 3.5%;
+    width: 96%;
+    height: 28.9%;
+    float: left;
+    position: relative;
+}
+.formulario{
+    width: 100%;
+    height: 50%;
+}
+.textoCentrado{
+    text-align: center;
+}
+#interno1{
+    margin-top: 0.05%;
+    margin-left: 7%;
+    width: 33%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#interno2{
+    margin-top: 0.05%;
+    margin-left: 42%;
+    width: 20%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#interno3{
+    margin-top: 0.05%;
+    margin-left: 66%;
+    width: 10%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#interno4{
+    margin-top: 0.05%;
+    margin-left: 81%;
+    width: 12.5%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#contenedor2{
+    width: 100%;
+    height: 4.5%;
+}
+#fadn{
+    width: 50%;
+    height: 100%;
+    float: left;
+    position: relative;
+    margin-left: 1.75%;
+}
+#depto{
+    width: 50%;
+    height: 100%;
+    float: left;
+    position: relative;
+    margin-left: 7.5%;
+}
+#mes{
+    margin-left: 3%;
+}
+#contenedor3{
+    width: 78%;
+}
+.fondo{
+    border-top: 2px solid white;
+    background-color: #00B0F0; 
+    color:white;
+    font-family: Century;
+}
+#tituloTabla{
+    background-color: #757171; 
+    color:white;
+    font-family: Century;
+    border-top: 1px solid #757171;  
+    border-collapse: collapse;
+}
+.cuerpo{
+    border: 1px solid black; 
+    border-collapse: collapse;
+}
+#bIzq{
+    border-left: 1px solid #00B0F0;
+}
+#bDer{
+    border-right: 1px solid #00B0F0;
+}
+#espacio1{
+    width: 100%;
+    height: 1.2%;
+}
+#espacio2{
+    width: 100%;
+    height: 0.5%;
+}
+#anchoFull{
+    width: 100%;
+}
+.textoCentrado{
+    text-align: center;
+}
+.bordeDerechoGruesoBlanco{
+    border-right: 2px solid white;
+}
+.tamanioFuente10{
+    font-size: 62.5%;
+}
+.tamanioFuente11{
+    font-size: 68.75%;
+}
+.tamanioFuente9{
+    font-size: 56.25%;
+}
+.tamanioFuente14{
+    font-size: 87.5%;
+}
+#no{
+    width: 6%;
+}
+#nacimiento{
+    width: 12.75%;
+}
+#edad{
+    width: 9%;
+}
+#genero{
+    width: 14%;
+}
+#categoria{
+    width: 16%;
+}
+#lineaFADN{
+    position: absolute; 
+    margin-left: 9.75%; 
+    margin-top: 0.02%;
+}
+#lineaDepartamento{
+    position: absolute; 
+    margin-left: 27.25%; 
+    margin-top: 0.02%;
+}
+#posicionMes{
+    position: absolute; 
+    margin-left: 22.5%; 
+    margin-top: 1.5%;
+}

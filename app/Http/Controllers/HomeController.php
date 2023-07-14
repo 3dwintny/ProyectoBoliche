@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Psicologia;
 
 class HomeController extends Controller
 {
@@ -21,6 +22,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->tipo_usuario_id==3){
+            $psicologia = Psicologia::where('correo',auth()->user()->email)->first();
+            if($psicologia->codigo_correo==null){
+                return view('configuraciones.psicologia.codigoCorreo');
+            }
+        }
         return view('dashboard');
     }
     public function wel()

@@ -1,18 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-2 pt-5 pt-md-10">
-    <div class="container-fluid">
-      <div class="header-body">
-        <!-- Card stats -->
-        <div class="row">
-          <div class="col-xl-6 col-lg-6">
-            <h1 class="text-white">Atletas</h1>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>
+@include('layouts.headers.cards', ['texto' => 'Atletas'])
 <div class="container-fluid mt--4">
     <div class="header-body text-center  mb-7">
         <div class="row justify-content-center">
@@ -24,6 +13,12 @@
                         </strong>
                     </div>
                 </div>
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                     <div class="form-group">
                         <div class="card">
                             <div class="card-body bg-light">

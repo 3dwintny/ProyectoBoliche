@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Tipo_Contrato;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class Tipo_ContratoController extends Controller
 {
@@ -20,8 +21,13 @@ class Tipo_ContratoController extends Controller
      */
     public function index()
     {
-        $tipos = Tipo_Contrato::where('estado','activo')->get(['id','descripcion']);
-        return view('configuraciones.tipos_contratos.show', compact('tipos'));
+        try{
+            $tipos = Tipo_Contrato::where('estado','activo')->get(['id','descripcion']);
+            return view('configuraciones.tipos_contratos.show', compact('tipos'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +37,13 @@ class Tipo_ContratoController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now()->toDateString();
-        return view('configuraciones.tipos_contratos.create', compact('hoy'));
+        try{
+            $hoy = Carbon::now()->toDateString();
+            return view('configuraciones.tipos_contratos.create', compact('hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +54,22 @@ class Tipo_ContratoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'descripcion'=>['unique:tipo_contrato'],
-        ]);
-        $contratos = new Tipo_Contrato(['descripcion' => $request->descripcion]);
-        $contratos->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>30]);
-        $control->save();
-        return redirect()->action([Tipo_ContratoController::class, 'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'descripcion'=>['unique:tipo_contrato'],
+            ]);
+            $contratos = new Tipo_Contrato(['descripcion' => $request->descripcion]);
+            $contratos->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>30]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Tipo_ContratoController::class, 'index'])->with('success','Tipo de contrato registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al registrar al tipo de contrato');
+        }
     }
 
     /**
@@ -72,8 +91,13 @@ class Tipo_ContratoController extends Controller
      */
     public function edit($id,Request $request)
     {
-        $contratos = $this->t->obtenerTipoContratoById(decrypt($id));
-        return view('configuraciones.tipos_contratos.edit',['contratos' => $contratos]);
+        try{
+            $contratos = $this->t->obtenerTipoContratoById(decrypt($id));
+            return view('configuraciones.tipos_contratos.edit',['contratos' => $contratos]);
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -85,12 +109,20 @@ class Tipo_ContratoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $contratos = Tipo_Contrato::find(decrypt($id));
-        $contratos ->fill(['descripcion' => $request->descripcion]);
-        $contratos->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>30]);
-        $control->save();
-        return redirect()->action([Tipo_ContratoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $contratos = Tipo_Contrato::find(decrypt($id));
+            $contratos ->fill(['descripcion' => $request->descripcion]);
+            $contratos->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>30]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Tipo_ContratoController::class,'index'])->with('success','Tipo de contrato actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al actualizar la información del tipo de contrato');
+        }
     }
 
     /**
@@ -101,24 +133,52 @@ class Tipo_ContratoController extends Controller
      */
     public function destroy($id)
     {
-        Tipo_Contrato::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>30]);
-        $control->save();
-        return redirect()->action([Tipo_ContratoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Tipo_Contrato::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>30]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Tipo_ContratoController::class,'index'])->with('success','Tipo de contrato eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al eliminar al tipo de contrato');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',30)->with('usuario')->paginate(5);
-        return view('configuraciones.tipos_contratos.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',30)->with('usuario')->paginate(5);
+            return view('configuraciones.tipos_contratos.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Tipo_Contrato::where('estado', 'inactivo')->get();
-        return view('configuraciones.tipos_contratos.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Tipo_Contrato::where('estado', 'inactivo')->get();
+            return view('configuraciones.tipos_contratos.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Tipo_Contrato::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([Tipo_ContratoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Tipo_Contrato::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>30]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Tipo_ContratoController::class,'index'])->with('success','Tipo de contrato restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al restaurar al tipo de contrato');
+        }
     }
 }

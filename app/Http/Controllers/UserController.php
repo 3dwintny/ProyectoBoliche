@@ -5,13 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
-use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
 use App\Models\Control;
-use Carbon\Carbon;
 use App\Models\Administracion;
 
 
@@ -24,8 +22,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios =User::paginate();
-        return view('users.indexs', compact('usuarios'));
+        try{
+            $usuarios =User::all();
+            return view('users.indexs', compact('usuarios'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -35,8 +38,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
-        return view('users.crear', compact('roles'));
+        try{
+            $roles = Role::pluck('name','name')->all();
+            return view('users.crear', compact('roles'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -47,28 +55,35 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required | email | unique:users,email,',
-            'password' => 'required | same:confirm-password',
-            'roles' => 'required'
-        ]);
-        $rol = $request->roles;
-        $input = $request-> all();
-        $input ['password'] = Hash::make($input['password']);
-
-        $user = User::create($input);
-        
-        $user->assignRole($request -> input('roles'));
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>31]);
-        $control->save();
-        if($rol[0] == 'Administrador'){
-            $ultimoUsuario = User::max('id');
-            $administrador = new Administracion(['estado'=>'activo','user_id'=>$ultimoUsuario]);
-            $administrador->save();
+        DB::beginTransaction();
+        try{
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required | email | unique:users,email,',
+                'password' => 'required | same:confirm-password',
+                'roles' => 'required'
+            ]);
+            $rol = $request->roles;
+            $input = $request->all();
+            $input ['password'] = Hash::make($input['password']);
+    
+            $user = User::create($input);
+            
+            $user->assignRole($request -> input('roles'));
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>31]);
+            $control->save();
+            if($rol[0] == 'Usuario'){
+                $ultimoUsuario = User::max('id');
+                $administrador = new Administracion(['estado'=>'activo','user_id'=>$ultimoUsuario]);
+                $administrador->save();
+            }
+            DB::commit();
+            return redirect()->route('usuarios.index')->with('success','Usuario registrado exitosamente');
         }
-        return redirect()->route('usuarios.index');
-
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al registrar al usuario');
+        }
     }
 
     /**
@@ -90,10 +105,15 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $roles = Role::pluck('name', 'name')->all();
-        $userRole = $user->roles->pluck('name', 'name')->all();
-        return view('users.editar', compact('user', 'roles', 'userRole'));
+        try{
+            $user = User::find(decrypt($id));
+            $roles = Role::pluck('name', 'name')->all();
+            $userRole = $user->roles->pluck('name', 'name')->all();
+            return view('users.editar', compact('user', 'roles', 'userRole'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -105,28 +125,64 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
-        ]);
-
-        $input = $request->all();
-        if(!empty($input['password'])){
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));
+        DB::beginTransaction();
+        try{
+            $this->validate($request, [
+                'name' => 'required',
+                'email' => 'required|email|unique:users,email,'.decrypt($id),
+                'password' => 'same:confirm-password',
+                'roles' => 'required'
+            ]);
+    
+            $input = $request->all();
+            $rol = implode(",",$input['roles']);
+            $contrasenia = null;
+            if(!empty($input['password'])){
+                $contrasenia = Hash::make($input['password']);
+            }
+            $tipo_usuario_id=null;
+            if($rol=="Administrador"){
+                $tipo_usuario_id=null;
+            }
+            else if($rol=="Atleta"){
+                $tipo_usuario_id=1;
+            }
+            else if($rol=="Entrenador"){
+                $tipo_usuario_id=2;
+            }
+            else{
+                $tipo_usuario_id=3;
+            }
+    
+            $user = User::find(decrypt($id));
+            if($contrasenia==null){
+                $user->fill([
+                    'name'=>$input['name'],
+                    'email'=>$input['email'],
+                    'tipo_usuario_id'=>$tipo_usuario_id,
+                ]);
+            }
+            else{
+                $user->fill([
+                    'name'=>$input['name'],
+                    'email'=>$input['email'],
+                    'password'=>$contrasenia,
+                    'tipo_usuario_id'=>$tipo_usuario_id,
+                ]);
+            }
+            $user->save();
+            DB::table('model_has_roles')->where('model_id',decrypt($id))->delete();
+    
+            $user->assignRole($request->input('roles'));
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>31]);
+            $control->save();
+            DB::commit();
+            return redirect()->route('usuarios.index')->with('success','Usuario actualizado exitosamente');
         }
-
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-        $user->assignRole($request->input('roles'));
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>31]);
-        $control->save();
-        return redirect()->route('usuarios.index');
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al actualizar la información del usuario');
+        }
     }
 
     /**
@@ -137,12 +193,22 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('users')->where('id',$id)->delete();
-        return redirect()->route('usuarios.index');
+        try{
+            DB::table('users')->where('id',decrypt($id))->delete();
+            return redirect()->route('usuarios.index')->with('success','Usuario eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al eliminar al usuario');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',31)->with('usuario')->paginate(5);
-        return view('users.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',31)->with('usuario')->paginate(5);
+            return view('users.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 }

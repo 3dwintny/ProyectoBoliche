@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Nivel_fadn;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class Nivel_fadnController extends Controller
 {
@@ -20,8 +21,13 @@ class Nivel_fadnController extends Controller
      */
     public function index()
     {
-        $niveles = Nivel_fadn::where('estado','activo')->get(['id','tipo']);
-        return view('configuraciones.nivel_fadn.show', compact('niveles'));
+        try{
+            $niveles = Nivel_fadn::where('estado','activo')->get(['id','tipo']);
+            return view('configuraciones.nivel_fadn.show', compact('niveles'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +37,13 @@ class Nivel_fadnController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now()->toDateString();
-        return view('configuraciones.nivel_fadn.create', compact('hoy'));
+        try{
+            $hoy = Carbon::now()->toDateString();
+            return view('configuraciones.nivel_fadn.create', compact('hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +54,22 @@ class Nivel_fadnController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'tipo'=>['unique:nivel_fadn'],
-        ]);
-        $nivel = new Nivel_fadn(['tipo' => $request->tipo]);
-        $nivel->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>23]);
-        $control->save();
-        return redirect()->action([Nivel_fadnController::class, 'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'tipo'=>['unique:nivel_fadn'],
+            ]);
+            $nivel = new Nivel_fadn(['tipo' => $request->tipo]);
+            $nivel->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>23]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Nivel_fadnController::class, 'index'])->with('success','Nivel FADN registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al registrar el nivell FADN');
+        }
     }
 
     /**
@@ -72,8 +91,13 @@ class Nivel_fadnController extends Controller
      */
     public function edit($id)
     {
-        $nivel = $this->n->obtenerNivelFADNById(decrypt($id));
-        return view('configuraciones.nivel_fadn.edit',['nivel' => $nivel]);
+        try{
+            $nivel = $this->n->obtenerNivelFADNById(decrypt($id));
+            return view('configuraciones.nivel_fadn.edit',['nivel' => $nivel]);
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -85,12 +109,20 @@ class Nivel_fadnController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nivel = Nivel_fadn::find(decrypt($id));
-        $nivel ->fill(['tipo' => $request->tipo]);
-        $nivel->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>23]);
-        $control->save();
-        return redirect()->action([Nivel_fadnController::class,'index']);
+        DB::beginTransaction(); 
+        try{
+            $nivel = Nivel_fadn::find(decrypt($id));
+            $nivel ->fill(['tipo' => $request->tipo]);
+            $nivel->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>23]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Nivel_fadnController::class,'index'])->with('success','Nivel FADN actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al actualizar la información del nivel FADN');
+        }
     }
 
     /**
@@ -101,24 +133,52 @@ class Nivel_fadnController extends Controller
      */
     public function destroy($id)
     {
-        Nivel_fadn::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>23]);
-        $control->save();
-        return redirect()->action([Nivel_fadnController::class,'index']);
+        DB::beginTransaction(); 
+        try{
+            Nivel_fadn::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>23]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Nivel_fadnController::class,'index'])->with('success','Nivel FADN eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al eliminar al nivel FADN');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',23)->with('usuario')->paginate(5);
-        return view('configuraciones.nivel_fadn.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',23)->with('usuario')->paginate(5);
+            return view('configuraciones.nivel_fadn.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Nivel_fadn::where('estado', 'inactivo')->get();
-        return view('configuraciones.nivel_fadn.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Nivel_fadn::where('estado', 'inactivo')->get();
+            return view('configuraciones.nivel_fadn.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Nivel_fadn::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([Nivel_fadnController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Nivel_fadn::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>23]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Nivel_fadnController::class,'index'])->with('success','Nivel FADN restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al restaurar al nivel FADN');
+        }
     }
 }

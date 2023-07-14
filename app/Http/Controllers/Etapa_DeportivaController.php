@@ -6,6 +6,7 @@ use App\Models\Etapa_Deportiva;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class Etapa_DeportivaController extends Controller
 {
@@ -20,8 +21,13 @@ class Etapa_DeportivaController extends Controller
      */
     public function index()
     {
-        $etapa = Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
-        return view('configuraciones.etapadep.show',compact('etapa'));
+        try{
+            $etapa = Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
+            return view('configuraciones.etapadep.show',compact('etapa'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +37,13 @@ class Etapa_DeportivaController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now()->toDateString();
-        return view('configuraciones.etapadep.create', compact('hoy'));
+        try{
+            $hoy = Carbon::now()->toDateString();
+            return view('configuraciones.etapadep.create', compact('hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +54,22 @@ class Etapa_DeportivaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre'=>['unique:etapa_deportiva'],
-        ]);
-        $etapa = new Etapa_Deportiva(['nombre' => $request->nombre]);
-        $etapa->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>15]);
-        $control->save();
-        return redirect()->action([Etapa_DeportivaController::class, 'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'nombre'=>['unique:etapa_deportiva'],
+            ]);
+            $etapa = new Etapa_Deportiva(['nombre' => $request->nombre]);
+            $etapa->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>15]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Etapa_DeportivaController::class, 'index'])->with('success','Etapa deportiva registrada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al registrar a la etapa deportiva');
+        }
     }
 
     /**
@@ -72,8 +91,13 @@ class Etapa_DeportivaController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $etapa = Etapa_Deportiva::find(decrypt($id));
-        return view('configuraciones.etapadep.edit',['etapa' => $etapa]);
+        try{
+            $etapa = Etapa_Deportiva::find(decrypt($id));
+            return view('configuraciones.etapadep.edit',['etapa' => $etapa]);
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -85,12 +109,20 @@ class Etapa_DeportivaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $etapa = Etapa_Deportiva::find(decrypt($id));
-        $etapa ->fill(['nombre' => $request->nombre]);
-        $etapa->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>15]);
-        $control->save();
-        return redirect()->action([Etapa_DeportivaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $etapa = Etapa_Deportiva::find(decrypt($id));
+            $etapa ->fill(['nombre' => $request->nombre]);
+            $etapa->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>15]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Etapa_DeportivaController::class,'index'])->with('success','Etapa deportiva actualizada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al actualizar la información de la etapa deportiva');
+        }
     }
 
     /**
@@ -101,24 +133,52 @@ class Etapa_DeportivaController extends Controller
      */
     public function destroy($id)
     {
-        Etapa_Deportiva::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>15]);
-        $control->save();
-        return redirect()->action([Etapa_DeportivaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Etapa_Deportiva::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>15]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Etapa_DeportivaController::class,'index'])->with('success','Etapa deportiva eliminada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al eliminar a la etapa deportiva');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',15)->with('usuario')->paginate(5);
-        return view('configuraciones.etapadep.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',15)->with('usuario')->paginate(5);
+            return view('configuraciones.etapadep.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Etapa_Deportiva::where('estado', 'inactivo')->get();
-        return view('configuraciones.etapadep.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Etapa_Deportiva::where('estado', 'inactivo')->get();
+            return view('configuraciones.etapadep.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Etapa_Deportiva::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([Etapa_DeportivaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Etapa_Deportiva::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>15]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([Etapa_DeportivaController::class,'index'])->with('success','Etapa deportiva restaurada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al restaurar a la etapa deportiva');
+        }
     }
 }

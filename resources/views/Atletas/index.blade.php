@@ -1,83 +1,97 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<div class="header bg-dark pb-2 pt-5 pt-md-10">
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
   <div class="container-fluid">
-    <div class="header-body">
-      <!-- Card stats -->
-      <div class="row">
-        <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Atletas Inscritos</h1>
-        </div>
+      <div class="header-body">
+          <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+                  <h1 class="text-white">Atletas inscritos</h1>
+              </div>
+          </div>
       </div>
-    </div>
   </div>
 </div>
-<div class="container my-1">
-  <form action="{{route('atletas.index')}}" role="form">
-    <div class="row">
-      <div class="col-md-4 mb-2">
-        <div class="form-floating">
-          <select name="filtroCategoria" class="form-control" id="filtroCategoria" onchange="this.form.submit()">
-            <option value="" selected disabled>Sin filtros</option>
-            @foreach($categoria as $item)
-            <option value="{{encrypt($item->id)}}" {{$item->tipo == "N/A" ? 'disabled' : ''}}>{{$item->tipo}}</option>
-            @endforeach>
-          </select>
-          <label for="filtroCategoria">Filtrar por categoría</label>
+
+<div class="container pt-2">
+  <div class="row">
+    <form action="{{route('atletas.index')}}" role="form">
+      <div class="row justify-content-center">
+        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-2">
+          <div class="form-floating">
+            <select name="filtroCategoria" class="form-control" id="filtroCategoria" onchange="this.form.submit()">
+              <option value="" selected disabled>Sin filtros</option>
+              @foreach($categoria as $item)
+              <option value="{{encrypt($item->id)}}" {{$item->tipo == "N/A" ? 'disabled' : ''}}>{{$item->tipo}}</option>
+              @endforeach>
+            </select>
+            <label for="filtroCategoria">Filtrar por categoría</label>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-2">
+          <button type="button" class="btn btn-light" onclick="window.location='{{route('atletas.index')}}'">Eliminar filtro</button>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-7 col-sm-7 mb-2">
+          <div class="form-floating">
+            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Búsqueda por nombre" id="buscarNombre" type="text" name="buscarNombre" value="" required>
+            <label for="buscarNombre">Nombre</label>
+          </div>
+        </div>
+        <div class="col-xl-2 col-lg-2 col-md-1 col-sm-1">
+          <button type="submit" class="btn btn-primary">Buscar</button>
         </div>
       </div>
-      <div class="col-md-2 mb-2">
-        <button type="button" class="btn btn-light" onclick="window.location='{{route('atletas.index')}}'">Eliminar filtro</button>
-      </div>
-      <div class="col-md-4 mb-2">
-        <div class="form-floating">
-          <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="Búsqueda por nombre" id="buscarNombre" type="text" name="buscarNombre" value="" required>
-          <label for="buscarNombre">Búsqueda por nombre</label>
-        </div>
-      </div>
-      <div class="col-md-2 mb-2">
-        <button type="submit" class="btn btn-primary">Buscar</button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 <div class="container">
-  <div class="pb-5 pt-5 pt-md-2">
-    @include('components.flash_alerts')
-    <div class="">
-      <table class="table table-responsive table-hover" style="border-radius: 5px;">
-        <thead class="table-dark">
-          <tr>
-            <th scope="col">No</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Categoria</th>
-            <th scope="col">Etapa Deportiva</th>
-            <th scope="col">Adaptado</th>
-            <th scope="col">Deporte Adaptado</th>
-            <th scope="col">Otro Programa de Atención</th>
-            <th scope="col">Centro</th>
-            <th scope="col">Entrenador</th>
-            <th scope="col">Fecha Ingreso</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody class="table-hover">
-          @php
-          $contador = 1;
-          @endphp
-          @if (count($atletas)<=0) <tr>
-            <td colspan="11">SIN RESULTADOS</td>
-            </tr>
-            @else
-            @foreach ($atletas as $atleta)
+  @include('components.flash_alerts')
+  @if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+
+  @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
+  <table class="table table-responsive table-hover" style="border-radius: 5px;">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">No</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Categoria</th>
+        <th scope="col">Etapa Deportiva</th>
+        <th scope="col">Adaptado</th>
+        <th scope="col">Deporte Adaptado</th>
+        <th scope="col">Otro Programa de Atención</th>
+        <th scope="col">Centro</th>
+        <th scope="col">Entrenador</th>
+        <th scope="col">Fecha Ingreso</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody class="table-hover">
+      @php
+        $contador = 1;
+      @endphp
+      @if (count($atletas)<=0) <tr>
+        <td colspan="11">SIN RESULTADOS</td>
+        </tr>
+        @else
+          @foreach ($atletas as $atleta)
             <tr>
               <td>{{$contador}}</td>
               <td>
                 <div class="d-flex px-2 py-1 bg-white">
                   <div>
-                    <img src="{{ asset('storage/uploads/'.$atleta->alumno->foto) }}" class="avatar avatar-sm me-3">
+                    <img src="{{ asset('uploads/alumnos/'.$atleta->alumno->foto) }}" class="avatar avatar-sm me-3">
                   </div>
                   <div class="d-flex flex-column justify-content-center">
                     <h6 class="mb-0 text-xs"><strong>{{$atleta->alumno->nombre1 }} {{$atleta->alumno->nombre2}} {{$atleta->alumno->nombre3}} {{$atleta->alumno->apellido1}} {{$atleta->alumno->apellido2}}</strong></h6>
@@ -112,15 +126,13 @@
               </td>
             </tr>
             @php
-            $contador++;
+              $contador++;
             @endphp
-            @endforeach
-            @endif
-        </tbody>
-      </table>
-      {{$atletas->appends(['buscarNombre'=>$buscarAtleta,'filtroCategoria'=>$filtrarCategoria])->links('vendor.pagination.custom')}}
-    </div>
-  </div>
+          @endforeach
+        @endif
+    </tbody>
+  </table>
+  {{$atletas->appends(['buscarNombre'=>$buscarAtleta,'filtroCategoria'=>$filtrarCategoria])->links('vendor.pagination.custom')}}
 </div>
 
 @include('layouts.footers.auth')
@@ -136,9 +148,6 @@
     var selected = combo.options[combo.selectedIndex].text;
     alert(selected);
   }
- 
-
- 
 </script>
 
 @endsection

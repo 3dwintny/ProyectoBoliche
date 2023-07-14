@@ -5,6 +5,7 @@ use App\Models\Parentesco;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class ParentescoController extends Controller
 {
@@ -19,9 +20,13 @@ class ParentescoController extends Controller
      */
     public function index()
     {
-        $parentescos = Parentesco::where('estado','activo')->get(['id','tipo']);
-        return view('configuraciones.parentesco.show',compact("parentescos"));
-
+        try{
+            $parentescos = Parentesco::where('estado','activo')->get(['id','tipo']);
+            return view('configuraciones.parentesco.show',compact("parentescos"));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +36,13 @@ class ParentescoController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now()->toDateString();
-        return view('configuraciones.parentesco.create',compact('hoy'));
+        try{
+            $hoy = Carbon::now()->toDateString();
+            return view('configuraciones.parentesco.create',compact('hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,15 +53,22 @@ class ParentescoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'tipo'=>['unique:parentezco'],
-        ]);
-        $parentescos = new Parentesco(['tipo' => $request->tipo]);
-        $parentescos->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>25]);
-        $control->save();
-        return redirect()->action([ParentescoController::class,'index']);
-
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'tipo'=>['unique:parentezco'],
+            ]);
+            $parentescos = new Parentesco(['tipo' => $request->tipo]);
+            $parentescos->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>25]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([ParentescoController::class,'index'])->with('success','Parentesco registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al registrar al parentesco');
+        }
     }
 
     /**
@@ -73,8 +90,13 @@ class ParentescoController extends Controller
      */
     public function edit($id)
     {
-        $parentesco = $this->p->obtenerParentescoById(decrypt($id));
-        return view('configuraciones.parentesco.edit',['parentesco' => $parentesco]);
+        try{
+            $parentesco = $this->p->obtenerParentescoById(decrypt($id));
+            return view('configuraciones.parentesco.edit',['parentesco' => $parentesco]);
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -86,12 +108,20 @@ class ParentescoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $parentesco = Parentesco::find(decrypt($id));
-        $parentesco ->fill(['tipo' => $request->tipo]);
-        $parentesco->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>25]);
-        $control->save();
-        return redirect()->action([ParentescoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $parentesco = Parentesco::find(decrypt($id));
+            $parentesco ->fill(['tipo' => $request->tipo]);
+            $parentesco->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>25]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([ParentescoController::class,'index'])->with('success','Parentesco actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al actualizar la información del parentesco');
+        }
     }
 
     /**
@@ -102,24 +132,52 @@ class ParentescoController extends Controller
      */
     public function destroy($id)
     {
-        Parentesco::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>25]);
-        $control->save();
-        return redirect()->action([ParentescoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Parentesco::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>25]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([ParentescoController::class,'index'])->with('success','Parentesco eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al eliminar al parentesco');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',25)->with('usuario')->paginate(5);
-        return view('configuraciones.parentesco.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',25)->with('usuario')->paginate(5);
+            return view('configuraciones.parentesco.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Parentesco::where('estado', 'inactivo')->get();
-        return view('configuraciones.parentesco.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Parentesco::where('estado', 'inactivo')->get();
+            return view('configuraciones.parentesco.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Parentesco::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([ParentescoController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Parentesco::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>25]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([ParentescoController::class,'index'])->with('success','Parentesco restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al restaurar al parentesco');
+        }
     }
 }

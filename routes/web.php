@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PRTController;
 use App\Http\Controllers\RolController;
@@ -12,7 +11,6 @@ use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\AtletaController;
 use App\Http\Controllers\CentroController;
 use App\Http\Controllers\EDG272Controller;
-use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\DeporteController;
 use App\Http\Controllers\HorarioController;
 use App\Http\Controllers\TerapiaController;
@@ -60,13 +58,15 @@ Route::get('wel', function () {return view('welcome');})->name('wel'); */
 Route::resource('/', FrontendController::class);
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
-Route::get('alumno-PDF',[AlumnoController::class,'generarPDF'])->name('alumnosPDF');
+Route::get('alumnos/{alumno}', [AlumnoController::class, 'show'])->name('alumnos.show');
 
-Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::get('ficha-PDF/{cui}',[AlumnoController::class,'generarPDF'])->name('ficha-PDF');
+//Route::get('Inscripcion', fuction () {return view('livewire/encargados-manager');});
+//Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth', 'verified'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 //Auth::routes();
-	Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+	Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth', 'verified'])->name('home');
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'App\Http\Controllers\ProfileController@update']);
@@ -84,17 +84,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Ruta administracion
     Route::resource('administradores',AdministracionController::class);
-    //Ruta alergias
-    Route::resource('alergias',AlergiaController::class);
 	//Rutas Asistencia
     Route::get('asistencia-atleta',[AsistenciaController::class, 'asistenciaIndividual'])->name('asistenciaIndividual');
     Route::get('asistencias/buscar',[AsistenciaController::class,'buscar'])->name('buscar');
-    Route::resource('asistencias',AsistenciaController::class);
+    Route::resource('asistencia',AsistenciaController::class);
     Route::post('asis',[AsistenciaController::class,'guardar'])->name('asis');
-	Route::resource('alergia',AlergiaController::class);
+    Route::post('actualizarAsistencia',[AsistenciaController::class,'actualizarAsistencia'])->name('actualizarAsistencia');
+    Route::get('exportar',[AsistenciaController::class,'exportar'])->name('exportar');
+    Route::get('editar-asistencia',[AsistenciaController::class,'editarAsistencia'])->name('editarAsistencia');
+    Route::get('actualizar-asistencia',[AsistenciaController::class,'modificarAsistencia'])->name('modificarAsistencia');
     //Ruta Reporte EDG31
     Route::resource('edg-31',EDG31Controller::class);
     //Rutas Atletas
+    Route::get('editar-perfil-atleta',[AtletaController::class,'modificar'])->name('modificarAtleta');
+    Route::put('actualizar-informacion-atleta',[AtletaController::class,'actualizar'])->name('actualizarAtleta');
+    Route::get('reinscripcion-PDF',[AtletaController::class,'generarPDF'])->name('reinscripcionPDF');
     Route::resource('atletas',AtletaController::class);
 
     //Ruta Categorias
@@ -166,6 +170,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('editar-perfil-psicologia',[PsicologiaController::class,'modificar'])->name('modificarPsicologia');
     Route::put('actualizar-informacion-psicologia',[PsicologiaController::class,'actualizar'])->name('actualizarPsicologia');
     Route::resource('psicologia',PsicologiaController::class);
+    Route::post('actualizarCodigoCorreo',[PsicologiaController::class,'actualizarCodigoCorreo'])->name('actualizarCodigoCorreo');
+    Route::get('editar-codigo-correo',[PsicologiaController::class,'editarCodigoCorreo'])->name('editarCodigoCorreo');
 
     //Rutas Terapia
     Route::get('tareas-pendientes',[TerapiaController::class,'tareaPendiente'])->name('tareaPendiente');
@@ -209,7 +215,6 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('us', function () {return view('configuraciones.us');})->name('us');
     Route::get('otros', function () {return view('configuraciones.otros');})->name('otros');
     Route::get('seguridad', function () {return view('configuraciones.seguridad');})->name('seguridad');
-    Route::get('seguridad/alergias',[AlergiaController::class,'acciones'])->name('accionesAlergia');
     Route::get('seguridad/atletas',[AtletaController::class,'acciones'])->name('accionesAtletas');
     Route::get('seguridad/asistencia',[AsistenciaController::class,'acciones'])->name('accionesAsistencia');
     Route::get('seguridad/alumnos',[AlumnoController::class,'acciones'])->name('accionesAlumno');
@@ -241,8 +246,6 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('seguridad/usuarios',[UserController::class,'acciones'])->name('accionesUsuarios');
     Route::get('restaurar', function () {return view('configuraciones.restaurar');})->name('restaurar');
 
-    Route::get('restaurar/alergias',[AlergiaController::class,'eliminados'])->name('eliminadosAlergia');
-    Route::post('restaurandoAlergias',[AlergiaController::class,'restaurar'])->name('restaurandoAlergia');
 
     Route::get('restaurar/atletas',[AtletaController::class,'eliminados'])->name('eliminadosAtletas');
     Route::post('restaurandoAtletas',[AtletaController::class,'restaurar'])->name('restaurandoAtleta');
@@ -312,13 +315,13 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::post('restaurandoPsicologos',[PsicologiaController::class,'restaurar'])->name('restaurandoPsicologia');
 
     Route::get('restaurar/sesiones',[TerapiaController::class,'eliminados'])->name('eliminadosTerapia');
-    
+
     Route::get('restaurar/tipos-de-contratos',[Tipo_ContratoController::class,'eliminados'])->name('eliminadosContrato');
     Route::post('restaurandoContratos',[Tipo_ContratoController::class,'restaurar'])->name('restaurandoContrato');
 
     Route::get('restaurar/usuarios',[UserController::class,'eliminados'])->name('eliminadosUsuarios');
     Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
-    
+
     Route::resource('municipio',MunicipioController::class);
     Route::get('edad', [AlumnoController::class, 'calcularEdad'])->name('edad');
     Route::get('paciente', [TerapiaController::class, 'getPaciente'])->name('paciente');
@@ -328,7 +331,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::post('asistenciaCategoria',[AsistenciaController::class,'filtroCategoria'])->name('asistenciaCategoria');
     });
 
-    Route::get('municipios', [AlumnoController::class, 'getMunicipios'])->name('municipios');
+    Route::get('municipios', [AtletaController::class, 'getMunicipios'])->name('municipios');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

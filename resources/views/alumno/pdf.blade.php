@@ -268,8 +268,8 @@
             @endforeach
         </div>
         <div id="fotoAlumno">
-            @foreach($alumno as $item)
-                <img src="storage/uploads/{{$item->foto}}" width="98%" height="98%">
+            @foreach($alumnos as $item)
+                <img src="uploads/alumnos/{{$item->foto}}" width="98%" height="98%">
             @endforeach
         </div>
     </div>
@@ -294,9 +294,9 @@
             <div class="contenedorTitulos tamanio70">TELÉFONO DE CASA:</div>
         </div>
         <div class="contenedorDerecho">
-            @foreach($alumno as $item)
+            @foreach($alumnos as $item)
             <div class="nombres tamanio70">{{$item->nombre1}} {{$item->nombre2}} {{$item->nombre3}} {{$item->apellido1}} {{$item->apellido2}}</div>
-            
+
             <div class="contenedorTitulos tamanio70"></div>
 
             <div class="edad tamanio70 textoCentrado">{{$item->edad}}</div>
@@ -314,7 +314,7 @@
             <div class="noCui tamanio70 textoCentrado">SUB-11</div>
             <div class="espacioDerecho1 tamanio70"></div>
 
-            
+
             <div class="contenedorTitulos tamanio70"></div>
             <div class="contenedorTitulos tamanio70"></div>
 
@@ -325,7 +325,7 @@
             <div class="espacioDerecho1 tamanio70"></div>
 
             <div class="contenedorTitulos tamanio70"></div>
-            
+
             <div class="day tamanio70 textoCentrado">DÍA</div>
             <div class="month tamanio70 textoCentrado">MES</div>
             <div class="year tamanio70 textoCentrado">AÑO</div>
@@ -340,7 +340,7 @@
             <div class="cui tamanio70">ALTURA (en cm.):</div>
             <div class="noCui tamanio70 textoCentrado">{{$item->altura}}</div>
             <div class="espacioDerecho1 tamanio70"></div>
-            
+
             <div class="contenedorTitulos tamanio70"></div>
             <div class="contenedorTitulos tamanio70"></div>
 
@@ -358,74 +358,210 @@
 
     <div id="espacio5"></div>
 
-    <div id="datosEncargados">
-        <div id="tituloAlumno" class="textoCentrado tamanio80"><strong>DATOS DE LOS PADRES/ENCARGADOS</strong></div>
-        <div id="espacio4"></div>
-        <div class="contenedorIzquierdo margenIzquierdo">
-            <div class="contenedorTitulos tamanio65">NOMBRE DEL PADRE/ENCARGADO:</div>
-            <div class="contenedorTitulos tamanio65"></div>
-            <div class="contenedorTitulos tamanio65">TELÉFONO DE CASA:</div>
-            <div class="contenedorTitulos tamanio65"></div>
-            <div class="contenedorTitulos tamanio65">DIRECCIÓN DE DOMICILIO:</div>
-            <div class="contenedorTitulos tamanio65"></div>
-            <div class="contenedorTitulos tamanio65">NOMBRE DE LA MADRE/ENCARGADA:</div>
-            <div class="contenedorTitulos tamanio65"></div>
-            <div class="contenedorTitulos tamanio65">TELÉFONO DE CASA:</div>
-            <div class="contenedorTitulos tamanio65"></div>
-            <div class="contenedorTitulos tamanio65">DIRECCIÓN DOMICILIO:</div>
-            <div class="contenedorTitulos tamanio65"></div>
-            <div class="contenedorTitulos tamanio65">EN CASO DE EMERGENCIA, LLAMAR A:</div>
-            <div class="contenedorTitulos tamanio65"></div>
-            <div class="contenedorTitulos tamanio65">EL ATLETA ES ALÉRGICO A:</div>
+    @if($cant_rel === 2)
+        <div id="datosEncargados">
+            <div id="tituloAlumno" class="textoCentrado tamanio80"><strong>DATOS DE LOS PADRES/ENCARGADOS</strong></div>
+            <div id="espacio4"></div>
+            <div class="contenedorIzquierdo margenIzquierdo">
+                <div class="contenedorTitulos tamanio65">NOMBRE DEL PADRE/ENCARGADO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">TELÉFONO DE CASA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">DIRECCIÓN DE DOMICILIO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">NOMBRE DE LA MADRE/ENCARGADA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">TELÉFONO DE CASA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">DIRECCIÓN DOMICILIO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">EN CASO DE EMERGENCIA, LLAMAR A:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">EL ATLETA ES ALÉRGICO A:</div>
+            </div>
+            <div class="contenedorDerecho">
+                    <div class="nombres tamanio70">{{ $encargados[0]['nombre1p'] }} {{$encargados[0]['nombre2p']}} {{$encargados[0]['nombre3p']}} {{$encargados[0]['apellido1p']}} {{$encargados[0]['apellido2p']}} {{$encargados[0]['apellido_casada']}}</div>
+
+                <div class="contenedorTitulos tamanio70"></div>
+
+                <div class="edad tamanio70 textoCentrado">{{$encargados[0]['telefono_casap']}}</div>
+                <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
+                <div class="cui tamanio70 textoCentrado">{{$encargados[0]['celularp']}}</div>
+                <div class="correo tamanio70">E-MAIL:</div>
+                <div class="espacioDerecho2 tamanio70">{{$encargados[0]['correop']}}</div>
+
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+
+                <div class="nombres tamanio70">{{$encargados[0]['direccionp']}}</div>
+
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="nombres tamanio70">{{ $encargados[1]['nombre1p'] }} {{$encargados[1]['nombre2p']}} {{$encargados[1]['nombre3p']}} {{$encargados[1]['apellido1p']}} {{$encargados[1]['apellido2p']}} {{$encargados[1]['apellido_casada']}}</div>
+
+                <div class="contenedorTitulos tamanio70"></div>
+
+                <div class="edad tamanio70 textoCentrado">7785-4521</div>
+                <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
+                <div class="cui tamanio70 textoCentrado">{{$encargados[1]['celularp']}}</div>
+                <div class="correo tamanio70">E-MAIL:</div>
+                <div class="espacioDerecho2 tamanio70">{{$encargados[1]['correop']}}</div>
+
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+
+                <div class="nombres tamanio70">{{$encargados[1]['direccionp']}}</div>
+
+                <div class="contenedorTitulos tamanio70"></div>
+                @foreach($alumnos as $item)
+                <div class="edad tamanio70"></div>
+                <div class="tamanio70 emergencia">{{$item->nombre_emergencia}}</div>
+                <div class="tamanio70 telEmergencia" style="text-align: right;">TELÉFONO:</div>
+                <div class="tamanio70 textoCentrado telefonoEmergencia">{{$item->contacto_emergencia}}</div>
+
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+
+
+                <div class="edad tamanio70"></div>
+                <div class="tamanio70 emergencia">{{$item->alergias}}</div>
+                <div class="tamanio70 telEmergencia"></div>
+                <div class="tamanio70 textoCentrado telefonoEmergencia"></div>
+                @endforeach
+            </div>
         </div>
-        <div class="contenedorDerecho">
-                <div class="nombres tamanio70">NOMBRE DEL PADRE</div>
-            
-            <div class="contenedorTitulos tamanio70"></div>
+    @elseif($cant_rel === 1)
+        <div id="datosEncargados">
+            <div id="tituloAlumno" class="textoCentrado tamanio80"><strong>DATOS DE LOS PADRES/ENCARGADOS</strong></div>
+            <div id="espacio4"></div>
+            <div class="contenedorIzquierdo margenIzquierdo">
+                <div class="contenedorTitulos tamanio65">NOMBRE DEL PADRE/ENCARGADO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">TELÉFONO DE CASA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">DIRECCIÓN DE DOMICILIO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">NOMBRE DE LA MADRE/ENCARGADA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">TELÉFONO DE CASA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">DIRECCIÓN DOMICILIO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">EN CASO DE EMERGENCIA, LLAMAR A:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">EL ATLETA ES ALÉRGICO A:</div>
+            </div>
+            <div class="contenedorDerecho">
+                    <div class="nombres tamanio70">{{$encargados[0]['nombre1p'] }} {{$encargados[0]['nombre2p']}} {{$encargados[0]['nombre3p']}} {{$encargados[0]['apellido1p']}} {{$encargados[0]['apellido2p']}} {{$encargados[0]['apellido_casada']}}</div>
+                <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="edad tamanio70 textoCentrado">7767-5255</div>
-            <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
-            <div class="cui tamanio70 textoCentrado">5545-8565</div>
-            <div class="correo tamanio70">E-MAIL:</div>
-            <div class="espacioDerecho2 tamanio70">correo.encargado1@dominio.com</div>
+                <div class="edad tamanio70 textoCentrado">{{$encargados[0]['telefono_casap']}}</div>
+                <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
+                <div class="cui tamanio70 textoCentrado">{{$encargados[0]['celularp']}}</div>
+                <div class="correo tamanio70">E-MAIL:</div>
+                <div class="espacioDerecho2 tamanio70">{{$encargados[0]['correop']}}</div>
 
-            <div class="contenedorTitulos tamanio70"></div>
-            <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="nombres tamanio70">DIRECCIÓN DEL PRIMER ENCARGADO</div>
+                <div class="nombres tamanio70">{{$encargados[0]['direccionp']}}</div>
 
-            <div class="contenedorTitulos tamanio70"></div>
-            <div class="nombres tamanio70">NOMBRE DE LA MADRE</div>
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="nombres tamanio70"></div>
 
-            <div class="contenedorTitulos tamanio70"></div>
-            
-            <div class="edad tamanio70 textoCentrado">7785-4521</div>
-            <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
-            <div class="cui tamanio70 textoCentrado">4648-1545</div>
-            <div class="correo tamanio70">E-MAIL:</div>
-            <div class="espacioDerecho2 tamanio70">correo.encargado2@dominio.com</div>
+                <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="contenedorTitulos tamanio70"></div>
-            <div class="contenedorTitulos tamanio70"></div>
+                <div class="edad tamanio70 textoCentrado"></div>
+                <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
+                <div class="cui tamanio70 textoCentrado"></div>
+                <div class="correo tamanio70">E-MAIL:</div>
+                <div class="espacioDerecho2 tamanio70"></div>
 
-            <div class="nombres tamanio70">DIRECCIÓN DEL ENCARGADO2</div>
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="contenedorTitulos tamanio70"></div>
+                <div class="nombres tamanio70"></div>
 
-            <div class="edad tamanio70"></div>
-            <div class="tamanio70 emergencia">Oscar Cáceres</div>
-            <div class="tamanio70 telEmergencia" style="text-align: right;">TELÉFONO:</div>
-            <div class="tamanio70 textoCentrado telefonoEmergencia">4217-6144</div>
+                <div class="contenedorTitulos tamanio70"></div>
+                @foreach($alumnos as $item)
+                <div class="edad tamanio70"></div>
+                <div class="tamanio70 emergencia">{{$item->nombre_emergencia}}</div>
+                <div class="tamanio70 telEmergencia" style="text-align: right;">TELÉFONO:</div>
+                <div class="tamanio70 textoCentrado telefonoEmergencia">{{$item->contacto_emergencia}}</div>
 
-            <div class="contenedorTitulos tamanio70"></div>
-            <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
 
-            <div class="edad tamanio70"></div>
-            <div class="tamanio70 emergencia">Penicilina</div>
-            <div class="tamanio70 telEmergencia"></div>
-            <div class="tamanio70 textoCentrado telefonoEmergencia">Lactantes</div>
+                <div class="edad tamanio70"></div>
+                <div class="tamanio70 emergencia">{{$item->alergias}}</div>
+                <div class="tamanio70 telEmergencia"></div>
+                <div class="tamanio70 textoCentrado telefonoEmergencia"></div>
+                @endforeach
+            </div>
         </div>
-    </div>
+    @else
+        <div id="datosEncargados">
+            <div id="tituloAlumno" class="textoCentrado tamanio80"><strong>DATOS DE LOS PADRES/ENCARGADOS</strong></div>
+            <div id="espacio4"></div>
+            <div class="contenedorIzquierdo margenIzquierdo">
+                <div class="contenedorTitulos tamanio65">NOMBRE DEL PADRE/ENCARGADO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">TELÉFONO DE CASA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">DIRECCIÓN DE DOMICILIO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">NOMBRE DE LA MADRE/ENCARGADA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">TELÉFONO DE CASA:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">DIRECCIÓN DOMICILIO:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">EN CASO DE EMERGENCIA, LLAMAR A:</div>
+                <div class="contenedorTitulos tamanio65"></div>
+                <div class="contenedorTitulos tamanio65">EL ATLETA ES ALÉRGICO A:</div>
+            </div>
+            <div class="contenedorDerecho">
+                    {{-- <div class="nombres tamanio70">{{$encargados[1]->nombre1p}} {{$encargados[1]->nombre2p}} {{$encargados[1]->nombre3p}} {{$encargados[1]->apellido1p}} {{$encargados[1]->apellido2p}} {{$encargados[1]->apellido_casada}}</div> --}}
+                <div class="contenedorTitulos tamanio70"></div>
+                {{-- <div class="edad tamanio70 textoCentrado">{{$encargados[1]->telefono_casap}}</div> --}}
+                <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
+                {{-- <div class="cui tamanio70 textoCentrado">{{$encargados[1]->celularp}}</div> --}}
+                <div class="correo tamanio70">E-MAIL:</div>
+                {{-- <div class="espacioDerecho2 tamanio70">{{$encargados[1]->correop}}</div> --}}
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+                {{-- <div class="nombres tamanio70">{{$encargados[1]->direccionp}}</div> --}}
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="nombres tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+                {{--  <div class="edad tamanio70 textoCentrado">7785-4521</div> --}}
+                <div class="mes tamanio70" style="text-align: right;">CELULAR:</div>
+                {{-- <div class="cui tamanio70 textoCentrado">4648-1545</div> --}}
+                <div class="correo tamanio70">E-MAIL:</div>
+                {{-- <div class="espacioDerecho2 tamanio70">correo.encargado2@dominio.com</div> --}}
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="nombres tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+                @foreach($alumnos as $item)
+                <div class="edad tamanio70"></div>
+                <div class="tamanio70 emergencia">{{$item->nombre_emergencia}}</div>
+                <div class="tamanio70 telEmergencia" style="text-align: right;">TELÉFONO:</div>
+                <div class="tamanio70 textoCentrado telefonoEmergencia">{{$item->contacto_emergencia}}</div>
+
+                <div class="contenedorTitulos tamanio70"></div>
+                <div class="contenedorTitulos tamanio70"></div>
+
+                <div class="edad tamanio70"></div>
+                <div class="tamanio70 emergencia">{{$item->alergias}}</div>
+                <div class="tamanio70 telEmergencia"></div>
+                <div class="tamanio70 textoCentrado telefonoEmergencia"></div>
+                @endforeach
+
+            </div>
+        </div>
+    @endif
     <div id="declaracion">
         <div id="espacio6"></div>
         <div id="declaratoria" class="textoCentrado">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Categoria;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class CategoriaController extends Controller
 {
@@ -21,8 +22,13 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
-        return view('configuraciones.categoria.show', compact("categoria"));
+        try{
+            $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
+            return view('configuraciones.categoria.show', compact("categoria"));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -32,8 +38,13 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now();
-        return view('configuraciones.categoria.create',compact('hoy'));
+        try{
+            $hoy = Carbon::now();
+            return view('configuraciones.categoria.create',compact('hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -44,14 +55,22 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'tipo' => ['unique:categoria']
-        ]);
-        $categoria = new Categoria(['tipo'=>$request->tipo,'descripcion'=>$request->descripcion]);
-        $categoria->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>5]);
-        $control->save();
-        return redirect()->action([CategoriaController::class, 'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'tipo' => ['unique:categoria']
+            ]);
+            $categoria = new Categoria(['tipo'=>$request->tipo,'descripcion'=>$request->descripcion]);
+            $categoria->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>5]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([CategoriaController::class, 'index'])->with('success','Categoría registrada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al registrar la categoría');
+        }
     }
 
     /**
@@ -73,8 +92,13 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        $categoria = $this->c->obtenerCategoriaById(decrypt($id));
-        return view('configuraciones.categoria.edit',['categoria' => $categoria]);
+        try{
+            $categoria = $this->c->obtenerCategoriaById(decrypt($id));
+            return view('configuraciones.categoria.edit',['categoria' => $categoria]);
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -86,12 +110,20 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categoria = Categoria::find(decrypt($id));
-        $categoria->fill(['tipo'=>$request->tipo,'descripcion'=>$request->descripcion]);
-        $categoria->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>5]);
-        $control->save();
-        return redirect()->action([CategoriaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $categoria = Categoria::find(decrypt($id));
+            $categoria->fill(['tipo'=>$request->tipo,'descripcion'=>$request->descripcion]);
+            $categoria->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>5]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([CategoriaController::class,'index'])->with('success','Categoría actualizada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return back()->with('error', 'Se produjo un error al actualizar la categoría');
+        }
     }
 
     /**
@@ -102,24 +134,52 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        Categoria::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>5]);
-        $control->save();
-        return redirect()->action([CategoriaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Categoria::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>5]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([CategoriaController::class,'index'])->with('success','Categoría eliminada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al eliminar la categoría');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',5)->with('usuario')->paginate(5);
-        return view('configuraciones.categoria.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',5)->with('usuario')->paginate(5);
+            return view('configuraciones.categoria.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Categoria::where('estado', 'inactivo')->get();
-        return view('configuraciones.categoria.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Categoria::where('estado', 'inactivo')->get();
+            return view('configuraciones.categoria.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Categoria::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([CategoriaController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Categoria::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>5]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([CategoriaController::class,'index'])->with('success','Categoría restaurada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al restaurar la categoría');
+        }
     }
 }

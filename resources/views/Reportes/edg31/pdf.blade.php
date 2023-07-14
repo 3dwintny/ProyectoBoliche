@@ -655,8 +655,18 @@
             </tr>
             <tr>
                 <td class="bordesExternosGruesos bordeInferiorGrueso textoCentrado tamanioFuente65">Master/Veteranos</td>
+                @php
+                    $controlVeteranos = 1;
+                @endphp
                 @foreach($veteranos as $item)
-                <td class="bDerecho textoCentrado tamanioFuente80">{{$item}}</td>
+                @if($controlVeteranos<7)
+                    <td class="bDerecho textoCentrado tamanioFuente80" style="background:black;">{{$item}}</td>
+                @else
+                    <td class="bDerecho textoCentrado tamanioFuente80">{{$item}}</td>
+                @endif
+                @php
+                    $controlVeteranos++;
+                @endphp
                 @endforeach
                 <td class="textoCentrado todosBordesGruesos tamanioFuente80 fondoGrisClaro"><strong>{{$fVeteranos}}</strong></td>
                 <td class="textoCentrado todosBordesGruesos tamanioFuente80 fondoGrisClaro"><strong>{{$mVeteranos}}</strong></td>

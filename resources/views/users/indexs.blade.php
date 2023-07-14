@@ -2,45 +2,59 @@
 
 @section('content')
 
-<div class="header bg-dark pb-4 pt-5 pt-md-6">
-    <div class="container-fluid">
-        <div class="header-body">
-            <!-- Card stats -->
-            <div class="row">
-                <div class="col-xl-6 col-lg-6">
-                    <h1 class="text-white">Usuarios</h1>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
+  <div class="container-fluid">
+      <div class="header-body">
+          <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+                  <h1 class="text-white">Usuarios</h1>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>
+@include('configuraciones.varnav')
+@if(session('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+@endif
 
+@if(session('error'))
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+@endif
 <div class="card container">
   <div class="table-responsive container">
     <hr>
-  <a class="btn btn-primary, text-light" style="background-color:#13213c;" href="{{ route('usuarios.create') }}">Nuevo</a>
+  <a class="btn btn-primary, text-light" style="background-color:#13213c;" href="{{ route('usuarios.create') }}">Nuevo administrador</a>
   <hr>
     <table class="table align-items-center mb-0" >
       <thead class="container">
         <tr>
-        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Usuario</th>
-          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Rol</th>
-          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Fecha</th>
-          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
+        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">No</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Usuario</th>
+          <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-12 ps-2">Rol</th>
+          <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-12">Acciones</th>
           <th class="text-secondary opacity-7"></th>
         </tr>
       </thead>
       <tbody>
+      @php
+        $contador=1;
+      @endphp
       @foreach ($usuarios as $usuario)
         <tr>
         <td class="align-middle text-left text-sm">
-            <span class="">{{ $usuario->id }}</span>
+            <span class="">{{ $contador }}</span>
           </td>
           <td>
             <div class="d-flex px-2 py-1">
               <div>
-                <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/team-2.jpg" class="avatar avatar-sm me-3">
+                <img src="{{ asset('uploads') }}/alumnos/{{ $usuario->avatar}}" class="avatar avatar-sm me-3">
               </div>
               <div class="d-flex flex-column justify-content-center">
                 <h6 class="mb-0 text-xs">{{ $usuario->name }}</h6>
@@ -56,19 +70,15 @@
             @endif
             <p class="text-xs text-secondary mb-0">Federeacion de boliche</p>
           </td>
-          <td class="align-middle text-center">
-            <span class="text-secondary text-xs font-weight-normal">23/04/18</span>
-          </td>
           <td class="align-middle">
-            <a href="{{ route('usuarios.edit',$usuario->id) }}" style="background-color:#fba313;" class="btn  font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Editar usuario">
+            <a href="{{ route('usuarios.edit',encrypt($usuario->id)) }}" style="background-color:#fba313;" class="btn  font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Editar usuario">
               Editar
             </a>
-            {!! Form::open(['method'=> 'DELETE', 'route' => ['usuarios.destroy', $usuario->id], 'style'=>'display:inline'])!!}
-            {!! Form::submit('Eliminar', ['class' => 'btn btn-danger'])!!}
-                                            {!! Form::close() !!}
           </td>
         </tr>
-
+        @php
+          $contador++;
+        @endphp
         @endforeach
       </tbody>
     </table>

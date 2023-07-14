@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Nacionalidad;
 use Carbon\Carbon;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class NacionalidadController extends Controller
 {
@@ -20,8 +21,13 @@ class NacionalidadController extends Controller
      */
     public function index()
     {
-        $nacionalidad = Nacionalidad::where('estado','activo')->get(['id','descripcion']);
-        return view('configuraciones.nacionalidad.show',compact('nacionalidad'));
+        try{
+            $nacionalidad = Nacionalidad::where('estado','activo')->get(['id','descripcion']);
+            return view('configuraciones.nacionalidad.show',compact('nacionalidad'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -31,8 +37,13 @@ class NacionalidadController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now()->toDateString();
-        return view('configuraciones.nacionalidad.create', compact('hoy'));
+        try{
+            $hoy = Carbon::now()->toDateString();
+            return view('configuraciones.nacionalidad.create', compact('hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +54,23 @@ class NacionalidadController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        DB::beginTransaction();
+        try{
+            $request->validate([
             'descripcion'=>['unique:nacionalidad'],
-        ]);
-        $nacionalidad = new Nacionalidad(['descripcion' => $request->descripcion]);
-        $nacionalidad->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>21]);
-        $control->save();
-        return redirect()->action([NacionalidadController::class, 'index']);
+            ]);
+            $nacionalidad = new Nacionalidad(['descripcion' => $request->descripcion]);
+            $nacionalidad->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>21]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([NacionalidadController::class, 'index'])->with('success','Nacionalidad registrada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al registrar la nacionalidad');
+        }
+        
     }
 
     /**
@@ -71,8 +91,13 @@ class NacionalidadController extends Controller
      */
     public function edit($id, Request $request)
     {
-        $nacionalidad = $this->n->obtenerNacionalidadesById(decrypt($id));
-        return view('configuraciones.nacionalidad.edit',['nacionalidad' => $nacionalidad]);
+        try{
+            $nacionalidad = $this->n->obtenerNacionalidadesById(decrypt($id));
+            return view('configuraciones.nacionalidad.edit',['nacionalidad' => $nacionalidad]);
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -84,12 +109,20 @@ class NacionalidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nacionalidad = Nacionalidad::find(decrypt($id));
-        $nacionalidad ->fill(['descripcion' => $request->descripcion]);
-        $nacionalidad->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>21]);
-        $control->save();
-        return redirect()->action([NacionalidadController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $nacionalidad = Nacionalidad::find(decrypt($id));
+            $nacionalidad ->fill(['descripcion' => $request->descripcion]);
+            $nacionalidad->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>21]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([NacionalidadController::class,'index'])->with('success','Nacionalidad actualizada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al actualizar la información de la nacionalidad');
+        }
     }
 
     /**
@@ -100,24 +133,52 @@ class NacionalidadController extends Controller
      */
     public function destroy($id)
     {
-        Nacionalidad::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>21]);
-        $control->save();
-        return redirect()->action([NacionalidadController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Nacionalidad::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>21]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([NacionalidadController::class,'index'])->with('success','Nacionalidad eliminada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al eliminar la nacionalidad');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',21)->with('usuario')->paginate(5);
-        return view('configuraciones.nacionalidad.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',21)->with('usuario')->paginate(5);
+            return view('configuraciones.nacionalidad.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Nacionalidad::where('estado', 'inactivo')->get();
-        return view('configuraciones.nacionalidad.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Nacionalidad::where('estado', 'inactivo')->get();
+            return view('configuraciones.nacionalidad.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Nacionalidad::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([NacionalidadController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Nacionalidad::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>21]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([NacionalidadController::class,'index'])->with('success','Nacionalidad restaurada exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al restaurar la nacionalidad');
+        }
     }
 }

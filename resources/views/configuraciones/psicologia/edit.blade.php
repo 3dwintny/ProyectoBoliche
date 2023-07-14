@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-9 pt-5 pt-md-5">
+<div class="header bg-dark pb-9 pt-5 pt-md-5 mt--5">
     <div class="container-fluid">
         <div class="header-body">
             <!-- Card stats -->
@@ -17,6 +17,12 @@
     <div class="header-body text-center  mb-2 container">
         <div class="row justify-content-center">
             <div class="col-lg-11 col-md-10">
+                @if(session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <form action="{{route('psicologia.update',encrypt($psicologo->id))}}"   id="register_form" method="POST" role="form" enctype="multipart/form-data">
                     @csrf
                     {{method_field('PUT')}}
@@ -31,7 +37,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="card-body bg-light">
                                     <h2 class="mb-2">Información Personal</h2>
                                     <div class="row">
@@ -78,9 +83,12 @@
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
-                                            <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" id="telefono" placeholder="Teléfono" name="telefono" value="{{$psicologo->telefono}}" pattern="[0-9]{4}[-][0-9]{4}" title="FORMATOS ACEPTADOS 0000-0000 o 0000 0000">
-                                                <label for="telefono">Teléfono</label>
+                                            <div class="form-floating">
+                                              <input type="tel" name="telefono" id="telefono" class="form-control text-dark @error('telefono') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('Teléfono') }}" value="{{ $psicologo->telefono }}" pattern="[0-9]{4}[-][0-9]{4}" title="Formato aceptado: 0000-0000 o 0000 0000">
+                                              <label for="telefono">Teléfono</label>
+                                              @error('telefono')
+                                                <div class="invalid-tooltip">{{ $message }}</div>
+                                              @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-2">
@@ -97,9 +105,9 @@
                                         </div>
                                         <div class="col-md-8 mb-2">
                                             <div class="input-group mb-2">
-                                                <span class="input-group-text" id="inputGroup-sizing-sm">Fecha de Inicio de Labores</span>
+                                                <span class="input-group-text" id="inputGroup-sizing-sm">Fecha de inicio de labores</span>
                                                 <input class="form-control text-dark" type="date" name="fecha_inicio_labores"
-                                            id="fecha_inicio_labores" value="{{$psicologo->fecha_inicio_labores}}" required>
+                                            id="fecha_inicio_labores" value="{{$psicologo->fecha_inicio_labores}}" readonly required>
                                             </div>
                                         </div>
                                     </div>

@@ -5,27 +5,34 @@
 
 <script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
-<div class="header bg-dark pb-4 pt-5 pt-md-6">
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
     <div class="container-fluid">
         <div class="header-body">
-            <!-- Card stats -->
             <div class="row">
-                <div class="col-xl-6 col-lg-6">
+                <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
                     <h1 class="text-white">Reporte EDG-27</h1>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<form method="GET" action="{{route('edg27PDF')}}" enctype="multipart/form-data" target="_blank" role="form">
-    @csrf
-    <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
-</form>
-<div class="card">
-    <div class="col-xl-12 col-lg-12 ">
-        <div class="pb-4 pt-5 pt-md-1">
-            <div class="card-body">
-                <table class="table table-responsive table-bordered border-light">
+<div class="container pt-2">
+    <div class="header-body text-center mb-7">
+        <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1">
+            <form method="GET" action="{{route('edg27PDF')}}" enctype="multipart/form-data" target="_blank" role="form">
+                @csrf
+                <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+            </form>
+        </div>
+        <div class="row justify-content-center">
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                <table class="table table-responsive">
                     @php
                         $contador = 1;   
                     @endphp

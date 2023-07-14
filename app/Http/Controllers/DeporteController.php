@@ -6,6 +6,7 @@ use App\Models\Deporte;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class DeporteController extends Controller
 {
@@ -19,9 +20,14 @@ class DeporteController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    { 
-        $deporte = Deporte::where('estado','activo')->get(['id','nombre']);
-        return view('configuraciones.deporte.show',compact('deporte'));
+    {
+        try{
+            $deporte = Deporte::where('estado','activo')->get(['id','nombre']);
+            return view('configuraciones.deporte.show',compact('deporte'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        } 
     }
 
     /**
@@ -31,8 +37,13 @@ class DeporteController extends Controller
      */
     public function create()
     {
-        $hoy = Carbon::now();
-        return view('configuraciones.deporte.create', compact('hoy'));
+        try{
+            $hoy = Carbon::now();
+            return view('configuraciones.deporte.create', compact('hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -43,14 +54,22 @@ class DeporteController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => ['unique:deporte'],
-        ]);
-        $deporte = new Deporte(['nombre' => $request->nombre]);
-        $deporte->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>9]);
-        $control->save();
-        return redirect()->action([DeporteController::class, 'index']);
+        DB::beginTransaction();
+        try{
+            $request->validate([
+                'nombre' => ['unique:deporte'],
+            ]);
+            $deporte = new Deporte(['nombre' => $request->nombre]);
+            $deporte->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>9]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([DeporteController::class, 'index'])->with('success','Deporte registrado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al registrar al deporte');
+        }
     }
 
     /**
@@ -72,8 +91,14 @@ class DeporteController extends Controller
      */
     public function edit($id)
     {
-        $deporte = Deporte::find(decrypt($id));
-        return view('configuraciones.deporte.edit',['deporte' => $deporte]);
+        try{
+            $deporte = Deporte::find(decrypt($id));
+            return view('configuraciones.deporte.edit',['deporte' => $deporte]);
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -85,12 +110,21 @@ class DeporteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $deporte = Deporte::find(decrypt($id));
-        $deporte ->fill(['nombre' => $request->nombre]);
-        $deporte->save();
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>9]);
-        $control->save();
-        return redirect()->action([DeporteController::class,'index']);
+        DB::beginTransaction();
+        try{
+            $deporte = Deporte::find(decrypt($id));
+            $deporte ->fill(['nombre' => $request->nombre]);
+            $deporte->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>9]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([DeporteController::class,'index'])->with('success','Deporte actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al actualizar la información del deporte');
+        }
     }
 
     /**
@@ -101,24 +135,56 @@ class DeporteController extends Controller
      */
     public function destroy($id)
     {
-        Deporte::find(decrypt($id))->update(['estado' => 'inactivo']);
-        $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>9]);
-        $control->save();
-        return redirect()->action([DeporteController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Deporte::find(decrypt($id))->update(['estado' => 'inactivo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>9]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([DeporteController::class,'index'])->with('success','Deporte eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            report($e);
+            $this->addError('error','Se produjo un error al eliminar al deporte');
+        }
     }
 
     public function acciones(){
-        $control = Control::where('tabla_accion_id',9)->with('usuario')->paginate(5);
-        return view('configuraciones.deporte.control',compact('control'));
+        try{
+            $control = Control::where('tabla_accion_id',9)->with('usuario')->paginate(5);
+            return view('configuraciones.deporte.control',compact('control'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function eliminados(){
-        $eliminar = Deporte::where('estado', 'inactivo')->get();
-        return view('configuraciones.deporte.eliminados',compact('eliminar'));
+        try{
+            $eliminar = Deporte::where('estado', 'inactivo')->get();
+            return view('configuraciones.deporte.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            report($e);
+            $this->addError('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     public function restaurar(Request $request){
-        Deporte::find(decrypt($request->e))->update(['estado'=>'activo']);
-        return redirect()->action([DeporteController::class,'index']);
+        DB::beginTransaction();
+        try{
+            Deporte::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>9]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([DeporteController::class,'index'])->with('success','Deporte restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            report($e);
+            $this->addError('error','Se produjo un error al restaurar al deporte');
+        }
     }
 }

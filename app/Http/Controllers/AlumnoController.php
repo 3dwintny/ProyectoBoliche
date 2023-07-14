@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alumno;
-use App\Models\Alergia;
 use App\Models\Encargado;
 use App\Models\Formulario;
 use App\Models\Parentesco;
@@ -12,16 +11,19 @@ use App\Models\Nacionalidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Alumnos_encargados;
 use PDF;
 use Carbon\Carbon;
 use App\Models\Control;
+use Throwable;
 
 class AlumnoController extends Controller
 {
-    protected $encargado;
-    public function __construct(Encargado $encargado)
+    protected $encargado, $alumnosCons;
+    public function __construct(Encargado $encargado, Alumno $alumnos)
     {
         $this->encargado = $encargado;
+        $this->alumnosCons = $alumnos;
     }
     /**
      * Display a listing of the resource.
@@ -48,7 +50,7 @@ class AlumnoController extends Controller
     public function getMunicipios(Request $request)
     {
         $municipios = DB::table('municipio')
-            ->where('departamento_id', $request->departamento_id)
+            ->where('departamento_id', decrypt($request->departamento_id))
             ->get();
 
         if (count($municipios) > 0) {
@@ -69,8 +71,7 @@ class AlumnoController extends Controller
         $nacionalidades = Nacionalidad::all();
         $parentezcos = Parentesco::all();
         $formularios = Formulario::all();
-        $alergia = Alergia::all();
-        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios", "alergia","anio"));
+        return view('alumno.alumno',compact("departamentos","nacionalidades","parentezcos","formularios","anio"));
     }
 
     /**
@@ -180,7 +181,6 @@ class AlumnoController extends Controller
         }
         //$alumno->encargado_id = $request->input('encargado_id');
 
-        $alumno->alergia_id = $request->input('alergia_id');
         $alumno->departamento_id = $request->input('departamento_id');
         $alumno->municipio_id = $request->input('municipio_id');
         $alumno->nacionalidad_id = $request->input('nacionalidad_id');
@@ -191,14 +191,10 @@ class AlumnoController extends Controller
         //return view("Funciona");
         //return redirect()->back()->with('status','Alumno ingresado Correctamente');
         /* return redirect()->action([AlumnoController::class, 'index']); */
-
-
-
         /*$factura = Alumno::create($request->all());
         return redirect()->route('facturas.index')
             ->with('success', 'Factura created successfully.');*/
     }
-
     /**
      * Display the specified resource.
      *
@@ -208,10 +204,22 @@ class AlumnoController extends Controller
     public function show($id)
     {
         $alumno = Alumno::find($id);
-        $departamentos = Departamento::pluck('nombre');
-        return view('alumno.show', compact('alumno'));
+        if (!$alumno) {
+            return response()->json(['error' => 'Alumno no encontrado'], 404);
+        }
+        $datosAlumno = [
+            'nombre' => $alumno->nombre1 .' '. $alumno->nombre2 .' '. $alumno->nombre3.' '.$alumno->apellido1 .' '.$alumno->apellido2,
+            'cui' => $alumno ->cui,
+            'celular' => $alumno->celular,
+            'telefono_casa' => $alumno->telefono_casa,
+            'correo' => $alumno ->correo,
+            'fecha_nacimiento' => $alumno->fecha,
+            'foto'=>$alumno->foto,
+            'departamento'=>$alumno->departamento_residencia->nombre,
+            'municipio'=>$alumno->municipio_residencia->nombre,
+        ];
+        return response()->json($datosAlumno);
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -222,7 +230,6 @@ class AlumnoController extends Controller
     {
         //
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -234,7 +241,6 @@ class AlumnoController extends Controller
     {
         //
     }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -246,16 +252,43 @@ class AlumnoController extends Controller
         Alumno::find($id)->update(['estado' => 'Rechazado']);
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
     }
-
-    public static function generarPDF()
+    public static function generarPDF($cui)
     {
-        $encargado = Encargado::orderByDesc('id')->limit(1)->get();
-        $anio = Carbon::now()->format('Y');
-        foreach ($encargado as $item){
-            $alumno = Alumno::where('encargado_id',$item->id)->get();
+            try{
+            $anio = Carbon::now()->format('Y');
+            $formularios = Formulario::all();
+            $alumnos = Alumno::where('cui', $cui)->get();
+            $cantidadDeRelaciones = null;
+            $relalumnos = null;
+            $encargados = [];
+            $cant_rel = null;
+            foreach($alumnos as $item){
+                $cantidadDeRelaciones = Alumnos_encargados::where('alumno_id', $item->id)->count();
+                $relalumnos = Alumnos_encargados::where('alumno_id', $item->id)->get();
+            }
+            foreach ($relalumnos as $item) {
+                $resultados = Encargado::where('id', $item->encargado_id)->get();
+                foreach($resultados as $resultado) {
+                $encargados[] = $resultado->toArray();
+                }
+            }
+            if($cantidadDeRelaciones === 2){
+                $cant_rel = 2;
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+            }elseif($cantidadDeRelaciones === 1){
+                $cant_rel = 1;
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+
+            }else{
+                $cant_rel = 0;
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','anio','cant_rel'))->setPaper('8.5x11')->stream();
+            }
+
+        }catch(Throwable $e){
+            report($e);
+            echo "Ha ocurrido un error. Por favor, inténtalo de nuevo.";
+            return false;
         }
-        $formularios = Formulario::all();
-        return PDF::loadView('alumno.pdf',compact('formularios','encargado','alumno','anio'))->setPaper('8.5x11')->stream();
     }
 
     public function acciones(){

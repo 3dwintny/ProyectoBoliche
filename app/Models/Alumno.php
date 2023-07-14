@@ -31,9 +31,10 @@ class Alumno extends Model
     'fecha_fotografia',
     'estado',
     'nit',
+    'alergias',
+    'nombre_emergencia',
     'pasaporte',
     'encargado_id',
-    'alergia_id',
     'departamento_id',
     'municipio_id',
     'nacionalidad_id',
@@ -41,6 +42,10 @@ class Alumno extends Model
     'updated_at',
     'departamento_residencia_id',
     'municipio_residencia_id'];
+    public function obtenerAlumno()
+    {
+        return Alumno::all();
+    }
 
     public function obtener_nombre($id)
     {
@@ -48,10 +53,6 @@ class Alumno extends Model
     }
     public function atletas(){
         return $this->hasMany('App\Models\Atleta');
-    }
-
-    public function alergia(){
-        return $this->belongsTo('App\Models\Alergia');
     }
 
     public function departamento(){
@@ -64,6 +65,10 @@ class Alumno extends Model
 
     public function encargado(){
         return $this->belongsTo('App\Models\Encargado');
+    }
+    public function encargados()
+    {
+        return $this->belongsToMany(Encargado::class, 'alumnos_encargados', 'alumno_id', 'encargado_id');
     }
 
     public function municipio(){

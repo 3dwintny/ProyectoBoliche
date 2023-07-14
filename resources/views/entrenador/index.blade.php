@@ -1,21 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="header bg-dark pb-4 pt-5 pt-md-8 responsive">
+<div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
   <div class="container-fluid">
-    <div class="header-body">
-      <!-- Card stats -->
-      <div class="row">
-        <div class="col-xl-6 col-lg-6">
-          <h1 class="text-white">Entrenadores</h1>
-        </div>
+      <div class="header-body">
+          <div class="row">
+              <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+                  <h1 class="text-white">Entrenadores</h1>
+              </div>
+          </div>
       </div>
-    </div>
   </div>
 </div>
 <div class="container">
   <div class="pt-md-2 pb-4 pt-5">
     @include('components.flash_alerts')
+    @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>  
+      </div>
+    @endif
+
+    @if(session('error'))
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
       <table class="table table-responsive">
         <thead class="table-dark" style="border-radius: 5px;">
           <tr>
@@ -73,7 +85,8 @@
   </div>
 </div>
 @include('layouts.footers.auth')
-</div>
+
+
 <script type="text/javascript">
   function eliminarEntrenador(value){
       action = confirm(value) ? true : event.preventDefault();

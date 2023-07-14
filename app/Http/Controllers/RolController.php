@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
-use League\Flysystem\Visibility;
-use Spatie\Permission\PermissionServiceProvider;
 
 class RolController extends Controller
 {
@@ -25,8 +23,13 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles = Role::paginate();
-        return view('roles.index', compact('roles'));
+        try{
+            $roles = Role::all();
+            return view('configuraciones.us', compact('roles'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
     /**
      * Show the form for creating a new resource.
@@ -35,8 +38,13 @@ class RolController extends Controller
      */
     public function create()
     {
-        $permission = Permission::get();
-        return view('roles.crear', compact('permission'));
+        try{
+            $permission = Permission::get();
+            return view('roles.crear', compact('permission'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -47,13 +55,18 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name'=> 'required' , 'permission' => 'required']);
-
-        $role = Role::create(['name' => $request-> input('name')]);
-        $role ->syncPermissions($request->input('permission'));
-
-        return redirect()->route('roles.index');
+        try{
+            $this->validate($request,[
+                'name'=> 'required' , 'permission' => 'required']);
+    
+            $role = Role::create(['name' => $request-> input('name')]);
+            $role ->syncPermissions($request->input('permission'));
+    
+            return redirect()->route('roles.index')->with('success','Rol registrado exitosamente');
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -75,13 +88,17 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions =DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id)
-            ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
-            ->all();
-        return view('roles.editar', compact('role', 'permission', 'rolePermissions'));
-
+        try{
+            $role = Role::find($id);
+            $permission = Permission::get();
+            $rolePermissions =DB::table('role_has_permissions')->where('role_has_permissions.role_id', $id)
+                ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
+                ->all();
+            return view('roles.editar', compact('role', 'permission', 'rolePermissions'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -93,14 +110,19 @@ class RolController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['name'=> 'required' , 'permission' => 'required']);
+        try{
+            $this->validate($request, ['name'=> 'required' , 'permission' => 'required']);
 
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->save();
+            $role = Role::find($id);
+            $role->name = $request->input('name');
+            $role->save();
 
-        $role->syncPermissions($request->input('permission'));
-        return redirect()->route('roles.index');
+            $role->syncPermissions($request->input('permission'));
+            return redirect()->route('roles.index')->with('success','Rol actualizado exitosamente');
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al actualizar la información del rol');
+        }
     }
 
     /**
@@ -111,7 +133,12 @@ class RolController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('roles')->where('id',$id)->delete();
-        return redirect()->route('roles.index');
+        try{
+            DB::table('roles')->where('id',$id)->delete();
+            return redirect()->route('roles.index')->with('success','Rol eliminado exitosamente');
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al eliminar al rol');
+        }
     }
 }
