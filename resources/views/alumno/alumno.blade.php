@@ -211,54 +211,11 @@
                                         <div class="card-body bg-light">
                                             <div class="row">
                                                 <div class="col-md-11"><h2>Información de encargados</h2></div>
-                                                <div class="col-md-1"><input type="button" id="agregarEncargado" name="submit" class="submit btn btn-outline-warning" value="+"   data-toggle="tooltip" data-original-title="Agregar Encargado"/></div>
+                                                <div class="col-md-1"><input type="button" id="added" name="submit" class="submit btn btn-outline-warning" value="+"   data-toggle="tooltip" data-original-title="Agregar Encargado"/></div>
                                             </div>
-                                            <div class="row">
+                                            <div class="row" id="inp">
                                                 <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" type="text" name="nombre1p[]" value="{{ old('Primer nombre') }}" required>
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" placeholder="{{ __('Segundo nombre') }}" type="text" name="nombre2p" value="{{ old('Segundo nombre') }}">
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" placeholder="{{ __('Tercer nombre') }}" type="text" name="nombre3p" value="{{ old('Tercer nombre') }}">
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido1p" placeholder="Primer apellido" required>
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" type="text" name="apellido2p" placeholder="Segundo apellido">
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="apellido_casada" placeholder="Apellido de casada">
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="direccionp" placeholder="Direccion" required>
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="celularp" placeholder="Celular" required>
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="telefono_casap" placeholder="Teléfono residencial">
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="correop" placeholder="Correo electrónico">
-                                                </div>
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control" type="text" name="dpi" placeholder="DPI" required>
-                                                </div>
-                                                <div class="col-md-12 mb-2">
-                                                    <select class="form-control" name="parentezco_id" required>
-                                                        <option selected disabled>Parentesco</option>
-                                                        @foreach ($parentezcos as $item)
-                                                        <option value="{{$item->id}}">{{$item->tipo}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4 mb-2">
-                                                    <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" type="text" name="nombre1p[]" id="nombre1p[]" value="{{ old('Primer nombre') }}" style="visibility:hidden;">
+                                                    <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" type="text" name="inputs[0][nombre1p]" value="{{ old('Primer nombre') }}" required>
                                                 </div>
                                                 <div class="col-md-4 mb-2">
                                                     <input class="form-control text-dark" placeholder="{{ __('Segundo nombre') }}" type="text" name="nombre2p" value="{{ old('Segundo nombre') }}">
@@ -337,7 +294,70 @@
         display: none;
     }
 </style>
+{{-- Script para inputs dinamicos --}}
+<script>
+    var i = 0;
+    var info = 1;
+    $('#added').click(function(){
+        i++;
+        info++;
+        $('#inp').append(
+            `
+            <br>
+            <br>
+            <br>
+            <div class="col-md-11"><h2>Información de encargados `+info+`</h2></div>
+            <div class="col-md-1"><input type="button" name="submit" class="submit btn btn-outline-danger remove-table-row" value="-"   data-toggle="tooltip" data-original-title="Remover"/></div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Primer nombre') }}" type="text" name="inputs[`+i+`][nombre1p]" value="{{ old('Primer nombre') }}" required>
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control text-dark" placeholder="{{ __('Segundo nombre') }}" type="text" name="inputs[`+i+`][nombre2p}" value="{{ old('Segundo nombre') }}">
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control text-dark" placeholder="{{ __('Tercer nombre') }}" type="text" name="inputs[`+i+`][nombre3p]" value="{{ old('Tercer nombre') }}">
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control text-dark" type="text" name="inputs[`+i+`][apellido1p]" placeholder="Primer apellido" required>
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control text-dark" type="text" name="inputs[`+i+`][apellido2p]" placeholder="Segundo apellido">
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control" type="text" name="inputs[`+i+`][apellido_casada]" placeholder="Apellido de casada">
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control" type="text" name="inputs[`+i+`][direccionp]" placeholder="Direccion" required>
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control" type="text" name="inputs[`+i+`][celularp]" placeholder="Celular" required>
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control" type="text" name="inputs[`+i+`][telefono_casap]" placeholder="Teléfono residencial">
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control" type="text" name="inputs[`+i+`][correop]" placeholder="Correo electrónico">
+            </div>
+            <div class="col-md-4 mb-2">
+                <input class="form-control" type="text" name="inputs[`+i+`][dpi]" placeholder="DPI" required>
+            </div>
+            <div class="col-md-12 mb-2">
+                <select class="form-control" name="inputs[`+i+`][parentezco_id]" required>
+                    <option selected disabled>Parentesco</option>
+                        @foreach ($parentezcos as $item)
+                        <option value="{{$item->id}}">{{$item->tipo}}</option>
+                        @endforeach
+                        </select>
+            </div>
 
+        `);
+        $(document).on('click','.remove-table-row', function(){
+                $(this).parent('div').remove();
+        });
+
+    });
+</script>
+{{-- Script para el progress_bar --}}
 <script>
     $(document).ready(function() {
         var form_count = 1,
