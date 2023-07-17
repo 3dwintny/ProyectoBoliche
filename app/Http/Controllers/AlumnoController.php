@@ -80,6 +80,44 @@ class AlumnoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function validarAlumnos(Request $request){
+
+        $request->validate([
+            'nombre1' => 'required',
+            'apellido1' => 'required',
+            'peso' => 'required',
+            'cui' => 'required | numeric | max:11 | min:10',
+            'fecha' => 'required',
+            'peso' => 'required | numeric',
+            'altura' => 'required | numeric',
+            'direccion' => 'required',
+            'contacto_emergencia' => 'required |regex:(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}',
+            'correo' => 'required | email',
+            'foto' => 'required | image |max:2048'
+        ],
+        [
+            'nombre1' => 'Este campo es requerido',
+            'apellido1' => 'Este campo es requerido',
+            'cui' => 'Este campo es requerido',
+            'cui.numeric' => 'Unicamente debe ingresar números',
+            'peso' => 'Este campo es requerido',
+            'peso.numeric' => 'Unicamente debe ingresar números',
+            'altura' => 'Este campo es requerido',
+            'altura.numeric' => 'Unicamente debe ingresar números',
+            'direccion' => 'Este campo es requerido',
+            'contacto_emergencia' => 'Este campo es requerido',
+            'contacto_emergencia.numeric' => 'Unicamente debe ingresar números',
+            'correo' => 'Este campo es requerido',
+            'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
+            'foto' => 'Este campo es requerido',
+            'fecha' => 'Este campo es requerido',
+
+
+
+        ]
+    );
+
+    }
     public function store(Request $request)
     {
         // $entrenador = new Entrenador($request->all());
