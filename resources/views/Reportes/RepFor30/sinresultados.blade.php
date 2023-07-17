@@ -51,7 +51,7 @@
                   <button type="submit" class="btn btn-primary">Buscar</button>
                 </div>
                 <div class="col-xl-1 col-lg-2 col-md-3 col-sm-2 mb-2 text-center">
-                  <button type="button" class="btn btn-light" onclick="window.location='{{ route('asistencias.index') }}'">Cancelar</button>
+                  <button type="button" class="btn btn-light" onclick="window.location='{{ route('asistencia.index') }}'">Cancelar</button>
                 </div>
               </div>
             </form>
