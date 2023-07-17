@@ -19,9 +19,9 @@ class Encargado extends Model
     public function alumnos(){
         return $this->hasMany('App\Models\Alumno');
     }
-    public function obtenerEncargado()
+    public function obtenerEncargadoporId($id)
     {
-        return Encargado::all();
+        return Encargado::find($id);
     }
 
 }

@@ -54,7 +54,6 @@ Route::get('wel', function () {return view('welcome');})->name('wel'); */
 //
 
 //Son para los sliders
-
 Route::resource('/', FrontendController::class);
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
@@ -117,7 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('deporte',DeporteController::class);
 
     //Rutas Encargado
-    Route::resource('encargados',EncargadoController::class);
+    Route::resource('encargados', EncargadoController::class);
 
     //Rutas de Entrenador
     Route::get('editar-perfil-entrenador',[EntrenadorController::class,'modificar'])->name('modificar');

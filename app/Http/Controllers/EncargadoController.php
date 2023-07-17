@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class EncargadoController extends Controller
 {
+    protected $encargados;
+    public function __construct(Encargado $encargado)
+    {
+        $this->encargados = $encargado;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,12 @@ class EncargadoController extends Controller
      */
     public function index()
     {
-        //
+        $encargados = Encargado::all();
+        $existencia = false;
+        if($encargados){
+            $existencia = true;
+        }
+        return view('encargados.index', compact('encargados','existencia'));
     }
 
     /**
@@ -48,7 +58,7 @@ class EncargadoController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -59,7 +69,8 @@ class EncargadoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $encargados = $this->encargados->obtenerEncargadoporId($id);
+        return view('encargados.edit',['encargados'=>$encargados]);
     }
 
     /**
@@ -71,7 +82,20 @@ class EncargadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $encargado = Encargado::find($id);
+        $encargado->nombre1p = $request->input('nombre1p');
+        $encargado->nombre2p = $request->input('nombre2p');
+        $encargado->nombre3p = $request->input('nombre3p');
+        $encargado->apellido1p = $request->input('apellido1p');
+        $encargado->apellido2p = $request->input('apellido2p');
+        $encargado->apellido_casada = $request->input('apellido_casada');
+        $encargado->direccionp = $request->input('direccionp');
+        $encargado->celularp = $request->input('celularp');
+        $encargado->telefono_casap = $request->input('telefono_casap');
+        $encargado->correop = $request->input('correop');
+        $encargado->dpi = $request->input('dpi');
+        $encargado->save();
+        return redirect()->action([EncargadoController::class, 'index'])->with('status','Editado correctamente');
     }
 
     /**
