@@ -2812,8 +2812,8 @@ class EDG31Controller extends Controller
             }
             $federacion = Deporte::find(1);
             $departamento = Departamento::find(13);
-            // $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>12]);
-            // $control->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>12]);
+            $control->save();
             return PDF::loadView('Reportes.edg31.pdf',compact("s9","s11","s13","s16","s18","s21","sSF","sM",
             "tS9","f9","m9","tS11","f11","m11","tS13","f13","m13","tS16","f16","m16",
             "tS18","f18","m18","tS21","f21","m21","tSF","fF","mF","tM","fM","mM",

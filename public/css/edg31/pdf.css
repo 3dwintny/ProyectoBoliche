@@ -1,0 +1,456 @@
+#contenedorEncabezado{
+    width: 19.3cm;
+    height: 0.8cm;
+    border-bottom: 0.3px solid black;
+    border-top: 0.3px solid black;
+    border-left: 0.3px solid black;
+    border-right: 0.3px solid black;
+    margin-left: 0.05cm;
+}
+#foto{
+    width: 0.5cm;
+    height: 100%;
+    border-right: 0.3px solid black;
+    float: left;
+    position: relative;
+}
+#primerContenedorEncabezado{
+    width: 18.8cm;
+    height: 62.5%;
+    border-bottom: 0.3px solid black;
+    float: left;
+    position: relative;
+}
+#segundoContenedorEncabezado{
+    margin-top: 0.5cm;
+    width: 96%;
+    height: 28.9%;
+    float: left;
+    position: relative;
+}
+#textoFormulario{
+    margin-top: 0%;
+    width: 100%;
+    height: 50%;
+}
+#reporteMensual{
+    margin-top: 0%;
+    width: 100%;
+    height: 50%;
+}
+#contenedorMRD{
+    margin-top: 0.05%;
+    margin-left: 4.5cm;
+    width: 33%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#contenedorCodigo{
+    margin-top: 0.05%;
+    margin-left: 8.6cm;
+    width: 20%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#contenedorVersion{
+    margin-top: 0.05%;
+    margin-left: 11.1cm;
+    width: 10%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#contenedorNumeroPagina{
+    margin-top: 0.05%;
+    margin-left: 12.5cm;
+    width: 12.5%;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#contenedorDatosAsociacion{
+    margin-left: 0.1cm;
+    width: 100%;
+    height: 3.75%;
+}
+#contenedorFederacion{
+    width: 45%;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+#contenedorDepartamento{
+    width: 33.25%;
+    height: 100%;
+    float: left;
+    position: relative;
+    margin-left: 1.1%;
+}
+#contenedorMes{
+    width: 2.5%;
+    height: 100%;
+    float: left;
+    position: relative;
+}
+#contenedorNombreMes{
+    width: 2.2cm;
+    height: 65%;
+    float: left;
+    position: relative;
+    border-bottom: black 0.7px solid;
+}
+#contenedorAnio{
+    margin-top: 0.8%;
+    width: 0.6cm;
+    height: 38%;
+    float: left;
+    position: relative;
+}
+#contenedorResumenCantidadAtletas{
+    width: 100%;
+    height: 0.8cm;
+    border: 0.7px dashed black;
+}
+#contenedorResumenMatricular{
+    margin-top: 0.16cm;
+    margin-left: 0.2cm;
+    width: 1.43cm;
+    height: 0.5cm;
+    float: left;
+    position: relative;
+    font-size: 50%;
+}
+#contenedorSistem{
+    width: 0.65cm;
+    height: 35%;
+    margin-top: 0.34cm;
+    margin-left: 0.6cm;
+    float: left;
+    position: relative;
+    font-size:49%; 
+}
+#contenedorPracticantes{
+    width: 0.5cm;
+    height: 35%;
+    margin-top: 0.34cm;
+    margin-left: 0.5cm;
+    float: left;
+    position: relative;
+    font-size:49%; 
+}
+#contenedorDeporteAdaptado{
+    width: 0.8cm;
+    height: 35%;
+    margin-top: 0.34cm;
+    margin-left: 0.3cm;
+    float: left;
+    position: relative;
+    font-size:49%; 
+}
+#contenedorTotal{
+    width: 0.75cm;
+    height: 35%;
+    margin-top: 1.9%;
+    margin-left: 0.38cm;
+    float: left;
+    position: relative;
+    font-size: 48%;
+}
+.contenedorGenerosTotalResumen{
+    width: 100%;
+    height: 0.14cm;
+    margin-top: 0.05cm;
+    text-align: center;
+    font-size: 40%;
+}
+.contenedorTotalesFemenino{
+    width: 1.1cm;
+    height: 0.4cm;
+    text-align: center;
+    margin-top: 0.09cm;
+    border: 0.3px solid black;
+    border-collapse: collapse;
+}
+.contenedorTotalesMasculinos{
+    width: 1.1cm;
+    height: 0.4cm;
+    text-align: center;
+    margin-top: 0.09cm;
+    border-top: 0.3px solid black;
+    border-bottom: 0.3px solid black;
+    border-right: 0.3px solid black;
+    border-collapse: collapse;
+}
+#contenedorTotalMasculino{
+    width: 1.1cm;
+    height: 0.4cm;
+    text-align: center;
+    margin-top: 0.09cm;
+    border-top: 0.3px solid black;
+    border-bottom: 0.3px solid black;
+    border-right: 0.3px solid black;
+    border-left: 0.3px solid black;
+    border-collapse: collapse;
+}
+.contenedorTotalFemenino{
+    width: 1.1cm;
+    height: 0.4cm;
+    text-align: center;
+    margin-top: 0.09cm;
+    border: 0.3px solid black;
+    border-collapse: collapse;
+}
+#contenedorTotalAtletas{
+    width: 1.1cm;
+    height: 0.4cm;
+    text-align: center;
+    margin-top: 0.09cm;
+    border-top: 0.3px solid black;
+    border-bottom: 0.3px solid black;
+    border-right: 0.3px solid black;
+    border-left: 0.3px solid black;
+    background-color: #009CEA;
+    color: white;
+    border-collapse: collapse;
+}
+.contenedorTotalPorPrograma{
+    width: 1.1cm;
+    height: 0.4cm;
+    text-align: center;
+    margin-top: 0.09cm;
+    border-top: 0.3px solid black;
+    border-bottom: 0.3px solid black;
+    border-right: 0.3px solid black;
+    border-left: 0.3px solid black;
+    background-color: #E5E7D5;
+    border-collapse: collapse;
+}
+.contenedorDatosResumen{
+    height: 100%;
+    width: 1.1cm;
+    float: left;
+    position: relative;
+}
+.centradoVerticalDatosPorCategoria{
+    vertical-align: 73%;
+}
+.centradoVerticalTotalAtletas{
+    vertical-align: 70%;
+}
+#contenedorInstrucciones{
+    width: 18.7cm;
+    height: 0.5cm;
+    margin-left: 0.1cm;
+    font-size: 43.2%;
+}
+.espacio{
+    width: 100%;
+    height: 0.5%;
+}
+.espacio01Centimetros{
+    width: 100%;
+    height: 0.1cm;
+}
+.espacio02Cetimetros{
+    width: 100%;
+    height: 0.2cm;
+}
+.textoCentrado{
+    text-align: center;
+}
+.anchoTablasSistematicos{
+    width: 17.1cm;
+}
+.encabezado{
+    background-color: #7CC8DA;
+    border: 0.7px solid black;
+    border-collapse: collapse;
+}
+.todosBordesGruesos{
+    border: 0.7px solid black;
+    border-collapse: collapse;
+}
+.bordesExternosGruesos{
+    border-left: 0.7px solid black;
+    border-right: 0.7px solid black;
+    border-collapse: collapse; 
+}
+.bordeInferiorDelgado{
+    border-bottom: 0.3px solid black;
+    border-collapse: collapse;
+}
+.todosBordesDelgados{
+    border: 0.3px solid black;
+    border-collapse: collapse;
+}
+.fondoGrisOscuro{
+    background-color: #808080;
+}
+.fondoGrisClaro{
+    background-color: #BFBFBF;
+}
+.fondoVerde{
+    background-color: #7C691A;
+}
+.fondoNegro{
+    background-color:black;
+}
+.fondoCelesteClaro{
+    background-color: #7CC8DA;
+}
+.fondoGrisAzulado{
+    background-color: #D1E3F3;
+}
+.fondoRojo{
+    background-color: #962626;
+}
+.textoBlanco{
+    color: white;
+}
+.cantidadAtletasPorCategoria{
+    background-color: #E5E7D5;
+    text-align: center;
+}
+.textoAlineadoDerecha{
+    text-align: right;
+}
+.anchoCompletoPagina{
+    width: 100%;
+}
+.contenedorEncabezadoGenerosTblSistematico{
+    background-color: #7CC8DA;
+    border-right: 0.7px solid black;
+    border-bottom: 0.3px solid black;
+    border-top: 0.7px solid black;
+    border-collapse: collapse;
+}
+#recepcion{
+    color: white;
+    background-color: black;
+}
+#anchoTblRecepcionInformes{
+    width: 14.9cm;
+}
+.alto08{
+    height: 0.7cm;
+}
+.bordeInferiorGrueso{
+    border-bottom: 0.7px solid black;
+    border-collapse: collapse;
+}
+.bordeDerechoDelgado{
+    border-right: 0.3px solid black;
+}
+.bordesDelgadosTblRecepcion{
+    border: 0.3px solid black; 
+    border-collapse: collapse;
+}
+.tamanioFuenteDatosAsociacion{
+    font-size: 44.5832%;
+}
+.tamanioFuente49{
+    font-size:49%;
+}
+.tamanioFuente11{
+    font-size: 53%;
+}
+.tamanioFuente10{
+    font-size: 35.7%;
+}
+.tamanioFuente9{
+    font-size: 35%;
+}
+.tamanioFuente13{
+    font-size: 38%;
+}
+.tamanioFuente12{
+    font-size: 37%;
+}
+.tamanioFuente14{
+    font-size: 50%;
+}
+#contenedorPrincipal{
+    width: 19.4cm;
+    height: 100%;
+    position: relative;
+    top: -0.5cm;
+    margin-left: 4.5cm;
+}
+.tipoFuente{
+    font-family: "Century Gothic", sans-serif;
+}
+.fuente47{
+    font-size: 47%;
+}
+.fuente36{
+    font-size: 36%;
+}
+.filasDatos{
+    height: 0.25cm;
+}
+.anchoNombresApellidosInforme{
+    width: 6.5cm;
+}
+#lineaDepartamento{
+    position: absolute; 
+    margin-left: 24.25%; 
+    margin-top: 0.02%;
+}
+#lineaFADN{
+    position: absolute; 
+    margin-left: 31.85%;
+}
+#fuenteAsociacion{
+    font-size: 60%;
+}
+#fuenteDepartamento{
+    font-size: 60%;
+}
+#fuenteAnio{
+    font-size: 63%;
+}
+.fuenteMes{
+    font-size: 60%;
+}
+#posicionMes{
+    position: absolute;
+    text-align: center;
+    width: 2.2cm;
+    margin-top: 6%;
+}
+.anchoColumnaEtapaDeportiva{
+    width: 2.8cm;
+}
+.anchoColumna2Punto2
+{
+    width: 2.2cm;
+}
+.anchoColumna4Punto4
+{
+    width: 4.4cm;
+}
+.anchoColumna3Punto3
+{
+    width: 3.3cm;
+}
+.alturaEncabezadoCategoriasGeneros{
+    height: 0.2cm;
+}
+.ancho2Punto15{
+    width: 2.15cm;
+}
+.ancho3Punto36{
+    width: 3.36cm;
+}
+.ancho2Punto145
+{
+    width: 2.145cm;
+}
+.ancho2Punto16{
+    width: 2.16cm;
+}
+.ancho2Punto14{
+    width: 2.14cm;
+}
