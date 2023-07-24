@@ -1,102 +1,79 @@
-#contenedor{
-    width: 100%;
-    height: 5.7%;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
-}
-#foto{
-    width: 4%;
-    height: 100%;
-    border-right: 1px solid black;
-    float: left;
-    position: relative;
-}
-#inicial{
-    width: 96%;
-    height: 70%;
-    border-bottom: 1px solid black;
-    float: left;
-    position: relative;
-}
-#final{
-    margin-top: 2.88%;
-    width: 96%;
-    height: 28.9%;
-    float: left;
-    position: relative;
-}
-.formulario{
-    width: 100%;
-    height: 50%;
-}
-#interno1{
-    margin-top: 0.65%;
-    margin-left: 18%;
-    width: 33%;
-    height: 50%;
-    float: left;
-    position: relative;
-}
-#interno2{
-    margin-top: 0.65%;
-    margin-left: 45.5%;
-    width: 20%;
-    height: 50%;
-    float: left;
-    position: relative;
-}
-#interno3{
-    margin-top: 0.65%;
-    margin-left: 63.75%;
-    width: 10%;
-    height: 50%;
-    float: left;
-    position: relative;
-}
-#interno4{
-    margin-top: 0.65%;
-    margin-left: 73.5%;
-    width: 12.5%;
-    height: 50%;
-    float: left;
-    position: relative;
-}
-#contenedor2{
-    margin-top: 1.6%;
+#contenedorFDM{
     width: 100%;
     height: 1.7%;
 }
+#espacio0Punto4{
+    margin-top: 0.2cm;
+}
 #fadn{
-    width: 40%;
+    width: 6.7cm;
     height: 100%;
     float: left;
     position: relative;
-    margin-left: 2.25%;
+    margin-left: 0.7cm;
 }
 #depto{
-    width: 33%;
+    width: 6cm;
     height: 100%;
     float: left;
     position: relative;
-    margin-left: 2%;
+    margin-left: 1.15cm;
+}
+#tamanioFuenteFederacion{
+    font-size: 45%;
+}
+#tamanioFuenteMes{
+    font-size: 46%;
+}
+#tamanioNombreDeporte{
+    font-size: 60%;
+}
+#tamanioNombreDepartamento{
+    font-size: 60%;
+}
+#tamanioNombreMes{
+    font-size: 60%;
+}
+#tamanioAnio{
+    font-size: 80%;
+}
+#tamanioFuenteDepartamento{
+    font-size: 45%;
+}
+#tamanioFuenteDeporte{
+    font-size: 45%;
 }
 #mes{
     width: 20%;
     height: 100%;
     float: left;
     position: relative;
+    margin-left: 0.35cm;
 }
-#contenedor3{
-    width: 90%;
+#contenedorInstrucciones{
+    width: 18.9cm;
     margin-top: 1%;
 }
+.tamanioFuenteInstrucciones{
+    font-size: 50%;
+}
 .fondo{
-    border-top: 2px solid white;
+    border-top: 1.5px solid white;
     background-color: #00B0F0; 
     color:white;
     font-family: Century;
+}
+#altoCampos{
+    height: 0.6cm;
+    font-size: 45%;
+}
+#altoCamposMesAnio{
+    height: 0.3cm;
+    font-size: 45%;
+}
+#altoInformacion{
+    height: 0.3cm;
+    font-size: 45%;
 }
 .fondoBajo{
     background-color: #00B0F0; 
@@ -107,11 +84,12 @@
     background-color: #002060; 
     color:white;
     font-family: Century;
-    border-top: 1px solid #002060;  
+    height: 0.45cm;
     border-collapse: collapse;
+    font-size: 65%;
 }
 .cuerpo{
-    border: 1px solid black; 
+    border: 0.3px solid black; 
     border-collapse: collapse;
 }
 #espacio1{
@@ -119,83 +97,162 @@
     width: 100%;
 }
 #espacio2{
-    height: 0.5%;
+    height: 0.5cm;
     width: 100%;
 }
 .textoCentrado{
     text-align: center;
 }
 .bordeDerechoGruesoBlanco{
-    border-right: 2px solid white;
+    border-right: 1.5px solid white;
     border-collapse: collapse;
 }
 .bordeInferiorGruesoBlanco{
-    border-bottom: 2px solid white;
+    border-bottom: 0.7px solid white;
     border-collapse: collapse;
 }
 .anchoFull{
     width: 100%;
 }
-.tamanioFuente10{
-    font-size: 62.5%;
+#tamanioFuenteFormulario{
+    font-size: 0.23cm;
 }
-.tamanioFuente11{
+.tamanioFuenteNombreMes{
     font-size: 68.75%;
-}
-.tamanioFuente8{
-    font-size: 50%;
-}
-.tamanioFuente9{
-    font-size: 56.25%;
-}
-.tamanioFuente105{
-    font-size: 65.625%;
-}
-.tamanioFuente14{
-    font-size: 87.5%;
-}
-#edad{
-    text-align:right;
-    width: 6%;
-}
-#contenedorPrincipal{
-    margin-left: 10%;
-    margin-right: 8%;
-    width: 86%;
 }
 #margen1{
     margin-left: 1%;
 }
-#ancho4{
-    width: 4%;
+#contenedorPrincipal{
+    width: 19.75cm;
+    height: 100%;
+    position: relative;
+    top: -0.5cm;
+    margin-left: 4.3cm;
+}
+#edad{
+    text-align:right;
+    width: 0.95356989247cm;
+}
+.anchoMA{
+    width: 1.25502083333cm;
+}
+#anchoNo{
+    width: 0.72356989247cm;
+}
+#anchoTipoAtleta{
+    width: 2.10356989247cm;
+}
+#anchoNombre{
+    width: 4.20356989247cm;
 }
 .ancho115{
     width: 11.5%;
 }
-#ancho105{
-    width: 10.5%;
+#anchoGenero{
+    width: 1.75356989247cm;
 }
-#ancho10{
-    width: 10%;
-}
-#ancho11{
-    width: 11%;
-}
-.ancho7{
-    width: 7%;
-}
-#lineaFADN{
-    position: absolute; 
-    margin-left: 33.25%; 
-    margin-top: 0.02%;
-}
-#lineaDepartamento{
-    position: absolute; 
-    margin-left: 29.75%; 
-    margin-top: 0.02%;
+.anchoMCED{
+    width: 2.15356989247cm;
 }
 #mostrarMes{
     position: absolute; 
     margin-left: 32.5%; 
     margin-top: 2.75%;
+    text-align: center;
+}
+#lineaFADN{
+    position: absolute; 
+    margin-left: 39%; 
+    margin-top: 0.09%;
+}
+#lineaDepartamento{
+    position: absolute; 
+    margin-left: 26.25%; 
+    margin-top: 0.09%;
+}
+#interno1{
+    margin-top: 0.8%;
+    margin-left: 3.95cm;
+    width: 4.3cm;
+    height: 50%;
+    float: left;
+}
+#interno2{
+    margin-top: 0.8%;
+    margin-left: 8.95cm;
+    width: 2.3cm;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#interno3{
+    margin-top: 0.8%;
+    margin-left: 12cm;
+    width: 1.1cm;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#interno4{
+    margin-top: 0.8%;
+    margin-left: 13.7cm;
+    width: 1.6cm;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+.tipoFuente{
+    font-family: "Century Gothic", sans-serif;
+}
+#tamanioFuenteRegistroNominal{
+    font-size: 0.211cm;
+}
+.tamanioFuenteMRD{
+    font-size: 0.24cm;
+}
+.tamanioFuenteCodigo{
+    font-size: 0.225cm;
+}
+.tamanioFuenteVersion{
+    font-size: 0.22cm;
+}
+.tamanioFuentePagina{
+    font-size: 0.23cm;
+}
+#contenedorEncabezado{
+    width: 100%;
+    height: 1.08cm;
+    border-bottom: 0.3px solid black;
+    border-top: 0.3px solid black;
+    border-left: 0.3px solid black;
+    border-right: 0.3px solid black;
+}
+#foto{
+    width: 0.65cm;
+    height: 100%;
+    border-right: 0.3px solid black;
+    float: left;
+    position: relative;
+}
+#inicial{
+    width: 19.1cm;
+    height: 0.7cm;
+    border-bottom: 0.3px solid black;
+    float: left;
+    position: relative;
+}
+#final{
+    margin-top: 2.88%;
+    width: 19.1cm;
+    height: 0.38cm;
+    float: left;
+    position: relative;
+}
+.formulario{
+    width: 100%;
+    height: 50%;
+}
+.margenSuperiorFormulario{
+    margin-top: 0.3%;
 }
