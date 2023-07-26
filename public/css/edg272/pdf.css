@@ -1,161 +1,138 @@
-#contenedor{
+#contenedorPrincipal{
+    width: 18.7cm;
+    height: 100%;
+    font-family: "Century Gothic", sans-serif;
+}
+#contenedorEncabezado{
     width: 100%;
-    height: 4.25%;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    border-left: 1px solid black;
-    border-right: 1px solid black;
+    height: 1.3cm;
+    border-bottom: 0.3px solid black;
+    border-top: 0.3px solid black;
+    border-left: 0.3px solid black;
+    border-right: 0.3px solid black;
 }
 #foto{
-    width: 4%;
+    width: 0.8cm;
     height: 100%;
-    border-right: 1px solid black;
+    border-right: 0.3px solid black;
     float: left;
     position: relative;
 }
 #inicial{
-    width: 96%;
-    height: 60%;
-    border-bottom: 1px solid black;
+    width: 17.9cm;
+    height: 0.87cm;
+    border-bottom: 0.3px solid black;
     float: left;
     position: relative;
 }
 #final{
     margin-top: 3.5%;
-    width: 96%;
-    height: 28.9%;
+    width: 17.9cm;
+    height: 0.43cm;
     float: left;
     position: relative;
+}
+.margenSuperiorFormulario{
+    margin-top: 0.3%;
 }
 .formulario{
+    width: 1.7cm;
+    height: 50%;
+    margin-left: 7.7cm;
+}
+.registroNominal{
+    width: 7.7cm;
+    height: 50%;
+    margin-left: 4.7cm;
+}
+#tamanioFuenteRegistroNominal{
+    font-size: 0.564em;
+}
+#tamanioFuenteFormulario{
+    font-size: 0.57em;
+}
+#contenedorMRD{
+    margin-top: 1.5%;
+    margin-left: 1.8cm;
+    width: 4.8cm;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#contenedorCodigo{
+    margin-top: 1.5%;
+    margin-left: 7.6cm;
+    width: 3cm;
+    height: 50%;
+    float: left;
+    position: relative;
+}
+#contenedorVersion{
+    margin-top: 1.5%;
+    margin-left: 11.3cm;
+    width: 0.7cm;
+    height: 50%;
+    float: left;
+    position: relative;
+    overflow: hidden;
+}
+.textoVP{
+    font-size: 33.25%;
+    transform-origin: 0 0;
+    transform: scaleX(2) scaleY(2);
+    display: inline-block;
+}
+#contenedorPagina{
+    margin-top: 1.5%;
+    margin-left: 13.4cm;
+    width: 0.95cm;
+    height: 50%;
+    float: left;
+    position: relative;
+    overflow: hidden;
+}
+.tamanioFuenteMRDCVP{
+    font-size: 66.5%;
+}
+#contenedorFDM{
     width: 100%;
-    height: 50%;
-}
-.textoCentrado{
-    text-align: center;
-}
-#interno1{
-    margin-top: 0.05%;
-    margin-left: 7%;
-    width: 33%;
-    height: 50%;
-    float: left;
-    position: relative;
-}
-#interno2{
-    margin-top: 0.05%;
-    margin-left: 42%;
-    width: 20%;
-    height: 50%;
-    float: left;
-    position: relative;
-}
-#interno3{
-    margin-top: 0.05%;
-    margin-left: 66%;
-    width: 10%;
-    height: 50%;
-    float: left;
-    position: relative;
-}
-#interno4{
-    margin-top: 0.05%;
-    margin-left: 81%;
-    width: 12.5%;
-    height: 50%;
-    float: left;
-    position: relative;
-}
-#contenedor2{
-    width: 100%;
-    height: 4.5%;
+    height: 1.1cm;
 }
 #fadn{
-    width: 50%;
+    width: 7.6cm;
     height: 100%;
     float: left;
     position: relative;
-    margin-left: 1.75%;
+    margin-left: 0.3cm;
+}
+#espacio1{
+    width: 100%;
+    height: 0.4cm;
+}
+#contenedorInstrucciones{
+    width: 18.1cm;
+}
+.tamanioFuenteInstrucciones{
+    font-size: 62%;
 }
 #depto{
     width: 50%;
     height: 100%;
     float: left;
     position: relative;
-    margin-left: 7.5%;
+    margin-left: 2.3cm;
 }
 #mes{
-    margin-left: 3%;
-}
-#contenedor3{
-    width: 78%;
-}
-.fondo{
-    border-top: 2px solid white;
-    background-color: #00B0F0; 
-    color:white;
-    font-family: Century;
-}
-#tituloTabla{
-    background-color: #757171; 
-    color:white;
-    font-family: Century;
-    border-top: 1px solid #757171;  
-    border-collapse: collapse;
-}
-.cuerpo{
-    border: 1px solid black; 
-    border-collapse: collapse;
-}
-#bIzq{
-    border-left: 1px solid #00B0F0;
-}
-#bDer{
-    border-right: 1px solid #00B0F0;
-}
-#espacio1{
-    width: 100%;
-    height: 1.2%;
-}
-#espacio2{
-    width: 100%;
-    height: 0.5%;
-}
-#anchoFull{
-    width: 100%;
-}
-.textoCentrado{
-    text-align: center;
-}
-.bordeDerechoGruesoBlanco{
-    border-right: 2px solid white;
-}
-.tamanioFuente10{
-    font-size: 62.5%;
+    margin-left: 2.7%;
 }
 .tamanioFuente11{
     font-size: 68.75%;
 }
-.tamanioFuente9{
-    font-size: 56.25%;
-}
-.tamanioFuente14{
-    font-size: 87.5%;
-}
-#no{
-    width: 6%;
-}
-#nacimiento{
-    width: 12.75%;
-}
-#edad{
-    width: 9%;
-}
-#genero{
-    width: 14%;
-}
-#categoria{
-    width: 16%;
+#posicionMes{
+    position: absolute; 
+    margin-left: 0.7cm; 
+    margin-top: 1.5%;
+    width: 4.45cm;
 }
 #lineaFADN{
     position: absolute; 
@@ -167,8 +144,64 @@
     margin-left: 27.25%; 
     margin-top: 0.02%;
 }
-#posicionMes{
-    position: absolute; 
-    margin-left: 22.5%; 
-    margin-top: 1.5%;
+#espacio2{
+    width: 100%;
+    height: 0.3cm;
+}
+.textoCentrado{
+    text-align: center;
+}
+#tituloTabla{
+    background-color: #757171; 
+    color:white;
+    font-family: Century; 
+    border-collapse: collapse;
+    height: 0.4cm;
+}
+.fondo{
+    border-top: 0.05cm solid white;
+    background-color: #00B0F0; 
+    color:white;
+    height: 0.6cm;
+}
+.bordeDerechoGruesoBlanco{
+    border-right: 0.05cm solid white;
+}
+.cuerpo{
+    border: 0.3px solid black; 
+    border-collapse: collapse;
+    height: 0.3420625cm;
+}
+#no{
+    width: 1.0920625cm;
+}
+#nombreAtleta{
+    width: 6.5420625cm;
+}
+#nacimiento{
+    width: 3.05502083333cm;
+}
+#edad{
+    width: 1.5550208333cm;
+}
+#genero{
+    width: 2.65502083333cm;
+}
+#categoria{
+    width: 3.35502083333cm;
+}
+#anchoFull{
+    width: 100%;
+}
+.tamanioFuente9{
+    font-size: 56.25%;
+}
+.tamanioFuente10{
+    font-size: 72.5%;
+}
+.tamanioFuente14{
+    font-size: 87.5%;
+}
+.tamanioFuenteNacimiento{
+    font-size: 72.5%;
 }
