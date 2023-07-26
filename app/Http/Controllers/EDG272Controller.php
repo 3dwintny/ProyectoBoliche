@@ -119,8 +119,8 @@ class EDG272Controller extends Controller
                     $fechaCompleta = $fechaNacimiento->day . "/" . strtolower($meses->mesLetras($fechaNacimiento->month)) . "/" . $fechaNacimiento->year;
                     array_push($fechasNacimiento,$fechaCompleta);
                 }
-                // $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>11]);
-                // $control->save();
+                $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>11]);
+                $control->save();
                 return PDF::loadView('Reportes.edg272.pdf',compact('atletas','mostrarMes','anio','deporte','departamento','fechasNacimiento'))->setPaper('8.5x11')->stream();
             }
             else{
