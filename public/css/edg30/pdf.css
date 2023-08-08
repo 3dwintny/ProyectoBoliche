@@ -1,0 +1,286 @@
+#contenedorPrincipal{
+    width: 24.6cm;
+    height: 100%;
+}
+#contenedorEncabezado{
+    width: 100%;
+    height: 1.25cm;
+    border-bottom: 0.3px solid black;
+    border-top: 0.3px solid black;
+    border-left: 0.3px solid black;
+    border-right: 0.3px solid black;
+}
+#contenedorLogotipo{
+    width: 0.85cm;
+    height: 100%;
+    border-right: 0.3px solid black;
+    float: left;
+    position: relative;
+}
+#contenedorPrincipalEncabezado{
+    width: 23.75cm;
+    height: 0.8cm;
+    border-bottom: 0.3px solid black;
+    float: left;
+    position: relative;
+}
+#contenedorSecundarioEncabezado{
+    margin-top: 2.70%;
+    width: 23.75cm;
+    height: 0.45cm;
+    float: left;
+    position: relative;
+}
+#separacionCeroPuntoCincoCm{
+    width: 100%;
+    height: 0.5cm;
+}
+.separacionCeroPuntoCuatroCm{
+    width: 100%;
+    height: 0.4cm;
+}
+#contenedorTextoFormulario{
+    width: 100%;
+    height: 50%;
+    font-size: 67%;
+}
+#contenedorTextoRegistroAsistencia{
+    width: 100%;
+    height: 50%;
+    font-size: 67%;
+}
+#contenedorTextoProcesoAdministrativo{
+    margin-left: 1.9cm;
+    width: 2.6cm;
+    height: 50%;
+    float: left;
+    position: relative;
+    margin-top: 0.15cm;
+    font-size: 35.75%;
+    transform-origin: 0 0;
+    transform: scaleX(2) scaleY(2);
+}
+#contenedorTextoCodigo{
+    margin-left: 8.1cm;
+    width: 1.5cm;
+    height: 50%;
+    float: left;
+    position: relative;
+    margin-top: 0.15cm;
+    font-size: 35.75%;
+    transform-origin: 0 0;
+    transform: scaleX(2) scaleY(2);
+}
+#contenedorTextoFechaAprobacion{
+    margin-left: 12cm;
+    width: 1.96cm;
+    height: 50%;
+    float: left;
+    position: relative;
+    margin-top: 0.15cm;
+    font-size: 35.75%;
+    transform-origin: 0 0;
+    transform: scaleX(2) scaleY(2);
+}
+#contenedorTextoVersion{
+    margin-left: 16.9cm;
+    width: 0.73cm;
+    height: 50%;
+    float: left;
+    position: relative;
+    margin-top: 0.15cm;
+    font-size: 35.75%;
+    transform-origin: 0 0;
+    transform: scaleX(2) scaleY(2);
+}
+#contenedorTextoNumeroPagina{
+    margin-left: 19cm;
+    width: 1.05cm;
+    height: 50%;
+    float: left;
+    position: relative;
+    margin-top: 0.15cm;
+    font-size: 35.75%;
+    transform-origin: 0 0;
+    transform: scaleX(2) scaleY(2);
+}
+#contenedorHojaNoMesAnio{
+    width: 100%;
+    height: 0.4cm;
+}
+#contenedorTextoHojaNo{
+    margin-left: 5.1cm;
+    height: 100%;
+    float: left;
+    position: relative;
+    width: 5.52cm;
+}
+#contenedorTextoMesAnio{
+    margin-left: 6.47cm;
+    height: 100%;
+    float: left;
+    position: relative;
+    width: 6.5cm;
+}
+.textoAlineadoAlCentro{
+    text-align: center;
+}
+.rotacionVerticalTexto{
+    writing-mode: vertical-lr; 
+    transform: rotate(270deg);
+    width: 100%;
+}
+#dimensionesEncabezadoNombreAtletaTbl{
+    height: 1.57cm;
+}
+.margenIzquierdoDinamico{
+    margin-left:auto;
+}
+.anchoTotalTablas{
+    width: 100%;
+}
+#anchoContenedorDatosUbicacion{
+    width: 6.37708333333cm;
+}
+.tipoFuente{
+    font-family: "Century Gothic", sans-serif; 
+}
+.altoFilasDatosUbicacionEntrenamientoMonitoreoEvaluacion{
+    height: 0.42cm;
+}
+.anchoContenedorTextoPrimeraVisita{
+    width: 3.64708333333cm;
+}
+#anchoContenedorDatosEntrenamiento{
+    width: 6.57708333333cm;
+}
+.anchoDinamico{
+    width:auto;
+}
+.altoFilaTblAsistencia{
+    height: 0.3420625cm;
+}
+.altoEncabezadoTextoControlAsistencia{
+    height: 0.9cm;
+}
+#posicionMes{
+    position: absolute; 
+    margin-left: 3.05cm; 
+    margin-top: -0.05cm;
+    width: 2.65cm;
+    text-align: center;
+}
+.posicionBordeFechaTblControl{
+    position: absolute; 
+    margin-left: 0.45cm; 
+    margin-top: 0.22cm;
+    width: 2.5cm;
+    border-bottom: black 0.1px solid;
+}
+.posicionBordeConteoTblControl{
+    position: absolute; 
+    margin-left: 0.42cm; 
+    margin-top: 0.22cm;
+    width: 2.5cm;
+    border-bottom: black 0.1px solid;
+}
+.posicionBordeFirmaMetodologo{
+    position: absolute; 
+    margin-left: 0.23cm; 
+    margin-top: 0.22cm;
+    width: 2.02cm;
+    border-bottom: black 0.1px solid;
+}
+.posicionBordeDeporteDeptoMunicipioTblControl{
+    position: absolute; 
+    margin-left: 1cm; 
+    margin-top: 0.25cm;
+    width: 5.5cm;
+    border-bottom: black 0.1px solid;
+}
+#posicionBordeNombreEntrenador{
+    position: absolute; 
+    margin-left: 2.2cm; 
+    margin-top: 0.25cm;
+    width: 4.48cm;
+    border-bottom: black 0.1px solid;
+}
+#posicionNombreEntrenador{
+    position: absolute; 
+    margin-left: 1.04cm; 
+    margin-top: 0cm;
+    width: 4.48cm;
+    text-align: center;
+}
+#posicionBordeHorario{
+    position: absolute; 
+    margin-left: 1.48cm; 
+    margin-top: 0.25cm;
+    width: 5.2cm;
+    border-bottom: black 0.1px solid;
+}
+#posicionBordeDiasEntreno{
+    position: absolute; 
+    margin-left: 2.98cm; 
+    margin-top: 0.25cm;
+    width: 3.7cm;
+    border-bottom: black 0.1px solid;
+}
+#posicionDiasEntreno{
+    position: absolute; 
+    margin-left: 1.15cm; 
+    margin-top: 0cm;
+    width: 3.7cm;
+    text-align: center;
+}
+#bordesTablaControl{
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-collapse: collapse;
+    height: 0.4cm;
+}
+.bordeDerechoBlancoUnPixel{
+    border-right: 1px solid white;
+}
+.bordeDerechoNegroUnPixel{
+    border-right: 1px solid black;
+}
+#bordeInferiorBlancoUnPixel{
+    border-bottom:  1px solid white;
+}
+.bordeInferiorGruesoNegroUnPixel{
+    border-bottom: black 1px solid;
+}
+#bordeInferiorGruesoBlancoUnPixel{
+    border-bottom: white 1px solid;
+}
+.todosBordesCeroPuntoTresPixels{
+    border: 0.3px solid black; 
+    border-collapse: collapse;
+}
+.tamanioFuenteOchoPuntos{
+    font-size:50%;
+}
+.tamanioFuenteOncePuntos{
+    font-size:68.75%;
+}
+.tamanioFuenteDiezPuntos{
+    font-size:62.5%;
+}
+.tamanioFuenteSietePuntos{
+    font-size:43.75%;
+}
+.fondoAzulObscuro{
+    color: white;
+    background-color: #002060;
+}
+.fondoCeleste{
+    color: white;
+    background-color: #00B0F0;
+}
+th {
+    white-space: nowrap;
+}
+td {
+    white-space: nowrap;
+}

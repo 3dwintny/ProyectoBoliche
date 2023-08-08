@@ -322,8 +322,8 @@ class AsistenciaController extends Controller
             $entrenador = $request->entrenador;
             $dias = $request->dias;
             $horario = $request->horario;
-            $control = new Control(['usuario_id' => auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>3]);
-            $control->save();
+            // $control = new Control(['usuario_id' => auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>3]);
+            // $control->save();
             return PDF::setOptions(['enable_remote' => true,
             'chroot'  => public_path('storage/uploads'),])
             ->loadView('Reportes.RepFor30.pdf',compact('dias','horario','entrenador','centro','municipio','atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion','departamento'))
