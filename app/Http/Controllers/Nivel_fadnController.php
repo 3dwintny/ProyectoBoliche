@@ -68,7 +68,7 @@ class Nivel_fadnController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar el nivell FADN');
+            return back()->with('error', 'Se produjo un error al registrar el nivel FADN');
         }
     }
 

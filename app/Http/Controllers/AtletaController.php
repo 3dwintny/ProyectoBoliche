@@ -171,21 +171,6 @@ class AtletaController extends Controller
      */
     public function create($id)
     {
-        $hoy = Carbon::now();
-        $centro=Centro::all();
-        $entrenador= Entrenador::All();
-        $alumnos = Alumno::all();
-        $categoria = Categoria::all();
-        $etapa=Etapa_Deportiva::all();
-        $deporteadaptado = Deporte_Adoptado::all();
-        $otroprograma = Otro_Programa::all();
-        $lineadesarrollo = Linea_Desarrollo::all();
-        $deporte = Deporte::all();
-        $modalidad = Modalidad::all();
-        $prt = PRT::all();
-        return view('atletas.create',compact('centro','entrenador','alumnos','categoria','etapa',
-                                            'deporteadaptado','otroprograma','lineadesarrollo',
-                                            'deporte','modalidad','prt','hoy'));
     }
     public function creacion($id){
         try{

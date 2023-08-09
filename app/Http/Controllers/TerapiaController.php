@@ -14,7 +14,6 @@ use PDF;
 use Mail;
 use App\Mail\CorreosTerapia;
 use App\Models\Control;
-use Illuminate\Support\Facades\Auth;
 
 class TerapiaController extends Controller
 {
@@ -386,7 +385,7 @@ class TerapiaController extends Controller
             }
         }
         catch(\Exception $e){
-            return back()->with('error', 'Se produjo un error al obtener al paciente');
+            return back()->with('error', 'Se produjo un error al obtener la información paciente');
         }
     }
 
