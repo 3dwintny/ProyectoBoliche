@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Alumno;
 use App\Models\Atleta;
 use App\Models\Entrenador;
+use App\Models\Administracion;
 use Illuminate\Support\Facades\DB;
 
 class PsicologiaController extends Controller
@@ -84,13 +85,16 @@ class PsicologiaController extends Controller
                 if($tipoUsuarioId!=null){
                     switch($tipoUsuarioId){
                         case 1:
-                            $alumno = Alumno::where('correo',$request->correo)->first();
-                            Atleta::where('id',$alumno->atleta_id)->update(['estado'=>'inactivo']);
+                            $alumno = Alumno::where('correo',$request->email)->first();
+                            Atleta::where('alumno_id',$alumno->id)->update(['estado'=>'inactivo']);
                             break;
                         case 2:
                             Entrenador::where('correo',$request->correo)->update(['estado'=>'inactivo']);
                             break;
                     }
+                }
+                else{
+                    Administracion::where('user_id',$usuario->id)->update(['estado'=>'inactivo']);
                 }
                 DB::table('model_has_roles')->where('model_id',$usuario->id)->delete();
                 $usuario->update(['tipo_usuario_id'=>3]);

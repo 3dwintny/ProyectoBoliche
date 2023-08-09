@@ -28,6 +28,7 @@ use App\Models\Encargado;
 use PDF;
 use App\Models\Formulario;
 use App\Models\Psicologia;
+use App\Models\Administracion;
 
 class AtletaController extends Controller
 {
@@ -267,6 +268,9 @@ class AtletaController extends Controller
                             Psicologia::where('correo',$alumno->correo)->update(['estado'=>'inactivo']);
                             break;
                     }
+                }
+                else{
+                    Administracion::where('user_id',$usuario->id)->update(['estado'=>'inactivo']);
                 }
                 DB::table('model_has_roles')->where('model_id',$usuario->id)->delete();
                 $usuario->update(['tipo_usuario_id'=>1]);

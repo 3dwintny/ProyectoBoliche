@@ -71,9 +71,15 @@
             <p class="text-xs text-secondary mb-0">Federeacion de boliche</p>
           </td>
           <td class="align-middle">
-            <a href="{{ route('usuarios.edit',encrypt($usuario->id)) }}" style="background-color:#fba313;" class="btn  font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Editar usuario">
+            @if($usuario->name !== 'Administrador')
+              <a href="{{ route('usuarios.edit', encrypt($usuario->id)) }}" style="background-color:#fba313;" class="btn font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Editar usuario">
+                  Editar
+              </a>
+            @else
+            <span style="background-color:#fba313;" class="btn font-weight-normal text-xs" data-toggle="tooltip" data-original-title="Editar usuario">
               Editar
-            </a>
+            </span>
+            @endif
           </td>
         </tr>
         @php
