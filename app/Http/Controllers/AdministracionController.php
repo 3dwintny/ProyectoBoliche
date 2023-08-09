@@ -91,7 +91,7 @@ class AdministracionController extends Controller
         DB::beginTransaction();
         try{
             Administracion::find($id)->update(['estado' => 'inactivo']);
-            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>31]);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ELIMINAR', 'tabla_accion_id'=>31]);
             $control->save();
             DB::commit();
             return redirect()->action([AdministracionController::class,'index'])->with('success','Administrador eliminado exitosamente');
@@ -102,5 +102,28 @@ class AdministracionController extends Controller
         }
     }
 
-    public function eliminados(){}
+    public function eliminados(){
+        try{
+            $eliminar = Administracion::where('estado', 'inactivo')->get();
+            return view('administracion.eliminados',compact('eliminar'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function restaurar(Request $request){
+        DB::beginTransaction();
+        try{
+            Administracion::find(decrypt($request->e))->update(['estado'=>'activo']);
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'RESTAURAR', 'tabla_accion_id'=>31]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([AdministracionController::class,'index'])->with('success','Administrador restaurado exitosamente');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return back()->with('error', 'Se produjo un error al restaurar al administrador');
+        }
+    }
 }

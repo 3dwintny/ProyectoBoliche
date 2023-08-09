@@ -318,7 +318,8 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('restaurar/tipos-de-contratos',[Tipo_ContratoController::class,'eliminados'])->name('eliminadosContrato');
     Route::post('restaurandoContratos',[Tipo_ContratoController::class,'restaurar'])->name('restaurandoContrato');
 
-    Route::get('restaurar/usuarios',[UserController::class,'eliminados'])->name('eliminadosUsuarios');
+    Route::get('restaurar/usuarios',[AdministracionController::class,'eliminados'])->name('eliminadosUsuarios');
+    Route::post('restaurandoAdministradores',[AdministracionController::class,'restaurar'])->name('restaurandoAdministradores');
     Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 
     Route::resource('municipio',MunicipioController::class);

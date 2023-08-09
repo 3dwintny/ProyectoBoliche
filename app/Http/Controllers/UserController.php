@@ -283,6 +283,8 @@ class UserController extends Controller
         }
     }
 
+    
+
     public function acciones(){
         try{
             $control = Control::where('tabla_accion_id',31)->with('usuario')->paginate(5);
