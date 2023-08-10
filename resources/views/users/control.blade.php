@@ -6,7 +6,7 @@
       <div class="header-body">
           <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
-                  <h1 class="text-white">Entrenadores</h1>
+                  <h1 class="text-white">Usuarios</h1>
               </div>
           </div>
       </div>
@@ -21,7 +21,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       @endif
-      <div class="col-xl-6 col-lg-7 col-md-12 col-sm-9">
+      <div class="col-xl-4 col-lg-5 col-md-8 col-sm-7">
         <table class="table table-responsive table-hover" style="border-radius: 5px;">
           <thead class="table-dark">
             <tr>
@@ -53,8 +53,8 @@
               @endif
           </tbody>
         </table>
-        {{$control->links('vendor.pagination.custom')}}
       </div>
+      {{$control->links('vendor.pagination.custom')}}
     </div>
   </div>
 </div>

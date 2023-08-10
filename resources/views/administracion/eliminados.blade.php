@@ -5,7 +5,7 @@
   <div class="container-fluid">
       <div class="header-body">
           <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+              <div class="col-xl-8 col-lg-9 col-md-10 col-sm-12">
                   <h1 class="text-white">Administradores del sistema</h1>
               </div>
           </div>
@@ -21,7 +21,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       @endif
-      <div class="col-xl-12 col-lg-4 col-md-7 col-sm-5">
+      <div class="col-xl-12 col-lg-5 col-md-7 col-sm-6">
         <table class="table table-responsive table-hover" style="border-radius: 5px;">
           <thead class="table-dark">
             <tr>
