@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Registrar nueva(o)</h2>
+                            <h2>Nueva(o)</h2>
                         </strong>
                     </div>
                     <form action="{{ route('psicologia.store') }}" id="register_form" method="POST" role="form" enctype="multipart/form-data">

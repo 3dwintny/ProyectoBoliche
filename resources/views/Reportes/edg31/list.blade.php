@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="container pt-2">
+<div class="container-fluid pt-2">
     <div class="header-body text-center mb-7">
         <div class="row">
             <div class="col-xl-4 col-lg-2 col-md-1 col-sm-1">
@@ -34,7 +34,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <div class="col-xl-9 col-lg-11 col-md-12 col-sm-12">
+            <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12">
                 <table class="table table-responsive">
                     <thead class="table-dark ">
                         <tr>
@@ -154,7 +154,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
+            <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
                 <table class="table table-responsive">
                     <thead class="table-dark ">
                         <tr>
@@ -241,7 +241,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-xl-9 col-lg-11 col-md-12 col-sm-12">
+            <div class="col-xl-10 col-lg-12 col-md-12 col-sm-12">
                 <table class="table table-responsive">
                     <thead class="table-dark ">
                         <tr>

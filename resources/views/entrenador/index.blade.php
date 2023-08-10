@@ -12,8 +12,8 @@
       </div>
   </div>
 </div>
-<div class="container">
-  <div class="pt-md-2 pb-4 pt-5">
+<div class="container-fluid">
+  <div class="row pt-2">
     @include('components.flash_alerts')
     @if(session('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,6 +28,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
     @endif
+    <div class="col-12">
       <table class="table table-responsive">
         <thead class="table-dark" style="border-radius: 5px;">
           <tr>
