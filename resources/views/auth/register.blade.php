@@ -72,11 +72,13 @@
                                     <span class="input-group-text"><i class="ni ni-single-02"></i></span>
                                 </div>
                                 <select class="form-control" name="roles" id="roles" required autofocus>
-                                <option selected disabled value="">Tipo de usuario</option>
-                                @foreach ($roles as $item)
-                                    <option value="{{encrypt($item->id)}}">{{$item->name}}</option>
-                                @endforeach
-                                </select>
+                                    <option selected disabled value="">Tipo de usuario</option>
+                                    @foreach ($roles as $item)
+                                        @if ($item->name !== 'Administrador')
+                                            <option value="{{encrypt($item->id)}}">{{$item->name}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>                                
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn" style="background-color:#fba313;">{{ __('Crear cuenta') }}</button>
