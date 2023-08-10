@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar etapa deportiva</h2>
+                            <h2>Editar</h2>
                         </strong>
                     </div>
                     @if(session('error'))

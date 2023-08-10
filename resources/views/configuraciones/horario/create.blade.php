@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Registrar nuevo horario de entrenamiento</h2>
+                            <h2>Nuevo</h2>
                         </strong>
                     </div>
                     @if(session('error'))

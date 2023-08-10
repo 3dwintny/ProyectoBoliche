@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar modalidad</h2>
+                            <h2>Editar</h2>
                         </strong>
                     </div>
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('modalidad.update',encrypt($modalidad->id))}}">

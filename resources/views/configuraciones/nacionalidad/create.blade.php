@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Registrar nueva nacionalidad</h2>
+                            <h2>Nueva</h2>
                         </strong>
                     </div>
                     @if(session('error'))

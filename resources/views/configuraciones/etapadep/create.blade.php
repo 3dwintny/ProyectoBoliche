@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Registrar nueva etapa deportiva</h2>
+                            <h2>Nueva</h2>
                         </strong>
                     </div>
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('etapa-deportiva.store')}}">
