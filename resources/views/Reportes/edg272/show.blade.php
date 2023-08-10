@@ -17,9 +17,9 @@
     </div>
 </div>
 
-<div class="container pt-2">
+<div class="container-fluid pt-2">
     <div class="header-body text-center mb-7">
-        <div class="col-xl-6 col-lg-4 col-md-1 col-sm-1">
+        <div class="col-xl-1 col-lg-4 col-md-1 col-sm-1">
             <form method="GET" action="{{route('edg272PDF')}}" role="form" enctype="multipart/form-data" target="_blank">
                 @csrf
                 <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
@@ -32,7 +32,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <div class="col-xl-7 col-lg-9 col-md-12 col-sm-12">
+            <div class="col-xl-12 col-lg-9 col-md-12 col-sm-12">
                 <table class="table table-responsive" style="align-content: center;">
                     @php
                         $contador = 1;   
