@@ -21,11 +21,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12">
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Registrar nuevo entrenador</h2>
+                            <h2>Nuevo</h2>
                         </strong>
                     </div>
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('entrenadores.store')}}">

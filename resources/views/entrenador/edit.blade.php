@@ -21,11 +21,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12">
+            <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h3>Editar información</h3>
+                            <h3>Editar</h3>
                         </strong>
                     </div>
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('entrenadores.update',encrypt($entrenador->id))}}">
