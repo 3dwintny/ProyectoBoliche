@@ -18,8 +18,7 @@
         <div class="col-xl-8 col-lg-9 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4> Editar información
-                    </h4>
+                    <h4> Editar</h4>
                 </div>
                 <div class="card-body">
                     @if(session('error'))

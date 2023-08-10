@@ -16,8 +16,7 @@
 @include('configuraciones.varnav')
 <div class="card container-fluid mt-2">
     <div class="card-header">
-        <h4> Crear nuevo usuario
-        </h4>
+        <h4>Nuevo </h4>
     </div>
     <div class="card-body">
         @if ($errors->any())

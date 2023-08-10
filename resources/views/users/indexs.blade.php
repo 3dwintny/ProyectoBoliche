@@ -27,8 +27,8 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
 @endif
-<div class="card container">
-  <div class="table-responsive container">
+<div class="card container-fluid">
+  <div class="table-responsive">
     <hr>
   <a class="btn btn-primary, text-light" style="background-color:#13213c;" href="{{ route('usuarios.create') }}">Nuevo administrador</a>
   <hr>
