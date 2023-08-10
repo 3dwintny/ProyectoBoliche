@@ -28,7 +28,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       @endif
-      <div class="col-xl-4 col-lg-4 col-md-7 col-sm-6">
+      <div class="col-xl-12 col-lg-4 col-md-7 col-sm-6">
         <table class="table table-responsive table-hover" style="border-radius: 5px;">
           <thead class="table-dark">
             <tr>

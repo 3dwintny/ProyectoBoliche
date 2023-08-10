@@ -5,7 +5,7 @@
   <div class="container-fluid">
       <div class="header-body">
           <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+              <div class="col-xl-8 col-lg-8 col-md-10 col-sm-10">
                   <h1 class="text-white">Otros programas de atención</h1>
               </div>
           </div>
