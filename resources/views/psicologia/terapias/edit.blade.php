@@ -31,7 +31,7 @@
                                 <div class="row justify-content-center">
                                     <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12">
                                         @foreach($alumno as $item)
-                                        <h3 class="card-title text-dark">Editar nota evolutiva de {{$item->nombre1}} {{$item->nombre2}} {{$item->nombre3}} {{$item->apellido1}} {{$item->apellido2}}</h3>
+                                        <h3 class="card-title text-dark">Editar sesión de {{$item->nombre1}} {{$item->nombre2}} {{$item->nombre3}} {{$item->apellido1}} {{$item->apellido2}}</h3>
                                         <input type="hidden" value="{{$item->correo}}" name="correo" id="correo" readonly>
                                         @endforeach
                                     </div>
