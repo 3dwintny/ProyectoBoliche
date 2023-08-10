@@ -25,7 +25,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h3>Editar información</h3>
+                            <h3>Editar</h3>
                         </strong>
                     </div>
                 </div>
