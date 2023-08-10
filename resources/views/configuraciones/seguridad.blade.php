@@ -532,7 +532,7 @@
                             <div class="col-8">
                                 <div class="numbers">
                                     <h6 class="font-weight-bolder mb-0">
-                                        Terapias
+                                        Sesiones
                                     </h6>
                                 </div>
                             </div>
