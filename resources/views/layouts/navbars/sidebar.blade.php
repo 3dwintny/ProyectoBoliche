@@ -34,7 +34,7 @@
                         <span>{{ __('Ajustes') }}</span>
                     </a>
                     @endcan
-                    @can('administracion')
+                    @can('Administración')
                     <a href="{{route('administradores.index')}}" class="dropdown-item">
                         <i class="fa fa-magic" aria-hidden="true"></i>
                         <span>{{ __('Administración') }}</span>
@@ -72,7 +72,7 @@
             <!-- Navigation -->
 
             <ul class="navbar-nav">
-                @can('SeedAtletas')
+                @can('Menú de atleta')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-atleta" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-user-run"></i>
@@ -81,21 +81,21 @@
 
                     <div class="collapse show" id="navbar-atleta">
                         <ul class="nav nav-sm flex-column">
-                        @can('solicitud-Atletas')
+                        @can('Solicitudes pendientes')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('alumnos.index') }}">
                                     {{ __('Solicitudes') }}
                                 </a>
                             </li>
                             @endcan
-                            @can('listado-Atletas')
+                            @can('Listar atletas')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('atletas.index') }}">
                                     {{ __('Atletas') }}
                                 </a>
                             </li>
                             @endcan
-                            @can('ver-listado-tareas')
+                            @can('Ver listado de tareas')
                             @if(auth()->user()->tipo_usuario_id==1)
                             <li class="nav-item">
                                 <a href="{{route('tareaPendiente')}}" class="nav-link">
@@ -104,7 +104,7 @@
                             </li>
                             @endif
                             @endcan
-                            @can('Asistencia por atleta')
+                            @can('Asistencia personal')
                             @if(auth()->user()->tipo_usuario_id==1)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistenciaIndividual') }}">
@@ -113,7 +113,7 @@
                             </li>
                             @endif
                             @endcan
-                            @can('atletaPerfil')
+                            @can('Perfil de atleta')
                             @if(auth()->user()->tipo_usuario_id==1)
                             <li class="nav-item">
                                 <a href="{{ route('modificarAtleta') }}" class="nav-link">
@@ -126,7 +126,7 @@
                     </div>
                 </li>
                 @endcan
-                @can('seedEntrenador')
+                @can('Menú de entrenador')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-entrenador" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fa fa-stopwatch"></i>
@@ -134,7 +134,7 @@
                     </a>
                     <div class="collapse show" id="navbar-entrenador">
                         <ul class="nav nav-sm flex-column">
-                            @can('crear-EDG-31-Asistencia')
+                            @can('Toma de asistencia')
                             @if(auth()->user()->tipo_usuario_id==2)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('asistencia.create') }}">
@@ -143,7 +143,7 @@
                             </li>
                             @endif
                             @endcan
-                            @can('editarAsistencia')
+                            @can('Editar asistencia')
                             @if(auth()->user()->tipo_usuario_id==2)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('editarAsistencia') }}">
@@ -152,21 +152,21 @@
                             </li>
                             @endif
                             @endcan
-                            @can('registrar-Entrenadores')
+                            @can('Registrar entrenadores')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.create') }}">
                                     {{ __('Registrar entrenador') }}
                                 </a>
                             </li>
                             @endcan
-                            @can('ver-Entrenadores')
+                            @can('Listar entrenadores')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('entrenadores.index') }}">
                                     {{ __('Entrenadores') }}
                                 </a>
                             </li>
                             @endcan
-                            @can('entrenadorPerfil')
+                            @can('Perfil de entrenador')
                             @if(auth()->user()->tipo_usuario_id==2)
                             <li class="nav-item">
                                 <a href="{{ route('modificar') }}" class="nav-link">
@@ -179,7 +179,7 @@
                     </div>
                 </li>
                 @endcan
-                @can('seedPsicologia')
+                @can('Menú de psicología')
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-psico" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="ni ni-atom text-dark"></i>
@@ -187,7 +187,7 @@
                     </a>
                     <div class="collapse show" id="navbar-psico">
                         <ul class="nav nav-sm flex-column">
-                            @can('crearTerapias')
+                            @can('Registrar sesiones')
                             @if(auth()->user()->tipo_usuario_id==3)
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('sesiones.create') }}">
@@ -201,7 +201,7 @@
                             </li>
                             @endif
                             @endcan
-                            @can('ver-Psicologos')
+                            @can('Listar psicólogos')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('psicologia.create') }}">
                                     {{ __('Registrar piscólogo') }}
@@ -213,7 +213,7 @@
                                 </a>
                             </li>
                             @endcan
-                            @can('psicologoPerfil')
+                            @can('Perfil psicólogo')
                             @if(auth()->user()->tipo_usuario_id==3)
                                 <li class="nav-item">
                                     <a href="{{ route('modificarPsicologia') }}" class="nav-link">
@@ -222,7 +222,7 @@
                                 </li>
                             @endif
                             @endcan
-                            @can('Ver acciones')
+                            @can('Seguridad')
                             @if(auth()->user()->tipo_usuario_id==3)
                             <li class="nav-item">
                                 <a href="{{route('accionesTerapia')}}" class="nav-link">
@@ -231,7 +231,7 @@
                             </li>
                             @endif
                             @endcan
-                            @can('editarCodigoCorreo')
+                            @can('Editar código de correo')
                             @if(auth()->user()->tipo_usuario_id==3)
                             <li class="nav-item">
                                 <a href="{{route('editarCodigoCorreo')}}" class="nav-link">
@@ -258,31 +258,31 @@
 
             <!-- Navigation -->
             <ul class="navbar-nav mb-md-3">
-                @can('ver-EDG-30')
+                @can('Reporte EDG-31')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('edg-31.index')}}">
-                        <i class="ni ni-bullet-list-67" style="color: #f4645f;"></i> Reporte EGD FOR31
+                        <i class="ni ni-bullet-list-67" style="color: #f4645f;"></i> Reporte EGD FOR 31
                     </a>
                 </li>
                 @endcan
-                @can('ver-EDG-31-Asistencia')
+                @can('Reporte EDG-30')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('asistencia.index') }}">
                         <i class="ni ni-bullet-list-67"></i> Reporte EGD FOR 30
                     </a>
                 </li>
                 @endcan
-                @can('ver-EDG-27-2')
+                @can('Reporte EDG-27-2')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('edg-27-2.index') }}">
-                        <i class="ni ni-bullet-list-67" style="color: #fea735;"></i> Reporte EGD FOR27.2
+                        <i class="ni ni-bullet-list-67" style="color: #fea735;"></i> Reporte EGD FOR 27.2
                     </a>
                 </li>
                 @endcan
-                @can('ver-EDG-27')
+                @can('Reporte EDG-27')
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('edg-27.index') }}">
-                        <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR27
+                        <i class="ni ni-bullet-list-67" style="color: #00c3ff;"></i> Reporte EGD FOR 27
                     </a>
                 </li>
                 @endcan

@@ -40,7 +40,7 @@
                             <h2>Información personal</h2>
                         </strong>
                     </div>
-                    @can('atletaPerfil')
+                    @can('Perfil de atleta')
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('actualizarAtleta')}}">
                         @csrf
                         {{method_field('PUT')}}

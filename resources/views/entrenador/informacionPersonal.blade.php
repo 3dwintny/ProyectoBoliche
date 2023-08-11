@@ -35,7 +35,7 @@
                             <h2>Editar</h2>
                         </strong>
                     </div>
-                    @can('entrenadorPerfil')
+                    @can('Perfil de entrenador')
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('actualizar')}}">
                         @csrf
                         {{method_field('PUT')}}

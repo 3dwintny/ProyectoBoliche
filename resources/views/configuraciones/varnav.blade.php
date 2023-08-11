@@ -12,7 +12,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navigation">
                 <ul class="navbar-nav navbar-nav-hover ms-auto">
-                    @can('ver-rol')
+                    @can('Listar roles')
                     <div class="row">
                         <li class="nav-item">
                             <a class="nav-link nav-link-icon" href="{{ route('us') }}">

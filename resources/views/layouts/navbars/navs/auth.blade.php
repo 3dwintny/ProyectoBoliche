@@ -31,7 +31,7 @@
                         <span>{{ __('Ajustes') }}</span>
                     </a>
                     @endcan
-                    @can('administracion')
+                    @can('Administración')
                     <a href="{{route('administradores.index')}}" class="dropdown-item">
                         <i class="fa fa-magic" aria-hidden="true"></i>
                         <span>{{ __('Administración') }}</span>
