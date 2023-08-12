@@ -38,6 +38,7 @@ class SeederTablaPermisos extends Seeder
             'Editar atletas',
             'Asistencia personal',
             'Perfil de atleta',
+            'Información de encargados',
             //Configuraciones
             'Configuración',
             //Entrenadores
