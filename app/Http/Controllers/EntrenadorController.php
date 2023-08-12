@@ -383,7 +383,7 @@ class EntrenadorController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
             $control->save();
             DB::commit();
-            return redirect('modificar')->with('success','Información actualizada exitosamente');
+            return redirect()->action([EntrenadorController::class,'modificar'])->with('success','Información actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();

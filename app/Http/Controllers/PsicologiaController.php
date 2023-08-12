@@ -231,7 +231,7 @@ class PsicologiaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
             $control->save();
             DB::commit();
-            return redirect('modificarPsicologia')->with('success','Información actualizada exitosamente');
+            return redirect()->action([PsicologiaController::class,'modificar'])->with('success','Información actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();

@@ -485,7 +485,7 @@ class AtletaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
             $control->save();
             DB::commit();
-            return redirect('home');
+            return redirect()->action([AtletaController::class,'modificar'])->with('success','Información actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
