@@ -56,7 +56,7 @@
               <td>{{\Carbon\Carbon::parse($item->hora_fin)->format('H:i')}}</td>
               <td>{{$item->lunes}}</td>
               <td>{{$item->martes}}</td>
-              <td>{{$item->miércoles}}</td>
+              <td>{{$item->miercoles}}</td>
               <td>{{$item->jueves}}</td>
               <td>{{$item->viernes}}</td>
               <td>{{$item->sabado}}</td>

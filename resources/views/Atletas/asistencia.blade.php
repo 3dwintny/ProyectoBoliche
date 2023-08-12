@@ -36,7 +36,7 @@
                     <tbody>
                         <tr>
                             @if(count($estado) <= 0)
-                            <td colspan="{{ count($fechas) + 2 }}">SIN ASISTENCIA</td>
+                            <td colspan="{{ count($fechas) + 2 }}" class="textoCentrado textoNegrita" >SIN ASISTENCIA</td>
                             @else
                             @foreach($estado as $estadoDia)
                             <td>{{ $estadoDia }}</td>
@@ -52,3 +52,6 @@
     </div>
 </div>
 @endsection
+@push('styles')
+    <link rel="stylesheet" href="css/general.css">
+@endpush

@@ -36,7 +36,7 @@
             @endphp
             @if (count($eliminar)<=0)
               <tr>
-                <td colspan="2" style="font-weight: bolder; font-size:100%;">SIN RESULTADOS</td>
+                <td colspan="3" style="font-weight: bolder; font-size:100%;">SIN RESULTADOS</td>
               </tr>
             @else
               @foreach ($eliminar as $item)

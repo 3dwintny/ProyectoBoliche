@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h3>Detalles de sesión de {{$paciente->nombre1}} {{$paciente->nombre3}} {{$paciente->nombre3}} {{$paciente->apellido1}} {{$paciente->apellido2}}</h3>
+                            <h3>Detalles de sesión de {{$paciente->nombre1}} {{$paciente->nombre2}} {{$paciente->nombre3}} {{$paciente->apellido1}} {{$paciente->apellido2}}</h3>
                         </strong>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="col-12 mb-2">
-                                <img src="{{ asset('storage/uploads/'.$paciente->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
+                                <img src="{{ asset('uploads/alumnos/'.$paciente->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
                             </div>
                             <div class="row">
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-2">

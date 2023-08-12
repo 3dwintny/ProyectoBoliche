@@ -40,6 +40,16 @@
         </div>
       </div>
     </form>
+      <div class="row">
+        <div class="col-xl-4 col-lg-5 col-md-1 col-sm-3">
+          <form action="{{route('tareaPendiente')}}" method="GET">
+            @csrf
+            <input type="hidden" id="idAtleta" name="idAtleta" value="{{$guardarAtleta}}">
+            <input type="hidden" id="nombreAtleta" name="nombreAtleta" value="{{$completo}}">
+              <input type="submit" value="Tareas pendientes" class="btn btn-outline-info">
+          </form>
+        </div>
+      </div>
     <div class="row justify-content-center">
       @if(session('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">

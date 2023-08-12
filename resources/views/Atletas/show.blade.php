@@ -34,7 +34,7 @@
                     <div class="card">
                         <div class="card-body bg-light">
                             <div class="col-12 mb-2">
-                                <img src="{{ asset('storage/uploads/'.$alumno->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
+                                <img src="{{ asset('uploads/alumnos/'.$atleta->alumno->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
                             </div>
                             <h5 class="mb-2">Información personal</h5>
                             <div class="row">
