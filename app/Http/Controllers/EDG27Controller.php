@@ -21,12 +21,7 @@ class EDG27Controller extends Controller
     {
         try{
             $atletas = Atleta::where('federado','SISTEMÁTICO')->where('estado','activo')->get();
-            if(count($atletas)>0){
-                return view('Reportes.edg27.show',compact('atletas'));
-            }
-            else{
-                return view('Reportes.edg27.sinresultados');
-            }
+            return view('Reportes.edg27.show',compact('atletas'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');

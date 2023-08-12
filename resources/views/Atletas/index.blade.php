@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="header bg-dark pb-3 pt-xl-5 pt-lg-5 pt-md-2 pt-sm-2">
   <div class="container-fluid">
@@ -83,55 +82,56 @@
           @php
             $contador = 1;
           @endphp
-          @if (count($atletas)<=0) <tr>
-            <td colspan="11">SIN RESULTADOS</td>
+          @if (count($atletas)<=0) 
+            <tr>
+              <td colspan="13" class="textoCentrado textoNegrita">SIN RESULTADOS</td>
             </tr>
-            @else
-              @foreach ($atletas as $atleta)
-                <tr>
-                  <td>{{$contador}}</td>
-                  <td>
-                    <div class="d-flex px-2 py-1 bg-white">
-                      <div>
-                        <img src="{{ asset('uploads/alumnos/'.$atleta->alumno->foto) }}" class="avatar avatar-sm me-3">
-                      </div>
-                      <div class="d-flex flex-column justify-content-center">
-                        <h6 class="mb-0 text-xs"><strong>{{$atleta->alumno->nombre1 }} {{$atleta->alumno->nombre2}} {{$atleta->alumno->nombre3}} {{$atleta->alumno->apellido1}} {{$atleta->alumno->apellido2}}</strong></h6>
-                        <p class="text-xs text-secondary mb-0">{{ $atleta->alumno->correo }}</p>
-                      </div>
+          @else
+            @foreach ($atletas as $atleta)
+              <tr>
+                <td>{{$contador}}</td>
+                <td>
+                  <div class="d-flex px-2 py-1 bg-white">
+                    <div>
+                      <img src="{{ asset('uploads/alumnos/'.$atleta->alumno->foto) }}" class="avatar avatar-sm me-3">
                     </div>
-                  </td>
-                  <td>{{$atleta->categoria->tipo}}</td>
-                  <td>{{$atleta->etapa_deportiva->nombre}}</td>
-                  <td>{{$atleta->adaptado}}</td>
-                  <td>{{$atleta->deporte_adaptado->nombre}}</td>
-                  <td>{{$atleta->otro_programa->nombre}}</td>
-                  <td>{{$atleta->centro->nombre}}</td>
-                  <td>{{$atleta->entrenador->nombre1}} {{$atleta->entrenador->nombre2}} {{$atleta->entrenador->apellido1}} {{$atleta->entrenador->apellido2}}</td>
-                  <td>{{\Carbon\Carbon::parse($atleta->fecha_ingreso)->format('d-m-Y')}}</td>
-                  <td>
-                    <form action="{{route('atletas.edit',encrypt($atleta->id))}}" method="GET" role="form" enctype="multipart/form-data">
-                      <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-edit"></i></button>
-                    </form>
-                  </td>
-                  <td>
-                    <form action="{{route('atletas.show',encrypt($atleta->id))}}">
-                      <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-regular fa-eye"></i></button>
-                    </form>
-                  </td>
-                  <td>
-                    <form action="{{route('atletas.destroy',encrypt($atleta->id))}}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger" onclick="return eliminarAtleta('Eliminar atleta')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-                    </form>
-                  </td>
-                </tr>
-                @php
-                  $contador++;
-                @endphp
-              @endforeach
-            @endif
+                    <div class="d-flex flex-column justify-content-center">
+                      <h6 class="mb-0 text-xs"><strong>{{$atleta->alumno->nombre1 }} {{$atleta->alumno->nombre2}} {{$atleta->alumno->nombre3}} {{$atleta->alumno->apellido1}} {{$atleta->alumno->apellido2}}</strong></h6>
+                      <p class="text-xs text-secondary mb-0">{{ $atleta->alumno->correo }}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>{{$atleta->categoria->tipo}}</td>
+                <td>{{$atleta->etapa_deportiva->nombre}}</td>
+                <td>{{$atleta->adaptado}}</td>
+                <td>{{$atleta->deporte_adaptado->nombre}}</td>
+                <td>{{$atleta->otro_programa->nombre}}</td>
+                <td>{{$atleta->centro->nombre}}</td>
+                <td>{{$atleta->entrenador->nombre1}} {{$atleta->entrenador->nombre2}} {{$atleta->entrenador->apellido1}} {{$atleta->entrenador->apellido2}}</td>
+                <td>{{\Carbon\Carbon::parse($atleta->fecha_ingreso)->format('d-m-Y')}}</td>
+                <td>
+                  <form action="{{route('atletas.edit',encrypt($atleta->id))}}" method="GET" role="form" enctype="multipart/form-data">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-edit"></i></button>
+                  </form>
+                </td>
+                <td>
+                  <form action="{{route('atletas.show',encrypt($atleta->id))}}">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-fw fa-regular fa-eye"></i></button>
+                  </form>
+                </td>
+                <td>
+                  <form action="{{route('atletas.destroy',encrypt($atleta->id))}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" onclick="return eliminarAtleta('Eliminar atleta')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+                  </form>
+                </td>
+              </tr>
+              @php
+                $contador++;
+              @endphp
+            @endforeach
+          @endif
         </tbody>
       </table>
     </div>
@@ -160,4 +160,7 @@
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
 <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+@endpush
+@push('styles')
+  <link rel="stylesheet" href="css/general.css">
 @endpush

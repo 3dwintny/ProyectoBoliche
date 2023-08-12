@@ -21,7 +21,11 @@
         <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1">
             <form method="GET" action="{{route('edg27PDF')}}" enctype="multipart/form-data" target="_blank" role="form">
                 @csrf
-                <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                @if(count($atletas)<=0)
+                    <button class="btn btn-outline-info" type="submit" disabled><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                @else
+                    <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                @endif
             </form>
         </div>
         <div class="row justify-content-center">
@@ -51,26 +55,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($atletas as $item)
-                        <tr style="text-align: center;">
-                            <td>{{$contador}}</td>
-                            <td>{{$item->federado}}</td>
-                            <td>
-                                {{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}}
-                                {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
-                            </td>
-                            <td>{{$item->alumno->edad}}</td>
-                            <td>{{$item->alumno->genero}}</td>
-                            <td>{{$item->modalidad->nombre}}</td>
-                            <td>{{$item->categoria->tipo}}</td>
-                            <td>{{$item->etapa_deportiva->nombre}}</td>
-                            <td>{{$item->anios}}</td>
-                            <td>{{$item->meses}}</td>
-                            @php
-                                $contador++;
-                            @endphp
+                        @if(count($atletas)<=0)
+                        <tr>
+                            <td colspan="10" class="textoCentrado textoNegrita">NO SE ENCONTRARON RESULTADOS</td>
                         </tr>
-                        @endforeach
+                        @else
+                            @foreach ($atletas as $item)
+                                <tr style="text-align: center;">
+                                    <td>{{$contador}}</td>
+                                    <td>{{$item->federado}}</td>
+                                    <td>
+                                        {{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}}
+                                        {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
+                                    </td>
+                                    <td>{{$item->alumno->edad}}</td>
+                                    <td>{{$item->alumno->genero}}</td>
+                                    <td>{{$item->modalidad->nombre}}</td>
+                                    <td>{{$item->categoria->tipo}}</td>
+                                    <td>{{$item->etapa_deportiva->nombre}}</td>
+                                    <td>{{$item->anios}}</td>
+                                    <td>{{$item->meses}}</td>
+                                    @php
+                                        $contador++;
+                                    @endphp
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -78,3 +88,6 @@
     </div>
 </div>
 @endsection
+@push('styles')
+    <link rel="stylesheet" href="css/general.css">
+@endpush

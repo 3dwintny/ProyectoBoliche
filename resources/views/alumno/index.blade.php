@@ -39,33 +39,39 @@
         @php
         $contador = 1;
         @endphp
-        @foreach ($alumnos as $alumno)
-        <tr>
-          <td>{{ $contador }}</td>
-          <td>{{$alumno->nombre1}} {{$alumno->nombre2}} {{$alumno->nombre3}} {{$alumno->apellido1}} {{$alumno->apellido2}}</td>
-          <td>{{$alumno->cui}}</td>
-          <td>{{$alumno->celular}}</td>
-          <td>{{$alumno->contacto_emergencia}}</td>
-          <td>{{$alumno->correo}}</td>
-          <td class="table-danger text-danger">{{$alumno->estado}}</td>
-          <td>{{\Carbon\Carbon::parse($alumno->fecha)->format("d-m-Y")}}</td>
-          <td>{{$alumno->direccion}}</td>
-          <td>
-            <form action="{{ route('alumnos.destroy',$alumno->id) }}" method="POST">
-              <a class="btn btn-sm btn-primary show-modal" data-toggle="modal" data-target="#myModal" data-id="{{ $alumno->id }}" href="{{ route('alumnos.show', $alumno->id) }}">
-                <i class="fa fa-fw fa-eye"></i>Ver
-              </a>
-              <a class="btn btn-sm btn-success" href="{{route('creacion',encrypt($alumno->id) )}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
-              @csrf
-              @method('DELETE')
-              <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i>Rechazar</button>
-            </form>
-          </td>
-        </tr>
-        @php
-        $contador++;
-        @endphp
-        @endforeach
+        @if(count($alumnos)<=0)
+          <tr>
+            <td colspan="10" class="textoCentrado textoNegrita">SIN SOLICITUDES PENDIENTES</td>
+          </tr>
+        @else
+          @foreach ($alumnos as $alumno)
+            <tr>
+              <td>{{ $contador }}</td>
+              <td>{{$alumno->nombre1}} {{$alumno->nombre2}} {{$alumno->nombre3}} {{$alumno->apellido1}} {{$alumno->apellido2}}</td>
+              <td>{{$alumno->cui}}</td>
+              <td>{{$alumno->celular}}</td>
+              <td>{{$alumno->contacto_emergencia}}</td>
+              <td>{{$alumno->correo}}</td>
+              <td class="table-danger text-danger">{{$alumno->estado}}</td>
+              <td>{{\Carbon\Carbon::parse($alumno->fecha)->format("d-m-Y")}}</td>
+              <td>{{$alumno->direccion}}</td>
+              <td>
+                <form action="{{ route('alumnos.destroy',$alumno->id) }}" method="POST">
+                  <a class="btn btn-sm btn-primary show-modal" data-toggle="modal" data-target="#myModal" data-id="{{ $alumno->id }}" href="{{ route('alumnos.show', $alumno->id) }}">
+                    <i class="fa fa-fw fa-eye"></i>Ver
+                  </a>
+                  <a class="btn btn-sm btn-success" href="{{route('creacion',encrypt($alumno->id) )}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i>Rechazar</button>
+                </form>
+              </td>
+            </tr>
+            @php
+            $contador++;
+            @endphp
+          @endforeach
+        @endif
       </tbody>
     </table>
     {{$alumnos->links('vendor.pagination.custom')}}
@@ -154,4 +160,7 @@
 
   });
 </script>
+@endpush
+@push('styles')
+  <link rel="stylesheet" href="css/general.css">
 @endpush

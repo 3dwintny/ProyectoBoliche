@@ -32,12 +32,12 @@ class AlumnoController extends Controller
      */
     public function index()
     {
-        $alumnos = Alumno::where('estado','Pendiente')->paginate(5);
-        if(count($alumnos) > 0){
+        try{
+            $alumnos = Alumno::where('estado','Pendiente')->paginate(5);
             return view('alumno.index', compact('alumnos'));
         }
-        else{
-            return view('alumno.sinresultados');
+        catch(\Exception $e){
+            return back()->with('error','Se produjo un error al procesar la solicitud');
         }
     }
 

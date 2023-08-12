@@ -22,7 +22,11 @@
         <div class="col-xl-1 col-lg-4 col-md-1 col-sm-1">
             <form method="GET" action="{{route('edg272PDF')}}" role="form" enctype="multipart/form-data" target="_blank">
                 @csrf
-                <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                @if(count($atletas)<=0)
+                    <button class="btn btn-outline-info" type="submit" disabled><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                @else
+                    <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                @endif
             </form>
         </div>
         <div class="row justify-content-center">
@@ -48,22 +52,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($atletas as $item)
-                        <tr style="text-align: center;">
-                            <td>{{$contador}}</td>
-                            <td>
-                                {{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}}
-                                {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
-                            </td>
-                            <td>{{\Carbon\Carbon::parse($item->alumno->fecha)->format("d-m-Y")}}</td>
-                            <td>{{$item->alumno->edad}}</td>
-                            <td>{{$item->alumno->genero}}</td>
-                            <td>{{$item->categoria->tipo}}</td>
-                            @php
-                                $contador++;
-                            @endphp
+                        @if(count($atletas)<=0)
+                        <tr>
+                            <td colspan="6" class="textoCentrado textoNegrita">NO SE ENCONTRARON RESULTADOS</td>
                         </tr>
-                        @endforeach
+                        @else
+                            @foreach ($atletas as $item)
+                                <tr style="text-align: center;">
+                                    <td>{{$contador}}</td>
+                                    <td>
+                                        {{$item->alumno->nombre1}} {{$item->alumno->nombre2}} {{$item->alumno->nombre3}}
+                                        {{$item->alumno->apellido1}} {{$item->alumno->apellido2}}
+                                    </td>
+                                    <td>{{\Carbon\Carbon::parse($item->alumno->fecha)->format("d-m-Y")}}</td>
+                                    <td>{{$item->alumno->edad}}</td>
+                                    <td>{{$item->alumno->genero}}</td>
+                                    <td>{{$item->categoria->tipo}}</td>
+                                    @php
+                                        $contador++;
+                                    @endphp
+                                </tr>
+                            @endforeach
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -71,3 +81,6 @@
     </div>
 </div>
 @endsection
+@push('styles')
+    <link rel="stylesheet" href="css/general.css">
+@endpush

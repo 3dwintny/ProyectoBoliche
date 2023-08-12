@@ -22,12 +22,7 @@ class EDG272Controller extends Controller
     {
         try{
             $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
-            if(count($atletas)>0){
-                return view('Reportes.edg272.show',compact('atletas'));
-            }
-            else{
-                return view('Reportes.edg272.sinresultados');
-            }
+            return view('Reportes.edg272.show',compact('atletas'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
