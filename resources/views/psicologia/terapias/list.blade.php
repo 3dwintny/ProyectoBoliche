@@ -58,7 +58,7 @@
           @endphp
           @if (count($atleta)<=0)
           <tr>
-            <td colspan="2">SIN RESULTADOS</td>
+            <td colspan="2" class="textoCentrado textoNegrita">SIN RESULTADOS</td>
           </tr>
           @else
             @foreach ($atleta as $item)
@@ -82,4 +82,6 @@
 </div>
 @include('layouts.footers.auth')
 @endsection
-
+@push('styles')
+  <link rel="stylesheet" href="css/general.css">
+@endpush
