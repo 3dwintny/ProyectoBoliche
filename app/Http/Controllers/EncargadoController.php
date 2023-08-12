@@ -21,12 +21,13 @@ class EncargadoController extends Controller
      */
     public function index()
     {
-        $encargados = Encargado::all();
-        $existencia = false;
-        if($encargados){
-            $existencia = true;
+        try{
+            $encargados = Encargado::all();
+            return view('encargados.index', compact('encargados'));
         }
-        return view('encargados.index', compact('encargados','existencia'));
+        catch(\Exception $e){
+            return back()->with('error','Se produjo un error al procesar la solicitud');
+        }
     }
 
     /**
@@ -122,7 +123,7 @@ class EncargadoController extends Controller
     public function acciones(){
         try{
             $control = Control::where('tabla_accion_id',11)->with('usuario')->paginate(5);
-            return view('configuraciones.alergia.control',compact('control'));
+            return view('encargados.control',compact('control'));
         }
         catch(\Exception $e){
             report($e);

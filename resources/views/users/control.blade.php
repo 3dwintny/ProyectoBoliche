@@ -36,7 +36,7 @@
             $contador = 1;
             @endphp
             @if (count($control)<=0) <tr>
-              <td colspan="4">SIN RESULTADOS</td>
+              <td colspan="4" style="font-weight: bolder;">SIN RESULTADOS</td>
               </tr>
               @else
               @foreach ($control as $item)

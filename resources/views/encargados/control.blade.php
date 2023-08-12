@@ -6,7 +6,7 @@
       <div class="header-body">
           <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
-                  <h1 class="text-white">Reporte EDG-27</h1>
+                  <h1 class="text-white">Encargados</h1>
               </div>
           </div>
       </div>
@@ -36,21 +36,21 @@
                 $contador = 1;
             @endphp
             @if (count($control)<=0)
-              <tr>
-                <td colspan="4" style="font-weight: bolder;">SIN RESULTADOS</td>
-              </tr>
+            <tr>
+              <td colspan="4" style="font-weight: bolder; font-size:100%;">SIN RESULTADOS</td>
+            </tr>
             @else
-              @foreach ($control as $item)
-                <tr>
-                  <td>{{$contador}}</td>
-                  <td>{{$item->usuario->name}}</td>
-                  <td>{{$item->Descripcion}}</td>
-                  <td>{{Carbon\Carbon::parse($item->created_at)->format('d-m-Y')}} {{Carbon\Carbon::parse($item->created_at)->format('H:i:s')}}</td>
-                  @php
-                    $contador++;
-                  @endphp
-                </tr>
-              @endforeach
+            @foreach ($control as $item)
+            <tr>
+              <td>{{$contador}}</td>
+              <td>{{$item->usuario->name}}</td>
+              <td>{{$item->Descripcion}}</td>
+              <td>{{Carbon\Carbon::parse($item->created_at)->format('d-m-Y')}} {{Carbon\Carbon::parse($item->created_at)->format('H:i:s')}}</td>
+              @php
+                $contador++;
+              @endphp
+            </tr>
+            @endforeach
             @endif
           </tbody>
         </table>
@@ -59,13 +59,10 @@
     </div>
   </div>
 </div>
-@include('layouts.footers.auth')
-@endsection
-
-@push('js')
-<script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
-<script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
-@endpush
-@push('styles')
-  <link rel="stylesheet" href="css/general.css">
-@endpush
+  @include('layouts.footers.auth')
+  @endsection
+  
+  @push('js')
+  <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
+  <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
+  @endpush

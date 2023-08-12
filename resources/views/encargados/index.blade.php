@@ -29,24 +29,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if($existencia)
-                    @foreach ($encargados as $item )
-                    <tr>
-                        <td>{{ $item->nombre1p }}</td>
-                        <td>{{ $item->apellido1p }}</td>
-                        <td>{{ $item->direccionp }}</td>
-                        <td>{{ $item->celularp }}</td>
-                        <td>{{ $item->correop }}</td>
-                        <td>{{ $item->dpi }}</td>
-                        <td>
-                            <a href="{{ route('encargados.edit',$item->id) }}" class="btn btn-success btn-sm">Editar</a>
-                        </td>
-                    </tr>
-                    @endforeach
+                    @if(count($encargados)<=0)
+                        <tr>
+                            <td colspan="7" class="textoCentrado textoNegrita">NO SE ENCONTRARON RESULTADOS</td>
+                        </tr>
                     @else
-                    <tr>
-                        <td colspan="7" class="text-center">No se encontraron registros</td>
-                    </tr>
+                        @foreach ($encargados as $item )
+                        <tr>
+                            <td>{{ $item->nombre1p }}</td>
+                            <td>{{ $item->apellido1p }}</td>
+                            <td>{{ $item->direccionp }}</td>
+                            <td>{{ $item->celularp }}</td>
+                            <td>{{ $item->correop }}</td>
+                            <td>{{ $item->dpi }}</td>
+                            <td>
+                                <a href="{{ route('encargados.edit',$item->id) }}" class="btn btn-success btn-sm">Editar</a>
+                            </td>
+                        </tr>
+                        @endforeach
                     @endif
                 </tbody>
             </table>
@@ -54,3 +54,6 @@
     </div>
 </div>
 @endsection
+@push('styles')
+    <link rel="stylesheet" href="css/general.css">
+@endpush
