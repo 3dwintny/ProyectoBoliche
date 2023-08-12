@@ -201,6 +201,7 @@
                                         <div class="col-md-6 mb-2">
                                             <select class="form-control"
                                                 wire:model="country" id="departamento_id">
+                                                <option value="" selected>Departamento de nacimiento</option>
                                                 @foreach ($contries as $departamento)
                                                 <option value="{{$departamento->id}}">{{$departamento->nombre}}</option>
                                                 @endforeach
@@ -208,18 +209,17 @@
                                         </div>
                                         <div class="col-md-6 mb-2"><select class="form-control"
                                             wire:model="city" id="municipio_id">
-                                            @if ($cities->count() == 0)
-                                                <option  disabled selected>Seleccione un departamento</option>
-                                            @endif
                                             @foreach ($cities as $item)
                                                 <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
+                                        @error('city') <span class="text-danger error">{{ $message }}</span>@enderror
                                         </div>
                                         <label class="col-md-12 mb-2">Lugar de residencia</label>
                                         <div class="col-md-6 mb-2">
                                             <select class="form-control"
                                                 wire:model="countryr" id="departamento_id">
+                                                <option value="" selected>Departamento de recidencia</option>
                                                 @foreach ($contriesr as $departamentor)
                                                 <option value="{{$departamentor->id}}">{{$departamentor->nombre}}</option>
                                                 @endforeach
@@ -228,12 +228,13 @@
                                         <div class="col-md-6 mb-2"><select class="form-control"
                                             wire:model="cityr" id="municipio_id">
                                             @if ($citiesr->count() == 0)
-                                                <option  disabled selected>Seleccione un departamento</option>
+                                                <option value="" disabled selected>Seleccione un departamento</option>
                                             @endif
                                             @foreach ($citiesr as $item)
                                                 <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
                                         </select>
+                                        @error('cityr') <span class="text-danger error">{{ $message }}</span>@enderror
                                         </div>
                                         <label class="col-md-12 mb-2">Contacto de emergencia</label>
                                         <div class="col-md-6 mb-2">

@@ -251,26 +251,15 @@ class FormularioAlumno extends Component
             'nacionalidad' => 'required',
             'country' => 'required',
             'city' => 'required',
-            'countryr' => 'required',
             'cityr' => 'required',
+            'nombre_emergencia' => 'required'
         ],
         [
-            'nombre1' => 'Este campo es requerido',
-            'apellido1' => 'Este campo es requerido',
-            'peso' => 'Este campo es requerido',
-            'altura' => 'Este campo es requerido',
-            'direccion' => 'Este campo es requerido',
-            'contacto_emergencia' => 'Este campo es requerido',
-            'correo' => 'Este campo es requerido',
-            'correo' => 'Este campo es requerido',
-            'correo.email' => 'Debe ser una dirección de correo electrónico válida.',
-            'foto' => 'Este campo es requerido',
-            'fecha' => 'Este campo es requerido',
-            'country'=> 'Este campo es requerido',
-            'city'=> 'Este campo es requerido',
-            'countryr'=> 'Este campo es requerido',
-            'cityr'=> 'Este campo es requerido',
+            'nombre1' => 'El primer nombre es obligatorio',
+            'apellido1' => 'El primer apellido es obligatorio',
             'cui.numeric' => 'Unicamente debe ingresar números',
+            'city' => 'El campo es requerido',
+            'cityr' => 'El campo es requerido'
         ]
     );
 
