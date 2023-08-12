@@ -66,11 +66,10 @@ class NacionalidadController extends Controller
             DB::commit();
             return redirect()->action([NacionalidadController::class, 'index'])->with('success','Nacionalidad registrada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar la nacionalidad');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
-        
     }
 
     /**
@@ -119,9 +118,9 @@ class NacionalidadController extends Controller
             DB::commit();
             return redirect()->action([NacionalidadController::class,'index'])->with('success','Nacionalidad actualizada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información de la nacionalidad');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

@@ -141,9 +141,9 @@ class AsistenciaController extends Controller
                 return redirect()->action([AsistenciaController::class,'create'])->with('warning', 'La asistencia del '.$fecha[0].' ya ha sido tomada');
             }
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al tomar la asistencia');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -704,9 +704,9 @@ class AsistenciaController extends Controller
             DB::commit();
             return redirect()->action([AsistenciaController::class,'editarAsistencia'])->with('message', 'La asistencia del '.$fecha[0].' ha sido actualizada exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información de la asistencia');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 }

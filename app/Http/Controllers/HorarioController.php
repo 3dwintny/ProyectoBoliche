@@ -73,9 +73,9 @@ class HorarioController extends Controller
             DB::commit();
             return redirect()->back()->with('success','Horario de entrenamiento registrado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar el horario de entrenamiento');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
         
     }
@@ -137,11 +137,10 @@ class HorarioController extends Controller
             DB::commit();
             return redirect()->action([HorarioController::class,'index'])->with('success','Horario de entrenamiento actualizado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información del horario de entrenamiento');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
-        
     }
 
     /**

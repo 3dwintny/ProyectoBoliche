@@ -66,9 +66,9 @@ class DeporteController extends Controller
             DB::commit();
             return redirect()->action([DeporteController::class, 'index'])->with('success','Deporte registrado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar al deporte');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -120,10 +120,9 @@ class DeporteController extends Controller
             DB::commit();
             return redirect()->action([DeporteController::class,'index'])->with('success','Deporte actualizado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            report($e);
-            $this->addError('error','Se produjo un error al actualizar la información del deporte');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

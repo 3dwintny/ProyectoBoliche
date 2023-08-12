@@ -66,9 +66,9 @@ class Deporte_AdoptadoController extends Controller
             DB::commit();
             return redirect()->action([Deporte_AdoptadoController::class, 'index'])->with('success','Deporte adaptado registrado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar al deporte adaptado');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -119,9 +119,9 @@ class Deporte_AdoptadoController extends Controller
             DB::commit();
             return redirect()->action([Deporte_AdoptadoController::class,'index'])->with('success','Deporte adaptado actualizado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información del deporte adaptado');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

@@ -66,9 +66,9 @@ class Nivel_cdagController extends Controller
             DB::commit();
             return redirect()->action([Nivel_cdagController::class, 'index'])->with('success','Nivel CDAG registrado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar el nivel CDAG');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -119,9 +119,9 @@ class Nivel_cdagController extends Controller
             DB::commit();
             return redirect()->action([Nivel_cdagController::class,'index'])->with('success','Nivel CDAG actualizado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información del nivel CDAG');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

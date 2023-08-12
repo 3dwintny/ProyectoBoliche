@@ -67,9 +67,9 @@ class Linea_DesarrolloController extends Controller
             DB::commit();
             return redirect()->action([Linea_DesarrolloController::class,'index'])->with('success','Línea de desarrollo registrada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar la línea de desarrollo');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -120,9 +120,9 @@ class Linea_DesarrolloController extends Controller
             DB::commit();
             return redirect()->action([Linea_DesarrolloController::class,'index'])->with('success','Línea de desarrollo actualizada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información de la línea de desarrollo');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

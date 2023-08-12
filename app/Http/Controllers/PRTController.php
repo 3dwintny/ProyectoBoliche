@@ -65,9 +65,9 @@ class PRTController extends Controller
             $control->save();
             DB::commit();            return redirect()->action([PRTController::class, 'index'])->with('success','PRT registrado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar al PRT');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -118,9 +118,9 @@ class PRTController extends Controller
             DB::commit();
             return redirect()->action([PRTController::class,'index'])->with('success','PRT actualizado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar al PRT');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

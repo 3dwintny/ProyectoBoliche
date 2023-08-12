@@ -82,20 +82,30 @@ class EncargadoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $encargado = Encargado::find($id);
-        $encargado->nombre1p = $request->input('nombre1p');
-        $encargado->nombre2p = $request->input('nombre2p');
-        $encargado->nombre3p = $request->input('nombre3p');
-        $encargado->apellido1p = $request->input('apellido1p');
-        $encargado->apellido2p = $request->input('apellido2p');
-        $encargado->apellido_casada = $request->input('apellido_casada');
-        $encargado->direccionp = $request->input('direccionp');
-        $encargado->celularp = $request->input('celularp');
-        $encargado->telefono_casap = $request->input('telefono_casap');
-        $encargado->correop = $request->input('correop');
-        $encargado->dpi = $request->input('dpi');
-        $encargado->save();
-        return redirect()->action([EncargadoController::class, 'index'])->with('status','Editado correctamente');
+        DB::beginTransaction();
+        try{
+            $encargado = Encargado::find($id);
+            $encargado->nombre1p = $request->input('nombre1p');
+            $encargado->nombre2p = $request->input('nombre2p');
+            $encargado->nombre3p = $request->input('nombre3p');
+            $encargado->apellido1p = $request->input('apellido1p');
+            $encargado->apellido2p = $request->input('apellido2p');
+            $encargado->apellido_casada = $request->input('apellido_casada');
+            $encargado->direccionp = $request->input('direccionp');
+            $encargado->celularp = $request->input('celularp');
+            $encargado->telefono_casap = $request->input('telefono_casap');
+            $encargado->correop = $request->input('correop');
+            $encargado->dpi = $request->input('dpi');
+            $encargado->save();
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>11]);
+            $control->save();
+            DB::commit();
+            return redirect()->action([EncargadoController::class, 'index'])->with('status','Información actualizada exitosamente');
+        }
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
+        }
     }
 
     /**

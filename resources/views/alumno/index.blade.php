@@ -30,7 +30,7 @@
           <th scope="col">Contacto de emergencia</th>
           <th scope="col">Correo</th>
           <th scope="col">Estado</th>
-          <th scope="col">Fecha</th>
+          <th scope="col">Fecha de nacimiento</th>
           <th scope="col">Dirección</th>
           <th></th>
         </tr>
@@ -48,7 +48,7 @@
           <td>{{$alumno->contacto_emergencia}}</td>
           <td>{{$alumno->correo}}</td>
           <td class="table-danger text-danger">{{$alumno->estado}}</td>
-          <td>{{$alumno->fecha}}</td>
+          <td>{{\Carbon\Carbon::parse($alumno->fecha)->format("d-m-Y")}}</td>
           <td>{{$alumno->direccion}}</td>
           <td>
             <form action="{{ route('alumnos.destroy',$alumno->id) }}" method="POST">

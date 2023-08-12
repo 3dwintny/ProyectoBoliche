@@ -109,9 +109,9 @@ class UserController extends Controller
             DB::commit();
             return redirect()->route('usuarios.index')->with('success','Usuario registrado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar al usuario');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -172,8 +172,7 @@ class UserController extends Controller
         }
         else if($rol=="Atleta"){
             $alumno = Alumno::where('correo',$usuario->email)->first();
-            $atleta = Atleta::where('alumno_id',$alumno->id)->first();
-            if($atleta==null){
+            if($alumno==null){
                 return back()->with('error','La información del usuario no se puede actualizar, el usuario no ha sido registrado como Atleta');
             }
         }
@@ -260,9 +259,9 @@ class UserController extends Controller
             DB::commit();
             return redirect()->route('usuarios.index')->with('success','Usuario actualizado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información del usuario');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

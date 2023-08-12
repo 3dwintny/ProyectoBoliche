@@ -224,9 +224,9 @@ class TerapiaController extends Controller
             config(['mail.mailers.smtp.password' => 'iunswwozclorvtlx']);
             return redirect()->action([TerapiaController::class,'index'])->with('success','Sesión registrada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar la sesión');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -362,9 +362,9 @@ class TerapiaController extends Controller
             config(['mail.mailers.smtp.password' => 'iunswwozclorvtlx']);
             return redirect()->action([TerapiaController::class,'index'])->with('success','Sesión actualizada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la sesión');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -539,8 +539,9 @@ class TerapiaController extends Controller
                 return redirect()->action([TerapiaController::class,'tareaPendiente'])->with('warning', 'Debe de seleccionar al menos una tarea');
             }
         }
-        catch(\Exception $e){
-            return back()->with('error', 'Se produjo un error al marcar la tarea como finalizada');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 }

@@ -66,9 +66,9 @@ class Etapa_DeportivaController extends Controller
             DB::commit();
             return redirect()->action([Etapa_DeportivaController::class, 'index'])->with('success','Etapa deportiva registrada exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar a la etapa deportiva');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -119,9 +119,9 @@ class Etapa_DeportivaController extends Controller
             DB::commit();
             return redirect()->action([Etapa_DeportivaController::class,'index'])->with('success','Etapa deportiva actualizada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información de la etapa deportiva');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

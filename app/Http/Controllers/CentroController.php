@@ -95,9 +95,9 @@ class CentroController extends Controller
             DB::commit();
             return redirect()->action([CentroController::class,'index'])->with('success','Centro de entrenamiento registrado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar al centro de entrenamiento');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -151,9 +151,9 @@ class CentroController extends Controller
             DB::commit();
             return redirect()->action([CentroController::class,'index'])->with('success','Información del centro de entrenamiento actualizada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información del centro de entrenamiento');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -281,9 +281,9 @@ class CentroController extends Controller
                 return redirect()->back();
             }
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar los horarios del centro de entrenamiento');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

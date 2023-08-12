@@ -66,9 +66,9 @@ class Otro_ProgramaController extends Controller
             DB::commit();
             return redirect()->action([Otro_ProgramaController::class, 'index'])->with('success','Programa de atención registrado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar al programa de atención');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -119,9 +119,9 @@ class Otro_ProgramaController extends Controller
             DB::commit();
             return redirect()->action([Otro_ProgramaController::class,'index'])->with('success','Programa de atención actualizado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información del programa de atención');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

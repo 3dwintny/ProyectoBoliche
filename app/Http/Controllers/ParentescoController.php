@@ -65,9 +65,9 @@ class ParentescoController extends Controller
             DB::commit();
             return redirect()->action([ParentescoController::class,'index'])->with('success','Parentesco registrado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar al parentesco');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -118,9 +118,9 @@ class ParentescoController extends Controller
             DB::commit();
             return redirect()->action([ParentescoController::class,'index'])->with('success','Parentesco actualizado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información del parentesco');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

@@ -67,9 +67,9 @@ class ModalidadController extends Controller
             DB::commit();
             return redirect()->action([ModalidadController::class,'index'])->with('success','Modalidad registrada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar la modalidad');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -120,9 +120,9 @@ class ModalidadController extends Controller
             DB::commit();
             return redirect()->action([ModalidadController::class,'index'])->with('success','Modalidad actualizada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información de la modalidad');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

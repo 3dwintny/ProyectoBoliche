@@ -61,9 +61,9 @@ class MunicipioController extends Controller
             DB::commit();
             return redirect()->action([MunicipioController::class,'index'])->with('success','Municipio registrado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar al municipio');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -115,9 +115,9 @@ class MunicipioController extends Controller
             DB::commit();
             return redirect()->action([MunicipioController::class,'index'])->with('success','Municipio actualizado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información del municipio');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

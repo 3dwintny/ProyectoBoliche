@@ -60,9 +60,9 @@ class DepartamentoController extends Controller
             DB::commit();
             return redirect()->action([DepartamentoController::class,'index'])->with('success','Departamento registrado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar al departamento');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -113,9 +113,9 @@ class DepartamentoController extends Controller
             DB::commit();
             return redirect()->action([DepartamentoController::class,'index'])->with('success','Departamento actualizado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información del departamento');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

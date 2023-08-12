@@ -267,9 +267,9 @@ class AtletaController extends Controller
             DB::commit();
             return redirect()->action([AtletaController::class, 'index'])->with('success','Atleta registrado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar al atleta');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -384,9 +384,9 @@ class AtletaController extends Controller
             DB::commit();
             return redirect()->action([AtletaController::class,'index'])->with('success','Atleta actualizado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información del atleta');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -487,9 +487,9 @@ class AtletaController extends Controller
             DB::commit();
             return redirect('home');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

@@ -153,9 +153,9 @@ class EntrenadorController extends Controller
             DB::commit();
             return redirect()->action([EntrenadorController::class, 'index'])->with('success','Entrenador registrado exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar al entrenador');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -270,9 +270,9 @@ class EntrenadorController extends Controller
             DB::commit();
             return redirect()->action([EntrenadorController::class,'index'])->with('success','Información del entrenador actualizada exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información del entrenador');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -385,9 +385,9 @@ class EntrenadorController extends Controller
             DB::commit();
             return redirect('modificar')->with('success','Información actualizada exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la información');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

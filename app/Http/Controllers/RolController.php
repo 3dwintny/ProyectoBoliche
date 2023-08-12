@@ -64,8 +64,9 @@ class RolController extends Controller
     
             return redirect()->route('roles.index')->with('success','Rol registrado exitosamente');
         }
-        catch(\Exception $e){
-            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -120,8 +121,9 @@ class RolController extends Controller
             $role->syncPermissions($request->input('permission'));
             return redirect()->route('roles.index')->with('success','Rol actualizado exitosamente');
         }
-        catch(\Exception $e){
-            return back()->with('error', 'Se produjo un error al actualizar la información del rol');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

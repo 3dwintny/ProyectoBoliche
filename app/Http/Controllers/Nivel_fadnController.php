@@ -66,9 +66,9 @@ class Nivel_fadnController extends Controller
             DB::commit();
             return redirect()->action([Nivel_fadnController::class, 'index'])->with('success','Nivel FADN registrado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar el nivel FADN');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -119,9 +119,9 @@ class Nivel_fadnController extends Controller
             DB::commit();
             return redirect()->action([Nivel_fadnController::class,'index'])->with('success','Nivel FADN actualizado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información del nivel FADN');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

@@ -106,9 +106,9 @@ class PsicologiaController extends Controller
             DB::commit();
             return redirect()->action([PsicologiaController::class,'index'])->with('success','Psicólogo registrado exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al registrar al psicólogo');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -174,9 +174,9 @@ class PsicologiaController extends Controller
             DB::commit();
             return redirect()->action([PsicologiaController::class,'index'])->with('success','Información del psicólogo actualizada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información del psicólogo');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -233,9 +233,9 @@ class PsicologiaController extends Controller
             DB::commit();
             return redirect('modificarPsicologia')->with('success','Información actualizada exitosamente');
         }
-        catch(\Exception $e){
-            DB::rollback();
-            return back()->with('error', 'Se produjo un error al actualizar la información');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -290,8 +290,9 @@ class PsicologiaController extends Controller
             Psicologia::where('correo',auth()->user()->email)->update(['codigo_correo'=>$request->codigo_correo]);
             return redirect('home');             
         }
-        catch(\Exception $e){
-            return back()->with('error', 'Se produjo un error al actualizar el código del correo');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 }

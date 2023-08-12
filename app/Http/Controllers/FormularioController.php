@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Formulario;
 use App\Models\Control;
+use Illuminate\Support\Facades\DB;
 
 class FormularioController extends Controller
 {
@@ -88,6 +89,7 @@ class FormularioController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction()();
         try{
             $formulario = $this->f->obtenerFormularioById(decrypt($id));
             $formulario->fill([
@@ -99,10 +101,12 @@ class FormularioController extends Controller
             $formulario->save();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>16]);
             $control->save();
+            DB::commit();
             return redirect()->action([FormularioController::class,'index'])->with('success','Formulario actualizado exitosamente');
         }
-        catch(\Exception $e){
-            return back()->with('error', 'Se produjo un error al actualizar la información del formulario');
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 

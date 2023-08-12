@@ -67,9 +67,9 @@ class CategoriaController extends Controller
             DB::commit();
             return redirect()->action([CategoriaController::class, 'index'])->with('success','Categoría registrada exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al registrar la categoría');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
@@ -120,9 +120,9 @@ class CategoriaController extends Controller
             DB::commit();
             return redirect()->action([CategoriaController::class,'index'])->with('success','Categoría actualizada exitosamente');
         }
-        catch(\Exception $e){
+        catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
-            return back()->with('error', 'Se produjo un error al actualizar la categoría');
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 
