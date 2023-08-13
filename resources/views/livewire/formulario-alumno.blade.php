@@ -209,6 +209,9 @@
                                         </div>
                                         <div class="col-md-6 mb-2"><select class="form-control"
                                             wire:model="city" id="municipio_id">
+                                            @if ($citiesr->count() == 0)
+                                                <option value="" disabled selected>Seleccione un departamento</option>
+                                            @endif
                                             @foreach ($cities as $item)
                                                 <option value="{{$item->id}}">{{$item->nombre}}</option>
                                             @endforeach
@@ -498,7 +501,11 @@
                             </tr>
                             <tr>
                                 <td>Nacionalidad:</td>
-                                <td><strong>{{$nacionalidad}}</strong></td>
+                                @foreach($nacionalidades as $nas)
+                                @if($nas->id == $nacionalidad)
+                                    <td><strong>{{$nas->descripcion}}</strong></td>
+                                @endif
+                                @endforeach
                             </tr>
                             <tr>
                                 <td>Departanto de nacicmiento:</td>
@@ -600,8 +607,12 @@
                                     <td><strong>{{$dpip[$indice]}}</strong></td>
                                 </tr>
                                 <tr>
-                                    <td>Parentezco:</td>
-                                    <td><strong>{{$parentezcop[$indice]}}</strong></td>
+                                    <td>Parentesco:</td>
+                                    @foreach($parentezcos as $par)
+                                    @if($par->id == $parentezcop[$indice])
+                                        <td><strong>{{$par->tipo}}</strong></td>
+                                    @endif
+                                    @endforeach
                                 </tr>
                                 @endforeach
                             @endif
