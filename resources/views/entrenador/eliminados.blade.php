@@ -12,6 +12,7 @@
       </div>
   </div>
 </div>
+@include('configuraciones.varnav')
 <div class="container-fluid pt-2">
   <div class="header-body text-center mb-7">
     <div class="row justify-content-center">
@@ -37,7 +38,7 @@
             @endphp
             @if (count($eliminar)<=0)
               <tr>
-                <td colspan="4">SIN RESULTADOS</td>
+                <td colspan="4" style="font-weight: bolder;text-align:center;">SIN RESULTADOS</td>
               </tr>
             @else
               @foreach ($eliminar as $item)

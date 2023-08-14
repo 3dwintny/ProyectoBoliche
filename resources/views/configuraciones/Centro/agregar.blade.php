@@ -12,6 +12,7 @@
       </div>
   </div>
 </div>
+@include('configuraciones.varnav')
 <div class="container-fluid pt-2">
   <div class="header-body text-center mb-7">
     <div class="row justify-content-center">
@@ -28,6 +29,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       @endif
+      <div class="row">
+        <div class="col-lg-1">
+          <a href="{{ url('centro') }}" class="btn btn-danger btn-sm">Regresar</a>
+        </div>
+      </div>
+      
       <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
         <form method="post" role="form" enctype="multipart/form-data" action="{{route('guardarHorarios')}}">
           <input type="hidden" name="e" id="e" value="{{$idEncriptado}}">

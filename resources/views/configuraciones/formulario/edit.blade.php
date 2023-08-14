@@ -12,6 +12,7 @@
         </div>
     </div>
 </div>
+@include('configuraciones.varnav')
 <div class="container-fluid pt-2">
     <div class="header-body text-center mb-7">
         <div class="row justify-content-center">
@@ -25,7 +26,10 @@
                 <div class="card">
                     <div class="card-header text-bold ">
                         <strong>
-                            <h2>Editar</h2>
+                            <h2>
+                                Editar
+                                <a href="{{ url('formulario-inscripcion') }}" class="btn btn-danger btn-sm float-right">Regresar</a>
+                            </h2>
                         </strong>
                     </div>
                     <form method="post" role="form" enctype="multipart/form-data" action="{{route('formulario-inscripcion.update',encrypt($formulario->id))}}">

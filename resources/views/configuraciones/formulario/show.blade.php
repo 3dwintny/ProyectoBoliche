@@ -18,6 +18,7 @@
       </div>
   </div>
 </div>
+@include('configuraciones.varnav')
 <div class="container-fluid pt-2">
   <div class="header-body text-center mb-7">
     <div class="row justify-content-center">

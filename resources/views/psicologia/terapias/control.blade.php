@@ -12,7 +12,9 @@
       </div>
   </div>
 </div>
-
+@if(auth()->user()->tipo_usuario_id==null)
+@include('configuraciones.varnav')
+@endif
 <div class="container-fluid pt-2">
   <div class="header-body text-center mb-7">
     <div class="row justify-content-center">
@@ -38,7 +40,7 @@
             @endphp
             @if (count($control)<=0)
               <tr>
-                <td colspan="4">SIN RESULTADOS</td>
+                <td colspan="4" style="font-weight: bolder;text-align:center;">SIN RESULTADOS</td>
               </tr>
             @else
               @foreach ($control as $item)

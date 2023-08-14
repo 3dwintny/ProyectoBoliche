@@ -5,7 +5,7 @@
   <div class="container-fluid">
       <div class="header-body">
           <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                   <h1 class="text-white">Administradores del sistema</h1>
               </div>
           </div>

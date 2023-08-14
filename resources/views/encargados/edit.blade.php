@@ -23,9 +23,9 @@
                 @endif
                 <div class="card">
                     <div class="card-header">
-                        <h4> Editar Encargados
+                        <h2> Editar
                             <a href="{{ url('encargados') }}" class="btn btn-danger btn-sm float-right">Regresar</a>
-                        </h4>
+                        </h2>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('encargados.update',$encargados->id) }}" method="POST" role="form" enctype="multipart/form-data">
