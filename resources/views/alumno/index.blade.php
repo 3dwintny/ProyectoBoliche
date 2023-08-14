@@ -136,8 +136,12 @@
         $('#nombreAlumno').text(response.nombre);
         $('#apellidoAlumno').text(response.apellido);
         $('#cui').text(response.cui);
-        $('#celular').text("Celular:  "+response.celular);
-        $('#telefono_casa').text("Teléfono casa:  "+response.telefono_casa);
+        if(response.celular!=null){
+          $('#celular').text("Celular:  "+response.celular);
+        }
+        if(response.telefono_casa!=null){
+          $('#telefono_casa').text("Teléfono casa:  "+response.telefono_casa);
+        }
         $('#correo').text("Correo electrónico:  "+response.correo);
         $('#origen').text(response.municipio + "/" + response.departamento);
         var image = document.getElementById("imgAlumno");

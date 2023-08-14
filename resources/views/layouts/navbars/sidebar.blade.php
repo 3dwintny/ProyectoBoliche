@@ -122,6 +122,15 @@
                             </li>
                             @endif
                             @endcan
+                            @can('Información de encargados')
+                            @if(auth()->user()->tipo_usuario_id==1)
+                            <li class="nav-item">
+                                <a href="{{ route('editarInformacionDeEncargados') }}" class="nav-link">
+                                    {{ __('Información de encargados') }}
+                                </a>
+                            </li>
+                            @endif
+                            @endcan
                         </ul>
                     </div>
                 </li>

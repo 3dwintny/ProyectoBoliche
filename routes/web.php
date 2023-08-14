@@ -96,6 +96,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('edg-31',EDG31Controller::class);
     //Rutas Atletas
     Route::get('editar-perfil-atleta',[AtletaController::class,'modificar'])->name('modificarAtleta');
+    Route::get('editar-informacion-encargado',[EncargadoController::class,'editarInformacionDeEncargados'])->name('editarInformacionDeEncargados');
+    Route::put('actualizar-informacion-encargado',[EncargadoController::class,'actualizarInformacionDeEncargados'])->name('actualizarInformacionEncargados');
     Route::put('actualizar-informacion-atleta',[AtletaController::class,'actualizar'])->name('actualizarAtleta');
     Route::get('reinscripcion-PDF',[AtletaController::class,'generarPDF'])->name('reinscripcionPDF');
     Route::resource('atletas',AtletaController::class);

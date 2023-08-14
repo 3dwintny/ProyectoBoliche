@@ -24,7 +24,7 @@
                         </form>
                     </li>
                     <li>
-                        <a href="" style="text-decoration: none; color:white;">¿Cómo generar el código del correo?</a>
+                        <a href="https://youtu.be/z_0CJaH4LSQ" style="text-decoration: none; color:white;" target="_blank">¿Cómo generar el código del correo?</a>
                     </li>
                 </ul>
             </div>

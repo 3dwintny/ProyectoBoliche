@@ -6,7 +6,7 @@
         <div class="header-body">
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-10 col-sm-10">
-                    <h1 class="text-white">Preferencias</h1>
+                    <h1 class="text-white">Encargados</h1>
                 </div>
             </div>
         </div>
@@ -25,7 +25,6 @@
                         <th class="text-center">Celular</th>
                         <th class="text-center">Correo</th>
                         <th class="text-center">DPI</th>
-                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +42,7 @@
                             <td>{{ $item->correop }}</td>
                             <td>{{ $item->dpi }}</td>
                             <td>
-                                <a href="{{ route('encargados.edit',$item->id) }}" class="btn btn-success btn-sm">Editar</a>
+                                <a href="{{ route('encargados.edit',$item->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i></a>
                             </td>
                         </tr>
                         @endforeach

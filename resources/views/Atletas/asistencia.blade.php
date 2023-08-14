@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-  </div>
+</div>
 
 <div class="pb-4 pt-5 pt-md-3">
     <div class="container">
