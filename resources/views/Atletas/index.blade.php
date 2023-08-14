@@ -120,6 +120,12 @@
                   </form>
                 </td>
                 <td>
+                  <form action="{{route('reinscripcionPDF')}}" target="_blank">
+                    <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                    <input type="hidden" value="{{encrypt($atleta->id)}}" name="informacionAtleta">
+                  </form>
+                </td>
+                <td>
                   <form action="{{route('atletas.destroy',encrypt($atleta->id))}}" method="POST">
                     @csrf
                     @method('DELETE')

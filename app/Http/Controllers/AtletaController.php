@@ -493,11 +493,17 @@ class AtletaController extends Controller
         }
     }
 
-    public static function generarPDF()
+    public static function generarPDF(Request $request)
     {
         try{
             $formularios = Formulario::all();
             $alumnos = Alumno::where('correo',auth()->user()->email)->get();
+            if($request->informacionAtleta!=""){
+                $alumnos = Alumno::where('id',decrypt($request->informacionAtleta))->get(); 
+            }
+            if($request->informacionAspirante!=""){
+                $alumnos = Alumno::where('id',decrypt($request->informacionAspirante))->get(); 
+            }
             $anio = Carbon::now()->format('Y');
             $cantidadDeRelaciones = null;
             $relalumnos = null;

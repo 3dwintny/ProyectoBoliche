@@ -38,7 +38,6 @@
                         </div>
                         <div class="card">
                             <div class="card-body bg-light">
-                                <h3 class="mb-2">Información personal</h3>
                                 <div class="col-12 mb-2">
                                     <img src="{{ asset('uploads/alumnos/'.$entrenador->foto) }}" class="img-thumbnail" alt="50" height="50" width="50">
                                     <input type="hidden" name="pic" value="{{$entrenador->foto}}">

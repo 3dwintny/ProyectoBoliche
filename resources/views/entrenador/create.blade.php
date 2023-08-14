@@ -37,7 +37,6 @@
                         </div>
                         <div class="card">
                             <div class="card-body bg-light">
-                                <h3 class="mb-2">Información Personal</h3>
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 mb-2">
                                         <div class="form-floating">

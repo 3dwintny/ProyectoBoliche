@@ -58,12 +58,18 @@
               <td>
                 <form action="{{ route('alumnos.destroy',$alumno->id) }}" method="POST">
                   <a class="btn btn-sm btn-primary show-modal" data-toggle="modal" data-target="#myModal" data-id="{{ $alumno->id }}" href="{{ route('alumnos.show', $alumno->id) }}">
-                    <i class="fa fa-fw fa-eye"></i>Ver
+                    <i class="fa fa-fw fa-eye"></i>
                   </a>
-                  <a class="btn btn-sm btn-success" href="{{route('creacion',encrypt($alumno->id) )}}"><i class="fa fa-fw fa-check"></i>Aceptar</a>
+                  <a class="btn btn-sm btn-success" href="{{route('creacion',encrypt($alumno->id) )}}"><i class="fa fa-fw fa-check"></i></a>
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i>Rechazar</button>
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-fw fa-trash"></i></button>
+                </form>
+              </td>
+              <td>
+                <form action="{{route('reinscripcionPDF')}}" target="_blank">
+                  <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                  <input type="hidden" value="{{encrypt($alumno->id)}}" name="informacionAspirante">
                 </form>
               </td>
             </tr>
