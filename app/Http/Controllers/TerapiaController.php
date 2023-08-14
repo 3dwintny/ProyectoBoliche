@@ -220,8 +220,8 @@ class TerapiaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>29]);
             $control->save();
             DB::commit();
-            config(['mail.mailers.smtp.username' => 'oscar.caceres2321@gmail.com']);
-            config(['mail.mailers.smtp.password' => 'iunswwozclorvtlx']);
+            config(['mail.mailers.smtp.username' => 'bolichequetzaltenango@gmail.com']);
+            config(['mail.mailers.smtp.password' => 'tqmkytoprglvdxzv']);
             return redirect()->action([TerapiaController::class,'index'])->with('success','Sesión registrada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
@@ -358,8 +358,8 @@ class TerapiaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>29]);
             $control->save();
             DB::commit();
-            config(['mail.mailers.smtp.username' => 'oscar.caceres2321@gmail.com']);
-            config(['mail.mailers.smtp.password' => 'iunswwozclorvtlx']);
+            config(['mail.mailers.smtp.username' => 'bolichequetzaltenango@gmail.com']);
+            config(['mail.mailers.smtp.password' => 'tqmkytoprglvdxzv']);
             return redirect()->action([TerapiaController::class,'index'])->with('success','Sesión actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
