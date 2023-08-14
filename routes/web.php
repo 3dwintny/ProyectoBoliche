@@ -57,13 +57,13 @@ Route::get('wel', function () {return view('welcome');})->name('wel'); */
 Route::resource('/', FrontendController::class);
 //Ruta Formulario de Inscripción
 Route::resource('alumnos',AlumnoController::class);
-Route::get('alumnos/{alumno}', [AlumnoController::class, 'show'])->name('alumnos.show');
 
 Route::get('ficha-PDF/{cui}',[AlumnoController::class,'generarPDF'])->name('ficha-PDF');
 //Route::get('Inscripcion', fuction () {return view('livewire/encargados-manager');});
 //Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth', 'verified'])->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('alumnos/{alumno}', [AlumnoController::class, 'show'])->name('alumnos.show');
 //Auth::routes();
 	Route::get('/home', 'App\Http\Controllers\HomeController@index')->middleware(['auth', 'verified'])->name('home');
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
@@ -97,7 +97,6 @@ Route::group(['middleware' => 'auth'], function () {
     //Rutas Atletas
     Route::get('editar-perfil-atleta',[AtletaController::class,'modificar'])->name('modificarAtleta');
     Route::get('editar-informacion-encargado',[EncargadoController::class,'editarInformacionDeEncargados'])->name('editarInformacionDeEncargados');
-    Route::put('actualizar-informacion-encargado',[EncargadoController::class,'actualizarInformacionDeEncargados'])->name('actualizarInformacionEncargados');
     Route::put('actualizar-informacion-atleta',[AtletaController::class,'actualizar'])->name('actualizarAtleta');
     Route::get('reinscripcion-PDF',[AtletaController::class,'generarPDF'])->name('reinscripcionPDF');
     Route::resource('atletas',AtletaController::class);
@@ -334,8 +333,8 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     });
 
     Route::get('municipios', [AtletaController::class, 'getMunicipios'])->name('municipios');
-Route::get('/dashboard', function () {
+    Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
 require __DIR__.'/auth.php';
 
