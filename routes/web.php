@@ -245,6 +245,7 @@ Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272P
     Route::get('seguridad/tipos-de-contratos',[Tipo_ContratoController::class,'acciones'])->name('accionesContrato');
     Route::get('seguridad/usuarios',[UserController::class,'acciones'])->name('accionesUsuarios');
     Route::get('restaurar', function () {return view('configuraciones.restaurar');})->name('restaurar');
+    Route::get('seguridad/roles',[RolController::class,'acciones'])->name('accionesRoles');
 
 
     Route::get('restaurar/atletas',[AtletaController::class,'eliminados'])->name('eliminadosAtletas');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\DB;
+use App\Models\Control;
 
 class RolController extends Controller
 {
@@ -111,6 +112,7 @@ class RolController extends Controller
      */
     public function update(Request $request, $id)
     {
+        DB::beginTransaction();
         try{
             $this->validate($request, ['name'=> 'required' , 'permission' => 'required']);
 
@@ -119,11 +121,24 @@ class RolController extends Controller
             $role->save();
 
             $role->syncPermissions($request->input('permission'));
+            $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>32]);
+            $control->save();
+            DB::commit();
             return redirect()->route('roles.index')->with('success','Rol actualizado exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();
             return back()->withErrors($e->validator->errors())->withInput();
+        }
+    }
+
+    public function acciones(){
+        try{
+            $control = Control::where('tabla_accion_id',32)->with('usuario')->paginate(5);
+            return view('roles.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
 

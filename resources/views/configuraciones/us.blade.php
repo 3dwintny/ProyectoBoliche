@@ -65,9 +65,9 @@
                                 <h2 class="text-center"><i class="fa fa-user-lock f-left"></i><span>{{$cant_roles}}</span>
                                 </h2>
                                 <p class="m-b-0 text-center">
-                                    <button type="button" class="btn btn-link" style="color: rgba(2, 0, 28, 0.806);" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <a href="#exampleModal" class="text-dark" data-bs-toggle="modal">
                                         Ver más
-                                    </button>
+                                    </a>                                    
                                 </p>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
             <div class="container-fluid">
                 <div class="header-body text-center">
                     <div class="row justify-content-center">
-                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-8">
+                        <div class="col-xl-7 col-lg-7 col-md-6 col-sm-6">
                             <table class="table table-responsive">
                                 <thead class="table table-dark mt-2">
                                     <th style="color:#fff ;">Rol</th>
@@ -103,11 +103,11 @@
                                             <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Editar</a>
                                             @endcan
                     
-                                            @can('Eliminar roles')
+                                            {{-- @can('Eliminar roles')
                                             {!! Form::open(['method'=> 'DELETE', 'route' => ['roles.destroy', $role->id], 'style'=>'display:inline'])!!}
                                             {!! Form::submit('Eliminar', ['class' => 'btn btn-danger'])!!}
                                             {!! Form::close() !!}
-                                            @endcan
+                                            @endcan --}}
                                         </td>
                                     </tr>
                                     @endforeach
