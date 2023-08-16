@@ -29,6 +29,10 @@ class TerapiaController extends Controller
     public function index(Request $request)
     {
         try{
+            $psicologos = Psicologia::where('correo',auth()->user()->email)->get('codigo_correo');
+            if($psicologos[0]->codigo_correo == null or $psicologos[0]->codigo_correo == ""){
+                return redirect('home');
+            }
             $buscarAtleta = $request->buscarNombre;
             if($buscarAtleta ==""){
                 $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'LISTAR', 'tabla_accion_id'=>29]);
@@ -150,7 +154,10 @@ class TerapiaController extends Controller
     public function create()
     {
         try{
-            $psicologos = Psicologia::where('correo',auth()->user()->email)->get(['id','nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada']);
+            $psicologos = Psicologia::where('correo',auth()->user()->email)->get(['id','nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada','codigo_correo']);
+            if($psicologos[0]->codigo_correo == null or $psicologos[0]->codigo_correo == ""){
+                return redirect('home');
+            }
             $atletas = Atleta::where('estado','activo')->get();
             $hoy = Carbon::now();
             $hora = Carbon::now()->toTimeString('minute');
@@ -506,6 +513,12 @@ class TerapiaController extends Controller
 
     public function acciones(){
         try{
+            $psicologos = Psicologia::where('correo',auth()->user()->email)->get('codigo_correo');
+            if(count($psicologos)>0){
+                if($psicologos[0]->codigo_correo == null or $psicologos[0]->codigo_correo == ""){
+                    return redirect('home');
+                }
+            }
             $control = Control::where('tabla_accion_id',29)->with('usuario')->paginate(15);
             return view('psicologia.terapias.control',compact('control'));
         }

@@ -204,6 +204,10 @@ class PsicologiaController extends Controller
 
     public function modificar(){
         try{
+            $psicologos = Psicologia::where('correo',auth()->user()->email)->get('codigo_correo');
+            if($psicologos[0]->codigo_correo == null or $psicologos[0]->codigo_correo == ""){
+                return redirect('home');
+            }
             $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
             if(count($psicologos)>0){
                 $psicologo = Psicologia::find($psicologos[0]->id);
@@ -278,6 +282,9 @@ class PsicologiaController extends Controller
         try{
             $psicologo = Psicologia::where('correo',auth()->user()->email)->first();
             $codigo = $psicologo->codigo_correo;
+            if($codigo == null or $codigo == ""){
+                return redirect('home');
+            }
             return view('configuraciones.psicologia.editarCodigoCorreo',compact('codigo'));
         }
         catch(\Exception $e){
