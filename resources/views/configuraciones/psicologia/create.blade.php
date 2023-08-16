@@ -124,6 +124,40 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    let controlPrimerosDigitosTelefono = 0;
+    $(document).ready(function() {
+        $('#telefono').on('keydown',function(){
+            var numeroTelefono = document.getElementById('telefono');
+            var codigo = event.which || event.keyCode;
+            if(numeroTelefono.value.length <=8){
+                if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
+                    if(numeroTelefono.value.length<=4){
+                        controlPrimerosDigitosTelefono++;
+                    }
+                }
+                else if(codigo == 8){
+                    if((controlPrimerosDigitosTelefono > 0 && controlPrimerosDigitosTelefono < 5) && (numeroTelefono.value.length>-1 && numeroTelefono.value.length<5)){
+                        controlPrimerosDigitosTelefono--;
+                    }
+                }
+                if(numeroTelefono.value.length==4 && controlPrimerosDigitosTelefono==5){
+                    document.getElementById('telefono').value = document.getElementById('telefono').value+"-";
+                    if(controlPrimerosDigitosTelefono==5){
+                        controlPrimerosDigitosTelefono = 4;
+                    }
+                }
+            }
+            else{
+                document.getElementById('telefono').readOnly = true;
+            }
+
+            if(codigo == 8 && document.getElementById('telefono').readOnly == true){
+                document.getElementById('telefono').readOnly = false;
+            }
+        });
+    });
+</script>
 @endsection
 
 

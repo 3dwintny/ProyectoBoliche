@@ -265,8 +265,21 @@
     </div>
 </div>
 <script type="text/javascript">
-    let contadorCuatro = 0;
-    let contadorCinco = 0;
+    let contadorCuatro = 4;
+    let contadorCinco = 5;
+    let controlPrimerosDigitosTelefonoCasa = 4;
+    let controlPrimerosDigitosCelular = 4;
+    const txtCelular = document.getElementById('celular');
+    const txtTelefonoCasa = document.getElementById('telefono_casa');
+
+    if (txtCelular.innerHTML.trim() === '') {
+        controlPrimerosDigitosCelular = 0;
+    }
+    if (txtTelefonoCasa.innerHTML.trim() === '') {
+        controlPrimerosDigitosTelefonoCasa = 0;
+    }
+
+
     $('#fecha_nacimiento').on('change', function() {
             function calcularEdad(fechas) {
                 var hoy = new Date();
@@ -286,35 +299,35 @@
         $('#cui').on('keydown',function(){
             var obtenerCui = document.getElementById('cui');
             var codigo = event.which || event.keyCode;
-            console.log(codigo);
             if(obtenerCui.value.length <=14){
                 if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
                     if(obtenerCui.value.length<=4){
                         contadorCuatro++;
                     }
-                    if(obtenerCui.value.length>5 && obtenerCui.value.length<=10){
+                    if((obtenerCui.value.length>5 && obtenerCui.value.length<10) && contadorCinco<5){
                         contadorCinco++;
                     }
                 }
                 else if(codigo == 8){
-                    if(contadorCuatro > 0 && contadorCuatro < 5){
+                    if((contadorCuatro > 0 && contadorCuatro < 5) && (obtenerCui.value.length>-1 && obtenerCui.value.length<5)){
                         contadorCuatro--;
                     }
-                    if(contadorCinco > 0 && contadorCinco < 5){
+                    if((contadorCinco > 0 && contadorCinco < 6) && (obtenerCui.value.length>5 && obtenerCui.value.length<11)){
                         contadorCinco--;
                     }
                 }
                 if(obtenerCui.value.length==4 && contadorCuatro==5){
                     document.getElementById('cui').value = document.getElementById('cui').value+"-";
+                    contadorCinco = 1;
                     if(contadorCuatro==5){
-                        contadorCuatro = 0;
+                        contadorCuatro = 4;
                     }
                 }
                 if(obtenerCui.value.length==10 && contadorCinco==5){
                     document.getElementById('cui').value = document.getElementById('cui').value+"-";
                     if(contadorCinco==5)
                     {
-                        contadorCinco = 0;
+                        contadorCinco = 5;
                     }
                 }
             }
@@ -324,6 +337,64 @@
 
             if(codigo == 8 && document.getElementById('cui').readOnly == true){
                 document.getElementById('cui').readOnly = false;
+            }
+        });
+        $('#celular').on('keydown',function(){
+            var numeroCelular = document.getElementById('celular');
+            var codigo = event.which || event.keyCode;
+            if(numeroCelular.value.length <=8){
+                if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
+                    if(numeroCelular.value.length<=4){
+                        controlPrimerosDigitosCelular++;
+                    }
+                }
+                else if(codigo == 8){
+                    if((controlPrimerosDigitosCelular > 0 && controlPrimerosDigitosCelular < 5) && (numeroCelular.value.length>-1 && numeroCelular.value.length<5)){
+                        controlPrimerosDigitosCelular--;
+                    }
+                }
+                if(numeroCelular.value.length==4 && controlPrimerosDigitosCelular==5){
+                    document.getElementById('celular').value = document.getElementById('celular').value+"-";
+                    if(controlPrimerosDigitosCelular==5){
+                        controlPrimerosDigitosCelular = 4;
+                    }
+                }
+            }
+            else{
+                document.getElementById('celular').readOnly = true;
+            }
+
+            if(codigo == 8 && document.getElementById('celular').readOnly == true){
+                document.getElementById('celular').readOnly = false;
+            }
+        });
+        $('#telefono_casa').on('keydown',function(){
+            var numeroCasa = document.getElementById('telefono_casa');
+            var codigo = event.which || event.keyCode;
+            if(numeroCasa.value.length <=8){
+                if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
+                    if(numeroCasa.value.length<=4){
+                        controlPrimerosDigitosTelefonoCasa++;
+                    }
+                }
+                else if(codigo == 8){
+                    if((controlPrimerosDigitosTelefonoCasa > 0 && controlPrimerosDigitosTelefonoCasa < 5) && (numeroCasa.value.length>-1 && numeroCasa.value.length<5)){
+                        controlPrimerosDigitosTelefonoCasa--;
+                    }
+                }
+                if(numeroCasa.value.length==4 && controlPrimerosDigitosTelefonoCasa==5){
+                    document.getElementById('telefono_casa').value = document.getElementById('telefono_casa').value+"-";
+                    if(controlPrimerosDigitosTelefonoCasa==5){
+                        controlPrimerosDigitosTelefonoCasa = 4;
+                    }
+                }
+            }
+            else{
+                document.getElementById('telefono_casa').readOnly = true;
+            }
+
+            if(codigo == 8 && document.getElementById('telefono_casa').readOnly == true){
+                document.getElementById('telefono_casa').readOnly = false;
             }
         });
     });
