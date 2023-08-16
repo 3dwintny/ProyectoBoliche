@@ -72,7 +72,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Asegurarse de tener instalado php
     - php --version
 
-## Si no tubiera instalado php para linux ejecute el siguente comando 
+## Si no tuviera instalado php para linux ejecute el siguente comando 
     - sudo apt install php
 
 ## Asegurarse de tener instalado composer 
@@ -83,3 +83,5 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## El proyecto se ejecuta con el siguiente comando 
     - php artisan serve
+
+## La categoría en el formulario de inscripción queda pendinte.

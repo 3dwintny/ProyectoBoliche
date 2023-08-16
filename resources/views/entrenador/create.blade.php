@@ -32,7 +32,7 @@
                         @csrf
                         <div class="form-group">
                             <div>Fecha
-                                <input type="text" class="container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{Carbon\Carbon::parse($hoy)->format('Y-m-d')}}" readonly>
+                                <input type="date" class="container form-control text-center" name="fecha_registro" id="fecha_sistema" value="{{Carbon\Carbon::parse($hoy)->format('Y-m-d')}}">
                             </div>
                         </div>
                         <div class="card">
@@ -298,29 +298,30 @@
                     if(obtenerCui.value.length<=4){
                         contadorCuatro++;
                     }
-                    if(obtenerCui.value.length>5 && obtenerCui.value.length<=10){
+                    if((obtenerCui.value.length>5 && obtenerCui.value.length<10) && contadorCinco<5){
                         contadorCinco++;
                     }
                 }
                 else if(codigo == 8){
-                    if(contadorCuatro > 0 && contadorCuatro < 5){
+                    if((contadorCuatro > 0 && contadorCuatro < 5) && (obtenerCui.value.length>-1 && obtenerCui.value.length<5)){
                         contadorCuatro--;
                     }
-                    if(contadorCinco > 0 && contadorCinco < 5){
+                    if((contadorCinco > 0 && contadorCinco < 6) && (obtenerCui.value.length>5 && obtenerCui.value.length<11)){
                         contadorCinco--;
                     }
                 }
                 if(obtenerCui.value.length==4 && contadorCuatro==5){
                     document.getElementById('cui').value = document.getElementById('cui').value+"-";
+                    contadorCinco = 1;
                     if(contadorCuatro==5){
-                        contadorCuatro = 0;
+                        contadorCuatro = 4;
                     }
                 }
                 if(obtenerCui.value.length==10 && contadorCinco==5){
                     document.getElementById('cui').value = document.getElementById('cui').value+"-";
                     if(contadorCinco==5)
                     {
-                        contadorCinco = 0;
+                        contadorCinco = 5;
                     }
                 }
             }
