@@ -142,7 +142,7 @@ class CentroController extends Controller
         DB::beginTransaction();
         try{
             $centro = Centro::find(decrypt($id));
-            $centro->fill(['nombre' => $request->nombre, 'direccion' => $request->direccon, 'fecha_registro' => $request->fecha_registro,
+            $centro->fill(['nombre' => $request->nombre, 'direccion' => $request->direccion, 'fecha_registro' => $request->fecha_registro,
             'institucuion' => $request->institucion,'accesibilidad' => $request->accesibilidad,'implementacion' => $request->implementacion,
             'espacio_fisico' => $request->espacio_fisico,'departamento_id' => decrypt($request->departamento_id)]);
             $centro->save();

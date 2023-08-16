@@ -107,7 +107,7 @@
                       <select class="form-control" name="centro_entrenamiento" id="centro_entrenamiento" required>
                         <option selected disabled></option>
                         @foreach ($centro_entrenamiento as $item)
-                        <option value="{{$item->nombre}}">{{$item->nombre}}</option>
+                        <option value="{{encrypt($item->id)}}">{{$item->nombre}}</option>
                         @endforeach
                       </select>
                       <label for="centro_entrenamiento">Centro de entrenamiento</label>
@@ -144,14 +144,6 @@
                       <label for="dias">Días de entrenamiento</label>
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-floating mb-3">
-                      <input class="form-control" id="horario" type="text" name="horario" placeholder="Horario de entrenamiento" required>
-                      <label for="horario">Horario de entrenamiento</label>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
                   <div class="col-md-6">
                     <div class="form-floating mb-3">
                       <input class="form-control" id="fechaAprobacion" type="date" name="fechaAprobacion" required>

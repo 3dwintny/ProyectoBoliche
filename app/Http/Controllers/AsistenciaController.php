@@ -19,6 +19,8 @@ use App\Models\Municipio;
 use App\Exports\AsistenciaExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Str;
+use App\Models\Centro_Horario;
+use App\Models\Horario;
 
 class AsistenciaController extends Controller
 {
@@ -135,7 +137,7 @@ class AsistenciaController extends Controller
                 $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'INSERTAR', 'tabla_accion_id'=>3]);
                 $control->save();
                 DB::commit();
-                return redirect()->action([AsistenciaController::class,'create'])->with('message', 'La asistencia del '.$fecha[0].' ha sido tomada exitosamente');
+                return redirect()->action([AsistenciaController::class,'create'])->with('message', 'La asistencia del '.Carbon::parse($fecha[0])->format('d-m-Y').' ha sido tomada exitosamente');
             }
             else{
                 return redirect()->action([AsistenciaController::class,'create'])->with('warning', 'La asistencia del '.$fecha[0].' ya ha sido tomada');
@@ -200,7 +202,7 @@ class AsistenciaController extends Controller
                 $obtenerAnio = $datos['obtenerAnio'];
                 $mostrarMes = $datos['mostrarMes'];
                 $entrenador = Entrenador::where('estado','activo')->get(['nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada']);
-                $centro_entrenamiento = Centro::where('estado','activo')->get('nombre');
+                $centro_entrenamiento = Centro::where('estado','activo')->get(['nombre','id']);
                 $departamento = Departamento::where('estado','activo')->get(['id','nombre']);
                 $municipio = Municipio::where('estado','activo')->where('departamento_id',13)->get(['id','nombre','departamento_id']);
                 return view('Reportes.RepFor30.index',compact('atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes','entrenador','centro_entrenamiento','departamento','municipio'));
@@ -318,15 +320,53 @@ class AsistenciaController extends Controller
                     break;
             }
             $municipio = $request->municipio_id;
-            $centro = $request->centro_entrenamiento;
+            $centroId = decrypt($request->centro_entrenamiento);
+            $centro = Centro::where('id',$centroId)->first();
+            $nombreCentro = $centro->pluck('nombre')->toArray();
+            $centro = $nombreCentro[0];
+            $horarioId = Centro_Horario::where('centro_id', $centroId)->get('horario_id');
+            $horarioIdArray = $horarioId->pluck('horario_id')->toArray();
+            $horario = Horario::whereIn('id', $horarioIdArray)->get();
+            $mostrarHorarios = "";
+            $lunes = "";
+            $martes = "";
+            $miercoles = "";
+            $jueves = "";
+            $viernes = "";
+            $sabado = "";
+            $domingo = "";
+            foreach($horario as $item){
+                if($item->lunes!=null){
+                    $lunes = "Lun ".Carbon::parse($item->hora_inicio)->format('H:i')." - ".Carbon::parse($item->hora_fin)->format('H:i').", "; 
+                }
+                if($item->martes!=null){
+                    $martes = "Mar ".Carbon::parse($item->hora_inicio)->format('H:i')." - ".Carbon::parse($item->hora_fin)->format('H:i').", "; 
+                }
+                if($item->miercoles!=null){
+                    $miercoles = "Mie ".Carbon::parse($item->hora_inicio)->format('H:i')." - ".Carbon::parse($item->hora_fin)->format('H:i').", "; 
+                }
+                if($item->jueves!=null){
+                    $jueves = "Jue ".Carbon::parse($item->hora_inicio)->format('H:i')." - ".Carbon::parse($item->hora_fin)->format('H:i').", "; 
+                }
+                if($item->viernes!=null){
+                    $viernes = "Vie ".Carbon::parse($item->hora_inicio)->format('H:i')." - ".Carbon::parse($item->hora_fin)->format('H:i').", "; 
+                }
+                if($item->sabado!=null){
+                    $sabado = "Sab ".Carbon::parse($item->hora_inicio)->format('H:i')." - ".Carbon::parse($item->hora_fin)->format('H:i').", "; 
+                }
+                if($item->domingo!=null){
+                    $domingo = "Dom ".Carbon::parse($item->hora_inicio)->format('H:i')." - ".Carbon::parse($item->hora_fin)->format('H:i'); 
+                }
+            }           
+            $mostrarHorarios = $lunes.$martes.$miercoles.$jueves.$viernes.$sabado.$domingo;
+            $mostrarHorarios = rtrim($mostrarHorarios, ', ');
             $entrenador = $request->entrenador;
             $dias = $request->dias;
-            $horario = $request->horario;
             $control = new Control(['usuario_id' => auth()->user()->id,'Descripcion'=>'PDF', 'tabla_accion_id'=>3]);
             $control->save();
             return PDF::setOptions(['enable_remote' => true,
             'chroot'  => public_path('storage/uploads'),])
-            ->loadView('Reportes.RepFor30.pdf',compact('dias','horario','entrenador','centro','municipio','atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion','departamento'))
+            ->loadView('Reportes.RepFor30.pdf',compact('dias','mostrarHorarios','entrenador','centro','municipio','atleta','fechas','estado','contarDias','promedio','obtenerAnio','mostrarMes','aprobacion','departamento'))
             ->setPaper('8.5x11', 'landscape')
             ->stream();
         }
@@ -439,7 +479,7 @@ class AsistenciaController extends Controller
                 $obtenerAnio = $datos['obtenerAnio'];
                 $mostrarMes = $datos['mostrarMes'];
                 $entrenador = Entrenador::where('estado','activo')->get(['nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada']);
-                $centro_entrenamiento = Centro::where('estado','activo')->get('nombre');
+                $centro_entrenamiento = Centro::where('estado','activo')->get(['id','nombre']);
                 $departamento = Departamento::where('estado','activo')->get(['id','nombre']);
                 $municipio = Municipio::where('estado','activo')->where('departamento_id',13)->get(['id','nombre','departamento_id']);
                 return view('Reportes.RepFor30.index',compact('departamento','atleta','fechas','estado','contarDias','promedio','obtenerMes','obtenerAnio','mostrarMes','entrenador','centro_entrenamiento','municipio'));

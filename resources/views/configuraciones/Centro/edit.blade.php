@@ -32,7 +32,7 @@
                             </h2>
                         </strong>
                     </div>
-                    <form method="post" role="form" enctype="multipart/form-data" action="{{route('centro.update',$centro->id)}}">
+                    <form method="post" role="form" enctype="multipart/form-data" action="{{route('centro.update',encrypt($centro->id))}}">
                         @csrf
                         {{method_field('PUT')}}
                         <div class="form-group">
@@ -87,10 +87,7 @@
                                             <select class="form-control" name="departamento_id" id="departamento_id" required>
                                                 <option selected disabled></option>
                                                 @foreach ($departamento as $item)
-                                                <option value="{{$item->id}}">{{$item->nombre}}</option>
-                                                    @if ($item->id==$centro->departamento_id)
-                                                        <option selected value="{{$item->id}}">{{$item->nombre}}</option>
-                                                    @endif
+                                                    <option value="{{encrypt($item->id)}}" {{$centro->departamento_id==$item->id ? 'selected':''}}>{{$item->nombre}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="departamento_id">Departamento</label>

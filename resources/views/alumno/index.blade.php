@@ -32,7 +32,6 @@
           <th scope="col">Estado</th>
           <th scope="col">Fecha de nacimiento</th>
           <th scope="col">Dirección</th>
-          <th></th>
         </tr>
       </thead>
       <tbody class="table-hover">
@@ -68,7 +67,7 @@
               </td>
               <td>
                 <form action="{{route('reinscripcionPDF')}}" target="_blank">
-                  <button type="submit" class="btn btn-warning"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
+                  <button type="submit" class="btn btn-warning btn-sm"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
                   <input type="hidden" value="{{encrypt($alumno->id)}}" name="informacionAspirante">
                 </form>
               </td>

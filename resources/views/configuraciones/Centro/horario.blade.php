@@ -54,30 +54,36 @@
             @php
                 $contador = 1;
             @endphp
-            @foreach ($horario as $item)
-            <tr>
-              <td>{{$contador}}</td>
-              <td>{{\Carbon\Carbon::parse($item->hora_inicio)->format('H:i')}}</td>
-              <td>{{\Carbon\Carbon::parse($item->hora_fin)->format('H:i')}}</td>
-              <td>{{$item->lunes}}</td>
-              <td>{{$item->martes}}</td>
-              <td>{{$item->miercoles}}</td>
-              <td>{{$item->jueves}}</td>
-              <td>{{$item->viernes}}</td>
-              <td>{{$item->sabado}}</td>
-              <td>{{$item->domingo}}</td>
-              <td>
-                <form action="{{route('eliminarHorarios',encrypt($item->id))}}" method="GET">
-                  @csrf
-                  <button type="submit" class="btn btn-danger" onclick="return eliminarHorario('Eliminar horario')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
-                  <input type="hidden" name="e" id="e" value="{{$idEncriptado}}">
-              </form>
-              </td>
-              @php
-                $contador++;
-              @endphp
-            </tr>
-            @endforeach
+            @if(count($horario)<=0)
+              <tr>
+                <td colspan="10" style="font-weight: bolder;text-align:center;">SIN HORARIOS ASIGNADOS</td>
+              </tr>
+            @else
+              @foreach ($horario as $item)
+                <tr>
+                  <td>{{$contador}}</td>
+                  <td>{{\Carbon\Carbon::parse($item->hora_inicio)->format('H:i')}}</td>
+                  <td>{{\Carbon\Carbon::parse($item->hora_fin)->format('H:i')}}</td>
+                  <td>{{$item->lunes}}</td>
+                  <td>{{$item->martes}}</td>
+                  <td>{{$item->miercoles}}</td>
+                  <td>{{$item->jueves}}</td>
+                  <td>{{$item->viernes}}</td>
+                  <td>{{$item->sabado}}</td>
+                  <td>{{$item->domingo}}</td>
+                  <td>
+                    <form action="{{route('eliminarHorarios',encrypt($item->id))}}" method="GET">
+                      @csrf
+                      <button type="submit" class="btn btn-danger" onclick="return eliminarHorario('Eliminar horario')"><i class="fa fa-fw fa-regular fa-trash"></i></button>
+                      <input type="hidden" name="e" id="e" value="{{$idEncriptado}}">
+                  </form>
+                  </td>
+                  @php
+                    $contador++;
+                  @endphp
+                </tr>
+              @endforeach
+            @endif
           </tbody>
         </table>
       </div>

@@ -227,6 +227,14 @@
             width: 5.2cm;
             border-bottom: black 0.1px solid;
         }
+        #posicionHorario{
+            position: absolute; 
+            margin-left: 1.48cm; 
+            margin-top: 0.05cm;
+            width: 5.2cm;
+            font-size: 55%;
+            text-align: center;
+        }
         #posicionBordeDiasEntreno{
             position: absolute; 
             margin-left: 2.98cm; 
@@ -382,7 +390,8 @@
                     </td>
                     <td class="bordeDerechoNegroUnPixel">
                         <span id="posicionBordeHorario"></span>
-                        Horario: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{$horario}}
+                        <span id="posicionHorario">{{$mostrarHorarios}}</span>
+                        Horario:
                     </td>
                     <td class="bordeDerechoNegroUnPixel">
                         Fecha:&nbsp;
