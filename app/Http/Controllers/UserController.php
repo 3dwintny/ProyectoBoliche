@@ -90,12 +90,12 @@ class UserController extends Controller
             $this->validate($request, [
                 'name' => 'required',
                 'email' => 'required | email | unique:users,email,',
-                'password' => 'required | same:confirm-password',
                 'roles' => 'required'
             ]);
             $rol = $request->roles;
             $input = $request->all();
-            $input ['password'] = Hash::make($input['password']);
+            $input ['password'] = Hash::make('AsociacionBolicheXela');
+            $input ['avatar'] = 'federacion2.jpg';
     
             $user = User::create($input);
             $user->assignRole($request -> input('roles'));
@@ -107,6 +107,8 @@ class UserController extends Controller
                 $administrador->save();
             }
             DB::commit();
+            $usuario = User::where('email',$request->email)->first();
+            $usuario->sendEmailVerificationNotification();
             return redirect()->route('usuarios.index')->with('success','Usuario registrado exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
@@ -187,7 +189,6 @@ class UserController extends Controller
             $this->validate($request, [
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email,'.decrypt($id),
-                'password' => 'same:confirm-password',
                 'roles' => 'required'
             ]);
     

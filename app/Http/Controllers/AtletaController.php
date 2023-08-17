@@ -430,11 +430,17 @@ class AtletaController extends Controller
         DB::beginTransaction();
         try{
             $alumnos = Alumno::where('correo',auth()->user()->email)->get();
-            $usuario = User::where('email',auth()->user()->email)->first();
+            $nombreUsuario = "";
+            if($alumnos[0]->correo!=$request->correo){
+                $nombreUsuario = User::where('email',$alumnos[0]->correo)->first();
+                $nombreUsuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                $nombreUsuario->save();
+            }
             $atleta = Alumno::find($alumnos[0]->id);
             $fecha_foto = null;
             if($request->hasFile('foto'))
             {
+                $usuario = User::where('email',auth()->user()->email)->first();
                 $destination = 'uploads/alumnos/'.$atleta->foto;
                 if(File::exists($destination)){
                     File::delete($destination);
@@ -485,6 +491,10 @@ class AtletaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
             $control->save();
             DB::commit();
+            if($nombreUsuario!=""){
+                $nombreUsuario->sendEmailVerificationNotification();
+                return redirect()->route('login');
+            }
             return redirect()->action([AtletaController::class,'modificar'])->with('success','Información actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {

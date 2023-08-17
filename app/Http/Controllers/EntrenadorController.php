@@ -19,6 +19,7 @@ use App\Models\Psicologia;
 use App\Models\Atleta;
 use App\Models\Administracion;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Auth;
 
 class EntrenadorController extends Controller
 {
@@ -216,6 +217,12 @@ class EntrenadorController extends Controller
         DB::beginTransaction();
         try{
             $entrenador = Entrenador::find(decrypt($id));
+            $usuario = "";
+            if($entrenador->correo!=$request->correo){
+                $usuario = User::where('email',$entrenador->correo)->first();
+                $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                $usuario->save();
+            }
             if($request->hasFile('foto'))
             {
                 $destination = 'uploads/alumnos/'.$entrenador->foto;
@@ -268,6 +275,9 @@ class EntrenadorController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
             $control->save();
             DB::commit();
+            if($usuario!=""){
+                $usuario->sendEmailVerificationNotification();
+            }
             return redirect()->action([EntrenadorController::class,'index'])->with('success','Información del entrenador actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
@@ -335,8 +345,15 @@ class EntrenadorController extends Controller
         try{
             $entrenadores = Entrenador::where('correo',auth()->user()->email)->get();
             $entrenador = Entrenador::find($entrenadores[0]->id);
+            $nombreUsuario = "";
+            if($entrenador->correo!=$request->correo){
+                $nombreUsuario = User::where('email',$entrenador->correo)->first();
+                $nombreUsuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                $nombreUsuario->save();
+            }
             if($request->hasFile('foto'))
             {
+                $usuario = User::where('email',auth()->user()->email)->first();
                 $destination = 'uploads/alumnos/'.$entrenador->foto;
                 if(File::exists($destination)){
                     File::delete($destination);
@@ -346,6 +363,10 @@ class EntrenadorController extends Controller
                 $filename = time().'.'.$extention;
                 $file->move('uploads/alumnos/', $filename);
                 $fotografia = $filename;
+                $usuario->fill([
+                    'avatar' => $fotografia,
+                ]);
+                $usuario->save();
             }
             else{
                 $fotografia = $request->pic;
@@ -383,6 +404,10 @@ class EntrenadorController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>14]);
             $control->save();
             DB::commit();
+            if($nombreUsuario!=""){
+                $nombreUsuario->sendEmailVerificationNotification();
+                return redirect()->route('login');
+            }
             return redirect()->action([EntrenadorController::class,'modificar'])->with('success','Información actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {

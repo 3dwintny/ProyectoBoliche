@@ -50,19 +50,7 @@
                         <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
                             <div class="form-group">
                                 <label for="email">Correo</label>
-                                {!! Form::text('email', null, array('class' => 'form-control')) !!}
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="password">Contraseña</label>
-                                {!! Form::password('password', array('class' => 'form-control')) !!}
-                            </div>
-                        </div>
-                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="confirm-password">Confirmar contraseña</label>
-                                {!! Form::password('confirm-password', array('class' => 'form-control')) !!}
+                                {!! Form::text('email', null, array('class' => 'form-control', 'readonly' => 'readonly')) !!}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">

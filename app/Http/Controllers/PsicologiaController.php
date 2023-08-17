@@ -155,6 +155,15 @@ class PsicologiaController extends Controller
             $request->validate([
                 'telefono' => 'nullable|regex:/[0-9]{4}[-][0-9]{4}/'
             ]);
+            $usuario = "";
+            if($psicologo->correo!=$request->correo){
+                $usuario = User::where('email',$psicologo->correo)->first();
+                $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                $usuario->save();
+                $psicologo ->fill([
+                    'codigo_correo' => NULL
+                ]);
+            }
             $psicologo ->fill([
                 'nombre1' => $request->nombre1,
                 'nombre2' => $request->nombre2,
@@ -172,6 +181,9 @@ class PsicologiaController extends Controller
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
             $control->save();
             DB::commit();
+            if($usuario!=""){
+                $usuario->sendEmailVerificationNotification();
+            }
             return redirect()->action([PsicologiaController::class,'index'])->with('success','Información del psicólogo actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
@@ -230,11 +242,24 @@ class PsicologiaController extends Controller
             ]);
             $psicologos = Psicologia::where('correo',auth()->user()->email)->get();
             $psicologo = Psicologia::find($psicologos[0]->id);
+            $usuario = "";
+            if($psicologo->correo!=$request->correo){
+                $usuario = User::where('email',$psicologo->correo)->first();
+                $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                $usuario->save();
+                $psicologo ->fill([
+                    'codigo_correo' => NULL
+                ]);
+            }
             $psicologo->fill($request->all());
             $psicologo->save();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>27]);
             $control->save();
             DB::commit();
+            if($usuario!=""){
+                $usuario->sendEmailVerificationNotification();
+                return redirect()->route('login');
+            }
             return redirect()->action([PsicologiaController::class,'modificar'])->with('success','Información actualizada exitosamente');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
