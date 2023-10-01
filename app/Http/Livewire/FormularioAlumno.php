@@ -239,27 +239,33 @@ class FormularioAlumno extends Component
             'nombre1' => 'required',
             'apellido1' => 'required',
             'peso' => 'required',
-            'cui' => 'numeric',
+            'cui' => 'numeric|unique:alumno',
             'fecha' => 'required',
             'peso' => 'required | numeric',
             'altura' => 'required | numeric',
             'direccion' => 'required',
             'genero' => 'required',
             'contacto_emergencia' => 'required',
-            'correo' => 'required | email',
+            'correo' => 'required | email |unique:alumno',
             'foto' => 'required | image |max:2048',
             'nacionalidad' => 'required',
             'country' => 'required',
             'city' => 'required',
             'cityr' => 'required',
-            'nombre_emergencia' => 'required'
+            'nombre_emergencia' => 'required',
+            'nit'=>'unique:alumno|nullable',
+            'pasaporte'=>'unique:alumno|nullable'
         ],
         [
             'nombre1' => 'El primer nombre es obligatorio',
             'apellido1' => 'El primer apellido es obligatorio',
             'cui.numeric' => 'Unicamente debe ingresar números',
             'city' => 'El campo es requerido',
-            'cityr' => 'El campo es requerido'
+            'cityr' => 'El campo es requerido',
+            'correo.unique' => 'El correo ya ha sido registrado',
+            'cui.unique' => 'El CUI ya ha sido registrado',
+            'nit.unique' => 'El NIT ya ha sido registrado',
+            'pasaporte.unique' => 'El pasaporte ya ha sido registrado'
         ]
     );
 
@@ -270,7 +276,7 @@ class FormularioAlumno extends Component
         /* Extraemos el nombre de la fotografia */
         $imageName = time().'.'.$this->foto->getClientOriginalExtension();
         /* el public_uploados es lo que se modifico de filesystem para poder ingresar los datos a public */
-        $this->foto->storeAs("uploads/alumnos",$imageName,'public_uploads'); #los parametros que ingresan son (el path,nombre, disco a donde ingresa)
+        $this->foto->storeAs("uploads/alumnos",$imageName,'public_uploads');#los parametros que ingresan son (el path,nombre, disco a donde ingresa)
         Alumno::create([
 
             'nombre1'=> $this->nombre1,

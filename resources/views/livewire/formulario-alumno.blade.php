@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input class="form-control text-dark" placeholder="{{ __('Peso(Libras)') }}" id="formIns" type="text"
+                                                <input class="form-control text-dark" placeholder="{{ __('Peso(Libras)') }}" id="formIns" type="number"
                                                 wire:model="peso">
                                                 <label for="formIns">Peso(Libras)</label>
                                                 @error('peso') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -111,7 +111,7 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input class="form-control text-dark" placeholder="Altura(Metros)" id="formIns" type="text"
+                                                <input class="form-control text-dark" placeholder="Altura(Metros)" id="formIns" type="number"
                                                 wire:model="altura">
                                                 <label for="formIns">Altura(Metros)</label>
                                                 @error('altura') <span class="text-danger error">{{ $message }}</span>@enderror
@@ -144,14 +144,14 @@
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input class="form-control text-dark" id="formIns" type="text"
+                                                <input class="form-control text-dark" id="formIns" type="tel"
                                                 wire:model="telefono" name="telefono_casa" placeholder="Teléfono Residencial">
                                                 <label for="formIns">Teléfono residencial</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
-                                                <input class="form-control text-dark" id="formIns" type="text"
+                                                <input class="form-control text-dark" id="formIns" type="tel"
                                                 wire:model="celular" name="celular" placeholder="Celular">
                                                 <label for="formIns">Celular</label>
                                             </div>
@@ -167,7 +167,7 @@
                                         <div class="col-md-6 mb-2">
                                             <div class="form-floating">
                                                 <input class="form-control text-dark" id="formIns" type="file"
-                                                wire:model="foto" accept=".jpg, .jpeg, .png">
+                                                wire:model="foto" accept=".jpg, .jpeg, .png">
                                                 <label for="formIns">Fotografía:</label>
                                                 @error('foto') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
@@ -177,6 +177,7 @@
                                                 <input class="form-control text-dark" id="formIns" type="text"
                                                 wire:model="nit" name="nit" placeholder="NIT">
                                                 <label for="formIns">NIT</label>
+                                                @error('nit') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-2">
@@ -184,6 +185,7 @@
                                                 <input class="form-control text-dark" id="formIns" type="text"
                                                 wire:model="pasaporte" name="pasaporte" placeholder="Pasaporte">
                                                 <label for="formIns">Pasaporte</label>
+                                                @error('pasaporte') <span class="text-danger error">{{ $message }}</span>@enderror
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-2">
@@ -222,7 +224,7 @@
                                         <div class="col-md-6 mb-2">
                                             <select class="form-control"
                                                 wire:model="countryr" id="departamento_id">
-                                                <option value="" selected>Departamento de recidencia</option>
+                                                <option value="" selected>Departamento de residencia</option>
                                                 @foreach ($contriesr as $departamentor)
                                                 <option value="{{$departamentor->id}}">{{$departamentor->nombre}}</option>
                                                 @endforeach

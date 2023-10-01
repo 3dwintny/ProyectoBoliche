@@ -186,7 +186,7 @@ class AtletaController extends Controller
             $modalidad = Modalidad::where('estado','activo')->get(['id','nombre']);
             $prt = PRT::where('estado','activo')->get(['id','nombre']);
             $hoy = Carbon::now();
-            return view('atletas.create',compact('alumno','centro','entrenador','categoria','etapa',
+            return view('Atletas.create',compact('alumno','centro','entrenador','categoria','etapa',
             'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','hoy'));
         }
         catch(\Exception $e){
@@ -360,7 +360,7 @@ class AtletaController extends Controller
             $prt = decrypt($request->prt_id);
             $atletas->fill([
                 'fecha_ingreso'=> $request->fecha_ingreso,
-                'adaptado'=> $request->seleccionarAdaptado,
+                'adaptado'=> $request->adaptado,
                 'estado_civil' => $request->estado_civil,
                 'etnia' => $request->etnia,
                 'escolaridad' => $request->escolaridad,
@@ -509,7 +509,8 @@ class AtletaController extends Controller
             $formularios = Formulario::all();
             $alumnos = Alumno::where('correo',auth()->user()->email)->get();
             if($request->informacionAtleta!=""){
-                $alumnos = Alumno::where('id',decrypt($request->informacionAtleta))->get(); 
+                $atleta = Atleta::where('id',decrypt($request->informacionAtleta))->first();
+                $alumnos = Alumno::where('id',$atleta->alumno_id)->get();
             }
             if($request->informacionAspirante!=""){
                 $alumnos = Alumno::where('id',decrypt($request->informacionAspirante))->get(); 
