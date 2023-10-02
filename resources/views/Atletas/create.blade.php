@@ -122,9 +122,7 @@
                                                 <option value="Primaria">Primaria</option>
                                                 <option value="Básico">Básico</option>
                                                 <option value="Diversificado">Diversificado</option>
-                                                <option value="Licenciatura">Licenciatura</option>
-                                                <option value="Maestría">Maestría</option>
-                                                <option value="Doctorado">Doctorado</option>
+                                                <option value="Licenciatura">Universitario</option>
                                             </select>
                                             <label for="escolaridad">Nivel académico</label>
                                         </div>
@@ -168,7 +166,7 @@
                                             <select name="categoria_id" id="categoria_id" class="form-control text-dark" required>
                                                 <option selected value=""></option>
                                                 @foreach ($categoria as $item)
-                                                <option value="{{encrypt($item->id)}}" {{$item->tipo == $categoriaAtleta ? 'selected':''}}>{{$item->tipo}}</option>
+                                                <option value="{{encrypt($item->id)}}" {{ $item->tipo == $categoriaAtleta ? 'selected':'' }}>{{$item->tipo}}</option>
                                                 @endforeach
                                             </select>
                                             <label for="categoria_id">Categoría</label>
