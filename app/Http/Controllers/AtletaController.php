@@ -177,7 +177,50 @@ class AtletaController extends Controller
             $centro=Centro::where('estado','activo')->get(['id','nombre']);
             $entrenador= Entrenador::where('estado','activo')->get(['id','nombre1','apellido1']);
             $alumno = Alumno::find(decrypt($id));
+            $mesAnioCumpleaniosAtleta = substr($alumno->fecha,5,5);
             $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
+            if($alumno->edad==6 || $alumno->edad==7 || $alumno->edad == 8) {
+                $categoriaAtleta = $categoria[0]->tipo;
+            }
+            else if($alumno->edad==9 || $alumno->edad==10){
+                $categoriaAtleta = $categoria[1]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumno->edad==9){
+                    $categoriaAtleta = $categoria[0]->tipo;
+                }
+            }
+            else if($alumno->edad==11 || $alumno->edad==12){
+                $categoriaAtleta = $categoria[2]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumno->edad==11){
+                    $categoriaAtleta = $categoria[1]->tipo;
+                }
+            }
+            else if($alumno->edad==13 || $alumno->edad==14 || $alumno->edad==15){
+                $categoriaAtleta = $categoria[3]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumno->edad==13){
+                    $categoriaAtleta = $categoria[2]->tipo;
+                }
+            }
+            else if($alumno->edad==16 || $alumno->edad==17){
+                $categoriaAtleta = $categoria[4]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumno->edad==16){
+                    $categoriaAtleta = $categoria[3]->tipo;
+                }
+            }
+            else if($alumno->edad==18 || $alumno->edad==19 || $alumno->edad==20){
+                $categoriaAtleta = $categoria[5]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumno->edad==18){
+                    $categoriaAtleta = $categoria[4]->tipo;
+                }
+            }
+            else if($alumno->edad>20){
+                $categoriaAtleta = $categoria[7]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumno->edad==21){
+                    $categoriaAtleta = $categoria[5]->tipo;
+                }
+            }
+            else{
+                $categoriaAtleta = "N/A";
+            }
             $etapa=Etapa_Deportiva::where('estado','activo')->get(['id','nombre']);
             $deporteadaptado = Deporte_Adoptado::where('estado','activo')->get(['id','nombre']);
             $otroprograma = Otro_Programa::where('estado','activo')->get(['id','nombre']);
@@ -187,7 +230,7 @@ class AtletaController extends Controller
             $prt = PRT::where('estado','activo')->get(['id','nombre']);
             $hoy = Carbon::now();
             return view('Atletas.create',compact('alumno','centro','entrenador','categoria','etapa',
-            'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','hoy'));
+            'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','hoy','categoriaAtleta'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
