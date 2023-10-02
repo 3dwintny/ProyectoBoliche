@@ -311,7 +311,7 @@
             <div class="edad tamanio70 textoCentrado">{{$item->genero}}</div>
             <div class="mes"></div>
             <div class="cui tamanio70">CATEGORÍA:</div>
-            <div class="noCui tamanio70 textoCentrado">SUB-11</div>
+            <div class="noCui tamanio70 textoCentrado">{{$categoriaAtleta}}</div>
             <div class="espacioDerecho1 tamanio70"></div>
 
 

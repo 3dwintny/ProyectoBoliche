@@ -512,9 +512,13 @@ class AtletaController extends Controller
                 $atleta = Atleta::where('id',decrypt($request->informacionAtleta))->first();
                 $alumnos = Alumno::where('id',$atleta->alumno_id)->get();
             }
+
             if($request->informacionAspirante!=""){
                 $alumnos = Alumno::where('id',decrypt($request->informacionAspirante))->get(); 
             }
+
+            $categoria = Categoria::where('estado','activo')->where('id',$atleta->categoria_id)->get(['tipo']);
+            $categoriaAtleta = $categoria[0]->tipo;
             $anio = Carbon::now()->format('Y');
             $cantidadDeRelaciones = null;
             $relalumnos = null;
@@ -532,14 +536,14 @@ class AtletaController extends Controller
             }
             if($cantidadDeRelaciones === 2){
                 $cant_rel = 2;
-                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel','categoriaAtleta'))->setPaper('8.5x11')->stream();
             }elseif($cantidadDeRelaciones === 1){
                 $cant_rel = 1;
-                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel','categoriaAtleta'))->setPaper('8.5x11')->stream();
 
             }else{
                 $cant_rel = 0;
-                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','anio','cant_rel'))->setPaper('8.5x11')->stream();
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','anio','cant_rel','categoriaAtleta'))->setPaper('8.5x11')->stream();
             }
         }
         catch(\Exception $e){

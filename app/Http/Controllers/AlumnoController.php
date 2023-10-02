@@ -16,6 +16,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Control;
 use Throwable;
+use App\Models\Categoria;
 
 class AlumnoController extends Controller
 {
@@ -252,12 +253,57 @@ class AlumnoController extends Controller
         Alumno::find($id)->update(['estado' => 'Rechazado']);
         return redirect()->route('alumnos.index')->with('success', 'Solicitud Rechazada');
     }
+
     public static function generarPDF($cui)
     {
             try{
             $anio = Carbon::now()->format('Y');
             $formularios = Formulario::all();
             $alumnos = Alumno::where('cui', $cui)->get();
+            $categoria = Categoria::where('estado','activo')->get(['estado','tipo','id']);
+            $mesAnioCumpleaniosAtleta = substr($alumnos[0]->fecha,5,5);
+            if($alumnos[0]->edad==6 || $alumnos[0]->edad==7 || $alumnos[0]->edad == 8) {
+                $categoriaAtleta = $categoria[0]->tipo;
+            }
+            else if($alumnos[0]->edad==9 || $alumnos[0]->edad==10){
+                $categoriaAtleta = $categoria[1]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==9){
+                    $categoriaAtleta = $categoria[0]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad==11 || $alumnos[0]->edad==12){
+                $categoriaAtleta = $categoria[2]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==11){
+                    $categoriaAtleta = $categoria[1]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad==13 || $alumnos[0]->edad==14 || $alumnos[0]->edad==15){
+                $categoriaAtleta = $categoria[3]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==13){
+                    $categoriaAtleta = $categoria[2]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad==16 || $alumnos[0]->edad==17){
+                $categoriaAtleta = $categoria[4]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==16){
+                    $categoriaAtleta = $categoria[3]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad==18 || $alumnos[0]->edad==19 || $alumnos[0]->edad==20){
+                $categoriaAtleta = $categoria[5]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==18){
+                    $categoriaAtleta = $categoria[4]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad>20){
+                $categoriaAtleta = $categoria[7]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==21){
+                    $categoriaAtleta = $categoria[5]->tipo;
+                }
+            }
+            else{
+                $categoriaAtleta = "N/A";
+            }
             $cantidadDeRelaciones = null;
             $relalumnos = null;
             $encargados = [];
@@ -274,14 +320,14 @@ class AlumnoController extends Controller
             }
             if($cantidadDeRelaciones === 2){
                 $cant_rel = 2;
-                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel','categoriaAtleta'))->setPaper('8.5x11')->stream();
             }elseif($cantidadDeRelaciones === 1){
                 $cant_rel = 1;
-                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel'))->setPaper('8.5x11')->stream();
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','encargados','anio','cant_rel','categoriaAtleta'))->setPaper('8.5x11')->stream();
 
             }else{
                 $cant_rel = 0;
-                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','anio','cant_rel'))->setPaper('8.5x11')->stream();
+                return PDF::loadView('alumno.pdf',compact('formularios','alumnos','anio','cant_rel','categoriaAtleta'))->setPaper('8.5x11')->stream();
             }
 
         }catch(Throwable $e){
