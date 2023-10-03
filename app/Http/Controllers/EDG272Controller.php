@@ -136,4 +136,8 @@ class EDG272Controller extends Controller
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
         }
     }
+
+    public function bitacoraExcel($obtenerMes,$obtenerAnio){
+        
+    }
 }

@@ -185,7 +185,8 @@ Route::group(['middleware' => 'auth'], function () {
     //Rutas Tipo_Usuario
     Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
     //Ruta Reporte EDG27
-Route::resource('edg-27',EDG27Controller::class);
+    Route::resource('edg-27',EDG27Controller::class);
+    Route::get('exportar/edg27',[EDG27Controller::class,'exportar'])->name('exportarEDG27');
 
 //Ruta Reporte EDG27.2
 Route::resource('edg-27-2',EDG272Controller::class);

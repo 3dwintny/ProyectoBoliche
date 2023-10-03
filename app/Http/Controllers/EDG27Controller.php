@@ -9,6 +9,9 @@ use App\Models\Departamento;
 use App\Models\Deporte;
 use Carbon\Carbon;
 use App\Models\Control;
+use App\Http\Controllers\AsistenciaController;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EDG27Export;
 
 class EDG27Controller extends Controller
 {
@@ -100,45 +103,8 @@ class EDG27Controller extends Controller
             $fecha = Carbon::now();
             $mes = Carbon::parse($fecha)->format('m');
             $anio = Carbon::parse($fecha)->format('Y');
-            $mostrarMes = "";
-            switch ($mes){
-                case 1:
-                    $mostrarMes = "Enero";
-                    break;
-                case 2:
-                    $mostrarMes = "Febrero";
-                    break;
-                case 3:
-                    $mostrarMes = "Marzo";
-                    break;
-                case 4:
-                    $mostrarMes = "Abril";
-                    break;
-                case 5:
-                    $mostrarMes = "Mayo";
-                    break;
-                case 6:
-                    $mostrarMes = "Junio";
-                    break;
-                case 7:
-                    $mostrarMes = "Julio";
-                    break;
-                case 8:
-                    $mostrarMes = "Agosto";
-                    break;
-                case 9:
-                    $mostrarMes = "Septiembre";
-                    break;
-                case 10:
-                    $mostrarMes = "Octubre";
-                    break;
-                case 11:
-                    $mostrarMes = "Noviembre";
-                    break;
-                case 12:
-                    $mostrarMes = "Diciembre";
-                    break;
-            }
+            $meses = new AsistenciaController();
+            $mostrarMes = $meses->mesLetras($mes);
             $federacion = Deporte::find(1);
             $departamento = Departamento::find(13);
             $atletas = Atleta::where('federado','SISTEMÁTICO')->where('estado','activo')->get();
@@ -160,6 +126,25 @@ class EDG27Controller extends Controller
         try{
             $control = Control::where('tabla_accion_id',10)->with('usuario')->paginate(5);
             return view('Reportes.edg27.control',compact('control'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function bitacoraExcel(){
+        try{
+            $atletas = Atleta::where('federado','SISTEMÁTICO')->where('estado','activo')->get();
+            return $atletas;
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function exportar(Request $request){
+        try{
+            return Excel::download(new EDG27Export(),'edg27.xlsx');
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
