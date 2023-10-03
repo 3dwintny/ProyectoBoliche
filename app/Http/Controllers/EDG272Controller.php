@@ -10,6 +10,8 @@ use App\Models\Deporte;
 use Carbon\Carbon;
 use App\Models\Control;
 use App\Http\Controllers\AsistenciaController;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\EDG272Export;
 
 class EDG272Controller extends Controller
 {
@@ -137,7 +139,22 @@ class EDG272Controller extends Controller
         }
     }
 
-    public function bitacoraExcel($obtenerMes,$obtenerAnio){
-        
+    public function bitacoraExcel(){
+        try{
+            $atletas = Atleta::where('otro_programa_id',2)->where('estado','activo')->get();
+            return $atletas;
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function exportar(Request $request){
+        try{
+            return Excel::download(new EDG272Export(),'edg272.xlsx');
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
     }
 }

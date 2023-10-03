@@ -20,6 +20,7 @@
 <div class="container-fluid pt-2">
     <div class="header-body text-center mb-7">
         <div class="col-xl-1 col-lg-4 col-md-1 col-sm-1">
+        <div class="d-flex">
             <form method="GET" action="{{route('edg272PDF')}}" role="form" enctype="multipart/form-data" target="_blank">
                 @csrf
                 @if(count($atletas)<=0)
@@ -28,6 +29,12 @@
                     <button class="btn btn-outline-info" type="submit"><i class="fa fa-fw fa-regular fa-file-pdf"></i></button>
                 @endif
             </form>
+            @if(count($atletas)<=0)
+                <button type="button" class="btn btn-outline-success" disabled><i class="fa fa-file-excel-o" aria-hidden="true"></i></button>
+            @else
+                <a href="{{route('exportarEDG272')}}" target="_blank" type="button" class="btn btn-outline-success"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+            @endif
+        </div>
         </div>
         <div class="row justify-content-center">
             @if(session('error'))

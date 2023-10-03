@@ -188,22 +188,23 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('edg-27',EDG27Controller::class);
     Route::get('exportar/edg27',[EDG27Controller::class,'exportar'])->name('exportarEDG27');
 
-//Ruta Reporte EDG27.2
-Route::resource('edg-27-2',EDG272Controller::class);
+    //Ruta Reporte EDG27.2
+    Route::resource('edg-27-2',EDG272Controller::class);
 
-//Rutas Generar pdf Asistencias
-Route::get('asistencias-PDF',[AsistenciaController::class,'generarPDF'])->name('asistenciasPDF');
+    //Rutas Generar pdf Asistencias
+    Route::get('asistencias-PDF',[AsistenciaController::class,'generarPDF'])->name('asistenciasPDF');
 
-//Rutas Generar pdf Asistencias
-Route::get('edg-31-PDF',[EDG31Controller::class,'generarPDF'])->name('edg31PDF');
+    //Rutas Generar pdf Asistencias
+    Route::get('edg-31-PDF',[EDG31Controller::class,'generarPDF'])->name('edg31PDF');
 
-//Rutas Generar pdf Asistencias
-Route::get('edg-27-PDF',[EDG27Controller::class,'generarPDF'])->name('edg27PDF');
+    //Rutas Generar pdf Asistencias
+    Route::get('edg-27-PDF',[EDG27Controller::class,'generarPDF'])->name('edg27PDF');
 
-//Rutas Generar pdf Asistencias
-Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272PDF');
+    //Rutas Generar pdf Asistencias
+    Route::get('edg-27-2-PDF',[EDG272Controller::class,'generarPDF'])->name('edg272PDF');
+    Route::get('exportar/edg272',[EDG272Controller::class,'exportar'])->name('exportarEDG272');
 
-//ruta para mostrar el nombre del atleta
+    //ruta para mostrar el nombre del atleta
     Route::get('atl/{id}',[AtletaController::class,'creacion'])->name('creacion');
     Route::post('alc/{id}',[AtletaController::class,'store'])->name('ac_estado');
 
