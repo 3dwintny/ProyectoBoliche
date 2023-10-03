@@ -196,6 +196,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Rutas Generar pdf Asistencias
     Route::get('edg-31-PDF',[EDG31Controller::class,'generarPDF'])->name('edg31PDF');
+    Route::get('exportar/edg31',[EDG31Controller::class,'exportar'])->name('exportarEDG31');
 
     //Rutas Generar pdf Asistencias
     Route::get('edg-27-PDF',[EDG27Controller::class,'generarPDF'])->name('edg27PDF');
