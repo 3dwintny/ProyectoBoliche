@@ -551,6 +551,52 @@ class AtletaController extends Controller
         try{
             $formularios = Formulario::all();
             $alumnos = Alumno::where('correo',auth()->user()->email)->get();
+            if(count($alumnos)==1){
+                $categoria = Categoria::where('estado','activo')->get(['estado','tipo','id']);
+                $mesAnioCumpleaniosAtleta = substr($alumnos[0]->fecha,5,5);
+            if($alumnos[0]->edad==6 || $alumnos[0]->edad==7 || $alumnos[0]->edad == 8) {
+                $categoriaAtleta = $categoria[0]->tipo;
+            }
+            else if($alumnos[0]->edad==9 || $alumnos[0]->edad==10){
+                $categoriaAtleta = $categoria[1]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==9){
+                    $categoriaAtleta = $categoria[0]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad==11 || $alumnos[0]->edad==12){
+                $categoriaAtleta = $categoria[2]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==11){
+                    $categoriaAtleta = $categoria[1]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad==13 || $alumnos[0]->edad==14 || $alumnos[0]->edad==15){
+                $categoriaAtleta = $categoria[3]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==13){
+                    $categoriaAtleta = $categoria[2]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad==16 || $alumnos[0]->edad==17){
+                $categoriaAtleta = $categoria[4]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==16){
+                    $categoriaAtleta = $categoria[3]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad==18 || $alumnos[0]->edad==19 || $alumnos[0]->edad==20){
+                $categoriaAtleta = $categoria[5]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==18){
+                    $categoriaAtleta = $categoria[4]->tipo;
+                }
+            }
+            else if($alumnos[0]->edad>20){
+                $categoriaAtleta = $categoria[7]->tipo;
+                if($mesAnioCumpleaniosAtleta>"01-01" && $alumnos[0]->edad==21){
+                    $categoriaAtleta = $categoria[5]->tipo;
+                }
+            }
+            else{
+                $categoriaAtleta = "N/A";
+            }
+            }
             if($request->informacionAtleta!=""){
                 $atleta = Atleta::where('id',decrypt($request->informacionAtleta))->first();
                 $alumnos = Alumno::where('id',$atleta->alumno_id)->get();
