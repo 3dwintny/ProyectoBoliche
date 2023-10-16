@@ -26,5 +26,4 @@ class Departamento extends Model
     public function entrenadores(){
         return $this->hasMany('App\Models\Entrenador');
     }
-
 }

@@ -58,7 +58,7 @@
                                     </div>
                                     <label for="titulo_ficha">Declaración</label>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 mb-2">
-                                        <textarea class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Declaración') }}" id="declaracion" type="text" name="declaracion" style="text-align:justify;resize:none;" rows="8">{{$formulario->declaracion}}</textarea>
+                                        <textarea class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('Declaración') }}" id="declaracion" name="declaracion" style="text-align:justify;resize:none;" rows="8">{{$formulario->declaracion}}</textarea>
                                     </div>
                                 </div>
                                 <div class="container">

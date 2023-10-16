@@ -64,4 +64,8 @@ class Atleta extends Model
     public function asistencias(){
         return $this->hasMany('App\Models\Asistencia');
     }
+
+    public function actividad_atleta(){
+        return $this->hasMany('App\Models\Actividad_Atleta');
+    }
 }

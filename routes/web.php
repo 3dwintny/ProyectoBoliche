@@ -36,6 +36,7 @@ use App\Http\Controllers\Deporte_AdoptadoController;
 use App\Http\Controllers\Linea_DesarrolloController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\AdministracionController;
+use App\Http\Controllers\Actividad_EntrenoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -123,6 +124,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('editar-perfil-entrenador',[EntrenadorController::class,'modificar'])->name('modificar');
     Route::put('actualizar-informacion-entrenador',[EntrenadorController::class,'actualizar'])->name('actualizar');
     Route::resource('entrenadores',EntrenadorController::class);
+    Route::post('entrenadores/actualizarCodigoCorreo',[EntrenadorController::class,'actualizarCodigoCorreo'])->name('actualizarCodigoCorreoEntrenador');
+    Route::get('editar-codigo-correo-entrenadores',[EntrenadorController::class,'editarCodigoCorreo'])->name('editarCodigoCorreoEntrenador');
+    Route::get('entreno-en-casa/pendientes',[Actividad_EntrenoController::class,'actividadPendiente'])->name('actividadPendiente');
+    Route::post('entreno-en-casa/pendientes',[Actividad_EntrenoController::class,'finalizarActividad'])->name('finalizarActividad');
+    Route::put('entreno-en-casa/pendientes',[Actividad_EntrenoController::class,'actividadFinalizada'])->name('actividadFinalizada');
+    Route::resource('entreno-en-casa',Actividad_EntrenoController::class);
+    
 
     //Rutas Etapa_Deportiva
     Route::resource('etapa-deportiva',Etapa_DeportivaController::class);

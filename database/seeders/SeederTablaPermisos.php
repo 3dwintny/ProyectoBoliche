@@ -39,12 +39,15 @@ class SeederTablaPermisos extends Seeder
             'Asistencia personal',
             'Perfil de atleta',
             'Información de encargados',
+            'Actividad casa',
+            'Actividad asignada',
             //Configuraciones
             'Configuración',
             //Entrenadores
             'Listar entrenadores',
             'Registrar entrenadores',
             'Perfil de entrenador',
+            'Asignar entreno',
             //Psicologa
             'Registrar psicólogos',
             'Listar psicólogos',

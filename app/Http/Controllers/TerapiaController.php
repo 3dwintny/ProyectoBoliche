@@ -14,6 +14,8 @@ use PDF;
 use Mail;
 use App\Mail\CorreosTerapia;
 use App\Models\Control;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class TerapiaController extends Controller
 {
@@ -185,12 +187,25 @@ class TerapiaController extends Controller
             $obtenerFechaTarea = $request->fecha;
             $tarea = "";
             if($obtenerTarea != ""){
-                config(['mail.mailers.smtp.username' => auth()->user()->email]);
                 $psicologia = Psicologia::where('correo',auth()->user()->email)->first();
                 $codigoCorreo = $psicologia->codigo_correo;
-                config(['mail.mailers.smtp.password' => $codigoCorreo]);
-                Mail::to($correoAtleta)->send(new CorreosTerapia($obtenerTarea,$obtenerFechaTarea,auth()->user()->email));
                 $tarea = "pendiente";
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com'; 
+                $mail->Port = 587;
+                $mail->SMTPAuth = true;
+                $mail->Username = auth()->user()->email;
+                $mail->Password = $codigoCorreo;
+                $mail->SMTPSecure = 'tls';
+                $mail->CharSet = 'UTF-8';
+                $mail->setFrom(auth()->user()->email, 'Asociación de Boliche de Quetzaltenango');
+                $mail->isHTML(true);
+                $mail->addAddress($correoAtleta, '');
+                $mail->Subject = 'Departamento de Psicología - Tarea asignada el '.Carbon::parse($obtenerFechaTarea)->format("d-m-Y");
+                $mail->Body = $obtenerTarea;
+                $mail->send();
+                $mail->clearAddresses();
             }
             else{
                 $tarea = "sin";
@@ -327,11 +342,24 @@ class TerapiaController extends Controller
                     $tarea = "sin";
                     //DB::table('terapia')->where('id',decrypt($id))->update(['estado_tarea'=>'sin']);
                 }
-                config(['mail.mailers.smtp.username' => auth()->user()->email]);
                 $psicologia = Psicologia::where('correo',auth()->user()->email)->first();
                 $codigoCorreo = $psicologia->codigo_correo;
-                config(['mail.mailers.smtp.password' => $codigoCorreo]);
-                Mail::to($correoAtleta)->send(new ActualizarCorreos($obtenerTarea,$obtenerFechaTarea));
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com'; 
+                $mail->Port = 587;
+                $mail->SMTPAuth = true;
+                $mail->Username = auth()->user()->email;
+                $mail->Password = $codigoCorreo;
+                $mail->SMTPSecure = 'tls';
+                $mail->CharSet = 'UTF-8';
+                $mail->setFrom(auth()->user()->email, 'Asociación de Boliche de Quetzaltenango');
+                $mail->isHTML(true);
+                $mail->addAddress($correoAtleta, '');
+                $mail->Subject = 'Departamento de Psicología - Tarea actualizada el '.Carbon::parse($obtenerFechaTarea)->format("d-m-Y");
+                $mail->Body = $obtenerTarea;
+                $mail->send();
+                $mail->clearAddresses();
             }
             $terapia ->fill([
                 'numero_terapia' => $request->numero_terapia,

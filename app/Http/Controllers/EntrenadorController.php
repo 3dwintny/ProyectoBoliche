@@ -440,4 +440,29 @@ class EntrenadorController extends Controller
             return back()->with('error', 'Se produjo un error al restaurar al entrenador');
         }
     }
+
+    public function editarCodigoCorreo(){
+        try{
+            $entrenador = Entrenador::where('correo',auth()->user()->email)->first();
+            $codigo = $entrenador->codigo_correo;
+            if($codigo == null or $codigo == ""){
+                return redirect('home');
+            }
+            return view('entrenador.editarCodigoCorreo',compact('codigo'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function actualizarCodigoCorreo(Request $request){
+        try{
+            Entrenador::where('correo',auth()->user()->email)->update(['codigo_correo'=>$request->codigo_correo]);
+            return redirect('home');             
+        }
+        catch(\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->validator->errors())->withInput();
+        }
+    }
 }

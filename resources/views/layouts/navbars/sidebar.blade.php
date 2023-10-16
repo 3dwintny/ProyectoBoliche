@@ -104,6 +104,15 @@
                             </li>
                             @endif
                             @endcan
+                            @can('Actividad casa')
+                            @if(auth()->user()->tipo_usuario_id==1)
+                            <li class="nav-item">
+                                <a href="{{route('actividadPendiente')}}" class="nav-link">
+                                    {{ __('Prácticas pendientes') }}
+                                </a>
+                            </li>
+                            @endif
+                            @endcan
                             @can('Asistencia personal')
                             @if(auth()->user()->tipo_usuario_id==1)
                             <li class="nav-item">
@@ -175,12 +184,38 @@
                                 </a>
                             </li>
                             @endcan
+                            @if(auth()->user()->tipo_usuario_id==2)
+                            @can('Asignar entreno')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('entreno-en-casa.create') }}">
+                                    {{ __('Asignar práctica') }}
+                                </a>
+                            </li>
+                            @endcan
+                            @endif
+                            @if(auth()->user()->tipo_usuario_id==2)
+                            @can('Actividad asignada')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('entreno-en-casa.index') }}">
+                                    {{ __('Prácticas asignadas') }}
+                                </a>
+                            </li>
+                            @endcan
+                            @endif
                             @can('Perfil de entrenador')
                             @if(auth()->user()->tipo_usuario_id==2)
                             <li class="nav-item">
                                 <a href="{{ route('modificar') }}" class="nav-link">
                                     {{ __('Mi perfil') }}
                                 </a>
+                            </li>
+                            @endif
+                            @endcan
+                            @can('Editar código de correo')
+                            @if(auth()->user()->tipo_usuario_id==2)
+                            <li class="nav-item">
+                                <a href="{{route('editarCodigoCorreoEntrenador')}}" class="nav-link">
+                                {{__('Editar código de correo')}}</a>
                             </li>
                             @endif
                             @endcan
