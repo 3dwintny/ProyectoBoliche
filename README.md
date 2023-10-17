@@ -85,3 +85,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
     - php artisan serve
 
 ## La categoría en el formulario de inscripción queda pendinte.
+
+##Comando para el envío de correos
+    -  composer require phpmailer/phpmailer
