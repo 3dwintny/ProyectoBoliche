@@ -333,6 +333,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('restaurar/usuarios',[AdministracionController::class,'eliminados'])->name('eliminadosUsuarios');
     Route::post('restaurandoAdministradores',[AdministracionController::class,'restaurar'])->name('restaurandoAdministradores');
+    Route::get('enviar-correos',[AdministracionController::class,'redactarCorreo'])->name('redactarCorreo');
+    Route::post('enviar-correos',[AdministracionController::class,'enviarCorreo'])->name('enviarCorreo');
     Route::resource('tipo-usuarios',Tipo_UsuarioController::class);
 
     Route::resource('municipio',MunicipioController::class);

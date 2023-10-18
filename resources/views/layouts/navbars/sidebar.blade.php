@@ -295,6 +295,14 @@
                     </a>
                 </li>
                 @endcan
+                @can('Enviar correos')
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('redactarCorreo') }}">
+                        <i class="ni ni-email-83 text-dark"></i>
+                        <span class="nav-link-text text-dark">{{ __('Enviar correo') }}</span>
+                    </a>
+                </li>
+                @endcan
             </ul>
             <!-- Divider -->
             <hr class="my-3">

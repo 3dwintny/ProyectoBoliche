@@ -23,6 +23,7 @@ class SeederTablaPermisos extends Seeder
             'Crear roles',
             'Editar roles',
             'Eliminar roles',
+            'Enviar correos',
             //Reportes
             'Reporte EDG-31',
             'Reporte EDG-27',

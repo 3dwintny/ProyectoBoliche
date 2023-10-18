@@ -73,11 +73,6 @@ class Actividad_EntrenoController extends Controller
                 foreach($request->atletaSeleccionado as $item){
                     array_push($atletaId,decrypt($item));
                 }
-            }
-            else{
-                $atletaId = $request->atletaSeleccionado;
-            }
-            if($atletaId!==null){
                 $entrenadorId = decrypt($request->entrenador_id);
                 $informacionAtletas = Atleta::whereIn('id',$atletaId)->with('alumno')->get();
                 $actividad = $request->txtActividad;
@@ -115,9 +110,7 @@ class Actividad_EntrenoController extends Controller
                 DB::commit();
                 return redirect()->action([Actividad_EntrenoController::class,'create'])->with('success','Actividad asignada exitosamente');
             }
-            else{
-                return redirect()->action([Actividad_EntrenoController::class,'create'])->with('warning', 'Debe de seleccionar al menos un atleta');
-            }
+            return redirect()->action([Actividad_EntrenoController::class,'create'])->with('warning', 'Debe de seleccionar al menos un atleta');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
             DB::rollBack();

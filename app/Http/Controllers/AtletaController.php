@@ -356,7 +356,7 @@ class AtletaController extends Controller
     public function edit($id, Request $request)
     {
         try{
-            $atleta = Atleta::find(decrypt($id));
+            $atleta = Atleta::where('id',decrypt($id))->with('alumno')->first();
             $centro=Centro::where('estado','activo')->get(['id','nombre']);
             $entrenador= Entrenador::where('estado','activo')->get(['id','nombre1','apellido1']);
             $categoria = Categoria::where('estado','activo')->get(['id','tipo','rango_edades']);
@@ -367,8 +367,12 @@ class AtletaController extends Controller
             $deporte = Deporte::where('estado','activo')->get(['id','nombre']);
             $modalidad = Modalidad::where('estado','activo')->get(['id','nombre']);
             $prt = PRT::where('estado','activo')->get(['id','nombre']);
+            $departamentos = Departamento::get(['id','nombre']);
+            $nacionalidades = Nacionalidad::get(['id','descripcion']);
+            $municipioNacimiento = Municipio::where('departamento_id',$atleta->alumno->departamento_id)->get();
+            $municipioResidencia = Municipio::where('departamento_id',$atleta->alumno->departamento_residencia_id)->get();
             return view('Atletas.edit',compact('centro','entrenador','categoria','etapa',
-            'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','atleta'));
+            'deporteadaptado','otroprograma','lineadesarrollo','deporte','modalidad','prt','atleta','nacionalidades','departamentos','municipioNacimiento','municipioResidencia'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
@@ -399,7 +403,7 @@ class AtletaController extends Controller
             else{
                 $otroPrograma = decrypt($request->otro_programa_id);
             }
-            $atletas = Atleta::find(decrypt($id));
+            $atletas = Atleta::where('id',decrypt($id))->with('alumno')->first();
             $prt = decrypt($request->prt_id);
             $atletas->fill([
                 'fecha_ingreso'=> $request->fecha_ingreso,
@@ -421,6 +425,71 @@ class AtletaController extends Controller
                 'meses' => $request->meses,
                 'federado' => $request->federado,
             ]);
+            
+            $alumnos = Alumno::where('correo',$atletas->alumno->correo)->first();
+            $nombreUsuario = "";
+            if($alumnos->correo!=$request->correo){
+                $nombreUsuario = User::where('email',$alumnos->correo)->first();
+                if($nombreUsuario!=""){
+                    $nombreUsuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                    $nombreUsuario->save();
+                }
+            }
+            $atleta = Alumno::find($alumnos->id);
+            $fecha_foto = null;
+            
+            if($request->hasFile('foto'))
+            {
+                $usuario = User::where('email',$alumnos->correo)->first();
+                $destination = 'uploads/alumnos/'.$atleta->foto;
+                if(File::exists($destination)){
+                    File::delete($destination);
+                }
+                $file = $request->file('foto');
+                $extention = $file->getClientOriginalExtension();
+                $filename = time().'.'.$extention;
+                $file->move('uploads/alumnos/', $filename);
+                $fotografia = $filename;
+                if($usuario!=""){
+                    $usuario->fill([
+                        'avatar' => $fotografia,
+                    ]);
+                    $usuario->save();
+                }
+                $fecha_foto = Carbon::now();
+            }
+            else{
+                $fotografia = $request->pic;
+                $fecha_foto = $request->fecha_fotografia;
+            }
+            $atleta->fill([
+                'nombre1' => $request->nombre1,
+                'nombre2' => $request->nombre2,
+                'nombre3' => $request->nombre3,
+                'apellido1' => $request->apellido1,
+                'apellido2' => $request->apellido2,
+                'celular' => $request->celular,
+                'telefono_casa' => $request->telefono_casa,
+                'cui' => $request->cui,
+                'pasaporte' => $request->pasaporte,
+                'genero' => $request->genero,
+                'fecha' => $request->fecha,
+                'edad' => $request->edad,
+                'correo' => $request->correo,
+                'direccion' => $request->direccion,
+                'foto' => $fotografia,
+                'peso' => $request->peso,
+                'nit' => $request->nit,
+                'fecha_fotografia' => $fecha_foto,
+                'altura' => $request->altura,
+                'contacto_emergencia' => $request->contacto_emergencia,
+                'departamento_residencia_id' => decrypt($request->departamento_residencia_id),
+                'municipio_residencia_id' => decrypt($request->municipio_residencia_id),
+                'departamento_id' => decrypt($request->departamento_id),
+                'nacionalidad_id' => decrypt($request->nacionalidad_id),
+                'municipio_id' => decrypt($request->municipio_id),
+            ]);
+            $atleta->save();
             $atletas->save();
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'ACTUALIZAR', 'tabla_accion_id'=>4]);
             $control->save();

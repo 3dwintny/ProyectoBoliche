@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Administracion;
 use App\Models\Control;
+use App\Models\Atleta;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class AdministracionController extends Controller
 {
@@ -124,6 +128,54 @@ class AdministracionController extends Controller
         catch(\Exception $e){
             DB::rollback();
             return back()->with('error', 'Se produjo un error al restaurar al administrador');
+        }
+    }
+
+    public function redactarCorreo(){
+        try{    
+            $atletas = Atleta::where('estado','activo')->with(['alumno','categoria'])->get();
+            $hoy = Carbon::now();
+            return view('administracion.enviarCorreos',compact('atletas','hoy'));
+        }
+        catch(\Exception $e){
+            return back()->with('error', 'Se produjo un error al procesar la solicitud');
+        }
+    }
+
+    public function enviarCorreo(Request $request){
+        try{
+            if($request->atletaSeleccionado!=null){
+                $atletaId = array();
+                foreach($request->atletaSeleccionado as $item){
+                    array_push($atletaId,decrypt($item));
+                }
+                $usuario = env('MAIL_USERNAME');
+                $contrasenia = env('MAIL_PASSWORD');
+                $informacionAtletas = Atleta::whereIn('id',$atletaId)->with('alumno')->get();
+                $mensaje = $request->txtMensaje;
+                $mail = new PHPMailer(true);
+                $mail->isSMTP();
+                $mail->Host = 'smtp.gmail.com'; 
+                $mail->Port = 587;
+                $mail->SMTPAuth = true;
+                $mail->Username = $usuario;
+                $mail->Password = $contrasenia;
+                $mail->SMTPSecure = 'tls';
+                $mail->CharSet = 'UTF-8';
+                $mail->setFrom($usuario, 'Asociación de Boliche de Quetzaltenango');
+                $mail->isHTML(true);
+                foreach($informacionAtletas as $correoAtleta){
+                    $mail->addAddress($correoAtleta ->alumno->correo, '');
+                    $mail->Subject = 'Departamento Administrativo - Mensaje enviado el '.Carbon::parse($request->fecha[0])->format("d-m-Y");
+                    $mail->Body = $mensaje;
+                }
+                $mail->send();
+                return redirect()->action([AdministracionController::class,'redactarCorreo'])->with('success','Mensaje enviado exitosamente');
+            }
+            return redirect()->action([AdministracionController::class,'redactarCorreo'])->with('warning', 'Debe de seleccionar al menos un atleta');
+        }
+        catch(\Illuminate\Validation\ValidationException $e) {
+            return back()->withErrors($e->validator->errors())->withInput();
         }
     }
 }
