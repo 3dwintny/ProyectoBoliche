@@ -144,6 +144,9 @@ class AdministracionController extends Controller
 
     public function enviarCorreo(Request $request){
         try{
+            $request->validate([
+                'txtMensaje' =>'required',
+            ]);
             if($request->atletaSeleccionado!=null){
                 $atletaId = array();
                 foreach($request->atletaSeleccionado as $item){
@@ -172,6 +175,7 @@ class AdministracionController extends Controller
                 $mail->send();
                 return redirect()->action([AdministracionController::class,'redactarCorreo'])->with('success','Mensaje enviado exitosamente');
             }
+            session()->flash('txtMensaje', $request->input('txtMensaje'));
             return redirect()->action([AdministracionController::class,'redactarCorreo'])->with('warning', 'Debe de seleccionar al menos un atleta');
         }
         catch(\Illuminate\Validation\ValidationException $e) {

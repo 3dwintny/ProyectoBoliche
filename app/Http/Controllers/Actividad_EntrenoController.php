@@ -63,11 +63,9 @@ class Actividad_EntrenoController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            
-        ]);
         DB::beginTransaction();
         try{
+            $request->validate(['txtActividad'=>'required']);
             if($request->atletaSeleccionado!=null){
                 $atletaId = array();
                 foreach($request->atletaSeleccionado as $item){
@@ -110,6 +108,7 @@ class Actividad_EntrenoController extends Controller
                 DB::commit();
                 return redirect()->action([Actividad_EntrenoController::class,'create'])->with('success','Actividad asignada exitosamente');
             }
+            session()->flash('txtActividad', $request->input('txtActividad'));
             return redirect()->action([Actividad_EntrenoController::class,'create'])->with('warning', 'Debe de seleccionar al menos un atleta');
         }
         catch(\Illuminate\Validation\ValidationException $e) {
@@ -380,9 +379,15 @@ class Actividad_EntrenoController extends Controller
 
     public function actividadFinalizada(Request $request){
         try{
-            $actividad = Actividad_Atleta::find(decrypt($request->actividad));
+            $request->validate([
+                'fotografia' => 'required|file|max:2048', // Valida el tamaño
+            ]);
             $file = $request->file('fotografia');
             $extention = $file->getClientOriginalExtension();
+            if (!in_array($extention, ['jpg', 'png', 'jpeg'])) {
+                return back()->with('error','Solo se permiten archivos jpg, png o jpeg.');
+            }
+            $actividad = Actividad_Atleta::find(decrypt($request->actividad));
             $nombreFotografia = time().'.'.$extention;
             $file->move('uploads/evidencia/', $nombreFotografia);
             $fotografia = $nombreFotografia;

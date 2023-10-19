@@ -111,7 +111,7 @@
                             </tbody>
                         </table>
                         <label for="txtMensaje">Mensaje</label>
-                        <textarea name="txtMensaje" id="txtMensaje" placeholder="{{ __('Mensaje') }}" cols="40" rows="5" style="text-align:justify;resize:none;" class="form-control text-dark" aria-describedby="basic-addon2" required></textarea>
+                        <textarea name="txtMensaje" id="txtMensaje" placeholder="{{ __('Mensaje') }}" cols="40" rows="5" style="text-align:justify;resize:none;" class="form-control text-dark" aria-describedby="basic-addon2" required>{{ old('txtMensaje', session('txtMensaje')) }}</textarea>
                         @if(count($atletas)==0)
                             <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Aceptar" disabled></div>
                         @else

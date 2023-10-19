@@ -112,7 +112,7 @@
                             </tbody>
                         </table>
                         <label for="txtActividad">Actividad</label>
-                        <textarea name="txtActividad" id="txtActividad" placeholder="{{ __('Actividad') }}" cols="40" rows="5" style="text-align:justify;resize:none;" class="form-control text-dark" aria-describedby="basic-addon2" required></textarea>
+                        <textarea name="txtActividad" id="txtActividad" placeholder="{{ __('Actividad') }}" cols="40" rows="5" style="text-align:justify;resize:none;" class="form-control text-dark" aria-describedby="basic-addon2" required>{{ old('txtActividad', session('txtActividad')) }}</textarea>
                         @if(count($atletas)==0)
                             <div class="container"><input type="submit" class="next-form btn btn-outline-primary" value="Aceptar" disabled></div>
                         @else
