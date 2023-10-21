@@ -219,9 +219,15 @@ class EntrenadorController extends Controller
             $entrenador = Entrenador::find(decrypt($id));
             $usuario = "";
             if($entrenador->correo!=$request->correo){
-                $usuario = User::where('email',$entrenador->correo)->first();
-                $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
-                $usuario->save();
+                $correoNuevoExiste = User::where('email',$request->correo)->get();
+                if(count($correoNuevoExiste)>0){
+                    return redirect()->back()->with('error','El correo que desea ingresar ya ha sido registrado');
+                }
+                else{
+                    $usuario = User::where('email',$entrenador->correo)->first();
+                    $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                    $usuario->save();
+                }
             }
             if($request->hasFile('foto'))
             {
@@ -347,9 +353,15 @@ class EntrenadorController extends Controller
             $entrenador = Entrenador::find($entrenadores[0]->id);
             $nombreUsuario = "";
             if($entrenador->correo!=$request->correo){
-                $nombreUsuario = User::where('email',$entrenador->correo)->first();
-                $nombreUsuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
-                $nombreUsuario->save();
+                $correoNuevoExiste = User::where('email',$request->correo)->get();
+                if(count($correoNuevoExiste)>0){
+                    return redirect()->back()->with('error','El correo que desea ingresar ya ha sido registrado');
+                }
+                else{
+                    $nombreUsuario = User::where('email',$entrenador->correo)->first();
+                    $nombreUsuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                    $nombreUsuario->save();
+                }
             }
             if($request->hasFile('foto'))
             {
