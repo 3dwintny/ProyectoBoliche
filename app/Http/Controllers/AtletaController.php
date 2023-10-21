@@ -429,8 +429,11 @@ class AtletaController extends Controller
             $alumnos = Alumno::where('correo',$atletas->alumno->correo)->first();
             $nombreUsuario = "";
             if($alumnos->correo!=$request->correo){
-                $nombreUsuario = User::where('email',$alumnos->correo)->first();
-                if($nombreUsuario!=""){
+                $correoNuevoExiste = User::where('email',$request->correo)->get();
+                if(count($correoNuevoExiste)>0){
+                    return redirect()->back()->with('error','El correo que desea ingresar ya ha sido registrado');
+                }else{
+                    $nombreUsuario = User::where('email',$alumnos->correo)->first();
                     $nombreUsuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
                     $nombreUsuario->save();
                 }
@@ -544,9 +547,15 @@ class AtletaController extends Controller
             $alumnos = Alumno::where('correo',auth()->user()->email)->get();
             $nombreUsuario = "";
             if($alumnos[0]->correo!=$request->correo){
-                $nombreUsuario = User::where('email',$alumnos[0]->correo)->first();
-                $nombreUsuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
-                $nombreUsuario->save();
+                $correoNuevoExiste = User::where('email',$request->correo)->get();
+                if(count($correoNuevoExiste)>0){
+                    return redirect()->back()->with('error','El correo que desea ingresar ya ha sido registrado');
+                }
+                else{
+                    $nombreUsuario = User::where('email',$alumnos[0]->correo)->first();
+                    $nombreUsuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                    $nombreUsuario->save();
+                }
             }
             $atleta = Alumno::find($alumnos[0]->id);
             $fecha_foto = null;
