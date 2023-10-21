@@ -157,12 +157,18 @@ class PsicologiaController extends Controller
             ]);
             $usuario = "";
             if($psicologo->correo!=$request->correo){
-                $usuario = User::where('email',$psicologo->correo)->first();
-                $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
-                $usuario->save();
-                $psicologo ->fill([
-                    'codigo_correo' => NULL
-                ]);
+                $correoNuevoExiste = User::where('email',$request->correo)->get();
+                if(count($correoNuevoExiste)>0){
+                    return redirect()->back()->with('error','El correo que desea ingresar ya ha sido registrado');
+                }
+                else{
+                    $usuario = User::where('email',$psicologo->correo)->first();
+                    $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                    $usuario->save();
+                    $psicologo ->fill([
+                        'codigo_correo' => NULL
+                    ]);
+                }
             }
             $psicologo ->fill([
                 'nombre1' => $request->nombre1,
@@ -244,12 +250,18 @@ class PsicologiaController extends Controller
             $psicologo = Psicologia::find($psicologos[0]->id);
             $usuario = "";
             if($psicologo->correo!=$request->correo){
-                $usuario = User::where('email',$psicologo->correo)->first();
-                $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
-                $usuario->save();
-                $psicologo ->fill([
-                    'codigo_correo' => NULL
-                ]);
+                $correoNuevoExiste = User::where('email',$request->correo)->get();
+                if(count($correoNuevoExiste)>0){
+                    return redirect()->back()->with('error','El correo que desea ingresar ya ha sido registrado');
+                }
+                else{
+                    $usuario = User::where('email',$psicologo->correo)->first();
+                    $usuario->fill(['email' => $request->correo,'email_verified_at'=>NULL]);
+                    $usuario->save();
+                    $psicologo ->fill([
+                        'codigo_correo' => NULL
+                    ]);
+                }
             }
             $psicologo->fill($request->all());
             $psicologo->save();
