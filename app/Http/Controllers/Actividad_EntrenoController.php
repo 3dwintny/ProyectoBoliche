@@ -126,24 +126,26 @@ class Actividad_EntrenoController extends Controller
     public function show($id)
     {
         try{
-            $actividades = Actividad_Atleta::where('actividad_id',decrypt($id))->get(['id','evidencia','estado','atleta_id']);
+            $actividades = Actividad_Atleta::where('actividad_id',decrypt($id))->get();
             $atletasId = array();
-            foreach($actividades as $item){
-                array_push($atletasId,$item->atleta_id);
+            for($i=0;$i<count($actividades);$i++){
+                array_push($atletasId,$actividades[$i]->atleta_id);
             }
+            
             $datosActividad = Actividad_Entreno::where('id',decrypt($id))->first();
-            $alumnosId = Atleta::whereIn('id',$atletasId)->pluck('alumno_id');
-            $alumnos = Alumno::whereIn('id',$alumnosId)->get();
+            
+            $alumnosId = Atleta::whereIn('id',$atletasId)->with('alumno')->get();
+            
             $atletas = array();
-            foreach($alumnos as $item){
-                if($item->nombre2==null){
-                    $nombreCompleto = trim($item->nombre1 . ' ' . $item->apellido1 . ' ' . $item->apellido2);
+            foreach($alumnosId as $item){
+                if($item->alumno->nombre2==null){
+                    $nombreCompleto = trim($item->alumno->nombre1 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
                 }
-                elseif($item->nombre3==null){
-                    $nombreCompleto = trim($item->nombre1 . ' '. $item->nombre2 . ' ' . $item->apellido1 . ' ' . $item->apellido2);
+                elseif($item->alumno->nombre3==null){
+                    $nombreCompleto = trim($item->alumno->nombre1 . ' '. $item->alumno->nombre2 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
                 }
                 else{
-                    $nombreCompleto = trim($item->nombre1 . ' ' . $item->nombre2 . ' ' . $item->nombre3 . ' ' . $item->apellido1 . ' ' . $item->apellido2);
+                    $nombreCompleto = trim($item->alumno->nombre1 . ' ' . $item->alumno->nombre2 . ' ' . $item->alumno->nombre3 . ' ' . $item->alumno->apellido1 . ' ' . $item->alumno->apellido2);
                 }
                 array_push($atletas,$nombreCompleto);
             }

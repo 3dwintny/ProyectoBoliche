@@ -62,7 +62,7 @@
                                         @if($item->evidencia==NULL)
                                             <td></td>
                                         @else
-                                            <td><img src="{{ asset('uploads/evidencia/'.$item->evidencia) }}" alt="" width="20%" height="20%"></td>
+                                            <td><img src="{{ asset('uploads/evidencia/'.$item->evidencia) }}" alt="" width="100" height="100"></td>
                                         @endif
                                     </tr>
                                     @php
