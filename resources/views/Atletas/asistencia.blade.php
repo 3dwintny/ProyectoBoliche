@@ -42,7 +42,57 @@
                             <td>{{ $estadoDia }}</td>
                             @endforeach
                             <td>{{ $contarDias[0] }}</td>
-                            <td>{{ $promedio[0] }}</td>
+                            <td>
+                                @if($promedio[0]>=0 && $promedio[0]<=30)
+                                    <div class="d-flex align-items-center justify-content-center">
+                                    <span class="me-2 text-xs font-weight-bold">{{$promedio[0]}}</span>
+                                    <div>
+                                        <div class="progress">
+                                        <div class="progress-bar bg-gradient-danger" role="progressbar" 
+                                            aria-valuenow="{{$promedio[0]}}" aria-valuemin="0" 
+                                            aria-valuemax="{{$promedio[0]}}" style="width: {{$promedio[0]}}%;">
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                @elseif($promedio[0]>=31 && $promedio[0]<=50)
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <span class="me-2 text-xs font-weight-bold">{{$promedio[0]}}</span>
+                                        <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-gradient-warning" role="progressbar" 
+                                            aria-valuenow="{{$promedio[0]}}" aria-valuemin="0" 
+                                            aria-valuemax="{{$promedio[0]}}" style="width: {{$promedio[0]}}%;">
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                @elseif($promedio[0]>=51 && $promedio[0]<=80)
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <span class="me-2 text-xs font-weight-bold">{{$promedio[0]}}</span>
+                                        <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-gradient-info" role="progressbar" 
+                                            aria-valuenow="{{$promedio[0]}}" aria-valuemin="0" 
+                                            aria-valuemax="{{$promedio[0]}}" style="width: {{$promedio[0]}}%;">
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        <span class="me-2 text-xs font-weight-bold">{{$promedio[0]}}</span>
+                                        <div>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-gradient-success" role="progressbar" 
+                                            aria-valuenow="{{$promedio[0]}}" aria-valuemin="0" 
+                                            aria-valuemax="{{$promedio[0]}}" style="width: {{$promedio[0]}}%;">
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                @endif  
+                            </td>
                             @endif
                         </tr>
                     </tbody>

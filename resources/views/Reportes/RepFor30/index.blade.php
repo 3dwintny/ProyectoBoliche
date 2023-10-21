@@ -203,7 +203,57 @@
                       @for($i=$s;$i<count($fechas)+$s;$i++) <td>{{$estado[$i]}}</td>
                           @endfor
                       <td>{{$contarDias[$c]}}</td>
-                      <td>{{$promedio[$c]}}</td>
+                      <td>
+                      @if($promedio[$c]>=0 && $promedio[$c]<=30)
+                        <div class="d-flex align-items-center justify-content-center">
+                          <span class="me-2 text-xs font-weight-bold">{{$promedio[$c]}}</span>
+                          <div>
+                            <div class="progress">
+                              <div class="progress-bar bg-gradient-danger" role="progressbar" 
+                                aria-valuenow="{{$promedio[$c]}}" aria-valuemin="0" 
+                                aria-valuemax="{{$promedio[$c]}}" style="width: {{$promedio[$c]}}%;">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      @elseif($promedio[$c]>=31 && $promedio[$c]<=50)
+                      <div class="d-flex align-items-center justify-content-center">
+                        <span class="me-2 text-xs font-weight-bold">{{$promedio[$c]}}</span>
+                        <div>
+                          <div class="progress">
+                            <div class="progress-bar bg-gradient-warning" role="progressbar" 
+                              aria-valuenow="{{$promedio[$c]}}" aria-valuemin="0" 
+                              aria-valuemax="{{$promedio[$c]}}" style="width: {{$promedio[$c]}}%;">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      @elseif($promedio[$c]>=51 && $promedio[$c]<=80)
+                      <div class="d-flex align-items-center justify-content-center">
+                        <span class="me-2 text-xs font-weight-bold">{{$promedio[$c]}}</span>
+                        <div>
+                          <div class="progress">
+                            <div class="progress-bar bg-gradient-info" role="progressbar" 
+                              aria-valuenow="{{$promedio[$c]}}" aria-valuemin="0" 
+                              aria-valuemax="{{$promedio[$c]}}" style="width: {{$promedio[$c]}}%;">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      @else
+                      <div class="d-flex align-items-center justify-content-center">
+                        <span class="me-2 text-xs font-weight-bold">{{$promedio[$c]}}</span>
+                        <div>
+                          <div class="progress">
+                            <div class="progress-bar bg-gradient-success" role="progressbar" 
+                              aria-valuenow="{{$promedio[$c]}}" aria-valuemin="0" 
+                              aria-valuemax="{{$promedio[$c]}}" style="width: {{$promedio[$c]}}%;">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      @endif  
+                      </td>
                       <td>{{$item->etapa_deportiva->nombre}}</td>
                       @php
                           $contador++;
