@@ -48,12 +48,16 @@ class AtletaController extends Controller
             $buscarAtleta = $request->buscarNombre;
             $filtrarCategoria = $request->filtroCategoria;
             $categoria = Categoria::where('estado','activo')->get(['tipo','rango_edades','id']);
+            $perPageOptions =[5,10,20];
+            $perPage = request('per_page',5);
+            $categoriaId = 0;
             if($buscarAtleta ==""){
                 if($filtrarCategoria==""){
-                    $atletas = Atleta::where('estado','activo')->paginate(5);
+                    $atletas = Atleta::where('estado','activo')->paginate($perPage);
                 }
                 else{
-                    $atletas = Atleta::where('estado','activo')->where('categoria_id',decrypt($filtrarCategoria))->paginate(5);
+                    $categoriaId=decrypt($filtrarCategoria);
+                    $atletas = Atleta::where('estado','activo')->where('categoria_id',decrypt($filtrarCategoria))->paginate($perPage);
                 }
             }
             else{
@@ -154,9 +158,9 @@ class AtletaController extends Controller
                         array_push($indices,0);
                     }
                 }
-                $atletas = Atleta::where('estado','activo')->wherein('alumno_id',$indices)->paginate(5);
+                $atletas = Atleta::where('estado','activo')->wherein('alumno_id',$indices)->paginate($perPage);
             }
-            return view('Atletas.index', compact('atletas','buscarAtleta','categoria','filtrarCategoria'));
+            return view('Atletas.index', compact('atletas','buscarAtleta','categoria','filtrarCategoria','perPageOptions','perPage','categoriaId'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');

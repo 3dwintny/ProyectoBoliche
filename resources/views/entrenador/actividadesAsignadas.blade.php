@@ -70,7 +70,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-11">{{ $actividadesAsignadas->links('vendor.pagination.custom') }}</div>
+      <div class="col-11">{{ $actividadesAsignadas->appends(['per_page'=>$perPage])->links('vendor.pagination.custom') }}</div>
       <div class="col-1">
         <form method="GET" action="{{ url()->current() }}">
           <select name="per_page" id="per_page" class="form-select form-select-sm" aria-label="Small select example" onchange="this.form.submit()">

@@ -30,7 +30,7 @@ class Actividad_EntrenoController extends Controller
             $entrenador = Entrenador::where('correo',auth()->user()->email)->first();
             $perPage = request('per_page',5);
             $actividadesAsignadas = Actividad_Entreno::where('entrenador_id',$entrenador->id)->paginate($perPage);
-            return view('entrenador.actividadesAsignadas',compact('actividadesAsignadas','perPageOptions'));
+            return view('entrenador.actividadesAsignadas',compact('actividadesAsignadas','perPageOptions','perPage'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');

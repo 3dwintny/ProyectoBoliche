@@ -15,13 +15,13 @@
 <div class="container pt-2">
   <div class="row">
     <form action="{{route('atletas.index')}}" role="form">
-      <div class="row justify-content-center">
-        <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6 mb-2">
+      <div class="justify-content-center row">
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-6 mb-2">
           <div class="form-floating">
             <select name="filtroCategoria" class="form-control" id="filtroCategoria" onchange="this.form.submit()">
               <option value="" selected disabled>Sin filtros</option>
               @foreach($categoria as $item)
-              <option value="{{encrypt($item->id)}}" {{$item->tipo == "N/A" ? 'disabled' : ''}}>{{$item->tipo}}</option>
+                <option value="{{encrypt($item->id)}}" {{$item->id == $categoriaId ? 'selected' : ''}}>{{$item->tipo}}</option>
               @endforeach>
             </select>
             <label for="filtroCategoria">Filtrar por categoría</label>
@@ -141,8 +141,17 @@
         </tbody>
       </table>
     </div>
+    <div class="col-11">{{$atletas->appends(['buscarNombre'=>$buscarAtleta,'filtroCategoria'=>$filtrarCategoria,'per_page' => $perPage])->links('vendor.pagination.custom')}}</div>
+    <div class="col-1">
+      <form method="GET" action="{{ url()->current() }}">
+        <select name="per_page" id="per_page" class="form-select form-select-sm" aria-label="Small select example" onchange="this.form.submit()">
+            @foreach ($perPageOptions as $option)
+                <option value="{{ $option }}" {{ request('per_page') == $option ? 'selected' : '' }}>{{ $option }}</option>
+            @endforeach
+        </select>
+      </form>
+    </div>
   </div>
-  {{$atletas->appends(['buscarNombre'=>$buscarAtleta,'filtroCategoria'=>$filtrarCategoria])->links('vendor.pagination.custom')}}
 </div>
 
 @include('layouts.footers.auth')
