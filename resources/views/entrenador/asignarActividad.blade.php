@@ -15,7 +15,25 @@
 <div class="container-fluid pt-2">
     <div class="header-body text-center mb-7">
         <div class="row justify-content-center">
-            <div class="col-xl-6 col-lg-6 col-md-5 col-sm-5 mb-2">
+            <form action="{{route('entreno-en-casa.create')}}" role="form">
+                <div class="row justify-content-center">
+                    <div class="col-xl-4 col-lg-4 col-md-5 col-sm-6 mb-2">
+                        <div class="form-floating">
+                            <select name="filtroCategoria" class="form-control" id="filtroCategoria" onchange="this.form.submit()">
+                            <option value="" selected disabled>Sin filtros</option>
+                            @foreach($categoria as $item)
+                                <option value="{{encrypt($item->id)}}" {{$item->id == $categoriaId ? 'selected' : ''}}>{{$item->tipo}}</option>
+                            @endforeach>
+                            </select>
+                            <label for="filtroCategoria">Filtrar por categoría</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 mb-2">
+                        <button type="button" class="btn btn-light" onclick="window.location='{{route('entreno-en-casa.create')}}'">Eliminar filtro</button>
+                    </div>
+                </div>
+            </form>
+            <div class="col-xl-4 col-lg-6 col-md-5 col-sm-5 mb-2">
                 <div class="form-floating">
                     <input type="date" class="form-control" id="fecha" onchange="modificarFecha(this.value)">
                     <label for="fecha">Modificar fecha de actividad</label>

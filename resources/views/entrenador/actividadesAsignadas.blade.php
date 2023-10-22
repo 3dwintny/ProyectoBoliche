@@ -6,7 +6,7 @@
       <div class="header-body">
           <div class="row">
               <div class="col-xl-6 col-lg-6 col-md-10 col-sm-6">
-                  <h1 class="text-white">Prácticas designadas</h1>
+                  <h1 class="text-white">Prácticas asignadas</h1>
               </div>
           </div>
       </div>
@@ -69,6 +69,16 @@
             @endif
           </tbody>
         </table>
+      </div>
+      <div class="col-11">{{ $actividadesAsignadas->links('vendor.pagination.custom') }}</div>
+      <div class="col-1">
+        <form method="GET" action="{{ url()->current() }}">
+          <select name="per_page" id="per_page" class="form-select form-select-sm" aria-label="Small select example" onchange="this.form.submit()">
+              @foreach ($perPageOptions as $option)
+                  <option value="{{ $option }}" {{ request('per_page') == $option ? 'selected' : '' }}>{{ $option }}</option>
+              @endforeach
+          </select>
+        </form>
       </div>
     </div>
   </div>

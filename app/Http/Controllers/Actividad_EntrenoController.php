@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Illuminate\Support\Facades\File;
+use App\Models\Categoria;
 
 class Actividad_EntrenoController extends Controller
 {
@@ -25,9 +26,11 @@ class Actividad_EntrenoController extends Controller
     public function index()
     {
         try{
+            $perPageOptions =[5,10,20];
             $entrenador = Entrenador::where('correo',auth()->user()->email)->first();
-            $actividadesAsignadas = Actividad_Entreno::where('entrenador_id',$entrenador->id)->get(['id','fecha','actividad']);
-            return view('entrenador.actividadesAsignadas',compact('actividadesAsignadas'));
+            $perPage = request('per_page',5);
+            $actividadesAsignadas = Actividad_Entreno::where('entrenador_id',$entrenador->id)->paginate($perPage);
+            return view('entrenador.actividadesAsignadas',compact('actividadesAsignadas','perPageOptions'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
@@ -39,16 +42,25 @@ class Actividad_EntrenoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         try {
             $entrenador = Entrenador::where('correo',auth()->user()->email)->get(['id','nombre1','nombre2','nombre3','apellido1','apellido2','apellido_casada','codigo_correo']);
             if($entrenador[0]->codigo_correo == null or $entrenador[0]->codigo_correo == ""){
                 return redirect('home');
             }
-            $atletas = Atleta::where('estado','activo')->with(['alumno','categoria'])->get();
+            $filtrarCategoria = $request->filtroCategoria;
+            $categoriaId = 0;
+            if($filtrarCategoria==""){
+                $atletas = Atleta::where('estado','activo')->with(['alumno','categoria'])->get();
+            }
+            else{
+                $categoriaId=decrypt($filtrarCategoria);
+                $atletas = Atleta::where('estado','activo')->where('categoria_id',decrypt($filtrarCategoria))->with(['alumno','categoria'])->get();
+            }
             $hoy = Carbon::now();
-            return view('entrenador.asignarActividad',compact('entrenador','atletas','hoy'));
+            $categoria = Categoria::where('estado','activo')->get();
+            return view('entrenador.asignarActividad',compact('entrenador','atletas','hoy','categoria','categoriaId'));
         }
         catch (\Exception $e) {
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
