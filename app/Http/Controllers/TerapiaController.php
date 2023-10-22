@@ -36,10 +36,12 @@ class TerapiaController extends Controller
                 return redirect('home');
             }
             $buscarAtleta = $request->buscarNombre;
+            $perPageOptions=[5,10,20];
+            $perPage = request('per_page',5);
             if($buscarAtleta ==""){
                 $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'LISTAR', 'tabla_accion_id'=>29]);
                 $control->save();
-                $atleta = Atleta::paginate(5);
+                $atleta = Atleta::paginate($perPage);
             }
             else{
                 $indices = array();
@@ -139,9 +141,9 @@ class TerapiaController extends Controller
                         array_push($indices,0);
                     }
                 }
-                $atleta = Atleta::wherein('alumno_id',$indices)->paginate(5);
+                $atleta = Atleta::wherein('alumno_id',$indices)->paginate($perPage);
             }
-            return view('psicologia.terapias.list',compact('atleta','buscarAtleta'));
+            return view('psicologia.terapias.list',compact('atleta','buscarAtleta','perPage','perPageOptions'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
@@ -258,16 +260,18 @@ class TerapiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,Request $request)
     {
         try{
             $psicologo = Psicologia::where('correo',auth()->user()->email)->get();
+            $perPageOptions = [5,10,20];
+            $perPage = request('per_page',5);
             if(count($psicologo)==0)
             {
                 $historial = DB::table('terapia')->where('atleta_id',decrypt($id))->where('psicologia_id',0)->paginate(5);
             }
             else{
-                $historial = DB::table('terapia')->where('atleta_id',decrypt($id))->where('psicologia_id',$psicologo[0]->id)->paginate(5);
+                $historial = DB::table('terapia')->where('atleta_id',decrypt($id))->where('psicologia_id',$psicologo[0]->id)->paginate($perPage);
             }
             $guardarAtleta = $id;
             $inicial = "";
@@ -286,7 +290,7 @@ class TerapiaController extends Controller
             }
             $control = new Control(['usuario_id'=> auth()->user()->id,'Descripcion'=>'HISTORIAL', 'tabla_accion_id'=>29]);
             $control->save();
-            return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta','inicial','final'));
+            return view('psicologia.terapias.show',compact('historial','completo','guardarAtleta','inicial','final','perPage','perPageOptions'));
         }
         catch(\Exception $e){
             return back()->with('error', 'Se produjo un error al procesar la solicitud');
