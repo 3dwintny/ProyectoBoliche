@@ -361,17 +361,19 @@ class Actividad_EntrenoController extends Controller
     public function actividadPendiente(Request $request){
         try{
             $alumno = null;
+            $perPageOptions = [5,10,20];
+            $perPage = request('per_page',5);
             if(auth()->user()->tipo_usuario_id==1){
                 $alumno = Alumno::where('correo',auth()->user()->email)->first();
                 if($alumno!=null){
                     $atleta = Atleta::where('alumno_id',$alumno->id)->first();
-                    $practicas = Actividad_Atleta::where('estado','pendiente')->where('atleta_id',$atleta->id)->with('actividad_entreno')->get();
+                    $practicas = Actividad_Atleta::where('estado','pendiente')->where('atleta_id',$atleta->id)->with('actividad_entreno')->paginate($perPage);
                 }
                 else{
                     $atleta = Atleta::where('alumno_id',0)->get();
                     $practicas = Terapia::where('estado_tarea','pendiente')->where('atleta_id',0)->get();
                 }
-                return view('Atletas.actividadesPendientes',compact('practicas'));
+                return view('Atletas.actividadesPendientes',compact('practicas','perPage','perPageOptions'));
             }
             return back();
         }

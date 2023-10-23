@@ -70,6 +70,18 @@
                     </table>
                 </div>
             </div>
+            <div class="col-11">
+                {{$practicas->appends(['per_page'=>$perPage])->links('vendor.pagination.custom')}}
+            </div>
+            <div class="col-1">
+                <form action="{{url()->current()}}" method="GET">
+                    <select name="per_page" id="per_page" class="form-select form-select-sm" aria-label="Small select example" onchange="this.form.submit()">
+                        @foreach($perPageOptions as $option)
+                            <option value="{{$option}}" {{$option==request('per_page') ? 'selected':''}}>{{$option}}</option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
         </div>
     </div>
 </div>
