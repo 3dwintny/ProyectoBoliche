@@ -94,7 +94,7 @@
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-2">
                                         <div class="form-floating">
-                                        <input type="text" name="cui" id="cui" class="form-control text-dark @error('cui') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" value="{{ old('cui') }}">
+                                        <input type="tel" name="cui" id="cui" class="form-control text-dark @error('cui') is-invalid @enderror" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" value="{{ old('cui') }}">
                                         <label for="cui">CUI</label>
                                         @error('cui')
                                             <div class="invalid-tooltip">{{ $message }}</div>
@@ -295,6 +295,10 @@
         $('#cui').on('keydown',function(){
             var obtenerCui = document.getElementById('cui');
             var codigo = event.which || event.keyCode;
+            if(obtenerCui.value.length==0){
+                contadorCuatro=0;
+                contadorCinco=0;
+            }
             if(obtenerCui.value.length <=14){
                 if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
                     if(obtenerCui.value.length<=4){
@@ -338,6 +342,9 @@
         $('#celular').on('keydown',function(){
             var numeroCelular = document.getElementById('celular');
             var codigo = event.which || event.keyCode;
+            if(numeroCelular.value.length==0){
+                controlPrimerosDigitosCelular=0;
+            }
             if(numeroCelular.value.length <=8){
                 if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
                     if(numeroCelular.value.length<=4){
@@ -367,6 +374,9 @@
         $('#telefono_casa').on('keydown',function(){
             var numeroCasa = document.getElementById('telefono_casa');
             var codigo = event.which || event.keyCode;
+            if(numeroCasa.value.length==0){
+                controlPrimerosDigitosTelefonoCasa=0;
+            }
             if(numeroCasa.value.length <=8){
                 if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
                     if(numeroCasa.value.length<=4){

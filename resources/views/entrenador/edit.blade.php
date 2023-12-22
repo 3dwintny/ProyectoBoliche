@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 mb-2">
                                         <div class="form-floating">
-                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="text" name="cui" value="{{$entrenador->cui}}" readonly>
+                                            <input class="form-control text-dark" aria-describedby="basic-addon2" placeholder="{{ __('CUI') }}" id="cui" type="tel" name="cui" value="{{$entrenador->cui}}">
                                             <label for="cui">CUI</label>
                                         </div>
                                     </div>
@@ -274,14 +274,6 @@
     const txtCelular = document.getElementById('celular');
     const txtTelefonoCasa = document.getElementById('telefono_casa');
 
-    if (txtCelular.innerHTML.trim() === '') {
-        controlPrimerosDigitosCelular = 0;
-    }
-    if (txtTelefonoCasa.innerHTML.trim() === '') {
-        controlPrimerosDigitosTelefonoCasa = 0;
-    }
-
-
     $('#fecha_nacimiento').on('change', function() {
             function calcularEdad(fechas) {
                 var hoy = new Date();
@@ -301,6 +293,10 @@
         $('#cui').on('keydown',function(){
             var obtenerCui = document.getElementById('cui');
             var codigo = event.which || event.keyCode;
+            if(obtenerCui.value.length==0){
+                contadorCuatro=0;
+                contadorCinco=0;
+            }
             if(obtenerCui.value.length <=14){
                 if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
                     if(obtenerCui.value.length<=4){
@@ -344,6 +340,9 @@
         $('#celular').on('keydown',function(){
             var numeroCelular = document.getElementById('celular');
             var codigo = event.which || event.keyCode;
+            if(numeroCelular.value.length==0){
+                controlPrimerosDigitosCelular=0;
+            }
             if(numeroCelular.value.length <=8){
                 if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
                     if(numeroCelular.value.length<=4){
@@ -351,6 +350,7 @@
                     }
                 }
                 else if(codigo == 8){
+                    console.log(controlPrimerosDigitosCelular);
                     if((controlPrimerosDigitosCelular > 0 && controlPrimerosDigitosCelular < 5) && (numeroCelular.value.length>-1 && numeroCelular.value.length<5)){
                         controlPrimerosDigitosCelular--;
                     }
@@ -373,6 +373,9 @@
         $('#telefono_casa').on('keydown',function(){
             var numeroCasa = document.getElementById('telefono_casa');
             var codigo = event.which || event.keyCode;
+            if(numeroCasa.value.length==0){
+                controlPrimerosDigitosTelefonoCasa=0;
+            }
             if(numeroCasa.value.length <=8){
                 if(codigo >=96 && codigo <= 105 || codigo >=48 && codigo <= 57){
                     if(numeroCasa.value.length<=4){
