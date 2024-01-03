@@ -376,6 +376,7 @@ class AsistenciaController extends Controller
     }
 
     public function mesLetras($m){
+        echo "<script>console.log('Console: " . $m . "' );</script>";
         switch ($m){
             case 1:
                 $mostrarMes = "Enero";
@@ -432,21 +433,24 @@ class AsistenciaController extends Controller
             $m = $ms->month;
             $numeroDia = $ms->day;
             if($numeroDia>=1 && $numeroDia<=15){
-                $m--;
+                if($m==1){
+                    $m=12;
+                }
+                else{
+                    $m--;
+                }
             }
-
-            //Almacena el año desde la solicitud de búsqueda y lo envía a la vista para generar PDF
-            $y = $ms->year;
 
             $mes = 0;
-            $anio = 0;
+            $anio = $ms->year;
+
+            //Fechas finales
             if($m==12){
                 $mes = 1;
-                $anio = $y+1;
+                $y=$anio-1;
             }
             else{
-                $mes = $m+1;
-                $anio = $y;
+                $mes = $ms->month;
             }
             //Obtiene una sola vez la fecha de la asistencia
             $fechas= array();
@@ -469,7 +473,7 @@ class AsistenciaController extends Controller
                 }
             }
             if(count($fechas)>0){
-                $datos =  $this->mostrarAsistencia($m,$anio);
+                $datos =  $this->mostrarAsistencia($m,$y);
                 $atleta = $datos['atleta'];
                 $fechas = $datos['fechas'];
                 $estado = $datos['estado'];
