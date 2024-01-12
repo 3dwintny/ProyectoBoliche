@@ -146,14 +146,14 @@
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-4 col-xs-4 mb-2">
                                         <div class="form-floating">
-                                            <select name="etnia" id="estado_civil" class="form-control text-dark" required>
+                                            <select name="etnia" id="etnia" class="form-control text-dark" required>
                                                 <option selected disabled>Etnia</option>
                                                 <option value="Maya" {{$atleta->etnia == "Maya" ? 'selected' : ''}}>Maya</option>
                                                 <option value="Xinka" {{$atleta->etnia == "Xinka" ? 'selected' : ''}}>Xinka</option>
                                                 <option value="Garífuna" {{$atleta->etnia == "Garífuna" ? 'selected' : ''}}>Garifuna</option>
                                                 <option value="Ladino" {{$atleta->etnia == "Ladino" ? 'selected' : ''}}>Ladino</option>
                                             </select>
-                                            <label for="estado_civil">Estado civil</label>
+                                            <label for="etnia">Etnia</label>
                                         </div>
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-4 col-xs-4 mb-2">

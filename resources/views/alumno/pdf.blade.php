@@ -280,7 +280,7 @@
         <div class="contenedorIzquierdo margenIzquierdo">
             <div class="contenedorTitulos tamanio70">NOMBRE COMPLETO:</div>
             <div class="contenedorTitulos tamanio70"></div>
-            <div class="contenedorTitulos tamanio70">EDAD (el 1 de enero de 2022):</div>
+            <div class="contenedorTitulos tamanio70">EDAD (el 1 de enero de {{$anio}}):</div>
             <div class="contenedorTitulos tamanio70"></div>
             <div class="contenedorTitulos tamanio70">RAMA:</div>
             <div class="contenedorTitulos tamanio70"></div>
@@ -298,8 +298,11 @@
             <div class="nombres tamanio70">{{$item->nombre1}} {{$item->nombre2}} {{$item->nombre3}} {{$item->apellido1}} {{$item->apellido2}}</div>
 
             <div class="contenedorTitulos tamanio70"></div>
-
-            <div class="edad tamanio70 textoCentrado">{{$item->edad}}</div>
+            @if($estado=='Inscrito' && $cumplioAnios=='Si' && $mesAnioCumpleaniosAtleta!='01-01')
+                <div class="edad tamanio70 textoCentrado">{{$item->edad-1}}</div>
+            @else
+                <div class="edad tamanio70 textoCentrado">{{$item->edad}}</div>
+            @endif
             <div class="mes"></div>
             <div class="cui tamanio70">No. DE CUI:</div>
             <div class="noCui tamanio70 textoCentrado">{{$item->cui}}</div>
